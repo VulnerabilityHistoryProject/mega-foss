@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"janisdd.vscode-edit-csv",
+		"mhutchie.git-graph",
+		"ms-vscode-remote.remote-ssh",
+		"ms-vscode.remote-explorer",
+	]
+}
