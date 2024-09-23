@@ -10,7 +10,8 @@ config.read(os.path.join(os.path.dirname(__file__), 'github_secrets.ini'))
 url = 'https://api.github.com/graphql'
 
 acceptable_languages = [
-	'C'
+	# 'C',
+	'Rust',
 ]
 
 acceptable_repos = []
