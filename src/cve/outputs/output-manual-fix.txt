@@ -1,0 +1,4 @@
+[ PaddlePaddle/PaddleOCR ]
+Vendor: {'paddlepaddle'}
+Product: {'paddlepaddle'}
+--------------------------------------------------------------------------------
