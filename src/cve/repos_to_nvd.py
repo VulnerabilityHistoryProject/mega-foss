@@ -1,3 +1,7 @@
+"""
+Given a list of repositories, this script will attempt to match them with the Vendor and Product names from CVE JSONs.
+"""
+
 # Assume this repo:
 # is at ../cvelist
 import pathlib
@@ -6,12 +10,16 @@ import re
 import orjson
 from tqdm import tqdm
 
+# Input files/folders
 cvelist = os.path.join(os.path.dirname(__file__), '../cves')
 repolist = os.path.join(os.path.dirname(__file__), 'repos.txt')
-output_file = os.path.join(os.path.dirname(__file__), 'output.csv')
-missing_file = os.path.join(os.path.dirname(__file__), 'output-missing.txt')
-fix_file = os.path.join(os.path.dirname(__file__), 'output-fix.txt')
 id_to_name = os.path.join(os.path.dirname(__file__), 'cve-id-to-name.json')
+
+# Output files
+output_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd.csv')
+missing_file = os.path.join(os.path.dirname(__file__), 'output/missing_repos.txt')
+fix_file = os.path.join(os.path.dirname(__file__), 'output/manual_fix_repos.txt')
+
 URL_REGEX = re.compile(r"https?://(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)")
 
 class Repo:
