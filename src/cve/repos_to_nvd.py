@@ -33,9 +33,9 @@ class Repo:
 
 	def match_with(self, vendors, products, urls):
 		for i in range(len(vendors)):
-			v = str(vendors[i]).lower()
-			p = str(products[i]).lower()
-			if v in self.ids and p in self.ids:
+			v = str(vendors[i])
+			p = str(products[i])
+			if v.lower() in self.ids and p.lower() in self.ids:
 				return self.add_match([v], [p], [])
 
 		url_matches = []
@@ -60,9 +60,9 @@ class Repo:
 		for i in range(len(self.cve_vendor)):
 			if i >= len(self.cve_vendor):
 				break
-			ven = self.cve_vendor[i]
-			prod = self.cve_product[i]
-			if ven == self.ids[1].lower() and prod == self.ids[0].lower():
+			ven = str(self.cve_vendor[i])
+			prod = str(self.cve_product[i])
+			if ven.lower() == self.ids[1] and prod.lower() == self.ids[0]:
 				self.cve_vendor = [ven]
 				self.cve_product = [prod]
 
@@ -149,11 +149,9 @@ def write_output(output, output_missing, output_fix):
 	with open(output_file, 'w') as f:
 		f.write(output)
 
-	print("\bWriting Missing Output")
 	with open(missing_file, 'w') as f:
 		f.write(output_missing)
 
-	print("\bWriting Fix Output")
 	with open(fix_file, 'w') as f:
 		f.write(output_fix)
 
