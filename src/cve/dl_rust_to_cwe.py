@@ -8,8 +8,7 @@ import requests
 import os
 
 CWE_AND_RUST_SHEET = r"https://docs.google.com/spreadsheets/d/1JGei0TlPjIJVO8E0t_MqQcXFFn-qcEISHLBGJGBJfmQ"
-output_csv = os.path.join(os.path.dirname(__file__), 'output/rust_to_cwe.csv')
-
+output_csv = os.path.join(os.path.dirname(__file__), '../../lists/rust_to_cwe.csv')
 
 def download_rust_to_cwe():
 	try:
