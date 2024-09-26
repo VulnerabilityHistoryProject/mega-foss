@@ -1,66 +1,48 @@
 github repo,cve vendor,cve product
-facebook/react,Facebook,React
-tensorflow/tensorflow,Google,Tensorflow
-torvalds/linux,Linux,Linux
-Significant-Gravitas/AutoGPT,Significant-gravitas,Autogpt
-flutter/flutter,Flutter,Flutter
-microsoft/vscode,Microsoft,Vscode
-huggingface/transformers,Huggingface,Transformers
+tensorflow/tensorflow,tensorflow,tensorflow
+Significant-Gravitas/AutoGPT,significant-gravitas,significant-gravitas/autogpt
+huggingface/transformers,huggingface,huggingface/transformers
 golang/go,Golang,Go
-facebook/react-native,Facebook,React-native
-electron/electron,Electron,Electron
+facebook/react-native,Facebook,react-native
+electron/electron,electron,electron
 kubernetes/kubernetes,Kubernetes,Kubernetes
-microsoft/PowerToys,Microsoft,Powertoys
-nodejs/node,Nodejs,Node.js
-rust-lang/rust,Rust-lang,Rust
-microsoft/terminal,Microsoft,Terminal
-denoland/deno,Deno,Deno
-ollama/ollama,Ollama,Ollama
-godotengine/godot,Godotengine,Godot
-pytorch/pytorch,Linuxfoundation,Pytorch
-neovim/neovim,Neovim,Neovim
-bitcoin/bitcoin,Bitcoin,Bitcoin
-opencv/opencv,Opencv,Opencv
-rustdesk/rustdesk,Rustdesk,Rustdesk
-netdata/netdata,Netdata,Netdata
-elastic/elasticsearch,Elasticsearch,Elasticsearch
-moby/moby,Mobyproject,Moby
-swiftlang/swift,Apple,Swift
-redis/redis,Redis,Redis
-protocolbuffers/protobuf,Google,Protobuf
-ggerganov/llama.cpp,Ggerganov,Llama.cpp
-python/cpython,Python,Cpython
-twitter/the-algorithm,Twitter,Recommendation Algorithm
-tesseract-ocr/tesseract,Tesseract Ocr Project,Tesseract Ocr
-scikit-learn/scikit-learn,Scikit-learn,Scikit-learn
-git/git,GIT,GIT
-NationalSecurityAgency/ghidra,NSA,Ghidra
-JetBrains/kotlin,Jetbrains,Kotlin
-ethereum/go-ethereum,Ethereum,Go Ethereum
-rclone/rclone,Rclone,Rclone
-JuliaLang/julia,Julialang,Julia
-laurent22/joplin,Joplinapp,Joplin
-FFmpeg/FFmpeg,Ffmpeg,Ffmpeg
-pandas-dev/pandas,Numfocus,Pandas
-grpc/grpc,Grpc,Grpc
-nwjs/nw.js,Nwjs,Nw.js
-apache/spark,Apache,Spark
-pyenv/pyenv,Pyenv,Pyenv
-php/php-src,PHP,PHP
-ClickHouse/ClickHouse,Yandex,Clickhouse
-vim/vim,Vim,Vim
-curl/curl,Curl,Curl
-dotnet/aspnetcore,Microsoft,Aspnetcore
-aria2/aria2,Aria2 Project,Aria2
-tmux/tmux,Tmux Project,Tmux
-rapid7/metasploit-framework,Metasploit,Metasploit Framework
-AFNetworking/AFNetworking,Afnetworking Project,Afnetworking
-netty/netty,Netty,Netty
-ray-project/ray,Ray Project,RAY
-expo/expo,Expo,Expo
-shadowsocks/ShadowsocksX-NG,Shadowsocks,Shadowsocksx-ng
-hasura/graphql-engine,Hasura,Graphql Engine
-microsoft/MS-DOS,Microsoft,Ms-dos
-SerenityOS/serenity,Serenityos,Serenityos
-SeleniumHQ/selenium,Selenium,Selenium
-jqlang/jq,Jqlang,JQ
+nodejs/node,nodejs,node
+rust-lang/rust,rust-lang,rust
+denoland/deno,denoland,deno
+netdata/netdata,netdata,netdata
+elastic/elasticsearch,Elastic,elasticsearch
+moby/moby,moby,moby
+redis/redis,redis,redis
+protocolbuffers/protobuf,protocolbuffers,protobuf
+ggerganov/llama.cpp,ggerganov,llama.cpp
+scikit-learn/scikit-learn,scikit-learn,scikit-learn/scikit-learn
+git/git,git,git
+ethereum/go-ethereum,ethereum,go-ethereum
+laurent22/joplin,laurent22,joplin
+FFmpeg/FFmpeg,FFMPEG,FFMPEG
+ClickHouse/ClickHouse,ClickHouse,ClickHouse
+vim/vim,vim,vim
+curl/curl,curl,curl
+tmux/tmux,tmux,tmux
+netty/netty,netty,netty
+hasura/graphql-engine,hasura,graphql-engine
+SeleniumHQ/selenium,seleniumhq,seleniumhq/selenium
+jqlang/jq,jqlang,jq
+torvalds/linux,Linux,Linux
+microsoft/vscode,Microsoft,Visual Studio Code
+microsoft/terminal,Microsoft,Windows Terminal for Windows 11
+microsoft/terminal,Microsoft,Windows Terminal for Windows 10
+denoland/deno,denoland,deno
+ollama/ollama,ollama,ollama
+pytorch/pytorch,pytorch,pytorch
+bitcoin/bitcoin,bitcoin,bitcoin
+opencv/opencv,opencv,opencv
+rustdesk/rustdesk,rustdesk,rustdesk
+python/cpython,Python Software Foundation,CPython
+grpc/grpc,Google,gRPC
+apache/spark,Apache,Apache Spark
+php/php-src,PHP Group,PHP
+rapid7/metasploit-framework,Rapid7,Metasploit Framework
+ray-project/ray,ray-project,rayproject/ray
+shadowsocks/ShadowsocksX-NG,n/a,Shadowsocks
+SerenityOS/serenity,n/a,Serenityos
