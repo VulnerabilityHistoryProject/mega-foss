@@ -12,9 +12,9 @@ cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
 list_txt = '../../lists/c_repos.txt'
 
 
-CVE_REGEX = re.compile("CVE\-\d{4}\-\d+")
-COMMIT_REGEX = re.compile("commit/([\da-f]{40})")
-CWE_REGEX = re.compile("CWE\-\d+")
+CVE_REGEX = re.compile(r"CVE\-\d{4}\-\d+")
+COMMIT_REGEX = re.compile(r"commit/([\da-f]{40})")
+CWE_REGEX = re.compile(r"CWE\-\d+")
 
 unique_cwes = set()
 
