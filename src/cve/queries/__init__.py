@@ -37,7 +37,4 @@ def table_exists(cursor: Cursor, table_name: str) -> bool:
 
 	result = cursor.fetchone()
 
-	if result and result[0] is not None:
-		return True
-
-	return False
+	return bool(result) and bool(result[0])
