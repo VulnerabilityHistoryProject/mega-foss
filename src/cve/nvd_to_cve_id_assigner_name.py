@@ -11,8 +11,8 @@ from queries import execute_sql_file as sql
 # Files/Folders
 repo_to_nvd = os.path.join(os.path.dirname(__file__), '../../lists/c_repos_to_nvd.csv')
 cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
-# cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../cvelistV5/cves')
-cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
+cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../cvelistV5/cves')
+# cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 filter_id_name = os.path.join(os.path.dirname(__file__), 'queries/select_cve_id_assigner_name.sql')
 
 # Connection details
@@ -100,8 +100,8 @@ def main():
 	vendor_product_dict = load_vendor_product_dict()
 	print(vendor_product_dict.keys())
 	print(vendor_product_dict.values())
-	# process_cve_list(vendor_product_dict)
-	# process_cve_list_v5(vendor_product_dict)
+	# process_cvelist(vendor_product_dict)
+	# process_cvelist_v5(vendor_product_dict)
 	process_db_cvelist(vendor_product_dict)
 
 if __name__ == '__main__':
