@@ -11,8 +11,8 @@ from pathlib import Path
 from queries import execute_sql_file as sql, table_exists
 
 # Input files/folders
-# cvelist = os.path.join(os.path.dirname(__file__), '../cves')
-cvelist = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
+cvelist = os.path.join(os.path.dirname(__file__), '../cves')
+# cvelist = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 
 create_json = os.path.join(os.path.dirname(__file__), 'queries/create_cve_json.sql')
 insert_json = os.path.join(os.path.dirname(__file__), 'queries/insert_cve_json.sql')
@@ -25,7 +25,7 @@ insert_cve_patches = os.path.join(os.path.dirname(__file__), 'queries/insert_cve
 conn = psycopg2.connect(
     dbname="cve_db",
     user="postgres",
-    password="1599", # <--- Enter your password here
+    password=PASSWORD, # <--- Enter your password here
     host="localhost"
 )
 

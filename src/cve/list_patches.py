@@ -11,7 +11,7 @@ from queries import execute_sql_file as sql
 
 # Files/Folders
 cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
-cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
+# cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 list_txt = os.path.join(os.path.dirname(__file__),  '../../lists/c_repos.txt')
 select_patches = os.path.join(os.path.dirname(__file__),  'queries/select_cve_patches.sql')
 select_unique_cwes = os.path.join(os.path.dirname(__file__),  'queries/select_unique_cwes.sql')
@@ -21,7 +21,7 @@ select_unique_cwes = os.path.join(os.path.dirname(__file__),  'queries/select_un
 conn = psycopg2.connect(
     dbname="cve_db",
     user="postgres",
-    password="1599", # <--- Enter your password here
+    password=PASSWORD, # <--- Enter your password here
     host="localhost"
 )
 

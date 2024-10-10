@@ -21,7 +21,7 @@ fix_file = os.path.join(os.path.dirname(__file__), 'output/manual_fix_repos.txt'
 conn = psycopg2.connect(
     dbname="cve_db",
     user="postgres",
-    password="1599",# <--- Change this to your password
+    password=PASSWORD,# <--- Change this to your password
     host="localhost"
 )
 
