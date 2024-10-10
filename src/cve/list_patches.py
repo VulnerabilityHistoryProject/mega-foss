@@ -33,23 +33,48 @@ def load_repos() -> list[str]:
 
 	return repos
 
+class cve_analysis:
+	unique_cwes: set[str]
+	no_cwe: list[str]
+	no_patch: list[str]
+	has_cwe: list[str]
+	has_patch: list[str]
+
+	def __init__(self):
+		self.unique_cwes = set()
+		self.no_cwe = []
+		self.no_patch = []
+		self.has_cwe = []
+		self.has_patch = []
+
+	def total_cves(self) -> int:
+		return len(self.no_cwe) + len(self.has_cwe)
+
 def process_db_cvelist(repos: list[str], cursor: psycopg2.extensions.cursor):
 	with open(Path(select_patches), 'r') as f:
 		try:
 			sql = f.read()
-			data = []
-			unique_cwes = set()
+			output = []
+			data = cve_analysis()
 			for repo in tqdm(repos, desc="Processing repos"):
 				cursor.execute(sql, (f"%{repo}%",))
 				for (cve, cwes, commits) in cursor.fetchall():
 					if cwes:
 						for cwe in cwes:
-							unique_cwes.add(cwe)
+							data.unique_cwes.add(cwe)
+							data.has_cwe.append(cve)
 						cwes = cwes[0]
+					else:
+						cwes = ""
+						data.no_cwe.append(cve)
 					if commits:
 						commits = commits[0]
-					data.append(f"{repo}\t{cve}\t{cwes}\t{commits}")
-			return data, unique_cwes
+						data.has_patch.append(cve)
+					else:
+						commits = ""
+						data.no_patch.append(cve)
+					output.append(f"{repo}\t{cve}\t{cwes}\t{commits}")
+			return output, data
 		except Exception as e:
 			print(f"SQL Error: {e}")
 	# conn.commit()
@@ -116,12 +141,16 @@ def main():
 	repos = load_repos()
 	# unique_cwes = process_cvelist(repos, cvelist_v5)
 
-	data, unique_cwes = process_db_cvelist(repos, conn.cursor())
-	display_list(data)
+	output, analysis = process_db_cvelist(repos, conn.cursor())
+	display_list(output)
 
 	# unique_cwes = get_unique_cwes(conn.cursor())
 	print("Unique CWEs")
-	display_list(unique_cwes)
+	display_list(analysis.unique_cwes)
+
+	total = analysis.total_cves()
+	print(f"Num of CVEs with-out CWEs: {len(analysis.no_cwe)}/{total}")
+	print(f"Num of CVEs with-out Patches: {len(analysis.no_patch)}/{total}")
 
 
 if __name__ == "__main__":
