@@ -46,3 +46,20 @@ rapid7/metasploit-framework,Rapid7,Metasploit Framework
 ray-project/ray,ray-project,rayproject/ray
 shadowsocks/ShadowsocksX-NG,n/a,Shadowsocks
 SerenityOS/serenity,n/a,Serenityos
+
+pbatard/rufus,Akeo Consulting,Rufus
+nothings/stb,nothings,stb
+openssl/openssl,openssl,openssl
+nginx/nginx,nginx,nginx
+libuv/libuv,libuv,libuv
+taosdata/TDengine,taosdata,TDengine
+radareorg/radare2,radareorg,radare2
+openwrt/openwrt,OpenWRT,OpenWRT
+timescale/timescaledb,timescale,timescaledb
+videolan/vlc,VideoLAN,VLC
+espressif/esp-idf,espressif,esp-idf
+memcached/memcached,Memcached,Memcached
+systemd/systemd,systemd,systemd
+ImageMagick/ImageMagick,n/a,ImageMagick
+SoftEtherVPN/SoftEtherVPN,SoftEtherVPN,SoftEtherVPN
+coturn/coturn,coturn,coturn

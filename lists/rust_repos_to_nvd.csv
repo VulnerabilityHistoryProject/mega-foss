@@ -17,3 +17,12 @@ bitcoin/bitcoin,Bitcoin,Bitcoin
 rustdesk/rustdesk,Rustdesk,Rustdesk
 twitter/the-algorithm,Twitter,Recommendation Algorithm
 microsoft/vscode,Microsoft,Visual Studio Code
+
+tokio-rs/tokio,tokio-rs,tokio
+fish-shell/fish-shell,fish-shell,fish-shell
+qdrant/qdrant,qdrant,qdrant/qdrant
+wasmerio/wasmer,wasmerio,wasmer
+ankitects/anki,Ankitects,Anki
+cube-js/cube,cube-js,cube
+bytecodealliance/wasmtime,bytecodealliance,wasmtime
+hyperium/hyper,hyperium,hyper
