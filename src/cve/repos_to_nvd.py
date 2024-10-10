@@ -10,7 +10,7 @@ from pathlib import Path
 
 # Input files/folders
 repolist = os.path.join(os.path.dirname(__file__), 'repos.txt')
-filter_cve_data = os.path.join(os.path.dirname(__file__), 'queries/filter_cve_vendor_product.sql')
+filter_cve_data = os.path.join(os.path.dirname(__file__), 'queries/select_cve_vendor_product.sql')
 
 # Output files
 output_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd.csv')
@@ -21,7 +21,7 @@ fix_file = os.path.join(os.path.dirname(__file__), 'output/manual_fix_repos.txt'
 conn = psycopg2.connect(
     dbname="cve_db",
     user="postgres",
-    password=PASSWORD,# <--- Change this to your password
+    password="1599",# <--- Change this to your password
     host="localhost"
 )
 
@@ -40,7 +40,7 @@ class Repo:
 		self.cve_product = None
 
 	def add_match(self, row):
-		cve_id, vendor, product, urls = row
+		cve_id, _, _, vendor, product, urls = row
 		self.matches.append((vendor, product))
 
 	def resolve(self):
