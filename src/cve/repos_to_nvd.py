@@ -14,8 +14,8 @@ filter_cve_data = os.path.join(os.path.dirname(__file__), 'queries/select_cve_ve
 
 # Output files
 output_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd.csv')
-missing_file = os.path.join(os.path.dirname(__file__), 'output/missing_repos.txt')
-fix_file = os.path.join(os.path.dirname(__file__), 'output/manual_fix_repos.txt')
+missing_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd_missing.txt')
+fix_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd_manual_fix.txt')
 
 # Connection details
 conn = psycopg2.connect(

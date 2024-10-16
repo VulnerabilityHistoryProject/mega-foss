@@ -6,7 +6,7 @@ import orjson
 from tqdm import tqdm
 from pathlib import Path
 import psycopg2
-from queries import execute_sql_file as sql
+from queries import execute_sql_file as execute_sql_file
 
 # Files/Folders
 repo_to_nvd = os.path.join(os.path.dirname(__file__), '../../lists/c_repos_to_nvd.csv')
@@ -90,7 +90,7 @@ def process_cvelist_v5(vendor_product_dict: dict):
 def process_db_cvelist(vendor_product_dict: dict):
 	with conn.cursor() as cursor:
 		vendors = vendor_product_dict.keys()
-		sql(cursor, Path(filter_id_name), list(vendors))
+		execute_sql_file(cursor, Path(filter_id_name), list(vendors))
 		rows = cursor.fetchall()
 		for row in rows:
 			print(row)

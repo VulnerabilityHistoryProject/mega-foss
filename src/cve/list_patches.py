@@ -7,7 +7,7 @@ import orjson
 import psycopg2
 from tqdm import tqdm
 from pathlib import Path
-from queries import execute_sql_file as sql
+from queries import execute_sql_file as execute_sql_file
 
 # Files/Folders
 cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
@@ -50,7 +50,7 @@ class cve_analysis:
 	def total_cves(self) -> int:
 		return len(self.no_cwe) + len(self.has_cwe)
 
-def process_db_cvelist(repos: list[str], cursor: psycopg2.extensions.cursor):
+def process_db_cvelist(repos: list[str], cursor: psycopg2.extensions.cursor) -> tuple[list[str], cve_analysis]:
 	with open(Path(select_patches), 'r') as f:
 		try:
 			sql = f.read()
@@ -77,11 +77,12 @@ def process_db_cvelist(repos: list[str], cursor: psycopg2.extensions.cursor):
 			return output, data
 		except Exception as e:
 			print(f"SQL Error: {e}")
+			return [], cve_analysis()
 	# conn.commit()
 
 def get_unique_cwes(cursor: psycopg2.extensions.cursor) -> set[str]:
 	unique_cwes = set()
-	sql(cursor, Path(select_unique_cwes))
+	execute_sql_file(cursor, Path(select_unique_cwes))
 	for row in tqdm(cursor.fetchall(), desc="Getting unique CWES"):
 		unique_cwes.add(row[0])
 	return unique_cwes
@@ -114,7 +115,7 @@ def process_reference(repos, unique_cwes, data, json_str, url):
 def process_cvelist(repos, cvelist_dir):
 	unique_cwes = set()
 	cvelist_path = Path(cvelist_dir)
-	for p in tqdm(list(cvelist_path.rglob("CVE*.json")), desc=f"Reading CVE repo from {cvelist_v5}"):
+	for p in tqdm(list(cvelist_path.rglob("CVE*.json")), desc=f"Reading CVE repo from {cvelist}"):
 		with open(p, 'r') as f:
 			try:
 				json_str = f.read()
