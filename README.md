@@ -9,3 +9,10 @@ When we want to regenerate our repo list, run this:
 ```
 python .\src\github\get_repo_list.py
 ```
+
+Clone the cves repo:
+
+```
+git clone https://github.com/CVEProject/cvelistV5 cves
+```
+
