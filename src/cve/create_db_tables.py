@@ -21,6 +21,7 @@ create_cve_data = os.path.join(os.path.dirname(__file__), 'queries/create_cve_da
 insert_cve_data = os.path.join(os.path.dirname(__file__), 'queries/insert_cve_data.sql')
 create_cve_patches = os.path.join(os.path.dirname(__file__), 'queries/create_cve_patches.sql')
 insert_cve_patches = os.path.join(os.path.dirname(__file__), 'queries/insert_cve_patches.sql')
+create_cve_cwe_project = os.path.join(os.path.dirname(__file__), 'queries/create_cve_cwe_project.sql')
 
 # Connection details
 conn = pg_connect()
@@ -60,6 +61,9 @@ def main():
 		print("Creating cve_patches table")
 		execute_sql_file(cursor, Path(create_cve_patches))
 		execute_sql_file(cursor, Path(insert_cve_patches))
+	if not table_exists(cursor, 'cve_cwe_project'):
+		print("Creating cve_cwe_project table")
+		execute_sql_file(cursor, Path(create_cve_cwe_project))
 	print("Committing changes")
 	conn.commit()
 	cursor.close()
