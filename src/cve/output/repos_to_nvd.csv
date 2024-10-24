@@ -1,0 +1,42 @@
+github repo,cve vendor,cve product
+facebook/react,Facebook,react-native
+tensorflow/tensorflow,tensorflow,tensorflow
+Significant-Gravitas/AutoGPT,significant-gravitas,significant-gravitas/autogpt
+huggingface/transformers,huggingface,huggingface/transformers
+golang/go,golang,go
+facebook/react-native,Facebook,react-native
+electron/electron,electron,electron
+kubernetes/kubernetes,kubernetes,kubernetes
+nodejs/node,nodejs,node
+rust-lang/rust,rust-lang,rust
+denoland/deno,denoland,deno
+ollama/ollama,n/a,n/a
+godotengine/godot,n/a,n/a
+neovim/neovim,n/a,vim before patch 8.0.0056
+bitcoin/bitcoin,n/a,n/a
+netdata/netdata,netdata,netdata
+elastic/elasticsearch,elastic,elasticsearch
+moby/moby,moby,moby
+redis/redis,redis,redis
+protocolbuffers/protobuf,protocolbuffers,protobuf
+ggerganov/llama.cpp,ggerganov,llama.cpp
+twitter/the-algorithm,n/a,n/a
+tesseract-ocr/tesseract,n/a,n/a
+scikit-learn/scikit-learn,scikit-learn,scikit-learn/scikit-learn
+git/git,git,git
+NationalSecurityAgency/ghidra,n/a,n/a
+ethereum/go-ethereum,ethereum,go-ethereum
+laurent22/joplin,laurent22,joplin
+FFmpeg/FFmpeg,ffmpeg,ffmpeg
+pyenv/pyenv,n/a,n/a
+ClickHouse/ClickHouse,clickhouse,clickhouse
+vim/vim,vim,vim
+curl/curl,curl,curl
+tmux/tmux,tmux,tmux
+files-community/Files,Huawei Technologies Co., Ltd.,Files
+rapid7/metasploit-framework,n/a,n/a
+netty/netty,netty,netty
+ray-project/ray,ray-project,ray-project/ray
+hasura/graphql-engine,hasura,graphql-engine
+SeleniumHQ/selenium,seleniumhq,seleniumhq/selenium
+jqlang/jq,jqlang,jq
