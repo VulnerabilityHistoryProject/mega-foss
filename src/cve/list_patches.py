@@ -11,7 +11,7 @@ from queries import execute_sql_file as execute_sql_file
 from config import pg_connect
 
 # Files/Folders
-cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
+cvelist = os.path.join(os.path.dirname(__file__), '../cves/cves')
 # cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 list_txt = os.path.join(os.path.dirname(__file__),  '../../lists/c_repos.txt')
 select_patches = os.path.join(os.path.dirname(__file__),  'queries/select_cve_patches.sql')

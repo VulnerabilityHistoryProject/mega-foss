@@ -6,7 +6,7 @@ import os
 import orjson
 
 
-cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
+cvelist = os.path.join(os.path.dirname(__file__), '../cves/cves')
 print(f"Reading CVE repo from {cvelist}")
 
 cvelist_path = pathlib.Path(cvelist)

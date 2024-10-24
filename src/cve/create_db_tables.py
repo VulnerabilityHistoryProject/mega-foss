@@ -11,8 +11,11 @@ from pathlib import Path
 from queries import execute_sql_file, table_exists
 from config import pg_connect
 
+# Config
+RESTART_DB = True
+
 # Input files/folders
-cvelist = os.path.join(os.path.dirname(__file__), '../cves')
+cvelist = os.path.join(os.path.dirname(__file__), '../cves/cves')
 # cvelist = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 
 create_json = os.path.join(os.path.dirname(__file__), 'queries/create_cve_json.sql')
@@ -47,8 +50,17 @@ def load_jsons(cursor):
 					print(e)
 					print(f"ERROR loading {p}")
 
+def drop_tables(cursor):
+	tables = ['cve_json_data', 'cve_data', 'cve_patches', 'cve_cwe_project']
+	for table in tables:
+		cursor.execute(f"DROP TABLE IF EXISTS {table}")
+
 def main():
 	cursor = conn.cursor()
+	if RESTART_DB:
+		print("Dropping tables")
+		drop_tables(cursor)
+		conn.commit()
 	if not table_exists(cursor, 'cve_json_data'):
 		print("Creating cve_json_data table")
 		execute_sql_file(cursor, Path(create_json))
