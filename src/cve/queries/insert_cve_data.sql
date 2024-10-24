@@ -4,7 +4,8 @@ WITH url_data AS (
                SELECT url_element::TEXT
                FROM jsonb_path_query_array(cve_json_data.data, '$.**.url') AS urls,
                     jsonb_array_elements_text(urls) AS url_element
-               WHERE url_element::TEXT ~ '^https?://(www\.)?github.com.*/\w+/\w+.*$'
+               -- WHERE url_element::TEXT ~ '^https?://(www\.)?github.com.*/\w+/\w+.*$'
+               WHERE url_element::TEXT ~ '^https?://(www\.)?github.com.*/\w+/\w+.*([\da-f]{40}).*$'
            ) AS urls
     FROM cve_json_data
 )

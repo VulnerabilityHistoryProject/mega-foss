@@ -1,3 +1,4 @@
 SELECT * FROM cve_data
 WHERE
-   (affected_product ILIKE %s OR affected_product ILIKE %s);
+   (affected_product ILIKE %s OR affected_product ILIKE %s)
+   OR urls::TEXT ILIKE %s;
