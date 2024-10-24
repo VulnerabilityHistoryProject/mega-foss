@@ -15,7 +15,7 @@ from config import pg_connect
 RESTART_DB = True
 
 # Input files/folders
-cvelist = os.path.join(os.path.dirname(__file__), '../cves/cves')
+cvelist = os.path.join(os.path.dirname(__file__), '../../../cves/cves')
 # cvelist = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 
 create_json = os.path.join(os.path.dirname(__file__), 'queries/create_cve_json.sql')
@@ -37,7 +37,9 @@ def load_jsons(cursor):
 	insert_json_path = Path(insert_json)
 	with open(insert_json_path, 'r') as file:
 		insert_cve_json = file.read()
+		# breakpoint()
 		for p in tqdm(list(cvelist_path.rglob("CVE*.json")), desc="Loading JSONs"):
+
 			with open(p, 'r') as f:
 				try:
 					data_str = f.read()
@@ -51,7 +53,7 @@ def load_jsons(cursor):
 					print(f"ERROR loading {p}")
 
 def drop_tables(cursor):
-	tables = ['cve_json_data', 'cve_data', 'cve_patches', 'cve_cwe_project']
+	tables = ['cve_json_data', 'cve_data', 'cve_patches', 'cve_cwe_project', 'cve_project_no_cwe']
 	for table in tables:
 		cursor.execute(f"DROP TABLE IF EXISTS {table}")
 
