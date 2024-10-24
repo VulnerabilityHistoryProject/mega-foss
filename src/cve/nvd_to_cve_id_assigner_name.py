@@ -25,7 +25,8 @@ def load_vendor_product_dict() -> dict:
 		vendor_product_dict = {}
 		for line in f:
 			field = line.split(',')
-			vendor_product_dict[field[1]] = field[2].strip()
+			if len(field) == 3:
+				vendor_product_dict[field[1]] = field[2].strip()
 		return vendor_product_dict
 
 def safe_get(dict, *keys, default=None):
