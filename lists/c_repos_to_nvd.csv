@@ -29,6 +29,8 @@ hasura/graphql-engine,hasura,graphql-engine
 SeleniumHQ/selenium,seleniumhq,seleniumhq/selenium
 jqlang/jq,jqlang,jq
 torvalds/linux,Linux,Linux
+torvalds/linux,The Linux Kernel Organization,linux
+torvalds/linux,n/a,Linux
 microsoft/vscode,Microsoft,Visual Studio Code
 microsoft/terminal,Microsoft,Windows Terminal for Windows 11
 microsoft/terminal,Microsoft,Windows Terminal for Windows 10

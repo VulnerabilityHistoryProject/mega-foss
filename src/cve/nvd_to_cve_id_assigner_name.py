@@ -7,6 +7,7 @@ from tqdm import tqdm
 from pathlib import Path
 import psycopg2
 from queries import execute_sql_file as execute_sql_file
+from config import pg_connect
 
 # Files/Folders
 repo_to_nvd = os.path.join(os.path.dirname(__file__), '../../lists/c_repos_to_nvd.csv')
@@ -16,12 +17,7 @@ cvelist_v5 = os.path.join(os.path.dirname(__file__), '../../../cvelistV5/cves')
 filter_id_name = os.path.join(os.path.dirname(__file__), 'queries/select_cve_id_assigner_name.sql')
 
 # Connection details
-conn = psycopg2.connect(
-    dbname="cve_db",
-    user="postgres",
-    password=PASSWORD, # <--- Enter your password here
-    host="localhost"
-)
+conn = pg_connect()
 
 def load_vendor_product_dict() -> dict:
 	repo_to_nvd_path = Path(repo_to_nvd)

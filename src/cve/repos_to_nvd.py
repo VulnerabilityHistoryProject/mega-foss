@@ -7,9 +7,11 @@ import psycopg2
 from tqdm import tqdm
 from enum import Enum
 from pathlib import Path
+from cve.config import pg_connect
 
 # Input files/folders
 repolist = os.path.join(os.path.dirname(__file__), 'repos.txt')
+c_repolist = os.path.join(os.path.dirname(__file__), '../../lists/c_repos.txt')
 filter_cve_data = os.path.join(os.path.dirname(__file__), 'queries/select_cve_vendor_product.sql')
 
 # Output files
@@ -18,12 +20,7 @@ missing_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd_miss
 fix_file = os.path.join(os.path.dirname(__file__), 'output/repos_to_nvd_manual_fix.txt')
 
 # Connection details
-conn = psycopg2.connect(
-    dbname="cve_db",
-    user="postgres",
-    password=PASSWORD,# <--- Change this to your password
-    host="localhost"
-)
+conn = pg_connect()
 
 class RepoState(Enum):
 	NO_MATCHES = 0
@@ -40,7 +37,7 @@ class Repo:
 		self.cve_product = None
 
 	def add_match(self, row):
-		cve_id, _, _, vendor, product, urls = row
+		cve_id, a, b, vendor, product, urls = row
 		self.matches.append((vendor, product))
 
 	def resolve(self):
@@ -64,22 +61,24 @@ class Repo:
 		if self.cve_vendor is not None and self.cve_product is not None:
 			out += f"Vendor: {self.cve_vendor}\nProduct: {self.cve_product}\n"
 		else:
-			vendors = [vendor for vendor, _ in self.matches]
-			products = [product for _, product in self.matches]
-			out += f"Vendor: {list(vendors)}\nProduct: {list(products)}\n"
+			# vendors = [vendor for vendor, _ in self.matches]
+			# products = [product for _, product in self.matches]
+			# out += f"Vendor: {list(vendors)}\nProduct: {list(products)}\n"
+			out += f"Matches: {set(self.matches)}\n"
 
 		return out + "-"*80
 
 	def __repr__(self):
 		return self.__str__()
 
-def read_data() -> list[Repo]:
+def read_data(repo_list) -> list[Repo]:
 	"""
 	Reads the list of repos from the file into a list of Repo objects
 	"""
 	repos: list[Repo] = list()
 
-	with open(repolist, 'r') as f:
+	# with open(repolist, 'r') as f:
+	with open(repo_list, 'r') as f:
 		for repo in f:
 			repo = repo.strip()
 			vendor, name = repo.strip().split('/')
@@ -97,7 +96,7 @@ def find_repo_matches(repos: list[Repo], cursor: psycopg2.extensions.cursor):
 		for repo in tqdm(repos, desc="Finding Repo Matches"):
 			test_vendor, test_product = repo.ids
 			url = repo.url
-			cursor.execute(filter_cve_vendor_product, (f'%{test_vendor}%', f'%{url}%', f'{test_product}', f'{url}'))
+			cursor.execute(filter_cve_vendor_product, (f'{test_product}', f'{url}'))
 			rows = cursor.fetchall()
 			for row in rows:
 				repo.add_match(row)
@@ -131,7 +130,7 @@ def write_output(output, output_missing, output_fix):
 
 def main():
 	cursor = conn.cursor()
-	repos = read_data()
+	repos = read_data(c_repolist)
 	find_repo_matches(repos, cursor)
 	output, output_missing, output_fix = generate_outputs(repos)
 	write_output(output, output_missing, output_fix)

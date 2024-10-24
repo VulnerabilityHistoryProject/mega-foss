@@ -8,6 +8,7 @@ import psycopg2
 from tqdm import tqdm
 from pathlib import Path
 from queries import execute_sql_file as execute_sql_file
+from config import pg_connect
 
 # Files/Folders
 cvelist = os.path.join(os.path.dirname(__file__), '../../../cvelist')
@@ -16,14 +17,8 @@ list_txt = os.path.join(os.path.dirname(__file__),  '../../lists/c_repos.txt')
 select_patches = os.path.join(os.path.dirname(__file__),  'queries/select_cve_patches.sql')
 select_unique_cwes = os.path.join(os.path.dirname(__file__),  'queries/select_unique_cwes.sql')
 
-
 # Connection details
-conn = psycopg2.connect(
-    dbname="cve_db",
-    user="postgres",
-    password=PASSWORD, # <--- Enter your password here
-    host="localhost"
-)
+conn = pg_connect()
 
 def load_repos() -> list[str]:
 	repos = []

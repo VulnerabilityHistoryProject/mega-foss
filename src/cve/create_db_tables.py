@@ -9,6 +9,7 @@ import psycopg2
 from tqdm import tqdm
 from pathlib import Path
 from queries import execute_sql_file, table_exists
+from config import pg_connect
 
 # Input files/folders
 cvelist = os.path.join(os.path.dirname(__file__), '../cves')
@@ -22,12 +23,7 @@ create_cve_patches = os.path.join(os.path.dirname(__file__), 'queries/create_cve
 insert_cve_patches = os.path.join(os.path.dirname(__file__), 'queries/insert_cve_patches.sql')
 
 # Connection details
-conn = psycopg2.connect(
-    dbname="cve_db",
-    user="postgres",
-    password=PASSWORD, # <--- Enter your password here
-    host="localhost"
-)
+conn = pg_connect()
 
 def load_jsons(cursor):
 	"""

@@ -10,7 +10,7 @@ WITH array_data AS (
                SELECT val_element::TEXT
                FROM jsonb_path_query_array(cve_json_data.data, '$.**') AS values,
                     jsonb_array_elements_text(values) AS val_element
-               WHERE val_element::TEXT ~ '^https?://(www\.)?github.com.*/\w+/\w+/commit/([\da-f]{40}).*$'
+               WHERE val_element::TEXT ~ '^https?:.*/([\da-f]{40}).*$'
            ) AS commits,
 		   ARRAY(
                SELECT cwe_element::TEXT
