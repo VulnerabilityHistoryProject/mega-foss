@@ -1,0 +1,163 @@
+# No Help, or Langs Won't Help
+----------------------------
+- CWE-1050, https://cwe.mitre.org/data/definitions/1050.html
+- CWE-113, https://cwe.mitre.org/data/definitions/113.html
+- CWE-114, https://cwe.mitre.org/data/definitions/114.html
+- CWE-115, https://cwe.mitre.org/data/definitions/115.html
+- CWE-1258, https://cwe.mitre.org/data/definitions/1258.html
+- CWE-1287, https://cwe.mitre.org/data/definitions/1287.html
+- CWE-129, https://cwe.mitre.org/data/definitions/129.html
+- CWE-1333, https://cwe.mitre.org/data/definitions/1333.html
+- CWE-1335, https://cwe.mitre.org/data/definitions/1335.html
+- CWE-184, https://cwe.mitre.org/data/definitions/184.html
+- CWE-193, https://cwe.mitre.org/data/definitions/193.html
+- CWE-209, https://cwe.mitre.org/data/definitions/209.html
+- CWE-256, https://cwe.mitre.org/data/definitions/256.html
+- CWE-266, https://cwe.mitre.org/data/definitions/266.html
+- CWE-276, https://cwe.mitre.org/data/definitions/276.html
+- CWE-281, https://cwe.mitre.org/data/definitions/281.html
+- CWE-283, https://cwe.mitre.org/data/definitions/283.html
+- CWE-295, https://cwe.mitre.org/data/definitions/295.html
+- CWE-306, https://cwe.mitre.org/data/definitions/306.html
+- CWE-324, https://cwe.mitre.org/data/definitions/324.html
+- CWE-347, https://cwe.mitre.org/data/definitions/347.html
+- CWE-354, https://cwe.mitre.org/data/definitions/354.html
+- CWE-367, https://cwe.mitre.org/data/definitions/367.html
+- CWE-401, https://cwe.mitre.org/data/definitions/401.html
+- CWE-419, https://cwe.mitre.org/data/definitions/419.html
+- CWE-420, https://cwe.mitre.org/data/definitions/420.html
+- CWE-434, https://cwe.mitre.org/data/definitions/434.html
+- CWE-440, https://cwe.mitre.org/data/definitions/440.html
+- CWE-444, https://cwe.mitre.org/data/definitions/444.html
+- CWE-475, https://cwe.mitre.org/data/definitions/475.html
+- CWE-494, https://cwe.mitre.org/data/definitions/494.html
+- CWE-501, https://cwe.mitre.org/data/definitions/501.html
+- CWE-502, https://cwe.mitre.org/data/definitions/502.html
+- CWE-524, https://cwe.mitre.org/data/definitions/524.html
+- CWE-532, https://cwe.mitre.org/data/definitions/532.html
+- CWE-544, https://cwe.mitre.org/data/definitions/544.html
+- CWE-547, https://cwe.mitre.org/data/definitions/547.html
+- CWE-552, https://cwe.mitre.org/data/definitions/552.html
+- CWE-601, https://cwe.mitre.org/data/definitions/601.html
+- CWE-667, https://cwe.mitre.org/data/definitions/667.html
+- CWE-770, https://cwe.mitre.org/data/definitions/770.html
+- CWE-772, https://cwe.mitre.org/data/definitions/772.html
+- CWE-789, https://cwe.mitre.org/data/definitions/789.html
+- CWE-79, https://cwe.mitre.org/data/definitions/79.html
+- CWE-835, https://cwe.mitre.org/data/definitions/835.html
+- CWE-916, https://cwe.mitre.org/data/definitions/916.html
+- CWE-918, https://cwe.mitre.org/data/definitions/918.html
+- CWE-920, https://cwe.mitre.org/data/definitions/920.html
+- CWE-921, https://cwe.mitre.org/data/definitions/921.html
+
+# Opt-In Measures Only
+--------------------
+- CWE-378, https://cwe.mitre.org/data/definitions/378.html
+- CWE-426, https://cwe.mitre.org/data/definitions/426.html
+- CWE-427, https://cwe.mitre.org/data/definitions/427.html
+- CWE-78, https://cwe.mitre.org/data/definitions/78.html
+- CWE-88, https://cwe.mitre.org/data/definitions/88.html
+
+# Discouraged via Borrow Checker
+------------------------------
+- CWE-196, https://cwe.mitre.org/data/definitions/196.html
+- CWE-197, https://cwe.mitre.org/data/definitions/197.html
+- CWE-22, https://cwe.mitre.org/data/definitions/22.html
+- CWE-23, https://cwe.mitre.org/data/definitions/23.html
+- CWE-24, https://cwe.mitre.org/data/definitions/24.html
+- CWE-252, https://cwe.mitre.org/data/definitions/252.html
+- CWE-27, https://cwe.mitre.org/data/definitions/27.html
+- CWE-363, https://cwe.mitre.org/data/definitions/363.html
+- CWE-379, https://cwe.mitre.org/data/definitions/379.html
+- CWE-488, https://cwe.mitre.org/data/definitions/488.html
+- CWE-59, https://cwe.mitre.org/data/definitions/59.html
+- CWE-61, https://cwe.mitre.org/data/definitions/61.html
+- CWE-681, https://cwe.mitre.org/data/definitions/681.html
+- CWE-690, https://cwe.mitre.org/data/definitions/690.html
+
+# Discouraged via Debug Mode
+--------------------------
+- CWE-190, https://cwe.mitre.org/data/definitions/190.html
+- CWE-191, https://cwe.mitre.org/data/definitions/191.html
+- CWE-617, https://cwe.mitre.org/data/definitions/617.html
+- CWE-680, https://cwe.mitre.org/data/definitions/680.html
+
+# Virtually Impossible
+--------------------
+- CWE-1055, https://cwe.mitre.org/data/definitions/1055.html
+- CWE-120, https://cwe.mitre.org/data/definitions/120.html
+- CWE-121, https://cwe.mitre.org/data/definitions/121.html
+- CWE-122, https://cwe.mitre.org/data/definitions/122.html
+- CWE-123, https://cwe.mitre.org/data/definitions/123.html
+- CWE-125, https://cwe.mitre.org/data/definitions/125.html
+- CWE-126, https://cwe.mitre.org/data/definitions/126.html
+- CWE-131, https://cwe.mitre.org/data/definitions/131.html
+- CWE-134, https://cwe.mitre.org/data/definitions/134.html
+- CWE-170, https://cwe.mitre.org/data/definitions/170.html
+- CWE-248, https://cwe.mitre.org/data/definitions/248.html
+- CWE-369, https://cwe.mitre.org/data/definitions/369.html
+- CWE-372, https://cwe.mitre.org/data/definitions/372.html
+- CWE-415, https://cwe.mitre.org/data/definitions/415.html
+- CWE-416, https://cwe.mitre.org/data/definitions/416.html
+- CWE-457, https://cwe.mitre.org/data/definitions/457.html
+- CWE-467, https://cwe.mitre.org/data/definitions/467.html
+- CWE-471, https://cwe.mitre.org/data/definitions/471.html
+- CWE-476, https://cwe.mitre.org/data/definitions/476.html
+- CWE-682, https://cwe.mitre.org/data/definitions/682.html
+- CWE-762, https://cwe.mitre.org/data/definitions/762.html
+- CWE-787, https://cwe.mitre.org/data/definitions/787.html
+- CWE-788, https://cwe.mitre.org/data/definitions/788.html
+- CWE-824, https://cwe.mitre.org/data/definitions/824.html
+- CWE-843, https://cwe.mitre.org/data/definitions/843.html
+- CWE-908, https://cwe.mitre.org/data/definitions/908.html
+- CWE-94, https://cwe.mitre.org/data/definitions/94.html
+
+# Unspecified (Not Mapped)
+-----------
+- CWE-116, https://cwe.mitre.org/data/definitions/116.html
+- CWE-119, https://cwe.mitre.org/data/definitions/119.html
+- CWE-150, https://cwe.mitre.org/data/definitions/150.html
+- CWE-159, https://cwe.mitre.org/data/definitions/159.html
+- CWE-187, https://cwe.mitre.org/data/definitions/187.html
+- CWE-20, https://cwe.mitre.org/data/definitions/20.html
+- CWE-200, https://cwe.mitre.org/data/definitions/200.html
+- CWE-269, https://cwe.mitre.org/data/definitions/269.html
+- CWE-271, https://cwe.mitre.org/data/definitions/271.html
+- CWE-282, https://cwe.mitre.org/data/definitions/282.html
+- CWE-284, https://cwe.mitre.org/data/definitions/284.html
+- CWE-285, https://cwe.mitre.org/data/definitions/285.html
+- CWE-287, https://cwe.mitre.org/data/definitions/287.html
+- CWE-297, https://cwe.mitre.org/data/definitions/297.html
+- CWE-311, https://cwe.mitre.org/data/definitions/311.html
+- CWE-330, https://cwe.mitre.org/data/definitions/330.html
+- CWE-345, https://cwe.mitre.org/data/definitions/345.html
+- CWE-346, https://cwe.mitre.org/data/definitions/346.html
+- CWE-352, https://cwe.mitre.org/data/definitions/352.html
+- CWE-362, https://cwe.mitre.org/data/definitions/362.html
+- CWE-377, https://cwe.mitre.org/data/definitions/377.html
+- CWE-400, https://cwe.mitre.org/data/definitions/400.html
+- CWE-405, https://cwe.mitre.org/data/definitions/405.html
+- CWE-407, https://cwe.mitre.org/data/definitions/407.html
+- CWE-436, https://cwe.mitre.org/data/definitions/436.html
+- CWE-441, https://cwe.mitre.org/data/definitions/441.html
+- CWE-456, https://cwe.mitre.org/data/definitions/456.html
+- CWE-522, https://cwe.mitre.org/data/definitions/522.html
+- CWE-590, https://cwe.mitre.org/data/definitions/590.html
+- CWE-636, https://cwe.mitre.org/data/definitions/636.html
+- CWE-665, https://cwe.mitre.org/data/definitions/665.html
+- CWE-668, https://cwe.mitre.org/data/definitions/668.html
+- CWE-669, https://cwe.mitre.org/data/definitions/669.html
+- CWE-670, https://cwe.mitre.org/data/definitions/670.html
+- CWE-674, https://cwe.mitre.org/data/definitions/674.html
+- CWE-693, https://cwe.mitre.org/data/definitions/693.html
+- CWE-697, https://cwe.mitre.org/data/definitions/697.html
+- CWE-703, https://cwe.mitre.org/data/definitions/703.html
+- CWE-704, https://cwe.mitre.org/data/definitions/704.html
+- CWE-732, https://cwe.mitre.org/data/definitions/732.html
+- CWE-74, https://cwe.mitre.org/data/definitions/74.html
+- CWE-754, https://cwe.mitre.org/data/definitions/754.html
+- CWE-755, https://cwe.mitre.org/data/definitions/755.html
+- CWE-77, https://cwe.mitre.org/data/definitions/77.html
+- CWE-834, https://cwe.mitre.org/data/definitions/834.html
+- CWE-863, https://cwe.mitre.org/data/definitions/863.html
+- CWE-911, https://cwe.mitre.org/data/definitions/911.html
