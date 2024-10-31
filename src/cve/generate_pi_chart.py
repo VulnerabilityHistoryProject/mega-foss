@@ -25,7 +25,6 @@ RUST CWE CATEGORIES:
 import os
 import csv
 import psycopg2
-from tqdm import tqdm
 from enum import Enum
 from pathlib import Path
 from collections import Counter
@@ -37,9 +36,35 @@ PRINT_CVE_NO_CWE = True
 OUTPUT_TO_FILE = False
 PROMINANT_PROJECTS = {
 	"Linux": {
-		("Linux", "Linux"),
-		('The Linux Kernel Organization', 'linux'),
-		('n/a', 'Linux')
+		('n/a','Linux kernel 4.15.0-rc9'),
+		('Linux','Linux Kernel'),
+		('n/a','Linux Kernel before 4.13.6'),
+		('n/a','Linux kernel through v4.14-rc5'),
+		('n/a','Linux kernel before 4.12.3'),
+		('n/a','Linux kernel through 4.14.8'),
+		('n/a','Linux kernel before 4.13'),
+		('n/a','Linux kernel through 4.13.3'),
+		('Linux','Linux'),
+		('n/a','Linux kernel versions up to and including 4.12'),
+		('n/a','Linux kernel before 4.14-rc6'),
+		('Linux','kernel'),
+		('n/a','Linux kernel 4.11'),
+		('The Linux Kernel Organization','linux'),
+		('n/a','Linux kernel v4.0-rc1 through v4.15-rc5'),
+		('n/a','Linux Kernel'),
+		('Linux Kernel Organization',' Inc.,Linux Kernel'),
+		('n/a','Linux kernel'),
+		('n/a','Linux kernel through 4.12.4'),
+		('n/a','Linux kernel through version 4.9-rc1'),
+		('n/a','Linux'),
+		('n/a','Linux kernel through 4.11.1'),
+		('n/a','Linux kernel before 4.10.13'),
+		('n/a','kernel'),
+		('n/a','Linux kernel v4.13 and newer'),
+		('n/a','Kernel'),
+		('n/a','Linux kernel before 4.9'),
+		('n/a','Linux kernel before 4.6.2'),
+		('n/a','Linux kernel before 4.13.12'),
 	}
 }
 
@@ -49,6 +74,7 @@ rust_cwe_csv = os.path.join(os.path.dirname(__file__), '../../lists/rust_to_cwe.
 cwe_variants_to_base_csv = os.path.join(os.path.dirname(__file__), '../../lists/cwe_child_map.csv')
 select_unique_cwe_query = os.path.join(os.path.dirname(__file__), 'queries/select_unique_cwes.sql')
 select_cve_no_cwe_query = os.path.join(os.path.dirname(__file__), 'queries/select_cve_no_cwe.sql')
+create_c_cve_cwe_project = os.path.join(os.path.dirname(__file__), 'queries/create_c_cve_cwe_project.sql')
 
 # Output files
 output_file = os.path.join(os.path.dirname(__file__), 'output/pi_char_data.txt')
@@ -81,6 +107,7 @@ class CWEData:
 	def __init__(self):
 		self.projects = set()
 		self.cves = set()
+		self.cwes = set()
 
 def load_rust_csv() -> dict[str, RustCSVData]:
 	rust_cwe_csv_path = Path(rust_cwe_csv)
@@ -90,7 +117,7 @@ def load_rust_csv() -> dict[str, RustCSVData]:
 			next(reader)
 			# Headers: CWE-ID,Name,Link,Type,Prohibited?,Description,Vote,Clippy Helps?,Voter's Notes,Assumption,Revisit?,Needs discussion?,GH Issue,GH Issue URL,Rust Docs link
 			# Want: CWE-ID,Name,Type,Vote,Clippy Helps?
-			data =  {f"CWE-{r[0]}": RustCSVData(r[0], r[1], r[3], r[6], r[7]) for r in tqdm(reader, desc="Loading Rust CSV Data")}
+			data =  {f"CWE-{r[0]}": RustCSVData(r[0], r[1], r[3], r[6], r[7]) for r in reader}
 			return data
 	except FileNotFoundError:
 		print(f"Could not find file: {rust_cwe_csv_path}")
@@ -107,8 +134,7 @@ def load_cwe_variants_map(cwe_data):
 			next(reader)
 			# Headers: CWE-ID,Name,Type,Related Weakness,Parent,Vote,Clippy Helps?
 			# Want: CWE-ID, Type, Vote (If it exists)
-			for r in tqdm(reader, desc="Loading Parent-Child CSV Data"):
-				print(r)
+			for r in reader:
 				id, cwe_type, parent_vote = f"CWE-{r[0]}", r[2], r[5]
 				if id in cwe_data and parent_vote:
 					if cwe_type == 'Base':
@@ -124,16 +150,6 @@ def create_c_cwe_project_map(cursor):
 	"""
 	Creates a temporary table that maps C projects to their CWEs.
 	"""
-	create_c_tables = """
-	CREATE TEMP TABLE c_cve_cwe_project AS
-		SELECT * FROM cve_cwe_project
-		WHERE project=ANY(%s);
-
-	CREATE TEMP TABLE c_cve_project_no_cwe AS
-		SELECT * FROM cve_project_no_cwe
-		WHERE project=ANY(%s);
-		"""
-
 	c_repo_csv_path = Path(c_repos_nvd_csv)
 	c_projects = list()
 
@@ -144,7 +160,7 @@ def create_c_cwe_project_map(cursor):
 			if r:
 				c_projects.append(f"{r[1]}/{r[2]}")
 
-	cursor.execute(create_c_tables, (c_projects,c_projects))
+	execute_sql_file(cursor, Path(create_c_cve_cwe_project), c_projects, c_projects)
 	print("Created C Repos -> CWE -> Project Map")
 
 def analyze_single_project(cursor, rust_cwes: dict[str, RustCSVData], vendor, product, prev_category_data=None):
@@ -189,39 +205,59 @@ def analyze_data(cursor, rust_cwes:dict[str, RustCSVData]):
 	missing_cwe_data = dict()
 
 	cursor.execute("SELECT * FROM c_cve_cwe_project")
-	for (cve_id, cwe_id, project) in tqdm(cursor.fetchall(), desc="Analyzing CRepo CWE Data"):
+	for (cve_id, cwe_id, project) in cursor.fetchall():
 		if cwe_id in rust_cwes:
 			data = rust_cwes[cwe_id]
 			if (data.is_base() or data.is_reference()) and data.vote in category_data:
 				data = category_data[str(data.vote)]
 				data.projects.add(project)
 				data.cves.add(cve_id)
+				data.cwes.add(cwe_id)
 			else:
 				category_data["Unspecified"].projects.add(project)
 				category_data["Unspecified"].cves.add(cve_id)
+				category_data["Unspecified"].cwes.add(cwe_id)
 				if cwe_id not in missing_cwe_data:
 					missing_cwe_data[cwe_id] = CWEData()
 				data = missing_cwe_data[cwe_id]
 				data.projects.add(project)
 				data.cves.add(cve_id)
+				data.cwes.add(cwe_id)
 
 	return category_data, missing_cwe_data
 
+def print_unique_cwes(category_data: dict[str, CWEData]):
+	cwes = set([cwe for data in category_data.values() for cwe in data.cwes])
 
-def generate_outputs(cursor, category_data, missing_cwe_data, projects_data):
+	print("Unique CWEs")
+	print("-" * 10)
+	for cwe in cwes:
+		print(cwe)
+
+def print_category_data(category_data: dict[str, CWEData]):
+	output = ""
+
+	for category, data in category_data.items():
+		output += f"{category}\n{"-" * len(category)}\n"
+		for cwe in sorted(data.cwes):
+			output += f"{cwe}\n"
+
+	print(output)
+
+def generate_outputs(cursor, category_data: dict[str, CWEData], missing_cwe_data, projects_data):
 	output = ""
 	unspecified = ""
 
 	output += "Category\tProjects\tCVEs\n"
-	for category, data in tqdm(category_data.items(), desc="Generating Primary Output"):
+	for category, data in category_data.items():
 		output += f"{category}\t{len(data.projects)}\t{len(data.cves)}\n"
 
 	unspecified += "Unspecified CWEs (#Projects, #Cves)\n"
 	unspecified += "============\n"
-	for cwe, data in tqdm(missing_cwe_data.items(), desc="Generating Missing CWE Output"):
+	for cwe, data in missing_cwe_data.items():
 		unspecified += f"{cwe}\t{len(data.projects)}\t{len(data.cves)}\n"
 
-	for project, (category_data, missing) in tqdm(projects_data.items(), desc="Generating Project Output"):
+	for project, (category_data, missing) in projects_data.items():
 		output += f"\n\n{project}\n"
 		output += "=" * len(project) + "\n"
 		output += "Category\tCount\n"
@@ -324,6 +360,8 @@ def main():
 		print(unspecified_str)
 		print("-"*80)
 		print(no_cwes)
+		# print_unique_cwes(category_data)
+		# print_category_data(category_data)
 
 	cursor.close()
 	conn.close()

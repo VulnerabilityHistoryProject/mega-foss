@@ -28,27 +28,57 @@ netty/netty,netty,netty
 hasura/graphql-engine,hasura,graphql-engine
 SeleniumHQ/selenium,seleniumhq,seleniumhq/selenium
 jqlang/jq,jqlang,jq
+torvalds/linux,n/a,Linux kernel 4.15.0-rc9
+torvalds/linux,Linux,Linux Kernel
+torvalds/linux,n/a,Linux Kernel before 4.13.6
+torvalds/linux,n/a,Linux kernel through v4.14-rc5
+torvalds/linux,n/a,Linux kernel before 4.12.3
+torvalds/linux,n/a,Linux kernel through 4.14.8
+torvalds/linux,n/a,Linux kernel before 4.13
+torvalds/linux,n/a,Linux kernel through 4.13.3
 torvalds/linux,Linux,Linux
+torvalds/linux,n/a,Linux kernel versions up to and including 4.12
+torvalds/linux,n/a,Linux kernel before 4.14-rc6
+torvalds/linux,Linux,kernel
+torvalds/linux,n/a,Linux kernel 4.11
 torvalds/linux,The Linux Kernel Organization,linux
+torvalds/linux,n/a,Linux kernel v4.0-rc1 through v4.15-rc5
+torvalds/linux,n/a,Linux Kernel
+torvalds/linux,Linux Kernel Organization, Inc.,Linux Kernel
+torvalds/linux,n/a,Linux kernel
+torvalds/linux,n/a,Linux kernel through 4.12.4
+torvalds/linux,n/a,Linux kernel through version 4.9-rc1
 torvalds/linux,n/a,Linux
+torvalds/linux,n/a,Linux kernel through 4.11.1
+torvalds/linux,n/a,Linux kernel before 4.10.13
+torvalds/linux,n/a,kernel
+torvalds/linux,n/a,Linux kernel v4.13 and newer
+torvalds/linux,n/a,Kernel
+torvalds/linux,n/a,Linux kernel before 4.9
+torvalds/linux,n/a,Linux kernel before 4.6.2
+torvalds/linux,n/a,Linux kernel before 4.13.12
 microsoft/vscode,Microsoft,Visual Studio Code
 microsoft/terminal,Microsoft,Windows Terminal for Windows 11
 microsoft/terminal,Microsoft,Windows Terminal for Windows 10
 denoland/deno,denoland,deno
 ollama/ollama,ollama,ollama
 pytorch/pytorch,pytorch,pytorch
+pytorch/pytorch,pytorch,pytorch/pytorch
 bitcoin/bitcoin,bitcoin,bitcoin
 opencv/opencv,opencv,opencv
+opencv/opencv,n/a,OpenCV
 rustdesk/rustdesk,rustdesk,rustdesk
 python/cpython,Python Software Foundation,CPython
+python/cpython,n/a,python/cpython
 grpc/grpc,Google,gRPC
+grpc/grpc,n/a,grpc
 apache/spark,Apache,Apache Spark
 php/php-src,PHP Group,PHP
+php/php-src,n/a,PHP before 7.0.12
 rapid7/metasploit-framework,Rapid7,Metasploit Framework
 ray-project/ray,ray-project,rayproject/ray
 shadowsocks/ShadowsocksX-NG,n/a,Shadowsocks
 SerenityOS/serenity,n/a,Serenityos
-
 pbatard/rufus,Akeo Consulting,Rufus
 nothings/stb,nothings,stb
 openssl/openssl,openssl,openssl
@@ -65,3 +95,10 @@ systemd/systemd,systemd,systemd
 ImageMagick/ImageMagick,n/a,ImageMagick
 SoftEtherVPN/SoftEtherVPN,SoftEtherVPN,SoftEtherVPN
 coturn/coturn,coturn,coturn
+ollama/ollama,n/a,n/a
+godotengine/godot,n/a,n/a
+bitcoin/bitcoin,n/a,n/a
+tesseract-ocr/tesseract,n/a,n/a
+NationalSecurityAgency/ghidra,n/a,n/a
+pyenv/pyenv,n/a,n/a
+rapid7/metasploit-framework,n/a,n/a

@@ -53,7 +53,8 @@ def load_jsons(cursor):
 					print(f"ERROR loading {p}")
 
 def drop_tables(cursor):
-	tables = ['cve_json_data', 'cve_data', 'cve_patches', 'cve_cwe_project', 'cve_project_no_cwe']
+	tables = ['cve_json_data', 'cve_data', 'cve_patches', 'cve_cwe_project', 'cve_project_no_cwe', 'c_cve_cwe_project', 'c_cve_project_no_cwe']
+
 	for table in tables:
 		cursor.execute(f"DROP TABLE IF EXISTS {table}")
 
