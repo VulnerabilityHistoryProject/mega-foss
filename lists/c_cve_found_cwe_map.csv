@@ -1,0 +1,920 @@
+CVE,CWE,Mapping
+CVE-2024-42080,CWE-787,Virtually Impossible
+CVE-2022-48914,CWE-476,Virtually Impossible
+CVE-2024-38600,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-26899,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-47522,CWE-476,Virtually Impossible
+CVE-2023-52753,CWE-476,Virtually Impossible
+CVE-2021-46930,CWE-416,Virtually Impossible
+CVE-2024-38568,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-41000,CWE-190,Discouraged via Debug Mode
+CVE-2022-48691,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42094,CWE-787,Virtually Impossible
+CVE-2024-46674,CWE-416,Virtually Impossible
+CVE-2024-40906,CWE-416,Virtually Impossible
+CVE-2024-41060,CWE-476,Virtually Impossible
+CVE-2024-43902,CWE-476,Virtually Impossible
+CVE-2024-26584,CWE-755,Discouraged via Borrow Checker
+CVE-2024-42287,CWE-476,Virtually Impossible
+CVE-2023-52645,CWE-362,Discouraged via Borrow Checker
+CVE-2024-38581,CWE-416,Virtually Impossible
+CVE-2022-48895,CWE-476,Virtually Impossible
+CVE-2024-46676,CWE-369,"No Help, or Langs Won't Help"
+CVE-2024-43839,CWE-787,Virtually Impossible
+CVE-2024-42298,CWE-476,Virtually Impossible
+CVE-2024-43824,CWE-476,Virtually Impossible
+CVE-2024-46757,CWE-191,Discouraged via Debug Mode
+CVE-2024-43910,CWE-787,Virtually Impossible
+CVE-2024-42159,CWE-754,Discouraged via Borrow Checker
+CVE-2022-48789,CWE-416,Virtually Impossible
+CVE-2024-38608,CWE-476,Virtually Impossible
+CVE-2024-26582,CWE-416,Virtually Impossible
+CVE-2024-45024,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-36288,CWE-835,"No Help, or Langs Won't Help"
+CVE-2021-47570,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-38545,CWE-787,Virtually Impossible
+CVE-2022-42328,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48876,CWE-476,Virtually Impossible
+CVE-2024-43907,CWE-476,Virtually Impossible
+CVE-2024-40969,CWE-667,"No Help, or Langs Won't Help"
+CVE-2023-3823,CWE-611,"No Help, or Langs Won't Help"
+CVE-2023-52908,CWE-476,Virtually Impossible
+CVE-2022-32547,CWE-704,Virtually Impossible
+CVE-2024-44982,CWE-459,Virtually Impossible
+CVE-2022-48749,CWE-476,Virtually Impossible
+CVE-2024-36270,CWE-476,Virtually Impossible
+CVE-2022-48753,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-36967,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48890,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42162,CWE-754,Discouraged via Borrow Checker
+CVE-2019-10099,CWE-312,"No Help, or Langs Won't Help"
+CVE-2023-52472,CWE-476,Virtually Impossible
+CVE-2024-41046,CWE-415,Virtually Impossible
+CVE-2022-48675,CWE-667,"No Help, or Langs Won't Help"
+CVE-2023-52902,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-26883,CWE-119,Virtually Impossible
+CVE-2024-46797,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46756,CWE-191,Discouraged via Debug Mode
+CVE-2024-43888,CWE-416,Virtually Impossible
+CVE-2024-38598,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48888,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48777,CWE-476,Virtually Impossible
+CVE-2024-39496,CWE-416,Virtually Impossible
+CVE-2022-48724,CWE-401,"No Help, or Langs Won't Help"
+CVE-2020-10769,CWE-125,Virtually Impossible
+CVE-2021-47194,CWE-665,Virtually Impossible
+CVE-2021-47619,CWE-476,Virtually Impossible
+CVE-2024-42235,CWE-476,Virtually Impossible
+CVE-2024-38553,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48688,CWE-476,Virtually Impossible
+CVE-2024-46693,CWE-476,Virtually Impossible
+CVE-2022-48918,CWE-476,Virtually Impossible
+CVE-2021-28691,CWE-416,Virtually Impossible
+CVE-2024-43863,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-38563,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-36891,CWE-476,Virtually Impossible
+CVE-2021-46927,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-44993,CWE-125,Virtually Impossible
+CVE-2022-48800,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-43852,CWE-193,"No Help, or Langs Won't Help"
+CVE-2022-48726,CWE-416,Virtually Impossible
+CVE-2024-46770,CWE-476,Virtually Impossible
+CVE-2024-43882,CWE-367,"No Help, or Langs Won't Help"
+CVE-2024-40967,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-46917,CWE-668,"No Help, or Langs Won't Help"
+CVE-2022-48756,CWE-476,Virtually Impossible
+CVE-2022-48792,CWE-416,Virtually Impossible
+CVE-2024-42068,CWE-252,Discouraged via Borrow Checker
+CVE-2024-43900,CWE-416,Virtually Impossible
+CVE-2024-41052,CWE-908,Virtually Impossible
+CVE-2018-15687,CWE-362,Discouraged via Borrow Checker
+CVE-2024-39291,CWE-120,Virtually Impossible
+CVE-2024-42081,CWE-476,Virtually Impossible
+CVE-2024-44934,CWE-416,Virtually Impossible
+CVE-2024-40952,CWE-476,Virtually Impossible
+CVE-2014-3180,CWE-125,Virtually Impossible
+CVE-2024-42152,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-39478,CWE-770,"No Help, or Langs Won't Help"
+CVE-2023-52889,CWE-476,Virtually Impossible
+CVE-2024-41006,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-52806,CWE-476,Virtually Impossible
+CVE-2021-47606,CWE-369,"No Help, or Langs Won't Help"
+CVE-2022-48857,CWE-416,Virtually Impossible
+CVE-2022-48689,CWE-362,Discouraged via Borrow Checker
+CVE-2023-52440,CWE-119,Virtually Impossible
+CVE-2021-46940,CWE-190,Discouraged via Debug Mode
+CVE-2022-48735,CWE-416,Virtually Impossible
+CVE-2022-48921,CWE-362,Discouraged via Borrow Checker
+CVE-2024-40932,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-40961,CWE-476,Virtually Impossible
+CVE-2024-26583,CWE-362,Discouraged via Borrow Checker
+CVE-2024-42282,CWE-476,Virtually Impossible
+CVE-2024-42288,CWE-787,Virtually Impossible
+CVE-2024-40903,CWE-416,Virtually Impossible
+CVE-2021-47572,CWE-476,Virtually Impossible
+CVE-2024-46678,CWE-667,"No Help, or Langs Won't Help"
+CVE-2023-52769,CWE-416,Virtually Impossible
+CVE-2020-36775,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-47193,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-46949,CWE-476,Virtually Impossible
+CVE-2024-42085,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-44998,CWE-416,Virtually Impossible
+CVE-2024-35984,CWE-476,Virtually Impossible
+CVE-2022-48886,CWE-476,Virtually Impossible
+CVE-2022-26365,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48844,CWE-416,Virtually Impossible
+CVE-2024-42122,CWE-476,Virtually Impossible
+CVE-2023-52463,CWE-476,Virtually Impossible
+CVE-2024-40905,CWE-476,Virtually Impossible
+CVE-2021-47584,CWE-369,"No Help, or Langs Won't Help"
+CVE-2021-46944,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46791,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-43908,CWE-476,Virtually Impossible
+CVE-2024-42070,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46800,CWE-416,Virtually Impossible
+CVE-2022-48656,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48932,CWE-125,Virtually Impossible
+CVE-2020-14356,CWE-476,Virtually Impossible
+CVE-2024-42258,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-42108,CWE-416,Virtually Impossible
+CVE-2024-45006,CWE-476,Virtually Impossible
+CVE-2024-41061,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-44953,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-40911,CWE-476,Virtually Impossible
+CVE-2022-48889,CWE-131,Virtually Impossible
+CVE-2021-47179,CWE-476,Virtually Impossible
+CVE-2024-43871,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42232,CWE-416,Virtually Impossible
+CVE-2024-39292,CWE-415,Virtually Impossible
+CVE-2021-47605,CWE-787,Virtually Impossible
+CVE-2024-39472,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-40909,CWE-416,Virtually Impossible
+CVE-2024-46691,CWE-476,Virtually Impossible
+CVE-2024-36477,CWE-125,Virtually Impossible
+CVE-2024-43909,CWE-476,Virtually Impossible
+CVE-2024-38552,CWE-129,"No Help, or Langs Won't Help"
+CVE-2017-7477,CWE-119,Virtually Impossible
+CVE-2022-48791,CWE-416,Virtually Impossible
+CVE-2024-44992,CWE-476,Virtually Impossible
+CVE-2024-42066,CWE-190,Discouraged via Debug Mode
+CVE-2024-41080,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46763,CWE-476,Virtually Impossible
+CVE-2024-41083,CWE-476,Virtually Impossible
+CVE-2024-44981,CWE-190,Discouraged via Debug Mode
+CVE-2023-52445,CWE-416,Virtually Impossible
+CVE-2024-42285,CWE-416,Virtually Impossible
+CVE-2024-41087,CWE-415,Virtually Impossible
+CVE-2023-52464,CWE-119,Virtually Impossible
+CVE-2023-52452,CWE-665,Virtually Impossible
+CVE-2021-47610,CWE-476,Virtually Impossible
+CVE-2024-44978,CWE-416,Virtually Impossible
+CVE-2024-46762,CWE-416,Virtually Impossible
+CVE-2024-38667,CWE-787,Virtually Impossible
+CVE-2024-38555,CWE-416,Virtually Impossible
+CVE-2024-41012,CWE-416,Virtually Impossible
+CVE-2024-42078,CWE-665,Virtually Impossible
+CVE-2024-44974,CWE-416,Virtually Impossible
+CVE-2024-46744,CWE-59,Discouraged via Borrow Checker
+CVE-2024-46692,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-38543,CWE-476,Virtually Impossible
+CVE-2018-15688,CWE-120,Virtually Impossible
+CVE-2024-26594,CWE-125,Virtually Impossible
+CVE-2021-47615,CWE-763,Virtually Impossible
+CVE-2024-38547,CWE-476,Virtually Impossible
+CVE-2018-14670,CWE-285,"No Help, or Langs Won't Help"
+CVE-2024-43884,CWE-476,Virtually Impossible
+CVE-2024-26585,CWE-362,Discouraged via Borrow Checker
+CVE-2021-46939,CWE-662,"No Help, or Langs Won't Help"
+CVE-2024-45003,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-44971,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-44932,CWE-416,Virtually Impossible
+CVE-2024-45025,CWE-787,Virtually Impossible
+CVE-2021-47597,CWE-908,Virtually Impossible
+CVE-2024-42075,CWE-416,Virtually Impossible
+CVE-2024-39494,CWE-416,Virtually Impossible
+CVE-2024-41059,CWE-908,Virtually Impossible
+CVE-2022-48867,CWE-416,Virtually Impossible
+CVE-2022-48869,CWE-416,Virtually Impossible
+CVE-2022-48909,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-47620,CWE-125,Virtually Impossible
+CVE-2024-46784,CWE-908,Virtually Impossible
+CVE-2024-43843,CWE-131,Virtually Impossible
+CVE-2024-35978,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46761,CWE-476,Virtually Impossible
+CVE-2024-39493,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-47375,CWE-416,Virtually Impossible
+CVE-2022-48865,CWE-476,Virtually Impossible
+CVE-2024-39486,CWE-416,Virtually Impossible
+CVE-2024-39466,CWE-476,Virtually Impossible
+CVE-2022-48863,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-40958,CWE-416,Virtually Impossible
+CVE-2017-8313,CWE-125,Virtually Impossible
+CVE-2021-47601,CWE-476,Virtually Impossible
+CVE-2024-42307,CWE-476,Virtually Impossible
+CVE-2024-45026,CWE-787,Virtually Impossible
+CVE-2024-44960,CWE-476,Virtually Impossible
+CVE-2021-47609,CWE-120,Virtually Impossible
+CVE-2024-40954,CWE-416,Virtually Impossible
+CVE-2023-46838,CWE-476,Virtually Impossible
+CVE-2022-48899,CWE-416,Virtually Impossible
+CVE-2021-4441,CWE-476,Virtually Impossible
+CVE-2024-26595,CWE-476,Virtually Impossible
+CVE-2023-52508,CWE-476,Virtually Impossible
+CVE-2024-46737,CWE-476,Virtually Impossible
+CVE-2022-48788,CWE-416,Virtually Impossible
+CVE-2024-46714,CWE-476,Virtually Impossible
+CVE-2024-42144,CWE-476,Virtually Impossible
+CVE-2021-47526,CWE-476,Virtually Impossible
+CVE-2021-47173,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48933,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42255,CWE-476,Virtually Impossible
+CVE-2024-42223,CWE-190,Discouraged via Debug Mode
+CVE-2024-43893,CWE-369,"No Help, or Langs Won't Help"
+CVE-2024-42263,CWE-401,"No Help, or Langs Won't Help"
+CVE-2017-15102,CWE-476,Virtually Impossible
+CVE-2024-36901,CWE-476,Virtually Impossible
+CVE-2023-52893,CWE-476,Virtually Impossible
+CVE-2024-26587,CWE-476,Virtually Impossible
+CVE-2024-39474,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-41093,CWE-476,Virtually Impossible
+CVE-2024-42082,CWE-770,"No Help, or Langs Won't Help"
+CVE-2021-42322,CWE-269,"No Help, or Langs Won't Help"
+CVE-2024-46672,CWE-476,Virtually Impossible
+CVE-2024-38390,CWE-476,Virtually Impossible
+CVE-2024-26912,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-27021,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-40982,CWE-476,Virtually Impossible
+CVE-2022-48882,CWE-476,Virtually Impossible
+CVE-2023-52904,CWE-476,Virtually Impossible
+CVE-2024-46782,CWE-416,Virtually Impossible
+CVE-2024-46696,CWE-416,Virtually Impossible
+CVE-2024-46741,CWE-415,Virtually Impossible
+CVE-2024-43901,CWE-476,Virtually Impossible
+CVE-2021-46912,CWE-476,Virtually Impossible
+CVE-2021-46935,CWE-668,"No Help, or Langs Won't Help"
+CVE-2022-48937,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48925,CWE-416,Virtually Impossible
+CVE-2024-46673,CWE-415,Virtually Impossible
+CVE-2023-52441,CWE-119,Virtually Impossible
+CVE-2021-47603,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-42283,CWE-908,Virtually Impossible
+CVE-2017-7495,CWE-200,"No Help, or Langs Won't Help"
+CVE-2021-46921,CWE-668,"No Help, or Langs Won't Help"
+CVE-2024-26605,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-47614,CWE-416,Virtually Impossible
+CVE-2024-44986,CWE-416,Virtually Impossible
+CVE-2023-52444,CWE-119,Virtually Impossible
+CVE-2020-36777,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-40957,CWE-476,Virtually Impossible
+CVE-2024-38632,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-39371,CWE-476,Virtually Impossible
+CVE-2021-47602,CWE-824,Virtually Impossible
+CVE-2024-43833,CWE-476,Virtually Impossible
+CVE-2024-41036,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48734,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-47164,CWE-476,Virtually Impossible
+CVE-2024-27012,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42236,CWE-787,Virtually Impossible
+CVE-2024-44941,CWE-416,Virtually Impossible
+CVE-2024-36930,CWE-476,Virtually Impossible
+CVE-2024-46682,CWE-476,Virtually Impossible
+CVE-2021-46905,CWE-476,Virtually Impossible
+CVE-2021-47171,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42320,CWE-476,Virtually Impossible
+CVE-2021-47537,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42241,CWE-770,"No Help, or Langs Won't Help"
+CVE-2021-47590,CWE-667,"No Help, or Langs Won't Help"
+CVE-2017-15115,CWE-416,Virtually Impossible
+CVE-2019-1010101,CWE-732,"No Help, or Langs Won't Help"
+CVE-2024-46683,CWE-416,Virtually Impossible
+CVE-2023-52886,CWE-125,Virtually Impossible
+CVE-2021-47612,CWE-476,Virtually Impossible
+CVE-2022-48885,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42090,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-41095,CWE-476,Virtually Impossible
+CVE-2021-46925,CWE-362,Discouraged via Borrow Checker
+CVE-2024-39485,CWE-665,Virtually Impossible
+CVE-2022-48930,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48783,CWE-416,Virtually Impossible
+CVE-2022-48842,CWE-362,Discouraged via Borrow Checker
+CVE-2021-47596,CWE-416,Virtually Impossible
+CVE-2024-39471,CWE-125,Virtually Impossible
+CVE-2024-43858,CWE-129,"No Help, or Langs Won't Help"
+CVE-2018-1002100,CWE-20,"No Help, or Langs Won't Help"
+CVE-2021-28688,CWE-665,Virtually Impossible
+CVE-2022-48893,CWE-459,Virtually Impossible
+CVE-2024-26911,CWE-755,Discouraged via Borrow Checker
+CVE-2024-42262,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-47542,CWE-476,Virtually Impossible
+CVE-2024-46735,CWE-476,Virtually Impossible
+CVE-2019-25162,CWE-416,Virtually Impossible
+CVE-2022-48894,CWE-476,Virtually Impossible
+CVE-2024-41098,CWE-476,Virtually Impossible
+CVE-2021-47518,CWE-476,Virtually Impossible
+CVE-2022-48896,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-35990,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-41096,CWE-416,Virtually Impossible
+CVE-2022-48938,CWE-190,Discouraged via Debug Mode
+CVE-2024-42254,CWE-476,Virtually Impossible
+CVE-2022-48657,CWE-120,Virtually Impossible
+CVE-2024-42270,CWE-476,Virtually Impossible
+CVE-2024-46766,CWE-787,Virtually Impossible
+CVE-2022-48772,CWE-476,Virtually Impossible
+CVE-2024-45018,CWE-665,Virtually Impossible
+CVE-2021-47576,CWE-416,Virtually Impossible
+CVE-2024-39468,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-38631,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-36893,CWE-476,Virtually Impossible
+CVE-2024-36281,CWE-476,Virtually Impossible
+CVE-2021-47592,CWE-476,Virtually Impossible
+CVE-2023-34324,CWE-400,"No Help, or Langs Won't Help"
+CVE-2024-40912,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-43857,CWE-476,Virtually Impossible
+CVE-2024-45029,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48740,CWE-415,Virtually Impossible
+CVE-2021-47599,CWE-362,Discouraged via Borrow Checker
+CVE-2024-40959,CWE-476,Virtually Impossible
+CVE-2024-43818,CWE-476,Virtually Impossible
+CVE-2022-48928,CWE-401,"No Help, or Langs Won't Help"
+CVE-2020-1416,CWE-269,"No Help, or Langs Won't Help"
+CVE-2021-46929,CWE-416,Virtually Impossible
+CVE-2024-42301,CWE-129,"No Help, or Langs Won't Help"
+CVE-2023-52449,CWE-476,Virtually Impossible
+CVE-2024-26603,CWE-835,"No Help, or Langs Won't Help"
+CVE-2022-3643,CWE-74,"No Help, or Langs Won't Help"
+CVE-2021-47593,CWE-476,Virtually Impossible
+CVE-2024-44985,CWE-416,Virtually Impossible
+CVE-2024-38571,CWE-476,Virtually Impossible
+CVE-2024-46684,CWE-131,Virtually Impossible
+CVE-2024-36978,CWE-787,Virtually Impossible
+CVE-2024-44995,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-46924,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46742,CWE-476,Virtually Impossible
+CVE-2016-8704,CWE-190,Discouraged via Debug Mode
+CVE-2022-48732,CWE-193,"No Help, or Langs Won't Help"
+CVE-2021-47198,CWE-416,Virtually Impossible
+CVE-2016-7480,CWE-119,Virtually Impossible
+CVE-2024-46758,CWE-191,Discouraged via Debug Mode
+CVE-2024-41066,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-46954,CWE-125,Virtually Impossible
+CVE-2023-52471,CWE-476,Virtually Impossible
+CVE-2022-48940,CWE-119,Virtually Impossible
+CVE-2024-45012,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-42123,CWE-415,Virtually Impossible
+CVE-2020-7768,CWE-1321,"No Help, or Langs Won't Help"
+CVE-2024-26590,CWE-476,Virtually Impossible
+CVE-2024-43913,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42268,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-42316,CWE-369,"No Help, or Langs Won't Help"
+CVE-2024-42252,CWE-617,Discouraged via Debug Mode
+CVE-2024-35992,CWE-125,Virtually Impossible
+CVE-2024-43828,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-39464,CWE-476,Virtually Impossible
+CVE-2024-45005,CWE-908,Virtually Impossible
+CVE-2024-40980,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48733,CWE-416,Virtually Impossible
+CVE-2024-43886,CWE-476,Virtually Impossible
+CVE-2022-48931,CWE-362,Discouraged via Borrow Checker
+CVE-2024-38597,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-36969,CWE-369,"No Help, or Langs Won't Help"
+CVE-2024-39301,CWE-665,Virtually Impossible
+CVE-2021-46937,CWE-668,"No Help, or Langs Won't Help"
+CVE-2023-52467,CWE-476,Virtually Impossible
+CVE-2024-26987,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48782,CWE-416,Virtually Impossible
+CVE-2024-42160,CWE-754,Discouraged via Borrow Checker
+CVE-2024-46779,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48686,CWE-416,Virtually Impossible
+CVE-2017-1002101,CWE-59,Discouraged via Borrow Checker
+CVE-2024-46760,CWE-476,Virtually Impossible
+CVE-2024-26930,CWE-415,Virtually Impossible
+CVE-2024-39476,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-42272,CWE-908,Virtually Impossible
+CVE-2024-41089,CWE-476,Virtually Impossible
+CVE-2022-48907,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42310,CWE-476,Virtually Impossible
+CVE-2024-46796,CWE-416,Virtually Impossible
+CVE-2022-48742,CWE-416,Virtually Impossible
+CVE-2022-48851,CWE-416,Virtually Impossible
+CVE-2024-41085,CWE-476,Virtually Impossible
+CVE-2021-47513,CWE-401,"No Help, or Langs Won't Help"
+CVE-2017-7487,CWE-416,Virtually Impossible
+CVE-2022-48908,CWE-476,Virtually Impossible
+CVE-2024-40977,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48904,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-45027,CWE-459,Virtually Impossible
+CVE-2018-15686,CWE-502,"No Help, or Langs Won't Help"
+CVE-2024-26903,CWE-476,Virtually Impossible
+CVE-2024-2408,CWE-203,"No Help, or Langs Won't Help"
+CVE-2024-40981,CWE-667,"No Help, or Langs Won't Help"
+CVE-2023-52899,CWE-476,Virtually Impossible
+CVE-2024-46798,CWE-416,Virtually Impossible
+CVE-2024-39470,CWE-476,Virtually Impossible
+CVE-2024-42131,CWE-190,Discouraged via Debug Mode
+CVE-2024-42102,CWE-369,"No Help, or Langs Won't Help"
+CVE-2023-38039,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-38569,CWE-129,"No Help, or Langs Won't Help"
+CVE-2023-52821,CWE-476,Virtually Impossible
+CVE-2022-48919,CWE-415,Virtually Impossible
+CVE-2022-48838,CWE-416,Virtually Impossible
+CVE-2021-47550,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42224,CWE-754,Discouraged via Borrow Checker
+CVE-2024-42284,CWE-754,Discouraged via Borrow Checker
+CVE-2024-42313,CWE-416,Virtually Impossible
+CVE-2024-42067,CWE-252,Discouraged via Borrow Checker
+CVE-2022-48927,CWE-787,Virtually Impossible
+CVE-2024-41070,CWE-416,Virtually Impossible
+CVE-2022-48692,CWE-476,Virtually Impossible
+CVE-2024-26885,CWE-119,Virtually Impossible
+CVE-2024-42093,CWE-787,Virtually Impossible
+CVE-2017-1002100,CWE-200,"No Help, or Langs Won't Help"
+CVE-2023-52907,CWE-416,Virtually Impossible
+CVE-2024-44979,CWE-401,"No Help, or Langs Won't Help"
+CVE-2018-1066,CWE-476,Virtually Impossible
+CVE-2022-48636,CWE-476,Virtually Impossible
+CVE-2024-43891,CWE-416,Virtually Impossible
+CVE-2024-43856,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-42148,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-42076,CWE-908,Virtually Impossible
+CVE-2024-38664,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48750,CWE-476,Virtually Impossible
+CVE-2011-2498,CWE-772,"No Help, or Langs Won't Help"
+CVE-2022-48626,CWE-416,Virtually Impossible
+CVE-2021-47546,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46765,CWE-476,Virtually Impossible
+CVE-2022-48787,CWE-416,Virtually Impossible
+CVE-2024-38583,CWE-416,Virtually Impossible
+CVE-2024-46688,CWE-787,Virtually Impossible
+CVE-2024-44999,CWE-908,Virtually Impossible
+CVE-2024-46700,CWE-120,Virtually Impossible
+CVE-2023-52458,CWE-476,Virtually Impossible
+CVE-2022-48879,CWE-476,Virtually Impossible
+CVE-2022-48939,CWE-834,"No Help, or Langs Won't Help"
+CVE-2021-46932,CWE-665,Virtually Impossible
+CVE-2022-48920,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-41071,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-40951,CWE-476,Virtually Impossible
+CVE-2024-41009,CWE-770,"No Help, or Langs Won't Help"
+CVE-2019-1002101,CWE-59,Discouraged via Borrow Checker
+CVE-2024-45014,CWE-770,"No Help, or Langs Won't Help"
+CVE-2023-52454,CWE-476,Virtually Impossible
+CVE-2024-43823,CWE-476,Virtually Impossible
+CVE-2022-48843,CWE-476,Virtually Impossible
+CVE-2024-26902,CWE-476,Virtually Impossible
+CVE-2024-39482,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-46738,CWE-416,Virtually Impossible
+CVE-2021-47529,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42238,CWE-120,Virtually Impossible
+CVE-2024-38577,CWE-120,Virtually Impossible
+CVE-2024-43862,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46724,CWE-125,Virtually Impossible
+CVE-2024-36902,CWE-476,Virtually Impossible
+CVE-2022-33742,CWE-200,"No Help, or Langs Won't Help"
+CVE-2021-47556,CWE-476,Virtually Impossible
+CVE-2024-26604,CWE-476,Virtually Impossible
+CVE-2024-40956,CWE-416,Virtually Impossible
+CVE-2024-39477,CWE-770,"No Help, or Langs Won't Help"
+CVE-2021-46928,CWE-755,Discouraged via Borrow Checker
+CVE-2022-48841,CWE-476,Virtually Impossible
+CVE-2024-43911,CWE-476,Virtually Impossible
+CVE-2024-43899,CWE-476,Virtually Impossible
+CVE-2024-44937,CWE-476,Virtually Impossible
+CVE-2017-15116,CWE-476,Virtually Impossible
+CVE-2024-41073,CWE-415,Virtually Impossible
+CVE-2021-46952,CWE-125,Virtually Impossible
+CVE-2019-1010100,CWE-426,Opt-In Measures Only
+CVE-2024-46707,CWE-476,Virtually Impossible
+CVE-2024-43855,CWE-476,Virtually Impossible
+CVE-2024-46795,CWE-476,Virtually Impossible
+CVE-2021-47604,CWE-125,Virtually Impossible
+CVE-2021-46948,CWE-476,Virtually Impossible
+CVE-2024-42136,CWE-190,Discouraged via Debug Mode
+CVE-2024-27022,CWE-908,Virtually Impossible
+CVE-2022-48839,CWE-125,Virtually Impossible
+CVE-2022-33740,CWE-212,"No Help, or Langs Won't Help"
+CVE-2021-47195,CWE-416,Virtually Impossible
+CVE-2024-43889,CWE-369,"No Help, or Langs Won't Help"
+CVE-2021-4439,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-46685,CWE-476,Virtually Impossible
+CVE-2024-39475,CWE-369,"No Help, or Langs Won't Help"
+CVE-2023-52451,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-44964,CWE-401,"No Help, or Langs Won't Help"
+CVE-2011-0699,CWE-362,Discouraged via Borrow Checker
+CVE-2022-48941,CWE-362,Discouraged via Borrow Checker
+CVE-2022-48673,CWE-755,Discouraged via Borrow Checker
+CVE-2022-48913,CWE-416,Virtually Impossible
+CVE-2024-42065,CWE-476,Virtually Impossible
+CVE-2021-47591,CWE-476,Virtually Impossible
+CVE-2023-52631,CWE-476,Virtually Impossible
+CVE-2024-36884,CWE-476,Virtually Impossible
+CVE-2011-4915,CWE-200,"No Help, or Langs Won't Help"
+CVE-2024-42074,CWE-476,Virtually Impossible
+CVE-2024-2004,CWE-436,"No Help, or Langs Won't Help"
+CVE-2024-40964,CWE-476,Virtually Impossible
+CVE-2021-46904,CWE-476,Virtually Impossible
+CVE-2024-26884,CWE-119,Virtually Impossible
+CVE-2024-46697,CWE-665,Virtually Impossible
+CVE-2024-38561,CWE-416,Virtually Impossible
+CVE-2024-26934,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48654,CWE-908,Virtually Impossible
+CVE-2024-26599,CWE-119,Virtually Impossible
+CVE-2021-47521,CWE-416,Virtually Impossible
+CVE-2021-47559,CWE-476,Virtually Impossible
+CVE-2023-52469,CWE-416,Virtually Impossible
+CVE-2024-42104,CWE-416,Virtually Impossible
+CVE-2021-47617,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-45022,CWE-787,Virtually Impossible
+CVE-2024-46739,CWE-476,Virtually Impossible
+CVE-2024-46687,CWE-415,Virtually Impossible
+CVE-2023-52772,CWE-416,Virtually Impossible
+CVE-2024-42073,CWE-416,Virtually Impossible
+CVE-2024-42245,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48898,CWE-362,Discouraged via Borrow Checker
+CVE-2021-47520,CWE-416,Virtually Impossible
+CVE-2024-40907,CWE-416,Virtually Impossible
+CVE-2024-38630,CWE-416,Virtually Impossible
+CVE-2021-46936,CWE-416,Virtually Impossible
+CVE-2024-26597,CWE-125,Virtually Impossible
+CVE-2023-52465,CWE-476,Virtually Impossible
+CVE-2024-46747,CWE-125,Virtually Impossible
+CVE-2017-8312,CWE-125,Virtually Impossible
+CVE-2024-45004,CWE-312,"No Help, or Langs Won't Help"
+CVE-2024-42289,CWE-476,Virtually Impossible
+CVE-2024-44933,CWE-787,Virtually Impossible
+CVE-2022-48835,CWE-763,Virtually Impossible
+CVE-2024-41040,CWE-416,Virtually Impossible
+CVE-2023-52435,CWE-119,Virtually Impossible
+CVE-2024-43842,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-45030,CWE-787,Virtually Impossible
+CVE-2024-40965,CWE-667,"No Help, or Langs Won't Help"
+CVE-2023-52456,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46799,CWE-476,Virtually Impossible
+CVE-2024-36478,CWE-476,Virtually Impossible
+CVE-2022-48826,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-45021,CWE-476,Virtually Impossible
+CVE-2024-44956,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48912,CWE-416,Virtually Impossible
+CVE-2024-42311,CWE-908,Virtually Impossible
+CVE-2024-46701,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-38545,CWE-416,Virtually Impossible
+CVE-2024-42071,CWE-834,"No Help, or Langs Won't Help"
+CVE-2021-47622,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-41057,CWE-416,Virtually Impossible
+CVE-2024-46781,CWE-416,Virtually Impossible
+CVE-2023-52473,CWE-476,Virtually Impossible
+CVE-2024-36938,CWE-476,Virtually Impossible
+CVE-2023-52443,CWE-476,Virtually Impossible
+CVE-2022-48859,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-44952,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48923,CWE-787,Virtually Impossible
+CVE-2024-6874,CWE-125,Virtually Impossible
+CVE-2022-48687,CWE-125,Virtually Impossible
+CVE-2022-48693,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46772,CWE-369,"No Help, or Langs Won't Help"
+CVE-2017-7541,CWE-119,Virtually Impossible
+CVE-2021-47541,CWE-416,Virtually Impossible
+CVE-2024-46689,CWE-787,Virtually Impossible
+CVE-2024-42225,CWE-908,Virtually Impossible
+CVE-2021-47516,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-38588,CWE-416,Virtually Impossible
+CVE-2021-47585,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46721,CWE-476,Virtually Impossible
+CVE-2024-46793,CWE-476,Virtually Impossible
+CVE-2024-36008,CWE-476,Virtually Impossible
+CVE-2024-45013,CWE-416,Virtually Impossible
+CVE-2023-52438,CWE-416,Virtually Impossible
+CVE-2019-3459,CWE-125,Virtually Impossible
+CVE-2024-38539,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-44987,CWE-416,Virtually Impossible
+CVE-2024-39487,CWE-125,Virtually Impossible
+CVE-2024-46746,CWE-416,Virtually Impossible
+CVE-2024-42248,CWE-476,Virtually Impossible
+CVE-2023-52448,CWE-476,Virtually Impossible
+CVE-2024-42302,CWE-416,Virtually Impossible
+CVE-2022-48743,CWE-787,Virtually Impossible
+CVE-2024-41039,CWE-120,Virtually Impossible
+CVE-2022-48856,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-52898,CWE-476,Virtually Impossible
+CVE-2024-44944,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48942,CWE-476,Virtually Impossible
+CVE-2023-52760,CWE-416,Virtually Impossible
+CVE-2023-52450,CWE-476,Virtually Impossible
+CVE-2024-39504,CWE-476,Virtually Impossible
+CVE-2024-26986,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-46933,CWE-416,Virtually Impossible
+CVE-2024-45000,CWE-476,Virtually Impossible
+CVE-2022-48768,CWE-401,"No Help, or Langs Won't Help"
+CVE-2017-7533,CWE-362,Discouraged via Borrow Checker
+CVE-2023-52470,CWE-476,Virtually Impossible
+CVE-2023-52434,CWE-119,Virtually Impossible
+CVE-2024-36932,CWE-416,Virtually Impossible
+CVE-2024-44946,CWE-416,Virtually Impossible
+CVE-2024-41054,CWE-476,Virtually Impossible
+CVE-2022-48719,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-38562,CWE-129,"No Help, or Langs Won't Help"
+CVE-2023-52913,CWE-416,Virtually Impossible
+CVE-2023-52911,CWE-476,Virtually Impossible
+CVE-2022-48911,CWE-416,Virtually Impossible
+CVE-2024-41092,CWE-416,Virtually Impossible
+CVE-2024-40973,CWE-476,Virtually Impossible
+CVE-2024-43906,CWE-476,Virtually Impossible
+CVE-2024-27013,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-42153,CWE-667,"No Help, or Langs Won't Help"
+CVE-2011-4968,CWE-20,"No Help, or Langs Won't Help"
+CVE-2024-43849,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48781,CWE-476,Virtually Impossible
+CVE-2024-43854,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-47525,CWE-416,Virtually Impossible
+CVE-2024-26600,CWE-476,Virtually Impossible
+CVE-2024-41058,CWE-416,Virtually Impossible
+CVE-2024-41011,CWE-682,Virtually Impossible
+CVE-2017-7472,CWE-404,
+CVE-2019-25160,CWE-125,Virtually Impossible
+CVE-2024-42250,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-42161,CWE-908,Virtually Impossible
+CVE-2024-43904,CWE-476,Virtually Impossible
+CVE-2022-48864,CWE-908,Virtually Impossible
+CVE-2024-41088,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-41010,CWE-416,Virtually Impossible
+CVE-2024-36979,CWE-416,Virtually Impossible
+CVE-2024-43825,CWE-787,Virtually Impossible
+CVE-2022-48741,CWE-476,Virtually Impossible
+CVE-2022-48873,CWE-416,Virtually Impossible
+CVE-2022-48871,CWE-125,Virtually Impossible
+CVE-2024-46749,CWE-476,Virtually Impossible
+CVE-2024-45023,CWE-787,Virtually Impossible
+CVE-2024-43896,CWE-476,Virtually Impossible
+CVE-2024-43819,CWE-476,Virtually Impossible
+CVE-2022-48672,CWE-193,"No Help, or Langs Won't Help"
+CVE-2024-38584,CWE-476,Virtually Impossible
+CVE-2024-46759,CWE-191,Discouraged via Debug Mode
+CVE-2021-47589,CWE-415,Virtually Impossible
+CVE-2024-36976,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-38633,CWE-476,Virtually Impossible
+CVE-2023-52809,CWE-476,Virtually Impossible
+CVE-2024-41049,CWE-416,Virtually Impossible
+CVE-2024-42114,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48924,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-46943,CWE-131,Virtually Impossible
+CVE-2023-46219,CWE-311,"No Help, or Langs Won't Help"
+CVE-2024-26909,CWE-416,Virtually Impossible
+CVE-2023-52783,CWE-476,Virtually Impossible
+CVE-2024-26586,CWE-787,Virtually Impossible
+CVE-2024-46726,CWE-190,Discouraged via Debug Mode
+CVE-2024-45015,CWE-476,Virtually Impossible
+CVE-2024-36925,CWE-476,Virtually Impossible
+CVE-2024-26588,CWE-119,Virtually Impossible
+CVE-2023-52909,CWE-476,Virtually Impossible
+CVE-2024-46725,CWE-787,Virtually Impossible
+CVE-2024-43837,CWE-476,Virtually Impossible
+CVE-2024-46720,CWE-476,Virtually Impossible
+CVE-2021-46951,CWE-191,Discouraged via Debug Mode
+CVE-2024-39492,CWE-252,Discouraged via Borrow Checker
+CVE-2022-48846,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48779,CWE-416,Virtually Impossible
+CVE-2024-45020,CWE-787,Virtually Impossible
+CVE-2024-26894,CWE-770,"No Help, or Langs Won't Help"
+CVE-2022-48868,CWE-476,Virtually Impossible
+CVE-2024-44977,CWE-787,Virtually Impossible
+CVE-2021-46947,CWE-476,Virtually Impossible
+CVE-2024-42079,CWE-476,Virtually Impossible
+CVE-2022-48809,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42314,CWE-416,Virtually Impossible
+CVE-2022-48728,CWE-476,Virtually Impossible
+CVE-2022-48862,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-40995,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-46722,CWE-125,Virtually Impossible
+CVE-2024-38557,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-26949,CWE-476,Virtually Impossible
+CVE-2022-48922,CWE-476,Virtually Impossible
+CVE-2024-42101,CWE-476,Virtually Impossible
+CVE-2023-52901,CWE-476,Virtually Impossible
+CVE-2023-52446,CWE-416,Virtually Impossible
+CVE-2021-46938,CWE-415,Virtually Impossible
+CVE-2024-43859,CWE-476,Virtually Impossible
+CVE-2024-44990,CWE-476,Virtually Impossible
+CVE-2024-46727,CWE-476,Virtually Impossible
+CVE-2023-52894,CWE-476,Virtually Impossible
+CVE-2023-52815,CWE-476,Virtually Impossible
+CVE-2024-42154,CWE-754,Discouraged via Borrow Checker
+CVE-2022-48935,CWE-416,Virtually Impossible
+CVE-2024-42140,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48915,CWE-476,Virtually Impossible
+CVE-2023-52460,CWE-476,Virtually Impossible
+CVE-2021-28715,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-44989,CWE-476,Virtually Impossible
+CVE-2024-35870,CWE-416,Virtually Impossible
+CVE-2022-48929,CWE-125,Virtually Impossible
+CVE-2021-46931,CWE-787,Virtually Impossible
+CVE-2024-26881,CWE-476,Virtually Impossible
+CVE-2023-52439,CWE-415,Virtually Impossible
+CVE-2024-46723,CWE-125,Virtually Impossible
+CVE-2021-47600,CWE-416,Virtually Impossible
+CVE-2022-48870,CWE-476,Virtually Impossible
+CVE-2022-48874,CWE-416,Virtually Impossible
+CVE-2024-38385,CWE-416,Virtually Impossible
+CVE-2022-48875,CWE-476,Virtually Impossible
+CVE-2022-48822,CWE-416,Virtually Impossible
+CVE-2022-48854,CWE-416,Virtually Impossible
+CVE-2024-42237,CWE-834,"No Help, or Langs Won't Help"
+CVE-2024-46755,CWE-476,Virtually Impossible
+CVE-2021-46916,CWE-476,Virtually Impossible
+CVE-2024-39506,CWE-476,Virtually Impossible
+CVE-2024-43874,CWE-476,Virtually Impossible
+CVE-2024-44969,CWE-401,"No Help, or Langs Won't Help"
+CVE-2022-48847,CWE-787,Virtually Impossible
+CVE-2024-42063,CWE-908,Virtually Impossible
+CVE-2024-40994,CWE-190,Discouraged via Debug Mode
+CVE-2024-45028,CWE-476,Virtually Impossible
+CVE-2022-48824,CWE-476,Virtually Impossible
+CVE-2024-46695,CWE-276,"No Help, or Langs Won't Help"
+CVE-2021-28714,CWE-770,"No Help, or Langs Won't Help"
+CVE-2023-52773,CWE-476,Virtually Impossible
+CVE-2024-43890,CWE-190,Discouraged via Debug Mode
+CVE-2017-8311,CWE-119,Virtually Impossible
+CVE-2024-36968,CWE-190,Discouraged via Debug Mode
+CVE-2024-42240,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-40899,CWE-416,Virtually Impossible
+CVE-2023-34319,CWE-787,Virtually Impossible
+CVE-2019-1002100,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-42246,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-42231,CWE-682,Virtually Impossible
+CVE-2016-8705,CWE-190,Discouraged via Debug Mode
+CVE-2022-48775,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-52896,CWE-476,Virtually Impossible
+CVE-2024-41002,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-43829,CWE-476,Virtually Impossible
+CVE-2021-47471,CWE-476,Virtually Impossible
+CVE-2023-52447,CWE-416,Virtually Impossible
+CVE-2024-26846,CWE-415,Virtually Impossible
+CVE-2024-43845,CWE-908,Virtually Impossible
+CVE-2018-1065,CWE-476,Virtually Impossible
+CVE-2024-42277,CWE-476,Virtually Impossible
+CVE-2024-38661,CWE-190,Discouraged via Debug Mode
+CVE-2024-38780,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48661,CWE-404,
+CVE-2024-26889,CWE-120,Virtually Impossible
+CVE-2024-40934,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-52827,CWE-125,Virtually Impossible
+CVE-2024-44997,CWE-416,Virtually Impossible
+CVE-2024-46769,CWE-476,Virtually Impossible
+CVE-2021-47528,CWE-476,Virtually Impossible
+CVE-2021-46915,CWE-369,"No Help, or Langs Won't Help"
+CVE-2024-41063,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-43895,CWE-476,Virtually Impossible
+CVE-2021-23336,CWE-444,"No Help, or Langs Won't Help"
+CVE-2024-46698,CWE-476,Virtually Impossible
+CVE-2024-26589,CWE-119,Virtually Impossible
+CVE-2024-39473,CWE-476,Virtually Impossible
+CVE-2024-44935,CWE-476,Virtually Impossible
+CVE-2024-27014,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-42278,CWE-476,Virtually Impossible
+CVE-2024-38538,CWE-908,Virtually Impossible
+CVE-2024-46732,CWE-369,"No Help, or Langs Won't Help"
+CVE-2021-46923,CWE-668,"No Help, or Langs Won't Help"
+CVE-2022-48793,CWE-476,Virtually Impossible
+CVE-2024-43860,CWE-476,Virtually Impossible
+CVE-2023-52914,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42271,CWE-416,Virtually Impossible
+CVE-2022-48905,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-26735,CWE-416,Virtually Impossible
+CVE-2022-48861,CWE-416,Virtually Impossible
+CVE-2024-42069,CWE-476,Virtually Impossible
+CVE-2024-42234,CWE-415,Virtually Impossible
+CVE-2021-47616,CWE-416,Virtually Impossible
+CVE-2023-52915,CWE-476,Virtually Impossible
+CVE-2024-45002,CWE-476,Virtually Impossible
+CVE-2022-48855,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-46730,CWE-191,Discouraged via Debug Mode
+CVE-2016-8706,CWE-190,Discouraged via Debug Mode
+CVE-2024-43822,CWE-476,Virtually Impossible
+CVE-2024-38546,CWE-476,Virtually Impossible
+CVE-2024-43821,CWE-476,Virtually Impossible
+CVE-2024-43872,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-44938,CWE-787,Virtually Impossible
+CVE-2024-26913,CWE-191,Discouraged via Debug Mode
+CVE-2024-39484,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-26910,CWE-362,Discouraged via Borrow Checker
+CVE-2021-47594,CWE-476,Virtually Impossible
+CVE-2024-27019,CWE-362,Discouraged via Borrow Checker
+CVE-2022-48892,CWE-415,Virtually Impossible
+CVE-2024-43873,CWE-909,"No Help, or Langs Won't Help"
+CVE-2024-39498,CWE-476,Virtually Impossible
+CVE-2022-48674,CWE-416,Virtually Impossible
+CVE-2024-43903,CWE-476,Virtually Impossible
+CVE-2023-52885,CWE-416,Virtually Impossible
+CVE-2023-0468,CWE-416,Virtually Impossible
+CVE-2024-45016,CWE-416,Virtually Impossible
+CVE-2024-43905,CWE-476,Virtually Impossible
+CVE-2024-44947,CWE-665,Virtually Impossible
+CVE-2022-48804,CWE-191,Discouraged via Debug Mode
+CVE-2024-42315,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-41037,CWE-476,Virtually Impossible
+CVE-2021-47587,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-42269,CWE-476,Virtually Impossible
+CVE-2024-42247,CWE-770,"No Help, or Langs Won't Help"
+CVE-2022-48796,CWE-416,Virtually Impossible
+CVE-2018-14671,CWE-20,"No Help, or Langs Won't Help"
+CVE-2024-26591,CWE-476,Virtually Impossible
+CVE-2024-46719,CWE-476,Virtually Impossible
+CVE-2023-52457,CWE-416,Virtually Impossible
+CVE-2022-33741,CWE-200,"No Help, or Langs Won't Help"
+CVE-2022-48850,CWE-476,Virtually Impossible
+CVE-2021-46909,CWE-754,Discouraged via Borrow Checker
+CVE-2024-46705,CWE-476,Virtually Impossible
+CVE-2017-16996,CWE-119,Virtually Impossible
+CVE-2024-36023,CWE-476,Virtually Impossible
+CVE-2024-35972,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-44957,CWE-667,"No Help, or Langs Won't Help"
+CVE-2021-47598,CWE-416,Virtually Impossible
+CVE-2024-43838,CWE-190,Discouraged via Debug Mode
+CVE-2024-26901,CWE-908,Virtually Impossible
+CVE-2024-42253,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48840,CWE-835,"No Help, or Langs Won't Help"
+CVE-2024-26933,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-26581,CWE-416,Virtually Impossible
+CVE-2024-42228,CWE-908,Virtually Impossible
+CVE-2024-42286,CWE-476,Virtually Impossible
+CVE-2024-41084,CWE-476,Virtually Impossible
+CVE-2022-48858,CWE-362,Discouraged via Borrow Checker
+CVE-2024-40960,CWE-476,Virtually Impossible
+CVE-2024-40997,CWE-401,"No Help, or Langs Won't Help"
+CVE-2020-10742,CWE-787,Virtually Impossible
+CVE-2024-0853,CWE-295,"No Help, or Langs Won't Help"
+CVE-2024-46686,CWE-476,Virtually Impossible
+CVE-2022-48860,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-46934,CWE-754,Discouraged via Borrow Checker
+CVE-2024-38381,CWE-908,Virtually Impossible
+CVE-2024-44939,CWE-476,Virtually Impossible
+CVE-2022-48790,CWE-416,Virtually Impossible
+CVE-2024-42239,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48773,CWE-476,Virtually Impossible
+CVE-2024-46743,CWE-125,Virtually Impossible
+CVE-2024-26593,CWE-125,Virtually Impossible
+CVE-2022-48878,CWE-416,Virtually Impossible
+CVE-2024-44954,CWE-362,Discouraged via Borrow Checker
+CVE-2024-42242,CWE-770,"No Help, or Langs Won't Help"
+CVE-2024-38627,CWE-415,Virtually Impossible
+CVE-2024-39489,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-52903,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-36481,CWE-754,Discouraged via Borrow Checker
+CVE-2024-39461,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-36489,CWE-476,Virtually Impossible
+CVE-2024-46677,CWE-476,Virtually Impossible
+CVE-2024-42158,CWE-669,"No Help, or Langs Won't Help"
+CVE-2024-38591,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-44983,CWE-908,Virtually Impossible
+CVE-2024-43836,CWE-476,Virtually Impossible
+CVE-2022-48837,CWE-190,Discouraged via Debug Mode
+CVE-2024-44955,CWE-476,Virtually Impossible
+CVE-2022-48718,CWE-476,Virtually Impossible
+CVE-2024-41055,CWE-476,Virtually Impossible
+CVE-2024-43827,CWE-476,Virtually Impossible
+CVE-2024-46731,CWE-125,Virtually Impossible
+CVE-2024-43853,CWE-416,Virtually Impossible
+CVE-2024-38570,CWE-416,Virtually Impossible
+CVE-2022-42329,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-38551,CWE-476,Virtually Impossible
+CVE-2024-46773,CWE-369,"No Help, or Langs Won't Help"
+CVE-2017-8310,CWE-125,Virtually Impossible
+CVE-2018-1002105,CWE-388,Virtually Impossible
+CVE-2023-52459,CWE-476,Virtually Impossible
+CVE-2024-41076,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42251,CWE-617,Discouraged via Debug Mode
+CVE-2024-44996,CWE-674,Discouraged via Debug Mode
+CVE-2024-42309,CWE-476,Virtually Impossible
+CVE-2020-36776,CWE-129,"No Help, or Langs Won't Help"
+CVE-2024-43894,CWE-476,Virtually Impossible
+CVE-2021-47571,CWE-416,Virtually Impossible
+CVE-2024-40955,CWE-787,Virtually Impossible
+CVE-2021-46906,CWE-668,"No Help, or Langs Won't Help"
+CVE-2024-41038,CWE-120,Virtually Impossible
+CVE-2024-39510,CWE-416,Virtually Impossible
+CVE-2024-42294,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48671,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46740,CWE-416,Virtually Impossible
+CVE-2024-45019,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46694,CWE-476,Virtually Impossible
+CVE-2024-41053,CWE-476,Virtually Impossible
+CVE-2024-42083,CWE-476,Virtually Impossible
+CVE-2022-48872,CWE-416,Virtually Impossible
+CVE-2024-46750,CWE-667,"No Help, or Langs Won't Help"
+CVE-2024-46786,CWE-416,Virtually Impossible
+CVE-2024-27020,CWE-362,Discouraged via Borrow Checker
+CVE-2024-44951,CWE-667,"No Help, or Langs Won't Help"
+CVE-2022-48866,CWE-125,Virtually Impossible
+CVE-2023-52468,CWE-416,Virtually Impossible
+CVE-2021-47578,CWE-476,Virtually Impossible
+CVE-2024-41001,CWE-401,"No Help, or Langs Won't Help"
+CVE-2023-52895,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-42280,CWE-416,Virtually Impossible
+CVE-2024-42259,CWE-131,Virtually Impossible
+CVE-2022-48934,CWE-401,"No Help, or Langs Won't Help"
+CVE-2024-38603,CWE-401,"No Help, or Langs Won't Help"
+CVE-2019-3460,CWE-20,"No Help, or Langs Won't Help"
+CVE-2024-26900,CWE-401,"No Help, or Langs Won't Help"
+CVE-2021-47540,CWE-476,Virtually Impossible
+CVE-2020-10757,CWE-843,Virtually Impossible
+CVE-2024-5458,CWE-345,"No Help, or Langs Won't Help"
+CVE-2024-7264,CWE-125,Virtually Impossible
+CVE-2024-43861,CWE-401,"No Help, or Langs Won't Help"
