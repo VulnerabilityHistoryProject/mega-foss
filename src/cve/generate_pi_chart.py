@@ -28,6 +28,8 @@ import psycopg2
 from enum import Enum
 from pathlib import Path
 from collections import Counter
+
+from psycopg2.extensions import cursor as Cursor
 from queries import execute_sql_file
 from config import pg_connect
 from tqdm import tqdm
@@ -239,7 +241,7 @@ def analyze_single_project(cursor, rust_cwes: dict[str, RustCSVData], vendor, pr
 
 	return category_count, unspecified
 
-def analyze_data(cursor: psycopg2.extensions.cursor, rust_cwes:dict[str, RustCSVData], found_missing_data: list[tuple[str, str, str, str]]):
+def analyze_data(cursor: Cursor, rust_cwes:dict[str, RustCSVData], found_missing_data: list[tuple[str, str, str, str]]):
 	category_data = {
 		"No Help, or Langs Won't Help": CWEData(),
 		"Opt-In Measures Only": CWEData(),
@@ -502,6 +504,19 @@ def main():
 
 # PRINT PROJECTS RUST CAN'T PREVENT
 	# print_projects_rust_cant_prevent(category_data)
+	# cant_prevent = ["libuv/libuv","n/a/Shadowsocks","Apache/Apache Spark","rustdesk/rustdesk","huggingface/huggingface/transformers","SoftEtherVPN/SoftEtherVPN","taosdata/TDengine","Golang/Go","timescale/timescaledb","scikit-learn/scikit-learn/scikit-learn","OpenWRT/OpenWRT",
+	# "n/a/go/golang",
+	# "[UNKNOWN]/golang",
+	# ]
+	# get_cwe = """
+	# select cwe_id from c_cve_cwe_project where project = %s
+	# """
+
+	# for project in cant_prevent:
+	# 	cursor.execute(get_cwe, (project,))
+	# 	cwes = cursor.fetchall()
+	# 	cwes = [cwe[0] for cwe in cwes]
+	# 	print(f"{project}: {",".join(set(cwes))}")
 
 # PRINT UNCATAGORIZED CWEs
 	# for cwe in list(sorted(missing_cwe_data)):

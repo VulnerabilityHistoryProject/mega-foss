@@ -3,10 +3,14 @@ tensorflow/tensorflow,tensorflow,tensorflow
 Significant-Gravitas/AutoGPT,significant-gravitas,significant-gravitas/autogpt
 huggingface/transformers,huggingface,huggingface/transformers
 golang/go,Golang,Go
+golang/go,n/a,go/golang
+golang/go,[UNKNOWN],golang
 facebook/react-native,Facebook,react-native
 electron/electron,electron,electron
 kubernetes/kubernetes,Kubernetes,Kubernetes
 nodejs/node,nodejs,node
+nodejs/node,n/a,https://github.com/nodejs/node
+nodejs/node,Node,https://github.com/nodejs/node
 rust-lang/rust,rust-lang,rust
 denoland/deno,denoland,deno
 netdata/netdata,netdata,netdata
@@ -71,6 +75,7 @@ python/cpython,Python Software Foundation,CPython
 python/cpython,n/a,python/cpython
 grpc/grpc,Google,gRPC
 grpc/grpc,n/a,grpc
+grpc/grpc,n/a,@grpc/grpc-js
 apache/spark,Apache,Apache Spark
 php/php-src,PHP Group,PHP
 php/php-src,n/a,PHP before 7.0.12
