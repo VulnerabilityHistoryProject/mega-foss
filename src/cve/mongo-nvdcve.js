@@ -10,7 +10,6 @@
 	{
 	  $project: {
 		cve_id: "$cve.CVE_data_meta.ID",
-
 		urls: {
 			  $map: {
 				  input: {
@@ -28,7 +27,7 @@
 				  as: "url",
 				  in: {
 				  $regexFind: {
-									  input: "$$url",
+					input: "$$url",
 					regex: /^.*github.com\/(.*)\/commit\/.*([0-9a-f]{40}).*$/,
 				  }
 				}
@@ -36,5 +35,11 @@
 
 		}
 	  }
+	},
+	{
+		$project: {
+			cve_id: "cve_id",
+			patches: "$urls.captures"
+		}
 	},
 ]
