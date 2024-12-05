@@ -95,7 +95,8 @@ cve_no_cwe_out = os.path.join(os.path.dirname(__file__), 'output/cve_no_cwe.txt'
 conn = pg_connect()
 
 class RustCSVData:
-	def __init__(self, cwe_id=None, name=None, classification=None, vote=None, clippy=None):
+	# cwe_id,  name,  description,  mitre_url,  vote,  clippy_helps,  rust_docs_links,  notes,
+	def __init__(self, cwe_id=None, name=None, classification=None, vote=None, clippy=None, desc=None, url=None, docs=None, notes=None ):
 		self.id = cwe_id
 		self.name = name
 		self.type = classification
@@ -103,6 +104,11 @@ class RustCSVData:
 		self.clippy = clippy
 		self.cves = set()
 		self.ref = False
+
+		self.description = desc
+		self.url = url
+		self.docs = docs
+		self.vote_notes = notes
 
 	def is_base(self) -> bool:
 		return self.type == "Base"
@@ -128,7 +134,22 @@ def load_rust_csv() -> dict[str, RustCSVData]:
 		with open(rust_cwe_csv_path, 'r') as f:
 			reader = csv.reader(f)
 			next(reader)
-			data =  {f"CWE-{r[0]}": RustCSVData(r[0], r[1], r[3], r[7], r[8]) for r in reader}
+			# CWE-ID,Name,Link,Type,Non-Base Needs Classification,Prohibited?,Description,Vote,Clippy Helps?,
+			data =  {
+				f"CWE-{r[0]}":
+					RustCSVData(
+						cwe_id=r[0],
+						name=r[1],
+						classification=r[3],
+						vote=r[7],
+						clippy=r[8],
+						desc=r[6],
+						url=r[2],
+						docs=r[15],
+						notes=r[9]
+					)
+					for r in reader
+			}
 			return data
 	except FileNotFoundError:
 		print(f"Could not find file: {rust_cwe_csv_path}")
@@ -406,14 +427,12 @@ def print_most_common_cwes(cursor, found_missing, category_data, cwe_data, limit
 
 	for cwe, (c, p) in cwe_count.most_common(limit):
 		print(f"{cwe}\t{c}\t{p}")
-
 	#
 	# for (_,s, _) in cwes:
 	# 	if limit == 0:
 	# 		break
 	# 	print(s)
 		# limit -= 1
-
 	# print("Most Common CWEs by Category")
 	# print("-" * 15)
 	# for category, data in category_data.items():
@@ -461,6 +480,57 @@ def print_projects_rust_cant_prevent(category_data: dict[str, CWEData]):
 	print("=============================")
 	print("\n".join(not_prevented_in_rust))
 
+
+def get_cwe_page(
+		cwe_id:int =int(),
+		name:str =str(),
+		description: str=str(),
+		mitre_url: str=str(),
+		vote: str=str(),
+		clippy_helps: bool=bool(),
+		rust_docs_links: list[str]=list(),
+		notes: str=str()
+	):
+	return f"""+++
+title = "CWE-{cwe_id}: {name}"
+description	= "{description}"
+weight = {cwe_id}
+
+[extra]
+id = {cwe_id}
+name = "{name}"
+url = "{mitre_url}"
+vote = "{vote}"
+clippy_helps = {"true" if clippy_helps else "false"}
+rust_docs_links = [
+	{",\n".join([f'"{link}"' for link in rust_docs_links])}
+]
++++
+{notes}
+"""
+
+def generate_cwe_page_files(rust_csv_data: dict[str, RustCSVData]):
+	"""
+	Create a file per CWE in /cwes to work with te new zola site
+	"""
+
+	for cwe in rust_csv_data.values():
+		output_path = Path(os.path.join(os.path.dirname(__file__), f'output/cves/CWE-{cwe.id}.md'))
+		data = get_cwe_page(
+			cwe_id=cwe.id,
+			name=cwe.name,
+			description=cwe.description,
+			mitre_url=cwe.url,
+			vote=cwe.vote,
+			clippy_helps=(True if cwe.clippy else False),
+			rust_docs_links=(cwe.docs.split(",") if cwe.docs else []),
+			notes=cwe.vote_notes
+		)
+
+		with open(output_path, 'w') as f:
+			f.write(data)
+
+
 def main():
 	rust_csv_data = load_rust_csv()
 	load_cwe_variants_map(rust_csv_data)
@@ -473,22 +543,22 @@ def main():
 	category_data, missing_cwe_data = analyze_data(cursor, rust_csv_data, missing_cve_cwe_map)
 
 	# Analyze prominent projects
-	projects_data = dict()
-	for project, vp_list in PROMINANT_PROJECTS.items():
-		for (vendor, product) in vp_list:
-			category_count, unspecified = analyze_single_project(cursor, rust_csv_data, vendor, product, missing_cve_cwe_map, projects_data.get(project))
-			projects_data[project] = (category_count, unspecified)
+	# projects_data = dict()
+	# for project, vp_list in PROMINANT_PROJECTS.items():
+	# 	for (vendor, product) in vp_list:
+	# 		category_count, unspecified = analyze_single_project(cursor, rust_csv_data, vendor, product, missing_cve_cwe_map, projects_data.get(project))
+	# 		projects_data[project] = (category_count, unspecified)
 
 	# Output data
-	data_str, unspecified_str, no_cwes = generate_outputs(cursor, category_data, missing_cwe_data, projects_data)
-	if OUTPUT_TO_FILE:
-		output_data(data_str, unspecified_str, no_cwes)
-	else:
-		print(data_str)
-		print("-"*80)
-		print(unspecified_str)
-		print("-"*80)
-		print(no_cwes)
+	# data_str, unspecified_str, no_cwes = generate_outputs(cursor, category_data, missing_cwe_data, projects_data)
+	# if OUTPUT_TO_FILE:
+	# 	output_data(data_str, unspecified_str, no_cwes)
+	# else:
+	# 	print(data_str)
+	# 	print("-"*80)
+	# 	print(unspecified_str)
+	# 	print("-"*80)
+	# 	print(no_cwes)
 
 # PRINT UNIQUE CWES
 	# print_unique_cwes(category_data)
@@ -504,23 +574,13 @@ def main():
 
 # PRINT PROJECTS RUST CAN'T PREVENT
 	# print_projects_rust_cant_prevent(category_data)
-	# cant_prevent = ["libuv/libuv","n/a/Shadowsocks","Apache/Apache Spark","rustdesk/rustdesk","huggingface/huggingface/transformers","SoftEtherVPN/SoftEtherVPN","taosdata/TDengine","Golang/Go","timescale/timescaledb","scikit-learn/scikit-learn/scikit-learn","OpenWRT/OpenWRT",
-	# "n/a/go/golang",
-	# "[UNKNOWN]/golang",
-	# ]
-	# get_cwe = """
-	# select cwe_id from c_cve_cwe_project where project = %s
-	# """
-
-	# for project in cant_prevent:
-	# 	cursor.execute(get_cwe, (project,))
-	# 	cwes = cursor.fetchall()
-	# 	cwes = [cwe[0] for cwe in cwes]
-	# 	print(f"{project}: {",".join(set(cwes))}")
 
 # PRINT UNCATAGORIZED CWEs
 	# for cwe in list(sorted(missing_cwe_data)):
 	# 	print(cwe)
+	#
+
+	generate_cwe_page_files(rust_csv_data)
 
 	cursor.close()
 	conn.close()

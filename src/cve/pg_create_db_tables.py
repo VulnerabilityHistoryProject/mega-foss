@@ -15,8 +15,8 @@ from config import pg_connect
 RESTART_DB = True
 
 # Input files/folders
-cvelist = os.path.join(os.path.dirname(__file__), '../../../cves/cves')
-# cvelist = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
+# cvelist = os.path.join(os.path.dirname(__file__), '../../../cves/cves')
+cvelist = os.path.join(os.path.dirname(__file__), '../../../../Misc/cvelistV5/cves/')
 
 create_json = os.path.join(os.path.dirname(__file__), 'queries/create_cve_json.sql')
 insert_json = os.path.join(os.path.dirname(__file__), 'queries/insert_cve_json.sql')
