@@ -19,7 +19,7 @@
 					cond: {
 					  $regexMatch:{
 						input: "$$url",
-						regex: /^.*github.*commit.*([0-9a-f]{40}).*$/,
+						regex: /^.*github.*commit.*([0-9a-f]{40}).*$/
 					  }
 					}
 				  }
@@ -28,11 +28,10 @@
 				  in: {
 				  $regexFind: {
 					input: "$$url",
-					regex: /^.*github.com\/(.*)\/commit\/.*([0-9a-f]{40}).*$/,
+					regex: /^.*github.com\/(.*)\/commit\/.*([0-9a-f]{40}).*$/
 				  }
 				}
 			}
-
 		}
 	  }
 	},
@@ -41,5 +40,5 @@
 			cve_id: "cve_id",
 			patches: "$urls.captures"
 		}
-	},
+	}
 ]

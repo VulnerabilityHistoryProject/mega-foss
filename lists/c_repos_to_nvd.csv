@@ -27,6 +27,10 @@ FFmpeg/FFmpeg,FFMPEG,FFMPEG
 ClickHouse/ClickHouse,ClickHouse,ClickHouse
 vim/vim,vim,vim
 curl/curl,curl,curl
+curl/curl,The Curl Project,curl
+curl/curl,[UNKNOWN],curl
+curl/curl,n/a,curl
+curl/curl,n/a/https://github.com/curl,curl
 tmux/tmux,tmux,tmux
 netty/netty,netty,netty
 hasura/graphql-engine,hasura,graphql-engine
@@ -75,7 +79,6 @@ python/cpython,Python Software Foundation,CPython
 python/cpython,n/a,python/cpython
 grpc/grpc,Google,gRPC
 grpc/grpc,n/a,grpc
-grpc/grpc,n/a,@grpc/grpc-js
 apache/spark,Apache,Apache Spark
 php/php-src,PHP Group,PHP
 php/php-src,n/a,PHP before 7.0.12
@@ -96,6 +99,7 @@ videolan/vlc,VideoLAN,VLC
 espressif/esp-idf,espressif,esp-idf
 memcached/memcached,Memcached,Memcached
 systemd/systemd,systemd,systemd
+ImageMagick/ImageMagick,ImageMagick,ImageMagick
 ImageMagick/ImageMagick,n/a,ImageMagick
 SoftEtherVPN/SoftEtherVPN,SoftEtherVPN,SoftEtherVPN
 coturn/coturn,coturn,coturn
