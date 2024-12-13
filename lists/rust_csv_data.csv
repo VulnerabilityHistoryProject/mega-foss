@@ -1,0 +1,966 @@
+CWE,Name,Class,Vote,Parent
+1334,Unauthorized Error Injection Can Degrade Hardware Redundancy,Base,0000001,284
+1274,Improper Access Control for Volatile Memory Containing Boot Code,Base,0000001,284
+1007,Insufficient Visual Distinction of Homoglyphs Presented to User,Base,0000001,451
+219,Storage of File with Sensitive Data Under Web Root,Variant,0000001,552
+188,Reliance on Data/Memory Layout,Base,1000000,1105
+359,Exposure of Private Personal Information to an Unauthorized Actor,Base,0000001,200
+1056,Invokable Control Element with Variadic Parameters,Base,0110000,1120
+248,Uncaught Exception,Base,1000000,705
+308,Use of Single-factor Authentication,Base,0000001,1390
+1116,Inaccurate Comments,Base,0000001,1078
+1287,Improper Validation of Specified Type of Input,Base,0000001,20
+1351,Improper Handling of Hardware Behavior in Exceptionally Cold Environments,Base,0000001,1384
+1240,Use of a Cryptographic Primitive with a Risky Implementation,Base,0000001,327
+1091,Use of Object without Invoking Destructor Method,Base,1000000,772
+1300,Improper Protection of Physical Side Channels,Base,0000001,203
+1122,Excessive Halstead Complexity,Base,0000000,1120
+1062,Parent Class with References to Child Class,Base,0000000,1061
+1173,Improper Use of Validation Framework,Base,0000001,20
+423,DEPRECATED: Proxied Trusted Channel,Base,0000000,0
+563,Assignment to Variable without Use,Base,0100110,1164
+472,External Control of Assumed-Immutable Web Parameter,Base,0000001,642
+532,Insertion of Sensitive Information into Log File,Base,0000001,538
+710,Improper Adherence to Coding Standards,Pillar,0000000,
+481,Assigning instead of Comparing,Variant,0000001,480
+650,Trusting HTTP Permission Methods on the Server Side,Variant,0000001,436
+842,Placement of User into Incorrect Group,Base,0000001,286
+601,URL Redirection to Untrusted Site ('Open Redirect'),Base,0000001,610
+590,Free of Memory not on the Heap,Variant,1000000,762
+697,Incorrect Comparison,Pillar,0000001,
+506,Embedded Malicious Code,Class,0000001,912
+446,UI Discrepancy for Security Feature,Class,0000000,684
+786,Access of Memory Location Before Start of Buffer,Base,1000000,119
+775,Missing Release of File Descriptor or Handle after Effective Lifetime,Variant,0000001,772
+664,Improper Control of a Resource Through its Lifetime,Pillar,0000000,
+827,Improper Control of Document Type Definition,Variant,0000000,706
+837,"Improper Enforcement of a Single, Unique Action",Base,0000001,799
+674,Uncontrolled Recursion,Class,0000001,834
+765,Multiple Unlocks of a Critical Resource,Base,1000000,667
+625,Permissive Regular Expression,Base,0000001,185
+926,Improper Export of Android Application Components,Variant,0000001,285
+407,Inefficient Algorithmic Complexity,Class,0000001,405
+796,Only Filtering Special Elements Relative to a Marker,Variant,0000001,795
+547,"Use of Hard-coded, Security-relevant Constants",Base,0000001,1078
+456,Missing Initialization of a Variable,Variant,0000001,909
+516,DEPRECATED: Covert Timing Channel,Base,0000000,0
+687,Function Call With Incorrectly Specified Argument Value,Variant,1000000,628
+580,clone() Method Without super.clone(),Variant,0000000,664
+611,Improper Restriction of XML External Entity Reference,Base,0000001,610
+912,Hidden Functionality,Class,0000000,684
+640,Weak Password Recovery Mechanism for Forgotten Password,Base,0000001,1390
+943,Improper Neutralization of Special Elements in Data Query Logic,Class,0000001,74
+491,Public cloneable() Method Without Final ('Object Hijack'),Variant,0000001,668
+522,Insufficiently Protected Credentials,Class,0000001,1390
+462,Duplicate Key in Associative List (Alist),Variant,0000001,694
+573,Improper Following of Specification by Caller,Class,0000001,710
+433,Unparsed Raw Web Content Delivery,Variant,0000000,219
+1023,Incomplete Comparison with Missing Factors,Class,0000001,697
+1072,Data Resource Access without Use of Connection Pooling,Base,0000001,405
+1310,Missing Ability to Patch ROM Code,Base,0000001,1329
+1250,Improper Preservation of Consistency Between Independent Representations of Shared State,Base,0000001,664
+1341,Multiple Releases of Same Resource or Handle,Base,0000001,675
+1190,DMA Device Enabled Too Early in Boot Phase,Base,0000001,696
+318,Cleartext Storage of Sensitive Information in Executable,Variant,0000001,312
+1297,Unprotected Confidential Information on Device is Accessible by OSAT Vendors,Base,0000001,285
+1106,Insufficient Use of Symbolic Constants,Base,0000000,1078
+1046,Creation of Immutable Text Using String Concatenation,Base,0110000,1176
+258,Empty Password in Configuration File,Variant,0000001,260
+349,Acceptance of Extraneous Untrusted Data With Trusted Data,Base,0000001,345
+1386,Insecure Operation on Windows Junction / Mount Point,Base,0000001,59
+198,Use of Incorrect Byte Ordering,Variant,1000000,188
+209,Generation of Error Message Containing Sensitive Information,Base,0000001,200
+1235,Incorrect Use of Autoboxing and Unboxing for Performance Critical Operations,Base,1000000,400
+1264,Hardware Logic with Insecure De-Synchronization between Control and Data Channels,Base,0000001,821
+1324,DEPRECATED: Sensitive Information Accessible by Physical Probing of JTAG Interface,Base,0000000,0
+1244,Internal Asset Exposed to Unsafe Debug Access Level or State,Base,0000001,863
+1304,Improperly Preserved Integrity of Hardware Configuration State During a Power Save/Restore Operation,Base,0000001,284
+1095,Loop Condition Value Update within the Loop,Base,0000001,1120
+1177,Use of Prohibited Code,Class,0000001,710
+369,Divide By Zero,Base,1000000,682
+229,Improper Handling of Values,Base,0110000,228
+1037,Processor Optimization Removal or Modification of Security-critical Code,Base,0000001,1038
+1126,Declaration of Variable with Unnecessarily Wide Scope,Base,0110000,710
+338,Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG),Base,0110000,330
+278,Insecure Preserved Inherited Permissions,Variant,0000001,732
+1066,Missing Serialization Control Element,Base,0000000,710
+1221,Incorrect Register Defaults or Module Parameters,Base,0000001,1419
+1330,Remanent Data Readable after Memory Erase,Variant,0000001,1301
+1270,Generation of Incorrect Security Tokens,Base,0000001,284
+1052,Excessive Use of Hard-Coded Literals in Initialization,Base,0000001,1419
+1283,Mutable Attestation or Measurement Reporting Data,Base,0000001,284
+1112,Incomplete Documentation of Program Execution,Base,0000000,1059
+1392,Use of Default Credentials,Base,0000001,1391
+553,Command Shell in Externally Accessible Directory,Variant,0000001,552
+413,Improper Resource Locking,Base,0110000,667
+782,Exposed IOCTL with Insufficient Access Control,Variant,0100100,749
+6,J2EE Misconfiguration: Insufficient Session-ID Length,Variant,0000001,334
+502,Deserialization of Untrusted Data,Base,0000001,913
+693,Protection Mechanism Failure,Pillar,0000001,
+823,Use of Out-of-range Pointer Offset,Base,1000000,119
+771,Missing Reference to Active Allocated Resource,Base,0000001,400
+476,NULL Pointer Dereference,Base,1000000,710
+536,Servlet Runtime Error Message Containing Sensitive Information,Variant,0000001,211
+427,Uncontrolled Search Path Element,Base,0110000,668
+567,Unsynchronized Access to Shared Data in a Multithreaded Context,Base,1000000,820
+98,Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion'),Variant,0000000,706
+594,J2EE Framework: Saving Unserializable Objects to Disk,Variant,0000000,1076
+605,Multiple Binds to the Same Port,Variant,0000000,675
+654,Reliance on a Single Factor in a Security Decision,Base,0000001,657
+644,Improper Neutralization of HTTP Headers for Scripting Syntax,Variant,0000001,116
+704,Incorrect Type Conversion or Cast,Class,1000000,664
+495,Private Data Structure Returned From A Public Method,Variant,0000000,664
+807,Reliance on Untrusted Inputs in a Security Decision,Base,0000001,693
+916,Use of Password Hash With Insufficient Computational Effort,Base,0000001,328
+615,Inclusion of Sensitive Information in Source Code Comments,Variant,0000001,540
+584,Return Inside Finally Block,Base,1000000,705
+755,Improper Handling of Exceptional Conditions,Class,0110000,703
+88,Improper Neutralization of Argument Delimiters in a Command ('Argument Injection'),Base,0110000,77
+577,EJB Bad Practices: Use of Sockets,Variant,0000000,573
+437,Incomplete Model of Endpoint Features,Base,0000001,436
+526,Cleartext Storage of Sensitive Information in an Environment Variable,Variant,0000001,312
+466,Return of Pointer Value Outside of Expected Range,Base,1000000,119
+761,Free of Pointer not at Start of Buffer,Variant,1000000,763
+862,Missing Authorization,Class,0000001,285
+922,Insecure Storage of Sensitive Information,Class,0000000,664
+621,Variable Extraction Error,Variant,0000001,914
+833,Deadlock,Base,0110000,667
+670,Always-Incorrect Control Flow Implementation,Class,0000001,691
+683,Function Call With Incorrect Order of Arguments,Variant,1000000,628
+512,Spyware,Base,0000001,506
+792,Incomplete Filtering of One or More Instances of Special Elements,Variant,0000001,791
+403,Exposure of File Descriptor to Unintended Control Sphere ('File Descriptor Leak'),Base,0000001,402
+543,Use of Singleton Pattern Without Synchronization in a Multithreaded Context,Variant,0000000,820
+1102,Reliance on Machine-Dependent Data Representation,Base,0000001,758
+1293,Missing Source Correlation of Multiple Independent Data,Base,0000001,345
+1042,Static Member Data Element outside of a Singleton Class Element,Variant,0000000,1176
+1260,Improper Handling of Overlap Between Protected Memory Ranges,Base,0000001,284
+1320,Improper Protection for Outbound Error Messages and Alert Signals,Base,0000001,284
+1231,Improper Prevention of Lock Bit Modification,Base,0000001,284
+268,Privilege Chaining,Base,0000001,269
+1076,Insufficient Adherence to Expected Conventions,Class,0000001,710
+328,Use of Weak Hash,Base,0000001,326
+239,Failure to Handle Incomplete Element,Variant,0110000,237
+379,Creation of Temporary File in Directory with Insecure Permissions,Base,0110000,377
+1085,Invokable Control Element with Excessive Volume of Commented-out Code,Base,0000001,1078
+1314,Missing Write Protection for Parametric Data Values,Base,0000001,862
+1254,Incorrect Comparison Logic Granularity,Base,0000001,208
+1245,Improper Finite State Machines (FSMs) in Hardware Logic,Base,0000001,684
+1094,Excessive Index Range Scan for a Data Resource,Base,0000001,405
+368,Context Switching Race Condition,Base,0110000,362
+1176,Inefficient CPU Computation,Class,0000001,405
+228,Improper Handling of Syntactically Invalid Structure,Class,0110000,703
+339,Small Seed Space in PRNG,Variant,0110000,335
+1127,Compilation with Insufficient Warnings or Errors,Base,0110000,710
+1067,Excessive Execution of Sequential Searches of Data Resource,Base,0000001,1176
+279,Incorrect Execution-Assigned Permissions,Variant,0000001,732
+1220,Insufficient Granularity of Access Control,Base,0000001,284
+1331,Improper Isolation of Shared Resources in Network On Chip (NoC),Base,0000001,653
+1271,Uninitialized Value on Reset for Registers Holding Security Settings,Base,0000001,909
+1053,Missing Documentation for Design,Base,0000001,1059
+1113,Inappropriate Comment Style,Base,0000000,1078
+1282,Assumed-Immutable Data is Stored in Writable Memory,Base,0000001,668
+1393,Use of Default Password,Base,0000001,1392
+552,Files or Directories Accessible to External Parties,Base,0000001,668
+7,J2EE Misconfiguration: Missing Custom Error Page,Variant,0000001,756
+783,Operator Precedence Logic Error,Base,0000001,670
+412,Unrestricted Externally Accessible Lock,Base,0110000,667
+692,Incomplete Denylist to Cross-Site Scripting,Compound,0000001,184
+443,DEPRECATED: HTTP response splitting,Base,0000000,0
+822,Untrusted Pointer Dereference,Base,1000000,119
+770,Allocation of Resources Without Limits or Throttling,Base,0000001,400
+477,Use of Obsolete Function,Base,0100100,710
+537,Java Runtime Error Message Containing Sensitive Information,Variant,0000001,211
+426,Untrusted Search Path,Base,0110000,642
+566,Authorization Bypass Through User-Controlled SQL Primary Key,Variant,0000001,639
+99,Improper Control of Resource Identifiers ('Resource Injection'),Class,0000001,74
+595,Comparison of Object References Instead of Object Contents,Variant,1000000,1025
+484,Omitted Break Statement in Switch,Base,1000000,710
+655,Insufficient Psychological Acceptability,Class,0000000,657
+645,Overly Restrictive Account Lockout Mechanism,Base,0000001,287
+806,Buffer Access Using Size of Source Buffer,Variant,1000000,805
+494,Download of Code Without Integrity Check,Base,0000001,345
+705,Incorrect Control Flow Scoping,Class,0000000,691
+585,Empty Synchronized Block,Variant,0000001,1071
+614,Sensitive Cookie in HTTPS Session Without 'Secure' Attribute,Variant,0000001,319
+917,Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection'),Base,0000001,77
+89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),Base,0000001,943
+754,Improper Check for Unusual or Exceptional Conditions,Class,0110000,703
+576,EJB Bad Practices: Use of Java I/O,Variant,0000001,695
+436,Interpretation Conflict,Class,0000001,435
+527,Exposure of Version-Control Repository to an Unauthorized Control Sphere,Variant,0000001,552
+467,Use of sizeof() on a Pointer Type,Variant,1000000,131
+863,Incorrect Authorization,Class,0000001,285
+760,Use of a One-Way Hash with a Predictable Salt,Variant,0000001,916
+620,Unverified Password Change,Base,0000001,1390
+923,Improper Restriction of Communication Channel to Intended Endpoints,Class,0000001,284
+832,Unlock of a Resource that is not Locked,Base,0110000,667
+671,Lack of Administrator Control over Security,Class,0000000,657
+453,Insecure Default Variable Initialization,Variant,0000001,1188
+682,Incorrect Calculation,Pillar,1000000,170
+402,Transmission of Private Resources into a New Sphere ('Resource Leak'),Class,0000001,668
+793,Only Filtering One Instance of a Special Element,Variant,0000000,792
+542,DEPRECATED: Information Exposure Through Cleanup Log Files,Variant,0000000,0
+1292,Incorrect Conversion of Security Identifiers,Base,0000001,284
+1103,Use of Platform-Dependent Third Party Components,Base,0000000,758
+1043,Data Element Aggregating an Excessively Large Number of Non-Primitive Elements,Base,0000001,1093
+1261,Improper Handling of Single Event Upsets,Base,0000001,1384
+1321,Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution'),Variant,0000001,915
+1230,Exposure of Sensitive Information Through Metadata,Base,0000001,285
+1077,Floating Point Comparison with Incorrect Operator,Variant,0000001,697
+269,Improper Privilege Management,Class,0000001,284
+329,Generation of Predictable IV with CBC Mode,Variant,0000001,1204
+238,Improper Handling of Incomplete Structural Elements,Variant,0110000,237
+378,Creation of Temporary File With Insecure Permissions,Base,0110000,377
+1204,Generation of Weak Initialization Vector (IV),Base,0000001,330
+1315,Improper Setting of Bus Controlling Capability in Fabric End-point,Base,0000001,284
+1084,Invokable Control Element with Excessive File or Data Access Operations,Base,0000001,405
+1255,Comparison Logic is Vulnerable to Power Side-Channel Attacks,Variant,0000001,1300
+1335,Incorrect Bitwise Shift of Integer,Base,0000001,682
+1275,Sensitive Cookie with Improper SameSite Attribute,Variant,0000001,923
+1224,Improper Restriction of Write-Once Bit Fields,Base,0000001,284
+218,DEPRECATED: Failure to provide confidentiality for stored data,Base,0000000,0
+358,Improperly Implemented Security Check for Standard,Base,0000001,573
+249,DEPRECATED: Often Misused: Path Manipulation,Variant,0000000,0
+1057,Data Access Operations Outside of Expected Data Manager Component,Base,0000001,1061
+1286,Improper Validation of Syntactic Correctness of Input,Base,0000001,20
+1117,Callable with Insufficient Behavioral Summary,Base,0000000,1078
+309,Use of Password System for Primary Authentication,Base,0000001,1390
+1241,Use of Predictable Algorithm in Random Number Generator,Base,0000001,330
+1301,Insufficient or Incomplete Data Removal within Hardware Component,Base,0000001,226
+1090,Method Containing Access of a Member Element from Another Class,Base,0000000,1061
+1123,Excessive Use of Self-Modifying Code,Base,1000000,1120
+1063,Creation of Class Instance within a Static Code Block,Base,0000000,1176
+422,Unprotected Windows Messaging Channel ('Shatter'),Variant,0000001,420
+562,Return of Stack Variable Address,Base,1000000,758
+473,PHP External Variable Modification,Variant,1000000,471
+533,DEPRECATED: Information Exposure Through Server Log Files,Variant,0000000,0
+480,Use of Incorrect Operator,Base,0000001,670
+651,Exposure of WSDL File Containing Sensitive Information,Variant,0000001,538
+843,Access of Resource Using Incompatible Type ('Type Confusion'),Base,1000000,704
+591,Sensitive Data Storage in Improperly Locked Memory,Variant,0110000,413
+600,Uncaught Exception in Servlet,Variant,1000000,248
+507,Trojan Horse,Base,0000001,506
+696,Incorrect Behavior Order,Class,0000000,691
+447,Unimplemented or Unsupported Feature in UI,Base,0000001,446
+556,ASP.NET Misconfiguration: Use of Identity Impersonation,Variant,0000001,266
+416,Use After Free,Variant,1000000,825
+787,Out-of-bounds Write,Base,1000000,119
+774,Allocation of File Descriptors or Handles Without Limits or Throttling,Variant,0000001,770
+665,Improper Initialization,Class,1000000,664
+826,Premature Release of Resource During Expected Lifetime,Base,0110000,666
+836,Use of Password Hash Instead of Password for Authentication,Base,0000001,1390
+675,Multiple Operations on Resource in Single-Operation Context,Class,0000000,573
+764,Multiple Locks of a Critical Resource,Base,1000000,667
+927,Use of Implicit Intent for Sensitive Communication,Variant,0000001,285
+624,Executable Regular Expression Error,Base,0000001,77
+797,Only Filtering Special Elements at an Absolute Position,Variant,0000001,795
+406,Insufficient Control of Network Message Volume (Network Amplification),Class,0000001,405
+546,Suspicious Comment,Variant,0000000,1078
+457,Use of Uninitialized Variable,Variant,1000000,908
+686,Function Call With Incorrect Argument Type,Variant,1000000,628
+913,Improper Control of Dynamically-Managed Code Resources,Class,0000000,664
+610,Externally Controlled Reference to a Resource in Another Sphere,Class,0000001,664
+581,Object Model Violation: Just One of Equals and Hashcode Defined,Variant,0000000,573
+942,Permissive Cross-domain Policy with Untrusted Domains,Variant,0000001,863
+641,Improper Restriction of Names for Files and Other Resources,Base,0110000,99
+523,Unprotected Transport of Credentials,Base,0000001,522
+463,Deletion of Data Structure Sentinel,Base,1000000,707
+572,Call to Thread run() instead of start(),Variant,1000000,821
+432,Dangerous Signal Handler not Disabled During Sensitive Operations,Base,0110000,364
+1022,Use of Web Link to Untrusted Target with window.opener Access,Variant,0000001,266
+1073,Non-SQL Invokable Control Element with Excessive Number of Data Resource Accesses,Base,0000001,405
+1080,Source Code File with Excessive Number of Lines of Code,Base,0000001,1120
+1311,Improper Translation of Security Attributes by Fabric Bridge,Base,0000001,284
+1251,Mirrored Regions with Different Values,Base,0000001,1250
+1191,On-Chip Debug and Test Interface With Improper Access Control,Base,0000001,284
+1107,Insufficient Isolation of Symbolic Constant Definitions,Base,0000000,1078
+1296,Incorrect Chaining or Granularity of Debug Components,Base,0000001,284
+319,Cleartext Transmission of Sensitive Information,Base,0000001,311
+259,Use of Hard-coded Password,Variant,0000001,798
+1047,Modules with Circular Dependencies,Base,1000000,1120
+348,Use of Less Trusted Source,Base,0000001,345
+208,Observable Timing Discrepancy,Base,0000001,203
+1234,Hardware Internal or Debug Modes Allow Override of Locks,Base,0000001,667
+1265,Unintended Reentrant Invocation of Non-reentrant Code Via Nested Calls,Base,0000001,691
+1325,Improperly Controlled Sequential Memory Allocation,Base,0000001,770
+96,Improper Neutralization of Directives in Statically Saved Code ('Static Code Injection'),Base,1000000,94
+908,Use of Uninitialized Resource,Base,1000000,665
+65,Windows Hard Link,Variant,0110000,59
+478,Missing Default Case in Multiple Condition Expression,Base,1000000,1023
+34,Path Traversal: '....//',Variant,0110000,23
+538,Insertion of Sensitive Information into Externally-Accessible File or Directory,Base,0000001,200
+1421,Exposure of Sensitive Information in Shared Microarchitectural Structures during Transient Execution,Base,0000001,1420
+8,J2EE Misconfiguration: Entity Bean Declared Remote,Variant,0000001,668
+51,Path Equivalence: '/multiple//internal/slash',Variant,0110000,41
+182,Collapse of Data into Unsafe Value,Base,0000001,693
+213,Exposure of Sensitive Information Due to Incompatible Policies,Base,0000001,200
+353,Missing Support for Integrity Check,Base,0000001,345
+242,Use of Inherently Dangerous Function,Base,1000000,1177
+302,Authentication Bypass by Assumed-Immutable Data,Base,0000001,1390
+120,Buffer Copy without Checking Size of Input ('Classic Buffer Overflow'),Base,1000000,119
+336,Same Seed in Pseudo-Random Number Generator (PRNG),Variant,0110000,335
+1068,Inconsistency Between Implementation and Documented Design,Base,0000001,710
+276,Incorrect Default Permissions,Base,0000001,732
+367,Time-of-check Time-of-use (TOCTOU) Race Condition,Base,0000001,362
+1039,Automated Recognition Mechanism with Inadequate Detection or Handling of Adversarial Input Perturbations,Class,0000001,693
+394,Unexpected Status Code or Return Value,Base,0000001,754
+145,Improper Neutralization of Section Delimiters,Variant,0000001,140
+114,Process Control,Class,0000001,73
+285,Improper Authorization,Class,0000001,284
+295,Improper Certificate Validation,Base,0000001,287
+104,Struts: Form Bean Does Not Extend Validation Class,Variant,0000000,573
+155,Improper Neutralization of Wildcards or Matching Symbols,Variant,0000000,138
+384,Session Fixation,Compound,0000001,610
+237,Improper Handling of Structural Elements,Base,0110000,228
+377,Insecure Temporary File,Class,0000001,668
+1078,Inappropriate Source Code Style or Formatting,Class,0000000,1076
+266,Incorrect Privilege Assignment,Base,0000001,269
+326,Inadequate Encryption Strength,Class,0000001,693
+161,Improper Neutralization of Multiple Leading Special Elements,Variant,0000000,160
+130,Improper Handling of Length Parameter Inconsistency,Base,0110000,240
+312,Cleartext Storage of Sensitive Information,Base,0000001,311
+252,Unchecked Return Value,Base,0110000,754
+343,Predictable Value Range from Previous Values,Base,0000001,340
+203,Observable Discrepancy,Base,0000001,200
+192,Integer Coercion Error,Variant,0110000,681
+41,Improper Resolution of Path Equivalence,Base,0110000,706
+528,Exposure of Core Dump File to an Unauthorized Control Sphere,Variant,0000001,552
+468,Incorrect Pointer Scaling,Base,1000000,682
+24,Path Traversal: '../filedir',Variant,0110000,23
+579,J2EE Bad Practices: Non-serializable Object Stored in Session,Variant,0000000,573
+439,Behavioral Change in New Version or Environment,Base,0000001,435
+75,Failure to Sanitize Special Elements into a Different Plane (Special Element Injection),Class,0000001,74
+918,Server-Side Request Forgery (SSRF),Base,0000001,441
+86,Improper Neutralization of Invalid Characters in Identifiers in Web Pages,Variant,0000001,79
+829,Inclusion of Functionality from Untrusted Control Sphere,Base,0000001,669
+55,Path Equivalence: '/./' (Single Dot Directory),Variant,0110000,41
+788,Access of Memory Location After End of Buffer,Base,1000000,119
+419,Unprotected Primary Channel,Base,0000001,923
+508,Non-Replicating Malicious Code,Base,0000001,507
+448,Obsolete Feature in UI,Base,0000001,446
+92,DEPRECATED: Improper Sanitization of Custom Special Characters,Base,0000000,0
+30,Path Traversal: '\dir\..\filename',Variant,0110000,23
+61,UNIX Symbolic Link (Symlink) Following,Compound,0110000,59
+363,Race Condition Enabling Link Following,Base,0110000,367
+223,Omission of Security-relevant Information,Base,0000001,221
+332,Insufficient Entropy in PRNG,Variant,0000001,331
+272,Least Privilege Violation,Base,0000001,271
+281,Improper Preservation of Permissions,Base,0000001,732
+110,Struts: Validator Without Form Field,Variant,0000000,1164
+390,Detection of Error Condition Without Action,Base,1000000,755
+141,Improper Neutralization of Parameter/Argument Delimiters,Variant,0000001,140
+246,J2EE Bad Practices: Direct Use of Sockets,Variant,0000001,695
+1058,Invokable Control Element in Multi-Thread Context with non-Final Static Storable or Member Element,Base,1000000,662
+1118,Insufficient Documentation of Error Handling Techniques,Base,0000000,1059
+1289,Improper Validation of Unsafe Equivalence in Input,Base,0000001,20
+306,Missing Authentication for Critical Function,Base,0000001,287
+217,DEPRECATED: Failure to Protect Stored Data from Modification,Base,0000000,0
+186,Overly Restrictive Regular Expression,Base,0000001,185
+357,Insufficient UI Warning of Dangerous Operations,Base,0000001,693
+175,Improper Handling of Mixed Encoding,Variant,0000000,172
+124,Buffer Underwrite ('Buffer Underflow'),Base,1000000,786
+134,Use of Externally-Controlled Format String,Base,1000000,668
+165,Improper Neutralization of Multiple Internal Special Elements,Variant,0000000,164
+347,Improper Verification of Cryptographic Signature,Base,0000001,345
+196,Unsigned to Signed Conversion Error,Variant,0110000,681
+207,Observable Behavioral Discrepancy With Equivalent Products,Variant,0000001,205
+1299,Missing Protection Mechanism for Alternate Hardware Interface,Base,0000001,1191
+1108,Excessive Reliance on Global Variables,Base,0110000,1076
+316,Cleartext Storage of Sensitive Information in Memory,Variant,0000001,312
+256,Plaintext Storage of a Password,Base,0000001,522
+1048,Invokable Control Element with Large Number of Outward Calls,Base,0000000,710
+151,Improper Neutralization of Comment Delimiters,Variant,0000000,138
+291,Reliance on IP Address for Authentication,Variant,0000001,290
+262,Not Using Password Aging,Base,0000001,1390
+322,Key Exchange without Entity Authentication,Base,0000001,306
+233,Improper Handling of Parameters,Base,0110000,228
+373,DEPRECATED: State Synchronization Error,Base,0000000,0
+71,DEPRECATED: Apple '.DS_Store',Variant,0000000,0
+20,Improper Input Validation,Class,0000001,707
+82,Improper Neutralization of Script in Attributes of IMG Tags in a Web Page,Variant,0000000,83
+14,Compiler Removal of Code to Clear Buffers,Variant,0000001,733
+458,DEPRECATED: Incorrect Initialization,Base,0000000,0
+689,Permission Race Condition During Resource Copy,Compound,0110000,362
+45,Path Equivalence: 'file...name' (Multiple Internal Dot),Variant,0000000,44
+409,Improper Handling of Highly Compressed Data (Data Amplification),Base,0110000,405
+798,Use of Hard-coded Credentials,Base,0000001,1391
+549,Missing Password Field Masking,Base,0000001,522
+839,Numeric Range Comparison Without Minimum Check,Base,0000001,1023
+828,Signal Handler with Functionality that is not Asynchronous-Safe,Variant,0110000,364
+939,Improper Authorization in Handler for Custom URL Scheme,Base,0000001,862
+558,Use of getlogin() in Multithreaded Application,Variant,0000001,663
+789,Memory Allocation with Excessive Size Value,Variant,0000001,770
+54,Path Equivalence: 'filedir\' (Trailing Backslash),Variant,0110000,41
+509,Replicating Malicious Code (Virus or Worm),Base,0000001,507
+698,Execution After Redirect (EAR),Base,0000001,705
+449,The UI Performs the Wrong Action,Base,0000001,446
+93,Improper Neutralization of CRLF Sequences ('CRLF Injection'),Base,0000001,74
+31,Path Traversal: 'dir\..\..\filename',Variant,0110000,23
+362,Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition'),Class,0110000,691
+222,Truncation of Security-relevant Information,Base,0000001,221
+333,Improper Handling of Insufficient Entropy in TRNG,Variant,0000001,331
+273,Improper Check for Dropped Privileges,Base,0000001,754
+111,Direct Use of Unsafe JNI,Variant,0000001,695
+280,Improper Handling of Insufficient Permissions or Privileges,Base,0000001,755
+391,Unchecked Error Condition,Base,0110000,754
+140,Improper Neutralization of Delimiters,Base,0000001,138
+1059,Insufficient Technical Documentation,Class,0000001,710
+247,DEPRECATED: Reliance on DNS Lookups in a Security Decision,Base,0000000,0
+307,Improper Restriction of Excessive Authentication Attempts,Base,0000001,1390
+1288,Improper Validation of Consistency within Input,Base,0000001,20
+1119,Excessive Use of Unconditional Branching,Base,0000000,1120
+187,Partial String Comparison,Variant,1000000,1023
+216,DEPRECATED: Containment Errors (Container Errors),Class,0000000,0
+356,Product UI does not Warn User of Unsafe Actions,Base,0000001,221
+174,Double Decoding of the Same Data,Variant,0000000,172
+125,Out-of-bounds Read,Base,1000000,119
+135,Incorrect Calculation of Multi-Byte String Length,Base,1000000,682
+164,Improper Neutralization of Internal Special Elements,Variant,0000000,138
+346,Origin Validation Error,Class,0000001,345
+1389,Incorrect Parsing of Numbers with Different Radices,Base,0000001,704
+206,Observable Internal Behavioral Discrepancy,Variant,0000001,205
+197,Numeric Truncation Error,Base,0110000,681
+317,Cleartext Storage of Sensitive Information in GUI,Variant,0000001,312
+1109,Use of Same Variable for Multiple Purposes,Base,0000000,1078
+1298,Hardware Logic Contains Race Conditions,Base,0000001,362
+1049,Excessive Data Query Operations in a Large Data Table,Base,0000001,1176
+257,Storing Passwords in a Recoverable Format,Base,0000001,522
+150,"Improper Neutralization of Escape, Meta, or Control Sequences",Variant,0000001,138
+290,Authentication Bypass by Spoofing,Base,0000001,1390
+263,Password Aging with Long Expiration,Base,0000001,1390
+323,"Reusing a Nonce, Key Pair in Encryption",Base,0000001,344
+232,Improper Handling of Undefined Values,Variant,0110000,229
+372,Incomplete Internal State Distinction,Base,1000000,664
+83,Improper Neutralization of Script in Attributes in a Web Page,Variant,0000001,79
+459,Incomplete Cleanup,Base,1000000,404
+15,External Control of System or Configuration Setting,Base,0000001,642
+688,Function Call With Incorrect Variable or Reference as Argument,Variant,1000000,628
+799,Improper Control of Interaction Frequency,Class,0000000,691
+408,Incorrect Behavior Order: Early Amplification,Base,0000001,405
+44,Path Equivalence: 'file.name' (Internal Dot),Variant,0110000,41
+548,Exposure of Information Through Directory Listing,Variant,0000001,497
+838,Inappropriate Encoding for Output Context,Base,0000000,116
+97,Improper Neutralization of Server-Side Includes (SSI) Within a Web Page,Variant,1000000,96
+909,Missing Initialization of Resource,Class,1000000,665
+64,Windows Shortcut Following (.LNK),Variant,0110000,59
+428,Unquoted Search Path or Element,Base,0110000,668
+568,finalize() Method Without super.finalize(),Variant,0000000,573
+35,Path Traversal: '.../...//',Variant,0110000,23
+479,Signal Handler Use of a Non-reentrant Function,Variant,0000000,828
+539,Use of Persistent Cookies Containing Sensitive Information,Variant,0000001,552
+1420,Exposure of Sensitive Information during Transient Execution,Base,0000001,669
+50,Path Equivalence: '//multiple/leading/slash',Variant,0110000,41
+9,J2EE Misconfiguration: Weak Access Permissions for EJB Methods,Variant,0000001,266
+212,Improper Removal of Sensitive Information Before Storage or Transfer,Base,0000001,669
+183,Permissive List of Allowed Inputs,Base,0000001,697
+352,Cross-Site Request Forgery (CSRF),Compound,0000001,345
+243,Creation of chroot Jail Without Changing Working Directory,Variant,0000000,573
+303,Incorrect Implementation of Authentication Algorithm,Base,0000001,1390
+121,Stack-based Buffer Overflow,Variant,1000000,788
+170,Improper Null Termination,Base,1000000,707
+337,Predictable Seed in Pseudo-Random Number Generator (PRNG),Variant,0110000,335
+277,Insecure Inherited Permissions,Variant,0000001,732
+1069,Empty Exception Block,Variant,0000001,1071
+366,Race Condition within a Thread,Base,0110000,362
+226,Sensitive Information in Resource Not Removed Before Reuse,Base,0000001,459
+1038,Insecure Automated Optimizations,Class,0000000,435
+395,Use of NullPointerException Catch to Detect NULL Pointer Dereference,Base,1000000,705
+144,Improper Neutralization of Line Delimiters,Variant,0000001,140
+284,Improper Access Control,Pillar,0000001,
+115,Misinterpretation of Input,Base,0000001,436
+105,Struts: Form Field Without Validator,Variant,0000001,1173
+294,Authentication Bypass by Capture-replay,Base,0000001,1390
+154,Improper Neutralization of Variable Name Delimiters,Variant,0000000,138
+385,Covert Timing Channel,Base,0000001,514
+236,Improper Handling of Undefined Parameters,Variant,0110000,233
+267,Privilege Defined With Unsafe Actions,Base,0000001,269
+1079,Parent Class without Virtual Destructor Method,Base,1000000,1076
+327,Use of a Broken or Risky Cryptographic Algorithm,Class,0000001,693
+160,Improper Neutralization of Leading Special Elements,Variant,0000000,138
+131,Incorrect Calculation of Buffer Size,Base,1000000,682
+313,Cleartext Storage in a File or on Disk,Variant,0000001,312
+253,Incorrect Check of Function Return Value,Base,0110000,573
+342,Predictable Exact Value from Previous Values,Base,0000001,340
+193,Off-by-one Error,Base,0000001,682
+202,Exposure of Sensitive Information Through Data Queries,Base,0000001,1230
+40,Path Traversal: '\\UNC\share\name\' (Windows UNC Share),Variant,0110000,36
+11,ASP.NET Misconfiguration: Creating Debug Binary,Variant,0100100,489
+529,Exposure of Access Control List Files to an Unauthorized Control Sphere,Variant,0000001,552
+25,Path Traversal: '/../filedir',Variant,0110000,23
+469,Use of Pointer Subtraction to Determine Size,Base,1000000,682
+578,EJB Bad Practices: Use of Class Loader,Variant,0000000,573
+74,Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'),Class,0000001,707
+87,Improper Neutralization of Alternate XSS Syntax,Variant,0000001,79
+57,Path Equivalence: 'fakedir/../realdir/filename',Variant,0110000,41
+639,Authorization Bypass Through User-Controlled Key,Base,0000001,863
+1427,Improper Neutralization of Input Used for LLM Prompting,Base,0000000,0
+779,Logging of Excessive Data,Base,0000001,400
+668,Exposure of Resource to Wrong Sphere,Class,0000001,664
+32,Path Traversal: '...' (Triple Dot),Variant,0110000,23
+90,Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection'),Base,0000001,943
+392,Missing Report of Error Condition,Base,0110000,755
+143,Improper Neutralization of Record Delimiters,Variant,0000001,140
+283,Unverified Ownership,Base,0000001,282
+112,Missing XML Validation,Base,0000001,1286
+330,Use of Insufficiently Random Values,Class,0000001,693
+270,Privilege Context Switching Error,Base,0000001,269
+221,Information Loss or Omission,Class,0000000,664
+126,Buffer Over-read,Variant,1000000,125
+1338,Improper Protections Against Hardware Overheating,Base,0000001,693
+1278,Missing Protection Against Hardware Reverse Engineering Using Integrated Circuit (IC) Imaging Techniques,Base,0000001,693
+177,Improper Handling of URL Encoding (Hex Encoding),Variant,0000000,172
+1229,Creation of Emergent Resource,Class,0000000,664
+215,Insertion of Sensitive Information Into Debugging Code,Base,0000001,200
+184,Incomplete List of Disallowed Inputs,Base,0000001,693
+244,Improper Clearing of Heap Memory Before Release ('Heap Inspection'),Variant,0000001,226
+304,Missing Critical Step in Authentication,Base,0000001,303
+314,Cleartext Storage in the Registry,Variant,0000001,312
+345,Insufficient Verification of Data Authenticity,Class,0000001,693
+194,Unexpected Sign Extension,Variant,0110000,681
+205,Observable Behavioral Discrepancy,Base,0000001,203
+1239,Improper Zeroization of Hardware Register,Variant,0000001,226
+167,Improper Handling of Additional Special Element,Base,0000001,159
+1268,Policy Privileges are not Assigned Consistently Between Control and Data Agents,Base,0000001,284
+1328,Security Version Number Mutable to Older Versions,Base,0000001,285
+231,Improper Handling of Extra Values,Variant,0110000,229
+260,Password in Configuration File,Base,0000001,522
+102,Struts: Duplicate Validation Forms,Variant,0000001,694
+293,Using Referer Field for Authentication,Variant,0000001,290
+153,Improper Neutralization of Substitution Characters,Variant,0000000,138
+382,J2EE Bad Practices: Use of System.exit(),Variant,0000000,705
+80,Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS),Variant,0000001,79
+22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),Base,0110000,706
+73,External Control of File Name or Path,Base,0000001,642
+769,DEPRECATED: Uncontrolled File Descriptor Consumption,Base,0000000,0
+47,Path Equivalence: ' filename' (Leading Space),Variant,0110000,41
+36,Absolute Path Traversal,Base,0110000,22
+67,Improper Handling of Windows Device Names,Variant,0000001,66
+749,Exposed Dangerous Method or Function,Base,0100100,284
+94,Improper Control of Generation of Code ('Code Injection'),Base,1000000,74
+598,Use of GET Request Method With Sensitive Query Strings,Variant,0000001,201
+609,Double-Checked Locking,Base,0000000,667
+489,Active Debug Code,Base,0100100,710
+53,Path Equivalence: '\multiple\\internal\backslash',Variant,0110000,41
+1423,Exposure of Sensitive Information caused by Shared Microarchitectural Predictor State that Influences Transient Execution,Base,0000001,1420
+173,Improper Handling of Alternate Encoding,Variant,0000000,172
+122,Heap-based Buffer Overflow,Variant,1000000,788
+240,Improper Handling of Inconsistent Structural Elements,Base,0110000,237
+300,Channel Accessible by Non-Endpoint,Class,0000001,923
+180,Incorrect Behavior Order: Validate Before Canonicalize,Variant,0000001,179
+211,Externally-Generated Error Message Containing Sensitive Information,Base,0000001,209
+351,Insufficient Type Distinction,Base,1000000,345
+1248,Semiconductor Defects in Hardware Logic with Security-Sensitive Implications,Base,0000001,693
+1099,Inconsistent Naming Conventions for Identifiers,Base,0000000,1078
+116,Improper Encoding or Escaping of Output,Class,0000001,707
+287,Improper Authentication,Class,0000001,284
+396,Declaration of Catch for Generic Exception,Base,1000000,705
+1188,Initialization of a Resource with an Insecure Default,Base,0000001,1419
+147,Improper Neutralization of Input Terminators,Variant,0000000,138
+365,DEPRECATED: Race Condition in Switch,Base,0000000,0
+225,DEPRECATED: General Information Management Problems,Base,0000000,0
+334,Small Space of Random Values,Base,0000001,330
+274,Improper Handling of Insufficient Privileges,Base,0000001,755
+324,Use of a Key Past its Expiration Date,Base,0000001,672
+235,Improper Handling of Extra Parameters,Variant,0110000,233
+375,Returning a Mutable Object to an Untrusted Caller,Base,1000000,668
+157,Failure to Sanitize Paired Delimiters,Variant,0000000,138
+386,Symbolic Name not Mapping to Correct Object,Base,1000000,706
+1209,Failure to Disable Reserved Bits,Base,0000001,710
+1089,Large Data Table with Excessive Number of Indices,Base,0000001,405
+1318,Missing Support for Security Features in On-chip Fabrics or Buses,Base,0000001,693
+297,Improper Validation of Certificate with Host Mismatch,Variant,0000001,923
+106,Struts: Plug-in Framework not in Use,Variant,0000001,1173
+1258,Exposure of Sensitive System Information Due to Uncleared Debug Information,Base,0000001,212
+341,Predictable from Observable State,Base,0000001,340
+201,Insertion of Sensitive Information Into Sent Data,Base,0000001,200
+190,Integer Overflow or Wraparound,Base,0100100,682
+250,Execution with Unnecessary Privileges,Base,0000001,269
+132,DEPRECATED: Miscalculated Null Termination,Base,0000000,0
+163,Improper Neutralization of Multiple Trailing Special Elements,Variant,0000000,162
+12,ASP.NET Misconfiguration: Missing Custom Error Page,Variant,0000001,756
+43,Path Equivalence: 'filename....' (Multiple Trailing Dot),Variant,0000000,42
+648,Incorrect Use of Privileged APIs,Base,0000001,269
+708,Incorrect Ownership Assignment,Base,0000001,282
+499,Serializable Class Containing Sensitive Data,Variant,0000001,668
+619,Dangling Database Cursor ('Cursor Injection'),Base,0110000,402
+588,Attempt to Access Child of a Non-structure Pointer,Variant,1000000,704
+759,Use of a One-Way Hash without a Salt,Variant,0000001,916
+84,Improper Neutralization of Encoded URI Schemes in a Web Page,Variant,0000001,79
+77,Improper Neutralization of Special Elements used in a Command ('Command Injection'),Class,0000001,74
+26,Path Traversal: '/dir/../filename',Variant,0110000,23
+37,Path Traversal: '/absolute/pathname/here',Variant,0110000,36
+66,Improper Handling of File Names that Identify Virtual Resources,Base,0000001,706
+95,Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection'),Variant,1000000,94
+608,Struts: Non-private Field in ActionForm Class,Variant,0000001,668
+599,Missing Validation of OpenSSL Certificate,Variant,0000001,295
+488,Exposure of Data Element to Wrong Session,Base,0110000,668
+52,Path Equivalence: '/multiple/trailing/slash//',Variant,0110000,41
+1422,Exposure of Sensitive Information caused by Incorrect Data Forwarding during Transient Execution,Base,0000001,1420
+172,Encoding Error,Class,0000000,707
+123,Write-what-where Condition,Base,1000000,787
+241,Improper Handling of Unexpected Data Type,Base,0110000,228
+301,Reflection Attack in an Authentication Protocol,Base,0000001,1390
+210,Self-generated Error Message Containing Sensitive Information,Base,0000001,209
+181,Incorrect Behavior Order: Validate Before Filter,Variant,0000001,179
+350,Reliance on Reverse DNS Resolution for a Security-Critical Action,Variant,0000001,290
+1249,Application-Level Admin Tool with Inconsistent View of Underlying Operating System,Base,0000001,1250
+286,Incorrect User Management,Class,0000001,284
+117,Improper Output Neutralization for Logs,Base,0000001,116
+1098,Data Element containing Pointer Item without Proper Copy Control Element,Base,1000000,1076
+1189,Improper Isolation of Shared Resources on System-on-a-Chip (SoC),Base,0000001,653
+397,Declaration of Throws for Generic Exception,Base,1000000,705
+146,Improper Neutralization of Expression/Command Delimiters,Variant,0000001,140
+364,Signal Handler Race Condition,Base,0110000,362
+224,Obscured Security-relevant Information by Alternate Name,Base,0000001,221
+335,Incorrect Usage of Seeds in Pseudo-Random Number Generator (PRNG),Base,0110000,330
+325,Missing Cryptographic Step,Base,0000001,573
+234,Failure to Handle Missing Parameter,Variant,0110000,233
+374,Passing Mutable Objects to an Untrusted Method,Base,0110000,668
+156,Improper Neutralization of Whitespace,Variant,0000000,138
+107,Struts: Unused Validation Form,Variant,0000000,1164
+296,Improper Following of a Certificate's Chain of Trust,Base,0000001,295
+1319,Improper Protection against Electromagnetic Fault Injection (EM-FI),Base,0000001,693
+1088,Synchronous Access of Remote Resource without Timeout,Base,0110000,821
+1259,Improper Restriction of Security Token Assignment,Base,0000001,284
+340,Generation of Predictable Numbers or Identifiers,Class,0000001,330
+191,Integer Underflow (Wrap or Wraparound),Base,0100100,682
+200,Exposure of Sensitive Information to an Unauthorized Actor,Class,0000001,668
+311,Missing Encryption of Sensitive Data,Class,0000001,693
+162,Improper Neutralization of Trailing Special Elements,Variant,0000000,138
+13,ASP.NET Misconfiguration: Password in Configuration File,Variant,0000001,260
+42,Path Equivalence: 'filename.' (Trailing Dot),Variant,0110000,41
+649,Reliance on Obfuscation or Encryption of Security-Relevant Inputs without Integrity Checking,Base,0000001,345
+498,Cloneable Class Containing Sensitive Information,Variant,0000001,668
+589,Call to Non-ubiquitous API,Variant,0000001,474
+618,Exposed Unsafe ActiveX Method,Variant,0100100,749
+85,Doubled Character XSS Manipulations,Variant,0000001,79
+758,"Reliance on Undefined, Unspecified, or Implementation-Defined Behavior",Class,0000001,710
+76,Improper Neutralization of Equivalent Special Elements,Base,0000001,75
+27,Path Traversal: 'dir/../../filename',Variant,0110000,23
+56,Path Equivalence: 'filedir*' (Wildcard),Variant,0110000,41
+1426,Improper Validation of Generative AI Output,Base,0000001,707
+638,Not Using Complete Mediation,Class,0000000,657
+778,Insufficient Logging,Base,0000001,223
+669,Incorrect Resource Transfer Between Spheres,Class,0000001,664
+62,UNIX Hard Link,Variant,0110000,59
+33,Path Traversal: '....' (Multiple Dot),Variant,0110000,23
+91,XML Injection (aka Blind XPath Injection),Base,0000001,74
+393,Return of Wrong Status Code,Base,0000001,684
+142,Improper Neutralization of Value Delimiters,Variant,0000001,140
+113,Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Request/Response Splitting'),Variant,0000001,93
+282,Improper Ownership Management,Class,0000001,284
+331,Insufficient Entropy,Base,0000001,330
+271,Privilege Dropping / Lowering Errors,Class,0000001,269
+360,Trust of System Event Data,Base,0000001,345
+220,Storage of File With Sensitive Data Under FTP Root,Variant,0000001,552
+1339,Insufficient Precision or Accuracy of a Real Number,Base,0000001,682
+127,Buffer Under-read,Variant,1000000,125
+1279,Cryptographic Operations are run Before Supporting Units are Ready,Base,0000001,691
+176,Improper Handling of Unicode Encoding,Variant,0000000,172
+185,Incorrect Regular Expression,Class,0000001,697
+214,Invocation of Process Using Visible Sensitive Information,Base,0000001,497
+354,Improper Validation of Integrity Check Value,Base,0000001,345
+245,J2EE Bad Practices: Direct Management of Connections,Variant,0000001,695
+305,Authentication Bypass by Primary Weakness,Base,0000001,1390
+315,Cleartext Storage of Sensitive Information in a Cookie,Variant,0000001,312
+344,Use of Invariant Value in Dynamically Changing Context,Base,0110000,330
+204,Observable Response Discrepancy,Base,0000001,203
+195,Signed to Unsigned Conversion Error,Variant,0110000,681
+166,Improper Handling of Missing Special Element,Base,0000001,159
+1269,Product Released in Non-Release Configuration,Base,0000001,693
+1329,Reliance on Component That is Not Updateable,Base,0000001,1357
+230,Improper Handling of Missing Values,Variant,0110000,229
+370,Missing Check for Certificate Revocation after Initial Check,Variant,0000001,299
+261,Weak Encoding for Password,Base,0000001,522
+321,Use of Hard-coded Cryptographic Key,Variant,0000001,798
+292,DEPRECATED: Trusting Self-reported DNS Name,Variant,0000000,0
+103,Struts: Incomplete validate() Method Definition,Variant,0000000,573
+152,Improper Neutralization of Macro Symbols,Variant,0000000,138
+383,J2EE Bad Practices: Direct Use of Threads,Variant,0000001,695
+81,Improper Neutralization of Script in an Error Message Web Page,Variant,0000001,79
+23,Relative Path Traversal,Base,0110000,22
+72,Improper Handling of Apple HFS+ Alternate Data Stream Path,Variant,0000001,66
+768,Incorrect Short Circuit Evaluation,Variant,0000000,691
+628,Function Call with Incorrectly Specified Arguments,Base,1000000,573
+46,Path Equivalence: 'filename ' (Trailing Space),Variant,0110000,41
+1124,Excessively Deep Nesting,Base,0000000,1120
+1064,Invokable Control Element with Signature Containing an Excessive Number of Parameters,Base,0000000,1120
+149,Improper Neutralization of Quoting Syntax,Variant,0000000,138
+1357,Reliance on Insufficiently Trustworthy Component,Class,0000001,710
+1246,Improper Write Handling in Limited-write Non-Volatile Memories,Base,0000001,400
+118,Incorrect Access of Indexable Resource ('Range Error'),Class,1000000,664
+289,Authentication Bypass by Alternate Name,Base,0000001,1390
+1097,Persistent Storable Data Element without Associated Comparison Control Element,Base,0000000,1076
+1390,Weak Authentication,Class,0000001,287
+1050,Excessive Platform Resource Consumption within a Loop,Base,0000001,405
+1281,Sequence of Processor Instructions Leads to Unexpected Behavior,Base,0000001,691
+1110,Incomplete Design Documentation,Base,0000000,1059
+1332,Improper Handling of Faults that Lead to Instruction Skips,Base,0000001,1384
+1272,Sensitive Information Uncleared Before Debug/Power State Transition,Base,0000001,226
+1223,Race Condition for Write-Once Attributes,Base,0110000,362
+773,Missing Reference to Active File Descriptor or Handle,Variant,0000001,771
+662,Improper Synchronization,Class,0000000,664
+821,Incorrect Synchronization,Base,1000000,662
+500,Public Static Field Not Marked Final,Variant,0000000,493
+691,Insufficient Control Flow Management,Pillar,0000000,
+440,Expected Behavior Violation,Base,0000001,684
+551,Incorrect Behavior Order: Authorization Before Parsing and Canonicalization,Base,0000001,863
+780,Use of RSA Algorithm without OAEP,Variant,0000000,327
+487,Reliance on Package-level Scope,Base,0000001,664
+656,Reliance on Security Through Obscurity,Class,0000000,657
+596,DEPRECATED: Incorrect Semantic Object Comparison,Base,0000000,0
+607,Public Static Final Field References Mutable Object,Variant,1000000,471
+1419,Incorrect Initialization of Resource,Class,1000000,665
+425,Direct Request ('Forced Browsing'),Base,0000001,862
+69,Improper Handling of Windows ::DATA Alternate Data Stream,Variant,0000001,66
+565,Reliance on Cookies without Validation and Integrity Checking,Base,0000001,642
+474,Use of Function with Inconsistent Implementations,Base,0000001,758
+38,Path Traversal: '\absolute\pathname\here',Variant,0110000,36
+534,DEPRECATED: Information Exposure Through Debug Log Files,Variant,0000000,0
+524,Use of Cache Containing Sensitive Information,Base,0000001,668
+464,Addition of Data Structure Sentinel,Base,0110000,138
+28,Path Traversal: '..\filedir',Variant,0110000,23
+575,EJB Bad Practices: Use of AWT Swing,Variant,0000001,695
+435,Improper Interaction Between Multiple Correctly-Behaving Entities,Pillar,0000000,
+79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),Base,0000001,74
+617,Reachable Assertion,Base,0100100,670
+586,Explicit Call to Finalize(),Base,1000000,1076
+914,Improper Control of Dynamically-Identified Variables,Base,1000000,99
+757,Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade'),Base,0000001,693
+646,Reliance on File Name or Extension of Externally-Supplied File,Variant,0000001,345
+805,Buffer Access with Incorrect Length Value,Base,1000000,119
+706,Use of Incorrectly-Resolved Name or Reference,Class,0000000,664
+497,Exposure of Sensitive System Information to an Unauthorized Control Sphere,Base,0000001,200
+790,Improper Filtering of Special Elements,Class,0000000,138
+401,Missing Release of Memory after Effective Lifetime,Variant,0000001,772
+541,Inclusion of Sensitive Information in an Include File,Variant,0000001,540
+450,Multiple Interpretations of UI Input,Base,0000001,357
+681,Incorrect Conversion between Numeric Types,Base,0110000,704
+510,Trapdoor,Base,0000001,506
+831,Signal Handler Function Associated with Multiple Signals,Variant,0110000,364
+732,Incorrect Permission Assignment for Critical Resource,Class,0000001,285
+672,Operation on a Resource after Expiration or Release,Class,0000000,666
+763,Release of Invalid Pointer or Reference,Base,1000000,404
+623,Unsafe ActiveX Control Marked Safe For Scripting,Variant,0000001,267
+920,Improper Restriction of Power Consumption,Base,0000001,400
+1233,Security-Sensitive Hardware Controls with Missing Lock Bit Protection,Base,0000001,284
+1262,Improper Access Control for Register Interface,Base,0000001,284
+1322,"Use of Blocking Code in Single-threaded, Non-blocking Context",Base,0000001,834
+1100,Insufficient Isolation of System-Dependent Functions,Base,0110000,1061
+1291,Public Key Re-Use for Signing both Debug and Production Code,Base,0000001,693
+299,Improper Check for Certificate Revocation,Base,0000001,295
+108,Struts: Unvalidated Action Form,Variant,0000001,1173
+1087,Class with Virtual Method without a Virtual Destructor,Base,1000000,1076
+1316,Fabric-Address Map Allows Programming of Unwarranted Overlaps of Protected and Unprotected Ranges,Base,0000001,284
+1256,Improper Restriction of Software Interfaces to Hardware Features,Base,0000001,285
+159,Improper Handling of Invalid Use of Special Elements,Class,0000001,138
+1025,Comparison Using Wrong Factors,Base,0000001,697
+1074,Class with Excessively Deep Inheritance,Base,1000000,1093
+1054,Invocation of a Control Element at an Unnecessarily Deep Horizontal Layer,Base,0110000,1061
+1114,Inappropriate Whitespace Style,Base,0000000,1078
+1285,"Improper Validation of Specified Index, Position, or Offset in Input",Base,0000001,20
+1394,Use of Default Cryptographic Key,Base,0000001,1392
+179,Incorrect Behavior Order: Early Validation,Base,0000001,20
+1336,Improper Neutralization of Special Elements Used in a Template Engine,Base,0000001,94
+128,Wrap-around Error,Base,0100100,682
+1276,Hardware Child Block Incorrectly Connected to Parent System,Base,0000001,284
+1120,Excessive Code Complexity,Class,0000001,710
+1060,Excessive Number of Inefficient Server-Side Data Accesses,Base,0000001,1120
+1242,Inclusion of Undocumented Features or Chicken Bits,Base,0000001,284
+1093,Excessively Complex Data Representation,Class,0000001,710
+1302,Missing Source Identifier in Entity Transactions on a System-On-Chip (SOC),Base,0000001,1294
+603,Use of Client-Side Authentication,Base,0000001,1390
+592,DEPRECATED: Authentication Bypass Issues,Class,0000000,0
+483,Incorrect Block Delimitation,Base,1000000,670
+652,Improper Neutralization of Data within XQuery Expressions ('XQuery Injection'),Base,0000001,943
+470,Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection'),Base,1000000,913
+530,Exposure of Backup File to an Unauthorized Control Sphere,Variant,0000001,552
+421,Race Condition During Access to Alternate Channel,Base,0110000,420
+561,Dead Code,Base,0100110,1164
+666,Operation on Resource in Wrong Phase of Lifetime,Class,0000000,664
+825,Expired Pointer Dereference,Base,1000000,119
+637,Unnecessary Complexity in Protection Mechanism (Not Using 'Economy of Mechanism'),Class,0000000,657
+777,Regular Expression without Anchors,Variant,0000001,625
+555,J2EE Misconfiguration: Plaintext Password in Configuration File,Variant,0000001,260
+59,Improper Link Resolution Before File Access ('Link Following'),Base,0110000,706
+784,Reliance on Cookies without Validation and Integrity Checking in a Security Decision,Variant,0000000,807
+415,Double Free,Variant,1000000,825
+695,Use of Low-Level Functionality,Base,0000001,573
+444,Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling'),Base,0000001,436
+454,External Initialization of Trusted Variables or Data Stores,Base,0000001,1419
+514,Covert Channel,Class,0000000,1229
+685,Function Call With Incorrect Number of Arguments,Variant,1000000,628
+49,Path Equivalence: 'filename/' (Trailing Slash),Variant,0110000,41
+405,Asymmetric Resource Consumption (Amplification),Class,0000001,400
+794,Incomplete Filtering of Multiple Instances of Special Elements,Variant,0000000,792
+545,DEPRECATED: Use of Dynamic Class Loading,Variant,0000000,0
+767,Access to Critical Private Variable via Public Method,Base,0000001,668
+924,Improper Enforcement of Message Integrity During Transmission in a Communication Channel,Base,0000001,345
+627,Dynamic Variable Evaluation,Variant,0000001,914
+835,Loop with Unreachable Exit Condition ('Infinite Loop'),Base,0000001,834
+676,Use of Potentially Dangerous Function,Base,0100100,1177
+571,Expression is Always True,Base,0100110,710
+431,Missing Handler,Base,0110000,691
+520,.NET Misconfiguration: Use of Impersonation,Variant,0000001,266
+460,Improper Cleanup on Thrown Exception,Base,1000000,459
+941,Incorrectly Specified Destination in a Communication Channel,Base,0000001,923
+642,External Control of Critical State Data,Class,0000001,668
+493,Critical Public Variable Without Final Modifier,Variant,0000001,668
+910,Use of Expired File Descriptor,Base,0000000,672
+582,"Array Declared Public, Final, and Static",Variant,0000001,668
+613,Insufficient Session Expiration,Base,0000001,672
+1192,Improper Identifier for IP Block used in System-On-Chip (SOC),Base,0000001,657
+1312,Missing Protection for Mirrored Regions in On-Chip Fabric Firewall,Base,0000001,284
+1083,Data Access from Outside Expected Data Manager Component,Base,0000001,1061
+1252,CPU Hardware Not Configured to Support Exclusivity of Write and Execute Operations,Base,0000001,284
+1070,Serializable Data Element Containing non-Serializable Item Elements,Base,0000001,1076
+1021,Improper Restriction of Rendered UI Layers or Frames,Base,0000001,441
+1266,Improper Scrubbing of Sensitive Data from Decommissioned Device,Base,0000001,404
+1326,Missing Immutable Root of Trust in Hardware,Base,0000001,693
+138,Improper Neutralization of Special Elements,Class,0000000,707
+1384,Improper Handling of Physical or Environmental Conditions,Class,0110000,703
+1295,Debug Messages Revealing Unnecessary Information,Base,0000001,200
+1104,Use of Unmaintained Third Party Components,Base,0000001,1357
+1044,Architecture with Number of Horizontal Layers Outside of Expected Range,Base,0000001,710
+1055,Multiple Inheritance from Concrete Classes,Base,1000000,1093
+1284,Improper Validation of Specified Quantity in Input,Base,0000001,20
+1115,Source Code Element without Standard Prologue,Base,0000000,1078
+1395,Dependency on Vulnerable Third-Party Component,Class,0000000,657
+1004,Sensitive Cookie Without 'HttpOnly' Flag,Variant,0000001,732
+178,Improper Handling of Case Sensitivity,Base,0000001,706
+129,Improper Validation of Array Index,Variant,0000001,1285
+1277,Firmware Not Updateable,Base,0000001,1329
+1121,Excessive McCabe Cyclomatic Complexity,Base,0000000,1120
+1061,Insufficient Encapsulation,Class,0000001,710
+1243,Sensitive Non-Volatile Information Not Protected During Debug,Base,0000001,1263
+1303,Non-Transparent Sharing of Microarchitectural Resources,Base,0000001,1189
+1092,Use of Same Invokable Control Element in Multiple Architectural Layers,Base,0000001,710
+841,Improper Enforcement of Behavioral Workflow,Base,0000001,691
+593,Authentication Bypass: OpenSSL CTX Object Modified after SSL Objects are Created,Variant,0000000,666
+602,Client-Side Enforcement of Server-Side Security,Class,0000001,693
+482,Comparing instead of Assigning,Variant,0000001,480
+653,Improper Isolation or Compartmentalization,Class,0000000,657
+471,Modification of Assumed-Immutable Data (MAID),Base,1000000,664
+531,Inclusion of Sensitive Information in Test Code,Variant,0000001,540
+420,Unprotected Alternate Channel,Base,0000001,923
+560,Use of umask() with chmod-style Argument,Variant,0000000,687
+667,Improper Locking,Class,0000001,662
+824,Access of Uninitialized Pointer,Base,1000000,119
+636,Not Failing Securely ('Failing Open'),Class,0110000,657
+776,Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion'),Base,0000001,674
+554,ASP.NET Misconfiguration: Not Using Input Validation Framework,Variant,0000001,1173
+414,Missing Lock Check,Base,0110000,667
+785,Use of Path Manipulation Function without Maximum-sized Buffer,Variant,0100100,676
+58,Path Equivalence: Windows 8.3 Filename,Variant,0110000,41
+694,Use of Multiple Resources with Duplicate Identifier,Base,0000001,99
+455,Non-exit on Failed Initialization,Base,1000000,665
+684,Incorrect Provision of Specified Functionality,Class,0000001,710
+515,Covert Storage Channel,Base,0000001,514
+795,Only Filtering Special Elements at a Specified Location,Base,0000001,791
+404,Improper Resource Shutdown or Release,Class,0000000,664
+48,Path Equivalence: 'file name' (Internal Whitespace),Variant,0110000,41
+544,Missing Standardized Error Handling Mechanism,Base,0000001,755
+766,Critical Data Element Declared Public,Base,0000001,732
+626,Null Byte Interaction Error (Poison Null Byte),Variant,0000000,147
+925,Improper Verification of Intent by Broadcast Receiver,Variant,0000001,940
+834,Excessive Iteration,Class,0000001,691
+570,Expression is Always False,Base,0100110,710
+430,Deployment of Wrong Handler,Base,0110000,691
+521,Weak Password Requirements,Base,0000001,1391
+643,Improper Neutralization of Data within XPath Expressions ('XPath Injection'),Base,0000001,943
+940,Improper Verification of Source of a Communication Channel,Base,0000001,923
+703,Improper Check or Handling of Exceptional Conditions,Pillar,0110000,
+492,Use of Inner Class Containing Sensitive Data,Variant,0000001,668
+612,Improper Authorization of Index Containing Sensitive Information,Base,0000001,1230
+583,finalize() Method Declared Public,Variant,0000001,668
+911,Improper Update of Reference Count,Base,1000000,664
+1342,Information Exposure through Microarchitectural State after Transient Execution,Base,0000001,226
+1193,Power-On of Untrusted Execution Core Before Enabling Fabric Access Control,Base,0000001,696
+1082,Class Instance Self Destruction Control Element,Base,1000000,1076
+1313,Hardware Allows Activation of Test or Debug Logic at Runtime,Base,0000001,284
+1253,Incorrect Selection of Fuse Values,Base,0000001,693
+1071,Empty Code Block,Base,0110000,1164
+1267,Policy Uses Obsolete Encoding,Base,0000001,284
+1327,Binding to an Unrestricted IP Address,Base,0000001,668
+1236,Improper Neutralization of Formula Elements in a CSV File,Base,0000001,74
+168,Improper Handling of Inconsistent Special Elements,Base,0000001,159
+1385,Missing Origin Validation in WebSockets,Variant,0000001,346
+1105,Insufficient Encapsulation of Machine-Dependent Functionality,Base,0000000,758
+1294,Insecure Security Identifier Mechanism,Class,0000001,284
+1045,Parent Class with a Virtual Destructor and a Child Class without a Virtual Destructor,Base,1000000,1076
+1125,Excessive Attack Surface,Base,0000000,1120
+1065,Runtime Resource Management Control Element in a Component Built to Run on Application Servers,Base,0000000,710
+1174,ASP.NET Misconfiguration: Improper Model Validation,Variant,0000001,1173
+1187,DEPRECATED: Use of Uninitialized Resource,Base,0000000,0
+148,Improper Neutralization of Input Leaders,Variant,0000000,138
+1247,Improper Protection Against Voltage and Clock Glitches,Base,0000001,1384
+1096,Singleton Class Instance Creation without Proper Locking or Synchronization,Variant,0000000,820
+288,Authentication Bypass Using an Alternate Path or Channel,Base,0000001,306
+119,Improper Restriction of Operations within the Bounds of a Memory Buffer,Class,1000000,118
+1391,Use of Weak Credentials,Class,0000000,1390
+1051,Initialization with Hard-Coded Network Resource Configuration Data,Base,0110000,1419
+1111,Incomplete I/O Documentation,Base,0000000,1059
+1280,Access Control Check Implemented After Asset is Accessed,Base,0000001,696
+1333,Inefficient Regular Expression Complexity,Base,0000001,407
+1273,Device Unlock Credential Sharing,Base,0000001,200
+1222,Insufficient Granularity of Address Regions Protected by Register Locks,Variant,0000001,1220
+772,Missing Release of Resource after Effective Lifetime,Base,0000001,404
+663,Use of a Non-reentrant Function in a Concurrent Context,Base,0000000,662
+820,Missing Synchronization,Base,1000000,662
+690,Unchecked Return Value to NULL Pointer Dereference,Compound,0110000,252
+501,Trust Boundary Violation,Base,0000001,664
+441,Unintended Proxy or Intermediary ('Confused Deputy'),Class,0000001,610
+550,Server-generated Error Message Containing Sensitive Information,Variant,0000001,209
+5,J2EE Misconfiguration: Data Transmission Without Encryption,Variant,0000001,319
+781,Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code,Variant,0000001,1285
+410,Insufficient Resource Pool,Base,0000000,664
+486,Comparison of Classes by Name,Variant,1000000,1025
+657,Violation of Secure Design Principles,Class,0000001,710
+606,Unchecked Input for Loop Condition,Base,0110000,1284
+597,Use of Wrong Operator in String Comparison,Variant,0000000,595
+424,Improper Protection of Alternate Path,Class,0000001,693
+564,SQL Injection: Hibernate,Variant,0000001,89
+39,Path Traversal: 'C:dirname',Variant,0110000,36
+475,Undefined Behavior for Input to API,Base,0000001,573
+535,Exposure of Information Through Shell Error Message,Variant,0000001,211
+525,Use of Web Browser Cache Containing Sensitive Information,Variant,0000001,524
+29,Path Traversal: '\..\filename',Variant,0110000,23
+574,EJB Bad Practices: Use of Synchronization Primitives,Variant,0000001,695
+78,Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection'),Base,0110000,77
+434,Unrestricted Upload of File with Dangerous Type,Base,0000001,669
+915,Improperly Controlled Modification of Dynamically-Determined Object Attributes,Base,1000000,913
+587,Assignment of a Fixed Address to a Pointer,Variant,0110000,344
+616,Incomplete Identification of Uploaded File Variables (PHP),Variant,0000001,345
+756,Missing Custom Error Page,Base,0000001,755
+647,Use of Non-Canonical URL Paths for Authorization Decisions,Variant,0000001,863
+496,Public Data Assigned to Private Array-Typed Field,Variant,0000000,664
+707,Improper Neutralization,Pillar,0000000,
+804,Guessable CAPTCHA,Base,0000001,863
+400,Uncontrolled Resource Consumption,Class,0000001,664
+791,Incomplete Filtering of Special Elements,Base,0000001,790
+540,Inclusion of Sensitive Information in Source Code,Base,0000001,538
+451,User Interface (UI) Misrepresentation of Critical Information,Class,0000000,684
+511,Logic/Time Bomb,Base,0000001,506
+680,Integer Overflow to Buffer Overflow,Compound,0100100,190
+733,Compiler Optimization Removal or Modification of Security-critical Code,Base,0000001,1038
+830,Inclusion of Web Functionality from an Untrusted Source,Variant,0000001,829
+673,External Influence of Sphere Definition,Class,0000000,664
+762,Mismatched Memory Management Routines,Variant,1000000,763
+921,Storage of Sensitive Data in a Mechanism without Access Control,Base,0000001,922
+622,Improper Validation of Function Hook Arguments,Variant,0000001,20
+1232,Improper Lock Behavior After Power State Transition,Base,0000001,667
+1263,Improper Physical Access Control,Class,0000001,284
+1323,Improper Management of Sensitive Trace Data,Base,0000001,284
+1290,Incorrect Decoding of Security Identifiers,Base,0000001,284
+1101,Reliance on Runtime Component in Generated Code,Base,0000000,710
+1041,Use of Redundant Code,Base,0100100,710
+1317,Improper Access Control in Fabric Bridge,Base,0000001,284
+1086,Class with Excessive Number of Child Classes,Base,1000000,1093
+109,Struts: Validator Turned Off,Variant,0000001,1173
+298,Improper Validation of Certificate Expiration,Variant,0000001,295
+1257,Improper Access Control Applied to Mirrored or Aliased Memory Regions,Base,0000001,284
+158,Improper Neutralization of Null Byte or NUL Character,Variant,0000000,138
+1024,Comparison of Incompatible Types,Base,1000000,697
+1164,Irrelevant Code,Class,0000001,710
+1075,Unconditional Control Flow Transfer outside of Switch Block,Base,1000000,1120
