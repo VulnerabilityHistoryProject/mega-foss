@@ -34,7 +34,7 @@
         }
     }, {
         '$project': {
-            'cve_id': 'cve_id',
+            'cve_id': '$cve_id',
             'patches': '$urls.captures'
         }
     }
