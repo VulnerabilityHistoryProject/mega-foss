@@ -77,7 +77,7 @@ MAP_2_0 = {
   }
 }
 
-def vector_to_json(vector_str: str):
+def vector_to_dict(vector_str: str):
   """
   Converts a CVSS vector string to JSON format.
 
@@ -87,6 +87,10 @@ def vector_to_json(vector_str: str):
   Returns:
       bytes: JSON representation of the vector metrics as a bytes object
   """
+  if not vector_str:
+    return orjson.dumps({})
+  if vector_str.startswith("CVSS:3."):
+    vector_str = vector_str[9:]
   json = {}
   metrics = vector_str.split("/")
   for metric in metrics:
