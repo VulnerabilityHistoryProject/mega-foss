@@ -1,16 +1,16 @@
 """
-Print these out to the console spacing them out with tabs,
-and then we can just copy and paste into Google Sheets and rebuild the chart.
---------------------------------------------------------------------------------
-- Number of CVEs:
-		How many CVEs are in each category of our Rust->CWE classification.
-		e.g. 300 Virtually Impossible, 100 Discouraged via Borrow Checker, etc.
-- Number of projects:
-		How many projects have at least one CVE for each Rust->CWE classification.
-		e.g. 30 projects had at least one Virtually Impossible, etc.
-- Prominent Projects:
-	We should pick a few projects that are prominent and had a lot of CVEs.
-	e.g. Linux kernel or libxml or somethihg. Report the breakdown of each category
+This script analyzes CVE and CWE data and provides:
+- CVE Distribution: Analyzes and reports the number of CVEs that fall into each Rust safety category
+		(e.g. Virtually Impossible, Discouraged via Borrow Checker, etc.)
+- Project Coverage: Tracks how many distinct projects have CVEs in each Rust safety category
+- Project Analysis: Detailed breakdown of prominent projects (e.g. Linux kernel) showing distribution
+		of CVEs across safety categories
+
+Data Analysis :
+- Processes CVE/CWE mappings from multiple sources
+- Maps CWEs to Rust safety categories based on classification data
+- Generates statistical breakdowns by project and category
+- Outputs formatted data for visualization and further analysis
 """
 
 """
@@ -103,7 +103,7 @@ class RustCSVData:
 		self.vote = vote
 		self.clippy = clippy
 		self.cves = set()
-		self.ref = False
+		self.ref = False # Indicates if an entry is a child of a base class
 
 		self.description = desc
 		self.url = url
@@ -129,11 +129,15 @@ class CWEData:
 LOADING DATA
 """
 def load_rust_csv() -> dict[str, RustCSVData]:
+	"""
+	Load the Rust CWE classification data from the CSV file.
+	Returns a dictionary mapping CWE IDs to RustCSVData objects.
+	"""
 	rust_cwe_csv_path = Path(rust_cwe_csv)
 	try:
 		with open(rust_cwe_csv_path, 'r') as f:
 			reader = csv.reader(f)
-			next(reader)
+			next(reader) # Skip headers
 			# CWE-ID,Name,Link,Type,Non-Base Needs Classification,Prohibited?,Description,Vote,Clippy Helps?,
 			data =  {
 				f"CWE-{r[0]}":
@@ -159,6 +163,9 @@ def load_rust_csv() -> dict[str, RustCSVData]:
 		exit()
 
 def load_cwe_variants_map(cwe_data):
+	"""
+	Load the CWE variant mappings and update parent vote information for non-base CWEs.
+	"""
 	cwe_variants_to_base_csv_path = Path(cwe_variants_to_base_csv)
 	try:
 		with open(cwe_variants_to_base_csv_path, 'r') as f:
@@ -170,7 +177,7 @@ def load_cwe_variants_map(cwe_data):
 				id, cwe_type, parent_vote = f"CWE-{r[0]}", r[2], r[5]
 				if id in cwe_data and parent_vote:
 					if cwe_type == 'Base':
-						continue
+						continue # Skip base classes
 					d = cwe_data[id]
 					d.vote = parent_vote
 					d.ref = True
@@ -580,7 +587,8 @@ def main():
 	# 	print(cwe)
 	#
 
-	generate_cwe_page_files(rust_csv_data)
+# Generate Files for Website
+	# generate_cwe_page_files(rust_csv_data)
 
 	cursor.close()
 	conn.close()
