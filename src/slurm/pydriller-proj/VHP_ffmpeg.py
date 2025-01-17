@@ -23,6 +23,7 @@ from pydriller import Repository
 from pydriller.metrics.process.change_set import ChangeSet
 from pydriller import Git
 import subprocess as subsub
+import datetime
 
 FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697"
 ORIGIN_COMMIT_HASH:str = ""
@@ -33,14 +34,15 @@ MODIFIED_FILES:set[str] = set()
 
 
 
-def find_origin_commit(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> None:
+def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
     """_summary_
 
     Args:
-        fixed_commit_hash (str, optional): _description_. Defaults to FIXED_VULN_COMMIT_HASH.
-        repo_path (str, optional): _description_. Defaults to FFMPEG_PATH_TO_REPO.
+        fixed_commit_hash (str, optional): The hash of the bug fix as seen here --> https://vulnerabilityhistory.org/commits/d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 -->  Defaults to FIXED_VULN_COMMIT_HASH.
+
+
+        repo_path (str, optional): the path to the ffmpeg repo on RC -->  Defaults to FFMPEG_PATH_TO_REPO.
     """
-    global MODIFIED_FILES
     
     # Create empty set for files that were modified by the fixed commit
     modified_file_paths_from_fix:set = set()
@@ -67,20 +69,31 @@ def find_origin_commit(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path
         modified_file_paths_from_fix.add(path)
 
 
+    return modified_file_paths_from_fix
+
+    
+def traverse_commit_(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_REPO) -> None:
+    """
+    Traverse commits to find those that modified the given files.
+
+    Args:
+        modified_files (set[str]): Set of file paths to analyze.
+        repo_path (str): Path to the ffmpeg repository in RC cluster.
+    """
+    earliest_date = 
+    ffmpeg_git_repo:Git = Git(repo_path)
+
     # Looping through files that have been altered and identifying the commits that contributed to the alterations
+
     # Given a file path, get_commits_modified_file() returns all the commits that modified this file 
-    for file_path in modified_file_paths_from_fix:
-        commits_that_modified_file:list[str] = ffmpeg_git_repo.get_commits_modified_file(file_path)   
+    for file in modified_files:
+
+        commits_that_modified_file:list[str] = ffmpeg_git_repo.get_commits_modified_file(file)   
 
         for commit in commits_that_modified_file:
 
-    
-        timeline_of_commits:dict = ffmpeg_git_repo.get_commits_last_modified_lines(fixed_commit,bool=True)
-
-
-def traverse_commit() -> None:
-    global MODIFIED_FILES
-
+            ffmpeg_git_repo.get_commits_modified_file
+            timeline_of_commits:dict = ffmpeg_git_repo.get_commits_last_modified_lines(commit,bool=True)
 
     return None
 
@@ -94,9 +107,15 @@ def save_solution(hash_or_origin=ORIGIN_COMMIT_HASH):
     Returns:
         _type_: _description_
     """
-    return None
+
+    
+    return None      
 
 
 
 if __name__ == "__main__":
-    None
+    # Find modified files in the fixed commit
+    modified_files_by_fixed_commit:set[str] = find_modified_files()
+
+    # Analyze commits that modified these files
+    traverse_commit(modified_files_by_fixed_commit)
