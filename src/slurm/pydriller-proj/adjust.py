@@ -31,26 +31,7 @@ def find_origin_commit(fixed_commit_hash: str = FIXED_VULN_COMMIT_HASH, repo_pat
     return modified_file_paths_from_fix
 
 
-def traverse_commit(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_REPO) -> None:
-    """
-    Traverse commits to find those that modified the given files.
 
-    Args:
-        modified_files (set[str]): Set of file paths to analyze.
-        repo_path (str): Path to the repository.
-    """
-    ffmpeg_git_repo = Git(repo_path)
-
-    for file_path in modified_files:
-        # Get all commits that modified the file
-        commits_that_modified_file = ffmpeg_git_repo.get_commits_modified_file(file_path)
-
-        for commit in commits_that_modified_file:
-            print(f"File {file_path} was modified in commit {commit.hash} ({commit.msg.strip()})")
-
-            # Optional: Analyze lines last modified in this commit
-            last_modified_lines = ffmpeg_git_repo.get_commits_last_modified_lines(commit)
-            print(f"Last modified lines: {last_modified_lines}")
 
 
 if __name__ == "__main__":

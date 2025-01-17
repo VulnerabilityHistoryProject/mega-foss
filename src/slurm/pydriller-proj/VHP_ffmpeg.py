@@ -22,7 +22,7 @@ Notes:
 from pydriller import Repository
 from pydriller.metrics.process.change_set import ChangeSet
 from pydriller import Git
-import subprocess as subsub
+import subprocess
 import datetime
 
 FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697"
@@ -32,8 +32,36 @@ MODIFIED_FILES:set[str] = set()
 
 
 
+def git_blame(file_path:str,line_start:int,line_end:int):
+    """
+
+    Keep it simple and only process one file at a time for now.
+
+    Args:
+        file_path (str): _description_
+        line_start (int): _description_
+        line_end (int): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    result = subprocess.run(
+        ['git','blame',file_path, '-L',f'{line_start},{line_end}'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+    return result.stdout.decode()
 
 
+def extract_blame_info(blame_output:str) -> None:
+    lines:list[str] = blame_output.splitlines()
+
+    for line in lines:
+        parts = line.split(' ',2)
+        commit_hash = parts[0]
+        author = parts[1][1:1] #
 def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
     """_summary_
 
@@ -93,7 +121,12 @@ def traverse_commit_(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_R
         for commit in commits_that_modified_file:
 
             ffmpeg_git_repo.get_commits_modified_file
-            timeline_of_commits:dict = ffmpeg_git_repo.get_commits_last_modified_lines(commit,bool=True)
+           
+
+    """
+    
+
+    """
 
     return None
 
