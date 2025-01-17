@@ -33,22 +33,33 @@ FFMPEG_PATH_TO_REPO:str = ""
 def find_origin_commit(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO):
 
     # Create empty set for files that were modified by the fixed commit
-    modified_files_from_fix:set = set()
+    modified_file_paths_from_fix:set = set()
 
     # converting path to a Git object --> ffmpeg git repo
-    ffmpeg_gr= Git(repo_path)
+    ffmpeg_git_repo= Git(repo_path)
 
     # Getting the commit object from the fixed commit hash the fixed the vulnerability
-    fixed_commit = ffmpeg_gr.get_commit(fixed_commit_hash)
+    fixed_commit = ffmpeg_git_repo.get_commit(fixed_commit_hash)
 
 
     # Add modified files to the set for later reference
     for modified_file in fixed_commit.modified_files:
-        modified_files_from_fix.add(modified_file)
 
-        
+        path:str = ""
+        if modified_file.old_path == modified_file.new_path:
 
-    timeline_of_commits:dict = ffmpeg_gr.get_commits_modified_file(fixed_commit)
+            path:str = modified_file.new_path
+
+        ## Add modified file paths by fixed commit to the set
+        modified_file_paths_from_fix.add(path)
+
+    # Given a file path, get_commits_modified_file() returns all the commits that modified this file 
+    for files in modified_file_paths_from_fix:
+        ffmpeg_git_repo.get_commits_modified_file   
+
+
+    
+    timeline_of_commits:dict = ffmpeg_gr.get_commits_last_modified_lines(fixed_commit,bool=True)
 
 
 
