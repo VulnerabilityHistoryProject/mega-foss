@@ -27,11 +27,21 @@ import subprocess as subsub
 FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697"
 ORIGIN_COMMIT_HASH:str = ""
 FFMPEG_PATH_TO_REPO:str = ""
-### TASK --> figure out where this script will be run and the path to ffmpeg. I want local repo not the git web link.
+MODIFIED_FILES:set[str] = set()
 
 
-def find_origin_commit(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO):
 
+
+
+def find_origin_commit(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> None:
+    """_summary_
+
+    Args:
+        fixed_commit_hash (str, optional): _description_. Defaults to FIXED_VULN_COMMIT_HASH.
+        repo_path (str, optional): _description_. Defaults to FFMPEG_PATH_TO_REPO.
+    """
+    global MODIFIED_FILES
+    
     # Create empty set for files that were modified by the fixed commit
     modified_file_paths_from_fix:set = set()
 
@@ -46,22 +56,45 @@ def find_origin_commit(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path
     for modified_file in fixed_commit.modified_files:
 
         path:str = ""
-        if modified_file.old_path == modified_file.new_path:
+
+        if modified_file.old_path == modified_file.new_path: # if the paths are the same just add the new one
 
             path:str = modified_file.new_path
+        else: # if the paths are different, add the old path because other commits will have used the old path
+            path:str = modified_file.old_path
 
         ## Add modified file paths by fixed commit to the set
         modified_file_paths_from_fix.add(path)
 
-    # Given a file path, get_commits_modified_file() returns all the commits that modified this file 
-    for files in modified_file_paths_from_fix:
-        ffmpeg_git_repo.get_commits_modified_file   
 
+    # Looping through files that have been altered and identifying the commits that contributed to the alterations
+    # Given a file path, get_commits_modified_file() returns all the commits that modified this file 
+    for file_path in modified_file_paths_from_fix:
+        commits_that_modified_file:list[str] = ffmpeg_git_repo.get_commits_modified_file(file_path)   
+
+        for commit in commits_that_modified_file:
 
     
-    timeline_of_commits:dict = ffmpeg_gr.get_commits_last_modified_lines(fixed_commit,bool=True)
+        timeline_of_commits:dict = ffmpeg_git_repo.get_commits_last_modified_lines(fixed_commit,bool=True)
 
 
+def traverse_commit() -> None:
+    global MODIFIED_FILES
+
+
+    return None
+
+
+def save_solution(hash_or_origin=ORIGIN_COMMIT_HASH):
+    """_summary_
+
+    Args:
+        hash_or_origin (_type_, optional): _description_. Defaults to ORIGIN_COMMIT_HASH.
+
+    Returns:
+        _type_: _description_
+    """
+    return None
 
 
 
