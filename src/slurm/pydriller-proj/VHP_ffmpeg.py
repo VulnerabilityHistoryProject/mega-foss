@@ -17,13 +17,12 @@ Notes:
     - pydriller must be installed on the system to run this program
 
 """
-
-
-from pydriller import Repository
-from pydriller.metrics.process.change_set import ChangeSet
-from pydriller import Git
 import subprocess
 import datetime
+
+from pydriller import Git
+from pydriller import ModifiedFile
+from pydriller import Commit
 
 FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697"
 ORIGIN_COMMIT_HASH:str = ""
@@ -38,9 +37,9 @@ def git_blame(file_path:str,line_start:int,line_end:int):
     Keep it simple and only process one file at a time for now.
 
     Args:
-        file_path (str): _description_
-        line_start (int): _description_
-        line_end (int): _description_
+        file_path (str): path to the file where the vulnerability was introduced
+        line_start (int): start line of where the change for the vulnerability was introduced
+        line_end (int): end line of where the change for the vulnerability 
 
     Returns:
         _type_: _description_
@@ -56,12 +55,48 @@ def git_blame(file_path:str,line_start:int,line_end:int):
 
 
 def extract_blame_info(blame_output:str) -> None:
+    global ORIGIN_COMMIT_HASH
     lines:list[str] = blame_output.splitlines()
 
     for line in lines:
         parts = line.split(' ',2)
-        commit_hash = parts[0]
-        author = parts[1][1:1] #
+        commit_hash:str = parts[0]
+        author:str = parts[1][1:1] ## not currently using this author field but maybe in the future
+        ORIGIN_COMMIT_HASH = commit_hash
+
+
+def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
+
+    added_lines:list[tuple[int,str]] = modified_file.diff_parsed['added']
+    deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
+
+    # Get the earlies added line number
+    earliest_added_line:int = added_lines[0][0]
+
+    # Get the earliest deleted line number
+    earliest_deleted_line: int = deleted_lines[0][0]
+
+    # Get the last added line number
+    if added_lines:
+        last_added_line:int = added_lines[-1][1] # end_line of last added tuple
+    else:
+        last_added_line: None = None
+
+    # Get the last deleted line number
+    if deleted_lines:
+        last_deleted_line:int = deleted_lines[-1][1] # end_line of last deleted tuple
+    else:
+        last_deleted_line: None = None
+    
+    # Next steps
+    # 1. git blame line above the 'earliest added line' and below 'last_added_line'
+    # 1.a check to see if the commit is the same , if yes this means it's probably the bug
+    # 2. use the parent commit (commit that introd the vuln) for the git_show <parent hash>:<path_to_file> | sed -n '5,7p'
+    # add some error handling and confirmation for how many modified files there are
+    # figure out how to write the solution to a file in the RC program
+
+
+    return None
 def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
     """_summary_
 
@@ -81,6 +116,7 @@ def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_pat
     # Getting the commit object from the fixed commit hash the fixed the vulnerability
     fixed_commit = ffmpeg_git_repo.get_commit(fixed_commit_hash)
 
+    
 
     # Add modified files to the set for later reference
     for modified_file in fixed_commit.modified_files:
@@ -96,11 +132,13 @@ def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_pat
         ## Add modified file paths by fixed commit to the set
         modified_file_paths_from_fix.add(path)
 
+        modified_file.diff_parsed
+
 
     return modified_file_paths_from_fix
 
     
-def traverse_commit_(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_REPO) -> None:
+def traverse_commit(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_REPO) -> None:
     """
     Traverse commits to find those that modified the given files.
 
@@ -108,7 +146,7 @@ def traverse_commit_(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_R
         modified_files (set[str]): Set of file paths to analyze.
         repo_path (str): Path to the ffmpeg repository in RC cluster.
     """
-    earliest_date = 
+
     ffmpeg_git_repo:Git = Git(repo_path)
 
     # Looping through files that have been altered and identifying the commits that contributed to the alterations
