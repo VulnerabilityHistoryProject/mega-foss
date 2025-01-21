@@ -143,36 +143,31 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     """
 
     added_lines:list[tuple[int,str]] = modified_file.diff_parsed['added']
-    deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
+    #deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
 
+    print(added_lines)
     # Get the earlies added line number
     earliest_added_line:int = added_lines[0][0]
 
     # Get the earliest deleted line number
-    earliest_deleted_line: int = deleted_lines[0][0]
+    # I know that there weren't any deleted lines. 
+    ### TO-DO Add error handling in the case that no lines were added or deleted
+    #earliest_deleted_line: int = deleted_lines[0][0]
 
     # Get the last added line number
     if added_lines:
-        last_added_line:str = added_lines[-1][1] # end_line of last added tuple
+        last_added_line:str = added_lines[-1][0] # end_line of last added tuple
     else:
         last_added_line = None
 
     # Get the last deleted line number
-    if deleted_lines:
-        last_deleted_line:str = deleted_lines[-1][1] # end_line of last deleted tuple
-    else:
-        last_deleted_line = None
-    
-    ### Next steps
-    # 1. git blame line above the 'earliest added line' and below 'last_added_line' --> get the hash associated with that commit
-    # 2. use the parent commit (commit that introd the vuln) for the git_show <parent hash>:<path_to_file> | sed -n '5,7p'
-    # add some error handling and confirmation for how many modified files there are
-    # figure out how to write the solution to a file in the RC program
-    # test code on the ffmped repo locally to make sure that it works
+    ### TO-DO --> add error handling here
+    # if deleted_lines:
+    #     last_deleted_line:str = deleted_lines[-1][1] # end_line of last deleted tuple
+    # else:
+    #     last_deleted_line = None
 
    
-
-
     return (int(earliest_added_line),int(last_added_line))
 
 
