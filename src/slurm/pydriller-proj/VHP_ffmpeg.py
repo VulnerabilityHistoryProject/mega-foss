@@ -298,7 +298,9 @@ if __name__ == "__main__":
     # This line is a little broken. Technically, I should iterate over every file that was changed. But in this case I 
     # know that only one file was changed by the bug patch. That still doesn't answer the question: Did the vulnerable 
     # commit change other files? But this will do. 
-    VULN_CHANGES = git_show_vuln_changes(start,end,original_commit_hash=ORIGIN_COMMIT_HASH,file_path=FFMPEG_PATH_TO_REPO)
+
+    ### Fix this function call
+    #VULN_CHANGES = git_show_vuln_changes(start,end,original_commit_hash=ORIGIN_COMMIT_HASH,file_path=FFMPEG_PATH_TO_REPO)
 
     
 
@@ -307,24 +309,24 @@ if __name__ == "__main__":
 
 
     print("Modified files:")
-    print("__________________________________")
-    print("__________________________________")
     pprint.pprint(MODIFIED_FILES)
+    print("__________________________________")
+    print("__________________________________")
 
     print("Original / Vuln Commit Info:")
-    print("__________________________________")
-    print("__________________________________")
     pprint.pprint(ORIGIN_COMMIT_HASH)
+    print("__________________________________")
+    print("__________________________________")
 
     print("Changes that were made by the patch:")
-    print("__________________________________")
-    print("__________________________________")
     pprint.pprint(FIXED_CHANGES)
+    print("__________________________________")
+    print("__________________________________")
 
     print("Changes that were made by the vuln commit:")
-    print("__________________________________")
-    print("__________________________________")
     pprint.pprint(VULN_CHANGES)
+    print("__________________________________")
+    print("__________________________________")
     
 
 
