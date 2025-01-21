@@ -20,6 +20,7 @@ Notes:
 import subprocess
 from collections import Counter
 from dotenv import load_dotenv
+from pathlib import Path
 import os 
 import pprint
 
@@ -57,8 +58,8 @@ def git_blame(file_path:str,line_start:int,line_end:int,repo_path=FFMPEG_PATH_TO
     Returns:
         str: result from the git blame <file_path>
     """
-
-    full_path = os.path.relpath(file_path,start=repo_path)
+    
+    full_path = Path(repo_path) / file_path
 
     result = subprocess.run(
         ['git','-C',repo_path,'blame',full_path, '-L',f'{line_start},{line_end}'],
@@ -286,6 +287,7 @@ if __name__ == "__main__":
     start:int = lines_changed[0]
     end:int = lines_changed[1]
     file_path = modified_files_by_fixed_commit.pop().old_path
+    print(file_path)
     blame_ouput: str = git_blame(file_path=file_path, line_start=start,line_end=end,repo_path=FFMPEG_PATH_TO_REPO,)
 
     # Extract the most common commit hash and author of those commits
