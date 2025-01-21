@@ -23,12 +23,12 @@ from dotenv import load_dotenv
 import os 
 import pprint
 
-from pydriller import Git,ModifiedFile
+from pydriller import Git,ModifiedFile, Commit
 
 load_dotenv()
-FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697" # The hash of the commit that fixed CVE-2015-8218
+FIXED_VULN_COMMIT_HASH:str = "d4a731b84a08f0f3839eaaaf82e97d8d9c67da46" # The hash of the commit that fixed CVE-2015-8218
 ORIGIN_COMMIT_HASH:str = ""
-FFMPEG_PATH_TO_REPO:str = os.getenv("FFMPEG_DIR_PATH") # This is FFmeg on my local machine
+FFMPEG_PATH_TO_REPO:str = os.getenv("FFMPEG_PATH") # This is FFmeg on my local machine
 MODIFIED_FILES:set[str] = set()
 FIXED_CHANGES:dict[str,dict[str,str]] = {} # key: modified file  value: dict of changes --> key: added / deleted value: added / deleted text
 VULN_CHANGES:list[str] = [] # changes from the vulnerable commit hash
@@ -176,7 +176,7 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     return (int(earliest_added_line),int(last_added_line))
 
 
-def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
+def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[ModifiedFile]:
     """_summary_
 
     Args:
@@ -187,27 +187,27 @@ def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str 
     """
     
     # Create empty set for files that were modified by the fixed commit
-    modified_file_paths_from_fix:set[str] = set()
+    modified_file_paths_from_fix:set[ModifiedFile] = set()
 
     # converting path to a Git object --> ffmpeg git repo
     ffmpeg_git_repo= Git(repo_path)
 
     # Getting the commit object from the fixed commit hash the fixed the vulnerability
-    fixed_commit = ffmpeg_git_repo.get_commit(commit_hash)
+    fixed_commit:Commit = ffmpeg_git_repo.get_commit(commit_hash)
 
     
 
     # Add modified files to the set for later reference
     for modified_file in fixed_commit.modified_files:
 
+        
 
-
-        ## Add modified file paths by fixed commit to the set
+        ## Add modified file OBJECT
         # Always add the old path because that is the one what won't change
-        modified_file_paths_from_fix.add(modified_file.old_path)
+        modified_file_paths_from_fix.add(modified_file)
         MODIFIED_FILES.add(modified_file.old_path)
 
-        FIXED_CHANGES[modified_file] = modified_file.diff_parsed # I was to add the changes so I can look at them later
+        FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I was to add the changes so I can look at them later
 
 
     return modified_file_paths_from_fix
@@ -262,12 +262,13 @@ def save_solution(hash_or_origin:str =ORIGIN_COMMIT_HASH) -> None:
 
 if __name__ == "__main__":
     # Find modified files in the fixed commit
-    modified_files_by_fixed_commit:set[str] = find_modified_files(commit_hash=FIXED_VULN_COMMIT_HASH)
+    modified_files_by_fixed_commit:set[ModifiedFile] = find_modified_files(commit_hash=FIXED_VULN_COMMIT_HASH)
 
     # Extract the lines that were changed in each modified file
     ### In the case of CVE-2015-8218 I happen to know that only 1 file was changed. For sake of simplicity, I won't write hypter-robust code
     ### capable of handling multiple modified files (edge cases)
     for file in modified_files_by_fixed_commit:
+        # file should be of type ModifiedFile
         lines_changed:tuple[int,int] = get_lines_changed_in_fix(file)
 
 
