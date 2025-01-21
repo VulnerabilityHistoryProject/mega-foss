@@ -10,7 +10,7 @@ Description:
 
 Author: Trust-Worthy, TylerJaafari-RIT
 
-Date: 2025-1-17 
+Date: 2025-1-17 -> 2025-1-21
     
     
 Notes: 
@@ -31,7 +31,7 @@ ORIGIN_COMMIT_HASH:str = ""
 FFMPEG_PATH_TO_REPO:str = os.getenv("FFMPEG_DIR_PATH") # This is FFmeg on my local machine
 MODIFIED_FILES:set[str] = set()
 FIXED_CHANGES:dict[str,dict[str,str]] = {} # key: modified file  value: dict of changes --> key: added / deleted value: added / deleted text
-
+VULN_CHANGES:list[str] = [] # changes from the vulnerable commit hash
 
 def git_blame(file_path:str,line_start:int,line_end:int) -> str:
     """
@@ -89,11 +89,11 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
         authors.append(author)
 
     # Find the most common commit hash
-    commit_counter: Counter = Counter(commit_hashes)
+    commit_counter: Counter[str] = Counter(commit_hashes)
     most_common_commit: str = commit_counter.most_common(1)[0][0] if commit_counter else None
 
     # Find the author with the highest number of contributions
-    author_counter: Counter = Counter(authors)
+    author_counter: Counter[str] = Counter(authors)
     most_common_author: str = author_counter.most_common(1)[0][0] if author_counter else None
 
     return {
@@ -103,11 +103,11 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
 
 
 
-def git_show_vuln_changes(original_commit_hash:str,file_path:str,original_hash_start:int,original_hash_end:int) -> str:
+def git_show_vuln_changes(original_hash_start:int,original_hash_end:int,original_commit_hash=ORIGIN_COMMIT_HASH,file_path=FFMPEG_PATH_TO_REPO) -> list[str]:
     """_summary_
 
     Args:
-        original_commit_hash (str): _description_
+        original_commit_hash (str): the hash of the commit that introduced the vulnerabilities
         file_path (str): _description_
 
     Returns:
@@ -127,7 +127,8 @@ def git_show_vuln_changes(original_commit_hash:str,file_path:str,original_hash_s
     output:str = result.stdout.decode()
     lines:list[str] = output.splitlines()
 
-    desired_lines:str = lines[original_hash_start - 1:original_hash_end]
+    desired_lines:list[str] = lines[original_hash_start - 1:original_hash_end]
+    
     return desired_lines
 
 
@@ -275,12 +276,20 @@ if __name__ == "__main__":
     # This will hopefully get me the original author and commit of the vulnerability
     start:int = lines_changed[0]
     end:int = lines_changed[1]
+
     blame_ouput: str = git_blame(file_path=FFMPEG_PATH_TO_REPO,line_start=start,line_end=end)
 
     # Extract the most common commit hash and author of those commits
     original_commit_dict: dict[str, str]= extract_most_common_commit_and_author(blame_output=blame_ouput)
 
     ORIGIN_COMMIT_HASH = original_commit_dict['most_common_commit_hash']
+
+    # This line is a little broken. Technically, I should iterate over every file that was changed. But in this case I 
+    # know that only one file was changed by the bug patch. That still doesn't answer the question: Did the vulnerable 
+    # commit change other files? But this will do. 
+    VULN_CHANGES = git_show_vuln_changes(start,end,original_commit_hash=ORIGIN_COMMIT_HASH,file_path=FFMPEG_PATH_TO_REPO)
+
+    
 
 
     modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=ORIGIN_COMMIT_HASH)
@@ -300,6 +309,11 @@ if __name__ == "__main__":
     print("__________________________________")
     print("__________________________________")
     pprint.pprint(FIXED_CHANGES)
+
+    print("Changes that were made by the vuln commit:")
+    print("__________________________________")
+    print("__________________________________")
+    pprint.pprint(VULN_CHANGES)
     
 
 
