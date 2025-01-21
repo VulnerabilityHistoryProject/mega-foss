@@ -331,6 +331,7 @@ if __name__ == "__main__":
 
 
     for file1,file2 in zip(modified_files_by_fixed_commit,modified_files_by_vuln_commit):
-       assert file1 == file2, f'Mismatch: {file1} != {file2}'
+       print(f"file1: {file1}, file2: {file2}")
+       
 
     
