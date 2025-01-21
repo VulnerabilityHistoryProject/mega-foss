@@ -18,14 +18,13 @@ Notes:
 
 """
 import subprocess
-import datetime
 from typing import Counter
 
 from pydriller import Git
 from pydriller import ModifiedFile
 from pydriller import Commit
 
-FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697"
+FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697" # The hash of the commit that fixed CVE-2015-8218
 ORIGIN_COMMIT_HASH:str = ""
 FFMPEG_PATH_TO_REPO:str = ""
 MODIFIED_FILES:set[str] = set()
@@ -55,10 +54,7 @@ def git_blame(file_path:str,line_start:int,line_end:int) -> str:
     return result.stdout.decode()
 
 
-def extract_blame_info(blame_output:str) -> str:
-    from collections import Counter
-
-def extract_most_common_commit_and_author(blame_output: str) -> dict:
+def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
     """Extract the most common commit hash and the author with the highest contribution.
 
     Args:
@@ -67,10 +63,10 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict:
     Returns:
         dict: Dictionary with the most common commit hash and the author with the most contributions.
     """
-    commit_hashes = []
-    authors = []
+    commit_hashes:list[str] = []
+    authors:list[str] = []
 
-    lines = blame_output.splitlines()
+    lines:list[str] = blame_output.splitlines()
 
     for line in lines:
         # Validate and parse each line
@@ -81,20 +77,20 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict:
         if len(parts) < 2:
             continue  # Skip malformed lines
 
-        commit_hash = parts[0]
-        author = parts[1].strip('()')  # Remove parentheses if present
+        commit_hash:str = parts[0]
+        author:str = parts[1].strip('()')  # Remove parentheses if present
 
         # Collect commit hash and author
         commit_hashes.append(commit_hash)
         authors.append(author)
 
     # Find the most common commit hash
-    commit_counter = Counter(commit_hashes)
-    most_common_commit = commit_counter.most_common(1)[0][0] if commit_counter else None
+    commit_counter: Counter[str] = Counter(commit_hashes)
+    most_common_commit: str = commit_counter.most_common(1)[0][0] if commit_counter else None
 
     # Find the author with the highest number of contributions
-    author_counter = Counter(authors)
-    most_common_author = author_counter.most_common(1)[0][0] if author_counter else None
+    author_counter: Counter[str] = Counter(authors)
+    most_common_author: str = author_counter.most_common(1)[0][0] if author_counter else None
 
     return {
         "most_common_commit_hash": most_common_commit,
@@ -116,7 +112,7 @@ def git_show_vuln_changes(original_commit_hash:str,file_path:str,original_hash_s
 
 
     result = subprocess.run(
-        ['git','show',original_commit_hash,file_path,'|','sed','-n','f{},{}p'.format(original_hash_start,original_hash_end)],
+        ['git','show',original_commit_hash,':',file_path,'|','sed','-n','f{},{}p'.format(original_hash_start,original_hash_end)],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
@@ -169,11 +165,11 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     return (earliest_added_line,last_added_line)
 
 
-def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
+def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
     """_summary_
 
     Args:
-        fixed_commit_hash (str, optional): The hash of the bug fix as seen here --> https://vulnerabilityhistory.org/commits/d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 -->  Defaults to FIXED_VULN_COMMIT_HASH.
+        commit_hash (str, optional): The hash of the bug fix as seen here --> https://vulnerabilityhistory.org/commits/d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 -->  Defaults to FIXED_VULN_COMMIT_HASH.
 
 
         repo_path (str, optional): the path to the ffmpeg repo on RC -->  Defaults to FFMPEG_PATH_TO_REPO.
@@ -186,7 +182,7 @@ def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_pat
     ffmpeg_git_repo= Git(repo_path)
 
     # Getting the commit object from the fixed commit hash the fixed the vulnerability
-    fixed_commit = ffmpeg_git_repo.get_commit(fixed_commit_hash)
+    fixed_commit = ffmpeg_git_repo.get_commit(commit_hash)
 
     
 
@@ -204,7 +200,7 @@ def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_pat
         ## Add modified file paths by fixed commit to the set
         modified_file_paths_from_fix.add(path)
 
-        modified_file.diff_parsed
+        #modified_file.diff_parsed
 
 
     return modified_file_paths_from_fix
@@ -218,6 +214,7 @@ def traverse_commit(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_RE
         modified_files (set[str]): Set of file paths to analyze.
         repo_path (str): Path to the ffmpeg repository in RC cluster.
     """
+    ### Decided to go a different route with finding the original commit, but I will keep this code for reference for later
 
     ffmpeg_git_repo:Git = Git(repo_path)
 
@@ -258,7 +255,30 @@ def save_solution(hash_or_origin=ORIGIN_COMMIT_HASH):
 
 if __name__ == "__main__":
     # Find modified files in the fixed commit
-    modified_files_by_fixed_commit:set[str] = find_modified_files()
+    modified_files_by_fixed_commit:set[str] = find_modified_files(commit_hash=FIXED_VULN_COMMIT_HASH)
 
-    # Analyze commits that modified these files
-    traverse_commit(modified_files_by_fixed_commit)
+    # Extract the lines that were changed in each modified file
+    ### In the case of CVE-2015-8218 I happen to know that only 1 file was changed. For sake of simplicity, I won't write hypter-robust code
+    ### capable of handling multiple modified files (edge cases)
+    for file in modified_files_by_fixed_commit:
+        lines_changed:tuple[int,int] = get_lines_changed_in_fix(file)
+
+
+    # Blame the line 1 above start 
+    # Blame the line 1 below end
+    # This will hopefully get me the original author and commit of the vulnerability
+    start:int = lines_changed[0]
+    end:int = lines_changed[1]
+    blame_ouput: str = git_blame(file_path=FFMPEG_PATH_TO_REPO,line_start=start,line_end=end)
+
+    # Extract the most common commit hash and author of those commits
+    original_commit_dict: dict = extract_most_common_commit_and_author(blame_output=blame_ouput)
+
+    ORIGIN_COMMIT_HASH: str = original_commit_dict['most_common_commit_hash']
+
+
+    modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=ORIGIN_COMMIT_HASH)
+
+
+    for file1,file2 in zip(modified_files_by_fixed_commit,modified_files_by_vuln_commit):
+       
