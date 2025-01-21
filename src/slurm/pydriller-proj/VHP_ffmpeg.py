@@ -4,7 +4,7 @@ Module Name: VHP_ffmpeg.py
 
 Description:
     This python script is to be used on the RIT Research Computing Cluster to analyze CVE-2015-8218
-    via this commit hash:54e488b9da4abbceaf405d6492515697. This hash it the commit of the patch for 
+    via this commit hash:d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 . This hash it the commit of the patch for 
     this vulnerability. This file will mainly depend on pydriller to locate the original commit that 
     caused this vulnerability.This vulnerability had to deal with an overlooked array of some sort.
 
@@ -23,6 +23,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os 
 import pprint
+import json
 
 from pydriller import Git,ModifiedFile, Commit
 
@@ -333,5 +334,9 @@ if __name__ == "__main__":
     for file1,file2 in zip(modified_files_by_fixed_commit,modified_files_by_vuln_commit):
        print(f"file1: {file1}, file2: {file2}")
        
+# Writing the dictionary to a JSON file
+json_path:str = "ffmpeg_vuln_changes.json"
+with open(json_path, "w") as json_file:
+    json.dump(FIXED_CHANGES, json_file, indent=4) 
 
     
