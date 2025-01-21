@@ -31,18 +31,18 @@ MODIFIED_FILES:set[str] = set()
 
 
 
-def git_blame(file_path:str,line_start:int,line_end:int):
+def git_blame(file_path:str,line_start:int,line_end:int) -> str:
     """
 
     Keep it simple and only process one file at a time for now.
 
     Args:
-        file_path (str): path to the file where the vulnerability was introduced
+        file_path (str): path to the file where the vulnerability was introduced & fixed
         line_start (int): start line of where the change for the vulnerability was introduced
-        line_end (int): end line of where the change for the vulnerability 
+        line_end (int): end line of where the change for the vulnerability was introduced
 
     Returns:
-        _type_: _description_
+        str: result from the git blame <file_path>
     """
 
     result = subprocess.run(
@@ -54,18 +54,60 @@ def git_blame(file_path:str,line_start:int,line_end:int):
     return result.stdout.decode()
 
 
-def extract_blame_info(blame_output:str) -> None:
+def extract_blame_info(blame_output:str) -> str:
+    """_summary_
+
+    Args:
+        blame_output (str): _description_
+    
+    Returns:
+        str: suspected original commit hash
+    """
     global ORIGIN_COMMIT_HASH
+
     lines:list[str] = blame_output.splitlines()
 
     for line in lines:
-        parts = line.split(' ',2)
+        parts:list[str] = line.split(' ',2)
         commit_hash:str = parts[0]
         author:str = parts[1][1:1] ## not currently using this author field but maybe in the future
         ORIGIN_COMMIT_HASH = commit_hash
 
+    return commit_hash
+
+
+
+def git_show_vuln_changes(original_commit_hash:str,file_path:str,original_hash_start:int,original_hash_end:int) -> str:
+    """_summary_
+
+    Args:
+        original_commit_hash (str): _description_
+        file_path (str): _description_
+
+    Returns:
+        str: implementation of vulnerability
+    """
+
+
+    result = subprocess.run(
+        ['git','show',original_commit_hash,file_path,'|','sed','-n','f{},{}p'.format(original_hash_start,original_hash_end)],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+
+    return result.stdout.decode()
+
 
 def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
+    """_summary_
+
+    Args:
+        modified_file (ModifiedFile): _description_
+
+    Returns:
+        tuple[int,int]: _description_
+    """
 
     added_lines:list[tuple[int,str]] = modified_file.diff_parsed['added']
     deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
@@ -88,15 +130,19 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     else:
         last_deleted_line: None = None
     
-    # Next steps
-    # 1. git blame line above the 'earliest added line' and below 'last_added_line'
-    # 1.a check to see if the commit is the same , if yes this means it's probably the bug
+    ### Next steps
+    # 1. git blame line above the 'earliest added line' and below 'last_added_line' --> get the hash associated with that commit
     # 2. use the parent commit (commit that introd the vuln) for the git_show <parent hash>:<path_to_file> | sed -n '5,7p'
     # add some error handling and confirmation for how many modified files there are
     # figure out how to write the solution to a file in the RC program
+    # test code on the ffmped repo locally to make sure that it works
+
+   
 
 
-    return None
+    return (earliest_added_line,last_added_line)
+
+
 def find_modified_files(fixed_commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
     """_summary_
 
