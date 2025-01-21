@@ -19,6 +19,7 @@ Notes:
 """
 import subprocess
 import datetime
+from typing import Counter
 
 from pydriller import Git
 from pydriller import ModifiedFile
@@ -55,25 +56,50 @@ def git_blame(file_path:str,line_start:int,line_end:int) -> str:
 
 
 def extract_blame_info(blame_output:str) -> str:
-    """_summary_
+    from collections import Counter
+
+def extract_most_common_commit_and_author(blame_output: str) -> dict:
+    """Extract the most common commit hash and the author with the highest contribution.
 
     Args:
-        blame_output (str): _description_
-    
-    Returns:
-        str: suspected original commit hash
-    """
-    global ORIGIN_COMMIT_HASH
+        blame_output (str): Output from `git blame` command.
 
-    lines:list[str] = blame_output.splitlines()
+    Returns:
+        dict: Dictionary with the most common commit hash and the author with the most contributions.
+    """
+    commit_hashes = []
+    authors = []
+
+    lines = blame_output.splitlines()
 
     for line in lines:
-        parts:list[str] = line.split(' ',2)
-        commit_hash:str = parts[0]
-        author:str = parts[1][1:1] ## not currently using this author field but maybe in the future
-        ORIGIN_COMMIT_HASH = commit_hash
+        # Validate and parse each line
+        if not line.strip():
+            continue  # Skip empty lines
 
-    return commit_hash
+        parts = line.split(maxsplit=3)
+        if len(parts) < 2:
+            continue  # Skip malformed lines
+
+        commit_hash = parts[0]
+        author = parts[1].strip('()')  # Remove parentheses if present
+
+        # Collect commit hash and author
+        commit_hashes.append(commit_hash)
+        authors.append(author)
+
+    # Find the most common commit hash
+    commit_counter = Counter(commit_hashes)
+    most_common_commit = commit_counter.most_common(1)[0][0] if commit_counter else None
+
+    # Find the author with the highest number of contributions
+    author_counter = Counter(authors)
+    most_common_author = author_counter.most_common(1)[0][0] if author_counter else None
+
+    return {
+        "most_common_commit_hash": most_common_commit,
+        "most_common_author": most_common_author,
+    }
 
 
 
