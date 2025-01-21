@@ -20,9 +20,7 @@ Notes:
 import subprocess
 from typing import Counter
 
-from pydriller import Git
-from pydriller import ModifiedFile
-from pydriller import Commit
+from pydriller import Git,ModifiedFile
 
 FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697" # The hash of the commit that fixed CVE-2015-8218
 ORIGIN_COMMIT_HASH:str = ""
@@ -142,15 +140,15 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
 
     # Get the last added line number
     if added_lines:
-        last_added_line:int = added_lines[-1][1] # end_line of last added tuple
+        last_added_line:str = added_lines[-1][1] # end_line of last added tuple
     else:
-        last_added_line: None = None
+        last_added_line = None
 
     # Get the last deleted line number
     if deleted_lines:
-        last_deleted_line:int = deleted_lines[-1][1] # end_line of last deleted tuple
+        last_deleted_line:str = deleted_lines[-1][1] # end_line of last deleted tuple
     else:
-        last_deleted_line: None = None
+        last_deleted_line = None
     
     ### Next steps
     # 1. git blame line above the 'earliest added line' and below 'last_added_line' --> get the hash associated with that commit
@@ -162,7 +160,7 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
    
 
 
-    return (earliest_added_line,last_added_line)
+    return (int(earliest_added_line),int(last_added_line))
 
 
 def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[str]:
@@ -176,7 +174,7 @@ def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str 
     """
     
     # Create empty set for files that were modified by the fixed commit
-    modified_file_paths_from_fix:set = set()
+    modified_file_paths_from_fix:set[str] = set()
 
     # converting path to a Git object --> ffmpeg git repo
     ffmpeg_git_repo= Git(repo_path)
@@ -193,9 +191,9 @@ def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str 
 
         if modified_file.old_path == modified_file.new_path: # if the paths are the same just add the new one
 
-            path:str = modified_file.new_path
+            path = modified_file.new_path
         else: # if the paths are different, add the old path because other commits will have used the old path
-            path:str = modified_file.old_path
+            path = modified_file.old_path
 
         ## Add modified file paths by fixed commit to the set
         modified_file_paths_from_fix.add(path)
@@ -238,7 +236,7 @@ def traverse_commit(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_RE
     return None
 
 
-def save_solution(hash_or_origin=ORIGIN_COMMIT_HASH):
+def save_solution(hash_or_origin:str =ORIGIN_COMMIT_HASH) -> None:
     """_summary_
 
     Args:
@@ -272,13 +270,15 @@ if __name__ == "__main__":
     blame_ouput: str = git_blame(file_path=FFMPEG_PATH_TO_REPO,line_start=start,line_end=end)
 
     # Extract the most common commit hash and author of those commits
-    original_commit_dict: dict = extract_most_common_commit_and_author(blame_output=blame_ouput)
+    original_commit_dict: dict[str, str]= extract_most_common_commit_and_author(blame_output=blame_ouput)
 
-    ORIGIN_COMMIT_HASH: str = original_commit_dict['most_common_commit_hash']
+    ORIGIN_COMMIT_HASH = original_commit_dict['most_common_commit_hash']
 
 
     modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=ORIGIN_COMMIT_HASH)
 
 
     for file1,file2 in zip(modified_files_by_fixed_commit,modified_files_by_vuln_commit):
-       
+       assert(file1 == file2)
+
+    
