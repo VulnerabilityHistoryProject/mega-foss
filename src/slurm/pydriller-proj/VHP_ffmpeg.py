@@ -18,15 +18,19 @@ Notes:
 
 """
 import subprocess
-from typing import Counter
+from collections import Counter
+from dotenv import load_dotenv
+import os 
+import pprint
 
 from pydriller import Git,ModifiedFile
 
+load_dotenv()
 FIXED_VULN_COMMIT_HASH:str = "54e488b9da4abbceaf405d6492515697" # The hash of the commit that fixed CVE-2015-8218
 ORIGIN_COMMIT_HASH:str = ""
-FFMPEG_PATH_TO_REPO:str = ""
+FFMPEG_PATH_TO_REPO:str = os.getenv("FFMPEG_DIR_PATH") # This is FFmeg on my local machine
 MODIFIED_FILES:set[str] = set()
-
+FIXED_CHANGES:dict[str,dict[str,str]] = {} # key: modified file  value: dict of changes --> key: added / deleted value: added / deleted text
 
 
 def git_blame(file_path:str,line_start:int,line_end:int) -> str:
@@ -48,6 +52,8 @@ def git_blame(file_path:str,line_start:int,line_end:int) -> str:
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
+    if result.stderr:
+        raise Exception(f"Git blame failed: {result.stderr.decode()}")
 
     return result.stdout.decode()
 
@@ -83,11 +89,11 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
         authors.append(author)
 
     # Find the most common commit hash
-    commit_counter: Counter[str] = Counter(commit_hashes)
+    commit_counter: Counter = Counter(commit_hashes)
     most_common_commit: str = commit_counter.most_common(1)[0][0] if commit_counter else None
 
     # Find the author with the highest number of contributions
-    author_counter: Counter[str] = Counter(authors)
+    author_counter: Counter = Counter(authors)
     most_common_author: str = author_counter.most_common(1)[0][0] if author_counter else None
 
     return {
@@ -110,13 +116,19 @@ def git_show_vuln_changes(original_commit_hash:str,file_path:str,original_hash_s
 
 
     result = subprocess.run(
-        ['git','show',original_commit_hash,':',file_path,'|','sed','-n','f{},{}p'.format(original_hash_start,original_hash_end)],
+        ['git','show',original_commit_hash,':',file_path],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
 
+    if result.stderr:
+        raise Exception(f"Git show failed: {result.stderr.decode()}")
+    
+    output:str = result.stdout.decode()
+    lines:list[str] = output.splitlines()
 
-    return result.stdout.decode()
+    desired_lines:str = lines[original_hash_start - 1:original_hash_end]
+    return desired_lines
 
 
 def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
@@ -187,18 +199,14 @@ def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str 
     # Add modified files to the set for later reference
     for modified_file in fixed_commit.modified_files:
 
-        path:str = ""
 
-        if modified_file.old_path == modified_file.new_path: # if the paths are the same just add the new one
-
-            path = modified_file.new_path
-        else: # if the paths are different, add the old path because other commits will have used the old path
-            path = modified_file.old_path
 
         ## Add modified file paths by fixed commit to the set
-        modified_file_paths_from_fix.add(path)
+        # Always add the old path because that is the one what won't change
+        modified_file_paths_from_fix.add(modified_file.old_path)
+        MODIFIED_FILES.add(modified_file.old_path)
 
-        #modified_file.diff_parsed
+        FIXED_CHANGES[modified_file] = modified_file.diff_parsed # I was to add the changes so I can look at them later
 
 
     return modified_file_paths_from_fix
@@ -278,7 +286,24 @@ if __name__ == "__main__":
     modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=ORIGIN_COMMIT_HASH)
 
 
+    print("Modified files:")
+    print("__________________________________")
+    print("__________________________________")
+    pprint.pprint(MODIFIED_FILES)
+
+    print("Original / Vuln Commit Info:")
+    print("__________________________________")
+    print("__________________________________")
+    pprint.pprint(ORIGIN_COMMIT_HASH)
+
+    print("Changes that were made by the patch:")
+    print("__________________________________")
+    print("__________________________________")
+    pprint.pprint(FIXED_CHANGES)
+    
+
+
     for file1,file2 in zip(modified_files_by_fixed_commit,modified_files_by_vuln_commit):
-       assert(file1 == file2)
+       assert file1 == file2, f'Mismatch: {file1} != {file2}'
 
     
