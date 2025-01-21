@@ -26,6 +26,17 @@ import pprint
 from pydriller import Git,ModifiedFile, Commit
 
 load_dotenv()
+ffmpeg_path = os.getenv("FFMPEG_PATH")
+
+if ffmpeg_path:
+    print(f"FFMPEG_PATH: {ffmpeg_path}")
+else:
+    print("FFMPEG_PATH is not set in the .env file.")
+
+
+
+
+
 FIXED_VULN_COMMIT_HASH:str = "d4a731b84a08f0f3839eaaaf82e97d8d9c67da46" # The hash of the commit that fixed CVE-2015-8218
 ORIGIN_COMMIT_HASH:str = ""
 FFMPEG_PATH_TO_REPO:str = os.getenv("FFMPEG_PATH") # This is FFmeg on my local machine
@@ -33,7 +44,7 @@ MODIFIED_FILES:set[str] = set()
 FIXED_CHANGES:dict[str,dict[str,str]] = {} # key: modified file  value: dict of changes --> key: added / deleted value: added / deleted text
 VULN_CHANGES:list[str] = [] # changes from the vulnerable commit hash
 
-def git_blame(file_path:str,line_start:int,line_end:int) -> str:
+def git_blame(file_path:str,line_start:int,line_end:int,repo_path=FFMPEG_PATH_TO_REPO) -> str:
     """
 
     Keep it simple and only process one file at a time for now.
@@ -47,8 +58,10 @@ def git_blame(file_path:str,line_start:int,line_end:int) -> str:
         str: result from the git blame <file_path>
     """
 
+    full_path = os.path.relpath(file_path,start=repo_path)
+
     result = subprocess.run(
-        ['git','blame',file_path, '-L',f'{line_start},{line_end}'],
+        ['git','-C',repo_path,'blame',full_path, '-L',f'{line_start},{line_end}'],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
@@ -145,7 +158,7 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     added_lines:list[tuple[int,str]] = modified_file.diff_parsed['added']
     #deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
 
-    print(added_lines)
+    
     # Get the earlies added line number
     earliest_added_line:int = added_lines[0][0]
 
@@ -272,8 +285,8 @@ if __name__ == "__main__":
     # This will hopefully get me the original author and commit of the vulnerability
     start:int = lines_changed[0]
     end:int = lines_changed[1]
-
-    blame_ouput: str = git_blame(file_path=FFMPEG_PATH_TO_REPO,line_start=start,line_end=end)
+    file_path = modified_files_by_fixed_commit.pop().old_path
+    blame_ouput: str = git_blame(file_path=file_path, line_start=start,line_end=end,repo_path=FFMPEG_PATH_TO_REPO,)
 
     # Extract the most common commit hash and author of those commits
     original_commit_dict: dict[str, str]= extract_most_common_commit_and_author(blame_output=blame_ouput)
