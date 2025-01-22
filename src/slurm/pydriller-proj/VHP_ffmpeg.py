@@ -118,7 +118,6 @@ def extract_most_common_commit_and_author(blame_output: str, git_dir: str = PATH
     
     if result.returncode == 0:
         full_commit_hash: str = result.stdout.strip()
-        print(f"I don't think that {full_commit_hash} is the correct hash because it get different code from the git show command.")
         return {
             "partial_common_partial_commit_hash": most_common_partial_commit,
             "full_commit_hash": full_commit_hash,
@@ -156,7 +155,8 @@ def git_show_vuln_changes(vuln_commit_start:int,
 
 
     result = subprocess.run(
-        ['git','show',commit_hash,':',repo_path],
+        ['git','show',commit_hash], ## ,':',repo_path
+        cwd=repo_path,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
@@ -167,9 +167,12 @@ def git_show_vuln_changes(vuln_commit_start:int,
     output:str = result.stdout.decode()
     lines:list[str] = output.splitlines()
 
-    desired_lines:list[str] = lines[vuln_commit_start - 1:vuln_commit_end]
+    # print("Start:", vuln_commit_start)
+    # print("Start:", vuln_commit_end)
+
+    # desired_lines:list[str] = lines[vuln_commit_start - 2:vuln_commit_end+1]
     
-    return desired_lines
+    return lines #desired_lines
 
 
 def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
@@ -309,32 +312,32 @@ if __name__ == "__main__":
     modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=VULN_COMMIT_HASH)
 
 
-    # print("Modified files:")
-    # pprint.pprint(PATCH_MODIFIED_FILES)
-    # print("__________________________________")
-    # print("__________________________________")
-
-    # print("Partial Commit Info:")
-    # print("When I run git show with this hash I can't get any info")
-    # pprint.pprint(partial_commit_hash)
-    # print("__________________________________")
-    # print("__________________________________")
-
-    # print("Original / Vuln Commit Info:")
-    # print("When I run git show with this hash I get completely different code than what's in the original patch!")
-    # pprint.pprint(VULN_COMMIT_HASH)
-    # print("__________________________________")
-    # print("__________________________________")
-
-    # print("Changes that were made by the patch:")
-    # pprint.pprint(PATCH_FIXED_CHANGES)
-    # print("__________________________________")
-    # print("__________________________________")
-
-    print("Changes that were made by the vuln commit:")
-    pprint.pprint(VULN_CHANGES)
+    print("Modified files:")
+    pprint.pprint(PATCH_MODIFIED_FILES)
     print("__________________________________")
     print("__________________________________")
+
+    print("Partial Commit Info:")
+    print("When I run git show with this hash I can't get any info")
+    pprint.pprint(partial_commit_hash)
+    print("__________________________________")
+    print("__________________________________")
+
+    print("Original / Vuln Commit Info:")
+    print("When I run git show with this hash I get completely different code than what's in the original patch!")
+    pprint.pprint(VULN_COMMIT_HASH)
+    print("__________________________________")
+    print("__________________________________")
+
+    print("Changes that were made by the patch:")
+    pprint.pprint(PATCH_FIXED_CHANGES)
+    print("__________________________________")
+    print("__________________________________")
+
+    # print("Changes that were made by the vuln commit:")
+    # pprint.pprint(VULN_CHANGES)
+    # print("__________________________________")
+    # print("__________________________________")
     
 
 
