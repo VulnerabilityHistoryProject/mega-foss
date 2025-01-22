@@ -115,9 +115,10 @@ def extract_most_common_commit_and_author(blame_output: str, git_dir: str = PATH
         stderr=subprocess.PIPE,
         text=True
     )
-
+    
     if result.returncode == 0:
         full_commit_hash: str = result.stdout.strip()
+        print(f"I don't think that {full_commit_hash} is the correct hash because it get different code from the git show command.")
         return {
             "partial_common_partial_commit_hash": most_common_partial_commit,
             "full_commit_hash": full_commit_hash,
@@ -142,7 +143,7 @@ def git_show_vuln_changes(vuln_commit_start:int,
     Args:
         vuln_commit_start (int): Line number where the vulnerable code starts.
         vuln_commit_end (int): Line number where the vulnerable code ends.
-        commit_hash (str, optional): Commit hash to be analyzed. Defaults to VULN_COMMIT_HASH.
+        commit_hash (str, optional): Commit hash to be analyzed. Defaults to VULN_COMMIT_HASH. This should be the full commit to the original vulnerability commit.
         repo_path (str, optional): Path to repo to be analyzed. Defaults to PATH_FFMPEG_REPO.
 
     Raises:
@@ -300,7 +301,7 @@ if __name__ == "__main__":
 
     ### I think the original vuln commit got erased through a merge or something
     # When I tried
-    #VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,repo_path=PATH_FFMPEG_REPO)
+    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,repo_path=PATH_FFMPEG_REPO)
 
     
 
@@ -308,20 +309,27 @@ if __name__ == "__main__":
     modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=VULN_COMMIT_HASH)
 
 
-    print("Modified files:")
-    pprint.pprint(PATCH_MODIFIED_FILES)
-    print("__________________________________")
-    print("__________________________________")
+    # print("Modified files:")
+    # pprint.pprint(PATCH_MODIFIED_FILES)
+    # print("__________________________________")
+    # print("__________________________________")
 
-    print("Original / Vuln Commit Info:")
-    pprint.pprint(VULN_COMMIT_HASH)
-    print("__________________________________")
-    print("__________________________________")
+    # print("Partial Commit Info:")
+    # print("When I run git show with this hash I can't get any info")
+    # pprint.pprint(partial_commit_hash)
+    # print("__________________________________")
+    # print("__________________________________")
 
-    print("Changes that were made by the patch:")
-    pprint.pprint(PATCH_FIXED_CHANGES)
-    print("__________________________________")
-    print("__________________________________")
+    # print("Original / Vuln Commit Info:")
+    # print("When I run git show with this hash I get completely different code than what's in the original patch!")
+    # pprint.pprint(VULN_COMMIT_HASH)
+    # print("__________________________________")
+    # print("__________________________________")
+
+    # print("Changes that were made by the patch:")
+    # pprint.pprint(PATCH_FIXED_CHANGES)
+    # print("__________________________________")
+    # print("__________________________________")
 
     print("Changes that were made by the vuln commit:")
     pprint.pprint(VULN_CHANGES)
@@ -334,8 +342,8 @@ if __name__ == "__main__":
        print(f"file1: {file1}, file2: {file2}")
        
 # Writing the dictionary to a JSON file
-json_path:str = "ffmpeg_vuln_changes.json"
-with open(json_path, "w") as json_file:
-    json.dump(PATCH_FIXED_CHANGES, json_file, indent=4) 
+# json_path:str = "ffmpeg_vuln_changes.json"
+# with open(json_path, "w") as json_file:
+#     json.dump(PATCH_FIXED_CHANGES, json_file, indent=4) 
 
     
