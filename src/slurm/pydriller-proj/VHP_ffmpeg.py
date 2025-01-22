@@ -86,71 +86,47 @@ def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPE
 
     return result.stdout.decode()
 
-
-def extract_most_common_commit_and_author(blame_output: str,git_dir:str,work_tree:str=PATH_FFMPEG_REPO) -> dict[str,str]:
-    """
-    Extracts the most common commit hash and the author with the largest number of contributions.
-
-    Args:
-        blame_output (str): Output from the git blame command.
-        git_dir (str): Path to the .git portion of a directory. The .git portion is added on using the Path object module from pathlib.
-        work_tree (str): Path to the repo to be analyzed.
-
-    Returns:
-        dict[str,str]: Returns a dictionary with three keys: 'partial_common_partial_commit_hash' & 'full_commit_hash' & 'most-common_author'.
-                       The values associated with the keys are self explanatory.
-    """
-    
-    commit_hashes:list[str] = []
-    authors:list[str] = []
-
-    lines:list[str] = blame_output.splitlines()
+def extract_most_common_commit_and_author(blame_output: str, git_dir: str = PATH_FFMPEG_REPO, work_tree: str = PATH_FFMPEG_REPO) -> dict[str, str]:
+    commit_hashes: list[str] = []
+    authors: list[str] = []
+    lines: list[str] = blame_output.splitlines()
 
     for line in lines:
-        # Validate and parse each line
         if not line.strip():
-            continue  # Skip empty lines
-
+            continue
         parts = line.split(maxsplit=3)
         if len(parts) < 2:
-            continue  # Skip malformed lines
-
-        commit_hash:str = parts[0]
-        author:str = parts[1].strip('()')  # Remove parentheses if present
-
-        # Collect commit hash and author
+            continue
+        commit_hash: str = parts[0]
+        author: str = parts[1].strip('()')
         commit_hashes.append(commit_hash)
         authors.append(author)
 
-    # Find the most common partial commit hash
     commit_counter: Counter[str] = Counter(commit_hashes)
     most_common_partial_commit: str = commit_counter.most_common(1)[0][0] if commit_counter else None
 
-    # Find the author with the highest number of contributions
     author_counter: Counter[str] = Counter(authors)
     most_common_author: str = author_counter.most_common(1)[0][0] if author_counter else None
 
-
-    git_dir = Path(PATH_FFMPEG_REPO) / ".git"
-
+    git_dir = Path(git_dir) / ".git"
     result = subprocess.run(
-        ['git','--git-dir',git_dir, '--work-tree', work_tree,'rev-parse',most_common_partial_commit],
+        ['git', '--git-dir', str(git_dir), '--work-tree', str(work_tree), 'rev-parse', most_common_partial_commit],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
     )
-    
+
     if result.returncode == 0:
-
-        full_commit_hash:str = result.stderr.strip()
+        full_commit_hash: str = result.stdout.strip()
+        return {
+            "partial_common_partial_commit_hash": most_common_partial_commit,
+            "full_commit_hash": full_commit_hash,
+            "most_common_author": most_common_author,
+        }
     else:
-        print("Error:", result.stderr.strip())
+        raise Exception(f"Failed to resolve full commit hash: {result.stderr.strip()}")
 
-    return {
-        "partial_common_partial_commit_hash": most_common_partial_commit,
-        "full_commit_hash": full_commit_hash,
-        "most_common_author": most_common_author,
-    }
+    
 
 
 
@@ -314,7 +290,7 @@ if __name__ == "__main__":
 
 
     VULN_COMMIT_HASH = original_commit_dict['full_commit_hash']
-    partial_commit_hash = original_commit_dict['most_common_patrial_commit_hash']
+    partial_commit_hash = original_commit_dict['partial_common_partial_commit_hash']
     print(f'The full vulnerable commit hash is: {VULN_COMMIT_HASH}\n'
           f'The partial commit hash is {partial_commit_hash}')
 
@@ -323,7 +299,7 @@ if __name__ == "__main__":
     # commit change other files? But this will do. 
 
     ### Fix this function call
-    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,repo_path=PATH_FFMPEG_REPO)
+    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=partial_commit_hash,repo_path=PATH_FFMPEG_REPO)
 
     
 
