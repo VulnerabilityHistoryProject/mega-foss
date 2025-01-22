@@ -53,7 +53,8 @@ VULN_COMMIT_HASH:str = ""
 VULN_CHANGES:list[str] = []
 
 def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPEG_REPO) -> str:
-    """_summary_
+    """
+    Executes git blame command on line_start and line_end then returns the result.
 
     Args:
         file_path (str): Path to the file where the vulnerability was first introduced & later fixed.
@@ -85,14 +86,16 @@ def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPE
 
 
 def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
-    """Extract the most common commit hash and the author with the highest contribution.
+    """
+    Extracts the most common commit hash and the author with the largest number of contributions.
 
     Args:
-        blame_output (str): Output from `git blame` command.
+        blame_output (str): Output from the git blame command.
 
     Returns:
-        dict: Dictionary with the most common commit hash and the author with the most contributions.
+        dict[str,str]: Returns a dictionary with  two keys: 'most_common_commit_hash' & 'most-common_author'
     """
+    
     commit_hashes:list[str] = []
     authors:list[str] = []
 
@@ -129,20 +132,32 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
 
 
 
-def git_show_vuln_changes(original_hash_start:int,original_hash_end:int,original_commit_hash=VULN_COMMIT_HASH,file_path=PATH_FFMPEG_REPO) -> list[str]:
-    """_summary_
+def git_show_vuln_changes(vuln_commit_start:int,
+                          vuln_commit_end:int,
+                          commit_hash:str=VULN_COMMIT_HASH,
+                          repo_path:str=PATH_FFMPEG_REPO
+    ) -> list[str]:
+    """
+    Uses 'git show' command to extract code snippets that were added when the vulnerability was first introduced.
+
 
     Args:
-        original_commit_hash (str): the hash of the commit that introduced the vulnerabilities
-        file_path (str): _description_
+        vuln_commit_start (int): Line number where the vulnerable code starts.
+        vuln_commit_end (int): Line number where the vulnerable code ends.
+        commit_hash (str, optional): Commit hash to be analyzed. Defaults to VULN_COMMIT_HASH.
+        repo_path (str, optional): Path to repo to be analyzed. Defaults to PATH_FFMPEG_REPO.
+
+    Raises:
+        Exception: if 'git show' command fails.
 
     Returns:
-        str: implementation of vulnerability
+        list[str]: Changes that the initial vulnerable commit made. This is only the code for verification and debugging purposes. Thus, files in which
+                            the changes occurred aren't included.
     """
 
 
     result = subprocess.run(
-        ['git','show',original_commit_hash,':',file_path],
+        ['git','show',commit_hash,':',repo_path],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
@@ -153,23 +168,24 @@ def git_show_vuln_changes(original_hash_start:int,original_hash_end:int,original
     output:str = result.stdout.decode()
     lines:list[str] = output.splitlines()
 
-    desired_lines:list[str] = lines[original_hash_start - 1:original_hash_end]
+    desired_lines:list[str] = lines[vuln_commit_start - 1:vuln_commit_end]
     
     return desired_lines
 
 
 def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
-    """_summary_
+    """
+    Retrieves the lines that were alterd by the patch commit.
 
     Args:
-        modified_file (ModifiedFile): _description_
+        modified_file (ModifiedFile): File object supplied by pydriller package that is used to locate the lines changed.
 
     Returns:
-        tuple[int,int]: _description_
+        tuple[int,int]: Returns the earliest added line number and the latest added line number by the patch commit.
     """
 
     added_lines:list[tuple[int,str]] = modified_file.diff_parsed['added']
-    #deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
+    # deleted_lines:list[tuple[int,str]] = modified_file.diff_parsed['deleted']
 
     
     # Get the earlies added line number
@@ -178,7 +194,7 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     # Get the earliest deleted line number
     # I know that there weren't any deleted lines. 
     ### TO-DO Add error handling in the case that no lines were added or deleted
-    #earliest_deleted_line: int = deleted_lines[0][0]
+    # earliest_deleted_line: int = deleted_lines[0][0]
 
     # Get the last added line number
     if added_lines:
@@ -198,13 +214,16 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
 
 
 def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PATH_FFMPEG_REPO) -> set[ModifiedFile]:
-    """_summary_
+    """
+    Given a specific commit hash and repo via a path, returns a set of ModifiedFile objects. All items in the set were modified
+    by the original commit hash.
 
     Args:
-        commit_hash (str, optional): The hash of the bug fix as seen here --> https://vulnerabilityhistory.org/commits/d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 -->  Defaults to PATCH_COMMIT_HASH.
+        commit_hash (str, optional): The hash to be analyzed. Defaults to PATCH_COMMIT_HASH.
+        repo_path (str, optional): Path to repo used to analyze a commit hash. Defaults to PATH_FFMPEG_REPO.
 
-
-        repo_path (str, optional): the path to the ffmpeg repo on RC -->  Defaults to PATH_FFMPEG_REPO.
+    Returns:
+        set[ModifiedFile]: Set of ModifiedFile objects that were all modified by the commit.
     """
     
     # Create empty set for files that were modified by the fixed commit
@@ -221,14 +240,11 @@ def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PAT
     # Add modified files to the set for later reference
     for modified_file in fixed_commit.modified_files:
 
-        
-
-        ## Add modified file OBJECT
         # Always add the old path because that is the one what won't change
         modified_file_paths_from_fix.add(modified_file)
         PATCH_MODIFIED_FILES.add(modified_file.old_path)
 
-        PATCH_FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I was to add the changes so I can look at them later
+        PATCH_FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I want to add the changes so I can look at them later
 
 
     return modified_file_paths_from_fix
@@ -313,7 +329,7 @@ if __name__ == "__main__":
     # commit change other files? But this will do. 
 
     ### Fix this function call
-    VULN_CHANGES = git_show_vuln_changes(start,end,original_commit_hash=VULN_COMMIT_HASH,file_path=PATH_FFMPEG_REPO)
+    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,file_path=PATH_FFMPEG_REPO)
 
     
 
