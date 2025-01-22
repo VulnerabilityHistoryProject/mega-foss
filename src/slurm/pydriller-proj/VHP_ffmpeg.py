@@ -39,11 +39,13 @@ global vars:
                                                  commit and vice-versa.
     VULN_CHANGES list[str]: Changes that the initial vulnerable commit made. This is only the code for verification and debugging purposes. Thus, files in which
                             the changes occurred aren't included.
+    PATH_OUTPUT_DIR (str): Path to the output directory where the json file will be written to.
 
 
 """
 load_dotenv()
 PATH_FFMPEG_REPO:str = os.getenv("FFMPEG_PATH")
+PATH_OUTPUT_DIR:str = "" ### Fill in later
 
 PATCH_COMMIT_HASH:str = "d4a731b84a08f0f3839eaaaf82e97d8d9c67da46" 
 PATCH_MODIFIED_FILES:set[str] = set()
@@ -85,15 +87,18 @@ def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPE
     return result.stdout.decode()
 
 
-def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
+def extract_most_common_commit_and_author(blame_output: str,git_dir:str,work_tree:str=PATH_FFMPEG_REPO) -> dict[str,str]:
     """
     Extracts the most common commit hash and the author with the largest number of contributions.
 
     Args:
         blame_output (str): Output from the git blame command.
+        git_dir (str): Path to the .git portion of a directory. The .git portion is added on using the Path object module from pathlib.
+        work_tree (str): Path to the repo to be analyzed.
 
     Returns:
-        dict[str,str]: Returns a dictionary with  two keys: 'most_common_commit_hash' & 'most-common_author'
+        dict[str,str]: Returns a dictionary with three keys: 'partial_common_partial_commit_hash' & 'full_commit_hash' & 'most-common_author'.
+                       The values associated with the keys are self explanatory.
     """
     
     commit_hashes:list[str] = []
@@ -117,16 +122,33 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
         commit_hashes.append(commit_hash)
         authors.append(author)
 
-    # Find the most common commit hash
+    # Find the most common partial commit hash
     commit_counter: Counter[str] = Counter(commit_hashes)
-    most_common_commit: str = commit_counter.most_common(1)[0][0] if commit_counter else None
+    most_common_partial_commit: str = commit_counter.most_common(1)[0][0] if commit_counter else None
 
     # Find the author with the highest number of contributions
     author_counter: Counter[str] = Counter(authors)
     most_common_author: str = author_counter.most_common(1)[0][0] if author_counter else None
 
+
+    git_dir = Path(PATH_FFMPEG_REPO) / ".git"
+
+    result = subprocess.run(
+        ['git','--git-dir',git_dir, '--work-tree', work_tree,'rev-parse',most_common_partial_commit],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    
+    if result.returncode == 0:
+
+        full_commit_hash:str = result.stderr.strip()
+    else:
+        print("Error:", result.stderr.strip())
+
     return {
-        "most_common_commit_hash": most_common_commit,
+        "partial_common_partial_commit_hash": most_common_partial_commit,
+        "full_commit_hash": full_commit_hash,
         "most_common_author": most_common_author,
     }
 
@@ -250,14 +272,11 @@ def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PAT
     return modified_file_paths_from_fix
 
     
-
-
-
 def save_solution(commit_hash:str =VULN_COMMIT_HASH) -> None:
-    
+    return None
 
     
-    return None      
+         
 
 
 
@@ -278,22 +297,27 @@ if __name__ == "__main__":
     # This will hopefully get me the original author and commit of the vulnerability
     start:int = lines_changed[0]
     end:int = lines_changed[1]
-    file_path = modified_files_by_fixed_commit.pop().old_path
-    print(file_path)
-    blame_ouput: str = git_blame(file_path=file_path, line_start=start,line_end=end,repo_path=PATH_FFMPEG_REPO,)
+    mod_file_path = modified_files_by_fixed_commit.pop().old_path
+    print(f'The modified file path is: {mod_file_path}')
+
+
+    blame_ouput: str = git_blame(file_path=mod_file_path, line_start=start,line_end=end,repo_path=PATH_FFMPEG_REPO,)
 
     # Extract the most common commit hash and author of those commits
     original_commit_dict: dict[str, str]= extract_most_common_commit_and_author(blame_output=blame_ouput)
 
-    VULN_COMMIT_HASH = original_commit_dict['most_common_commit_hash']
-    print(VULN_COMMIT_HASH)
+
+    VULN_COMMIT_HASH = original_commit_dict['full_commit_hash']
+    partial_commit_hash = original_commit_dict['most_common_patrial_commit_hash']
+    print(f'The full vulnerable commit hash is: {VULN_COMMIT_HASH}\n'
+          f'The partial commit hash is {partial_commit_hash}')
 
     # This line is a little broken. Technically, I should iterate over every file that was changed. But in this case I 
     # know that only one file was changed by the bug patch. That still doesn't answer the question: Did the vulnerable 
     # commit change other files? But this will do. 
 
     ### Fix this function call
-    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,file_path=PATH_FFMPEG_REPO)
+    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,repo_path=PATH_FFMPEG_REPO)
 
     
 
