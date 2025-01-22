@@ -250,47 +250,11 @@ def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PAT
     return modified_file_paths_from_fix
 
     
-def traverse_commit(modified_files: set[str], repo_path: str = PATH_FFMPEG_REPO) -> None:
-    """
-    Traverse commits to find those that modified the given files.
 
-    Args:
-        modified_files (set[str]): Set of file paths to analyze.
-        repo_path (str): Path to the ffmpeg repository in RC cluster.
-    """
-    ### Decided to go a different route with finding the original commit, but I will keep this code for reference for later
 
-    ffmpeg_git_repo:Git = Git(repo_path)
 
-    # Looping through files that have been altered and identifying the commits that contributed to the alterations
-
-    # Given a file path, get_commits_modified_file() returns all the commits that modified this file 
-    for file in modified_files:
-
-        commits_that_modified_file:list[str] = ffmpeg_git_repo.get_commits_modified_file(file)   
-
-        for commit in commits_that_modified_file:
-
-            ffmpeg_git_repo.get_commits_modified_file
-           
-
-    """
+def save_solution(commit_hash:str =VULN_COMMIT_HASH) -> None:
     
-
-    """
-
-    return None
-
-
-def save_solution(hash_or_origin:str =VULN_COMMIT_HASH) -> None:
-    """_summary_
-
-    Args:
-        hash_or_origin (_type_, optional): _description_. Defaults to VULN_COMMIT_HASH.
-
-    Returns:
-        _type_: _description_
-    """
 
     
     return None      
