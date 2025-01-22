@@ -270,9 +270,15 @@ def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PAT
 
 
     return modified_file_paths_from_fix
-
-    
+   
 def save_solution(commit_hash:str =VULN_COMMIT_HASH) -> None:
+    """
+    Writed the full original commit hash to a directory location.
+
+    Args:
+        commit_hash (str, optional): Commit hash that needs to be saved and written to a directory location. Defaults to VULN_COMMIT_HASH.
+
+    """
     return None
 
     
