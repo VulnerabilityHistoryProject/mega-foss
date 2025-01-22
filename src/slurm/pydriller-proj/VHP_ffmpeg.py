@@ -243,7 +243,7 @@ def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PAT
         PATCH_MODIFIED_FILES.add(modified_file.old_path)
 
         PATCH_FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I want to add the changes so I can look at them later
-
+        
 
     return modified_file_paths_from_fix
    
@@ -298,8 +298,9 @@ if __name__ == "__main__":
     # know that only one file was changed by the bug patch. That still doesn't answer the question: Did the vulnerable 
     # commit change other files? But this will do. 
 
-    ### Fix this function call
-    VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=partial_commit_hash,repo_path=PATH_FFMPEG_REPO)
+    ### I think the original vuln commit got erased through a merge or something
+    # When I tried
+    #VULN_CHANGES = git_show_vuln_changes(start,end,commit_hash=VULN_COMMIT_HASH,repo_path=PATH_FFMPEG_REPO)
 
     
 
