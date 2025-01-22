@@ -27,38 +27,49 @@ import json
 
 from pydriller import Git,ModifiedFile, Commit
 
+"""
+
+global vars: 
+    PATCH_COMMIT_HASH (str): Commit hash of the patch to CVE-2015-8218 --> d4a731b84a08f0f3839eaaaf82e97d8d9c67da46
+    VULN_COMMIT_HASH (str): Commit hash of the original commit that introduced CVE-2015-8218
+    PATH_FFMPEG_REPO (str): Path to the ffmpeg repo that will be used as a test with this specific vulnerability
+    PATCH_MODIFIED_FILES set[str]: Set of files modified by the patch commit.
+    PATCH_FIXED_CHANGES dict[str,dict[str,str]]: The key of the outer dictionary is the name of the modified file. The value is another dictionary. The second
+                                                 dictionary has two keys, either "added" or "deleted". The added section has the code that was added by the
+                                                 commit and vice-versa.
+    VULN_CHANGES list[str]: Changes that the initial vulnerable commit made. This is only the code for verification and debugging purposes. Thus, files in which
+                            the changes occurred aren't included.
+
+
+"""
 load_dotenv()
-ffmpeg_path = os.getenv("FFMPEG_PATH")
+PATH_FFMPEG_REPO:str = os.getenv("FFMPEG_PATH")
 
-if ffmpeg_path:
-    print(f"FFMPEG_PATH: {ffmpeg_path}")
-else:
-    print("FFMPEG_PATH is not set in the .env file.")
+PATCH_COMMIT_HASH:str = "d4a731b84a08f0f3839eaaaf82e97d8d9c67da46" 
+PATCH_MODIFIED_FILES:set[str] = set()
+PATCH_FIXED_CHANGES:dict[str,dict[str,str]] = {}
 
+VULN_COMMIT_HASH:str = ""
+VULN_CHANGES:list[str] = []
 
-
-
-
-FIXED_VULN_COMMIT_HASH:str = "d4a731b84a08f0f3839eaaaf82e97d8d9c67da46" # The hash of the commit that fixed CVE-2015-8218
-ORIGIN_COMMIT_HASH:str = ""
-FFMPEG_PATH_TO_REPO:str = os.getenv("FFMPEG_PATH") # This is FFmeg on my local machine
-MODIFIED_FILES:set[str] = set()
-FIXED_CHANGES:dict[str,dict[str,str]] = {} # key: modified file  value: dict of changes --> key: added / deleted value: added / deleted text
-VULN_CHANGES:list[str] = [] # changes from the vulnerable commit hash
-
-def git_blame(file_path:str,line_start:int,line_end:int,repo_path=FFMPEG_PATH_TO_REPO) -> str:
-    """
-
-    Keep it simple and only process one file at a time for now.
+def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPEG_REPO) -> str:
+    """_summary_
 
     Args:
-        file_path (str): path to the file where the vulnerability was introduced & fixed
-        line_start (int): start line of where the change for the vulnerability was introduced
-        line_end (int): end line of where the change for the vulnerability was introduced
+        file_path (str): Path to the file where the vulnerability was first introduced & later fixed.
+        line_start (int): Starting line where the code for the vulnerability was introduced. Used for accurate git blame output.
+        line_end (int): Ending line where the code for the vulnerability was introduced. Used for accurate git blame output.
+        repo_path (str, optional): _description_. Defaults to PATH_FFMPEG_REPO.
+
+    Raises:
+        Exception: if the git blame command can'ts be executed
 
     Returns:
-        str: result from the git blame <file_path>
+        str: Returns the result from the git blame command.
     """
+    
+    
+    
     
     full_path = Path(repo_path) / file_path
 
@@ -118,7 +129,7 @@ def extract_most_common_commit_and_author(blame_output: str) -> dict[str,str]:
 
 
 
-def git_show_vuln_changes(original_hash_start:int,original_hash_end:int,original_commit_hash=ORIGIN_COMMIT_HASH,file_path=FFMPEG_PATH_TO_REPO) -> list[str]:
+def git_show_vuln_changes(original_hash_start:int,original_hash_end:int,original_commit_hash=VULN_COMMIT_HASH,file_path=PATH_FFMPEG_REPO) -> list[str]:
     """_summary_
 
     Args:
@@ -186,14 +197,14 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     return (int(earliest_added_line),int(last_added_line))
 
 
-def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str = FFMPEG_PATH_TO_REPO) -> set[ModifiedFile]:
+def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PATH_FFMPEG_REPO) -> set[ModifiedFile]:
     """_summary_
 
     Args:
-        commit_hash (str, optional): The hash of the bug fix as seen here --> https://vulnerabilityhistory.org/commits/d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 -->  Defaults to FIXED_VULN_COMMIT_HASH.
+        commit_hash (str, optional): The hash of the bug fix as seen here --> https://vulnerabilityhistory.org/commits/d4a731b84a08f0f3839eaaaf82e97d8d9c67da46 -->  Defaults to PATCH_COMMIT_HASH.
 
 
-        repo_path (str, optional): the path to the ffmpeg repo on RC -->  Defaults to FFMPEG_PATH_TO_REPO.
+        repo_path (str, optional): the path to the ffmpeg repo on RC -->  Defaults to PATH_FFMPEG_REPO.
     """
     
     # Create empty set for files that were modified by the fixed commit
@@ -215,15 +226,15 @@ def find_modified_files(commit_hash:str = FIXED_VULN_COMMIT_HASH, repo_path:str 
         ## Add modified file OBJECT
         # Always add the old path because that is the one what won't change
         modified_file_paths_from_fix.add(modified_file)
-        MODIFIED_FILES.add(modified_file.old_path)
+        PATCH_MODIFIED_FILES.add(modified_file.old_path)
 
-        FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I was to add the changes so I can look at them later
+        PATCH_FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I was to add the changes so I can look at them later
 
 
     return modified_file_paths_from_fix
 
     
-def traverse_commit(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_REPO) -> None:
+def traverse_commit(modified_files: set[str], repo_path: str = PATH_FFMPEG_REPO) -> None:
     """
     Traverse commits to find those that modified the given files.
 
@@ -255,11 +266,11 @@ def traverse_commit(modified_files: set[str], repo_path: str = FFMPEG_PATH_TO_RE
     return None
 
 
-def save_solution(hash_or_origin:str =ORIGIN_COMMIT_HASH) -> None:
+def save_solution(hash_or_origin:str =VULN_COMMIT_HASH) -> None:
     """_summary_
 
     Args:
-        hash_or_origin (_type_, optional): _description_. Defaults to ORIGIN_COMMIT_HASH.
+        hash_or_origin (_type_, optional): _description_. Defaults to VULN_COMMIT_HASH.
 
     Returns:
         _type_: _description_
@@ -272,7 +283,7 @@ def save_solution(hash_or_origin:str =ORIGIN_COMMIT_HASH) -> None:
 
 if __name__ == "__main__":
     # Find modified files in the fixed commit
-    modified_files_by_fixed_commit:set[ModifiedFile] = find_modified_files(commit_hash=FIXED_VULN_COMMIT_HASH)
+    modified_files_by_fixed_commit:set[ModifiedFile] = find_modified_files(commit_hash=PATCH_COMMIT_HASH)
 
     # Extract the lines that were changed in each modified file
     ### In the case of CVE-2015-8218 I happen to know that only 1 file was changed. For sake of simplicity, I won't write hypter-robust code
@@ -289,38 +300,39 @@ if __name__ == "__main__":
     end:int = lines_changed[1]
     file_path = modified_files_by_fixed_commit.pop().old_path
     print(file_path)
-    blame_ouput: str = git_blame(file_path=file_path, line_start=start,line_end=end,repo_path=FFMPEG_PATH_TO_REPO,)
+    blame_ouput: str = git_blame(file_path=file_path, line_start=start,line_end=end,repo_path=PATH_FFMPEG_REPO,)
 
     # Extract the most common commit hash and author of those commits
     original_commit_dict: dict[str, str]= extract_most_common_commit_and_author(blame_output=blame_ouput)
 
-    ORIGIN_COMMIT_HASH = original_commit_dict['most_common_commit_hash']
+    VULN_COMMIT_HASH = original_commit_dict['most_common_commit_hash']
+    print(VULN_COMMIT_HASH)
 
     # This line is a little broken. Technically, I should iterate over every file that was changed. But in this case I 
     # know that only one file was changed by the bug patch. That still doesn't answer the question: Did the vulnerable 
     # commit change other files? But this will do. 
 
     ### Fix this function call
-    #VULN_CHANGES = git_show_vuln_changes(start,end,original_commit_hash=ORIGIN_COMMIT_HASH,file_path=FFMPEG_PATH_TO_REPO)
+    VULN_CHANGES = git_show_vuln_changes(start,end,original_commit_hash=VULN_COMMIT_HASH,file_path=PATH_FFMPEG_REPO)
 
     
 
 
-    modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=ORIGIN_COMMIT_HASH)
+    modified_files_by_vuln_commit:set[str] = find_modified_files(commit_hash=VULN_COMMIT_HASH)
 
 
     print("Modified files:")
-    pprint.pprint(MODIFIED_FILES)
+    pprint.pprint(PATCH_MODIFIED_FILES)
     print("__________________________________")
     print("__________________________________")
 
     print("Original / Vuln Commit Info:")
-    pprint.pprint(ORIGIN_COMMIT_HASH)
+    pprint.pprint(VULN_COMMIT_HASH)
     print("__________________________________")
     print("__________________________________")
 
     print("Changes that were made by the patch:")
-    pprint.pprint(FIXED_CHANGES)
+    pprint.pprint(PATCH_FIXED_CHANGES)
     print("__________________________________")
     print("__________________________________")
 
@@ -337,6 +349,6 @@ if __name__ == "__main__":
 # Writing the dictionary to a JSON file
 json_path:str = "ffmpeg_vuln_changes.json"
 with open(json_path, "w") as json_file:
-    json.dump(FIXED_CHANGES, json_file, indent=4) 
+    json.dump(PATCH_FIXED_CHANGES, json_file, indent=4) 
 
     
