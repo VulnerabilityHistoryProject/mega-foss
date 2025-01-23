@@ -72,3 +72,20 @@ Output can be configured to print in the console or save to a file as well as pr
 Output will print out tab-seperated data to be copied into the spreadsheet which will auto-update the pi chart.
 Output will also print out data for specific projects.
 Output will also display a list of CWEs that had no vote mapping.
+
+
+### 6. Generate a List of Locally Retrievable Commits
+#### Pre-requisite
+Ensure you are in the RIT Supercomputing cluster or change the filepath on line 35 ("repos_dir = os.path...") to a folder of NVD repositories. 
+If you are on the supercomputing cluster, note that there might be an issue with "dubious ownership" in git. To fix this, run
+```sh
+git config --global --add safe.directory '*'
+```
+
+To run this script, run:
+```sh
+python src/cve/getLocalCommits.py
+```
+
+The output will state if a commit is found or not found. It will also state if a repository does not exist. Extra debug statements can be uncommented as well.
+The results will be saved in a file called viable_patches.json (our version is stored in src/cve/viable_patches.json). 
