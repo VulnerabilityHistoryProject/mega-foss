@@ -71,9 +71,6 @@ def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPE
         str: Returns the result from the git blame command.
     """
     
-    
-    
-    
     full_path = Path(repo_path) / file_path
 
     result = subprocess.run(
