@@ -72,3 +72,16 @@ Output can be configured to print in the console or save to a file as well as pr
 Output will print out tab-seperated data to be copied into the spreadsheet which will auto-update the pi chart.
 Output will also print out data for specific projects.
 Output will also display a list of CWEs that had no vote mapping.
+
+# Set Up With MongoDB
+
+## Scripts
+
+### 1. Load CVEs into a MongoDB database
+#### Pre-requisite
+Install MongoDB to your system, or have access to a system running MongoDB. You will also need to install the official toolkit [here](https://www.mongodb.com/try/download/database-tools). Once both downloads are ready, add their `bin`s to your Path or PATH environment variable. These should look something like `{install location}/MongoDB/Server/{version number}/bin` and `{install location}/MongoDB/Tools/{version number}/bin` respectively.
+Additionally, if you haven't already, download a collection of CVEs to use. We recommend cloning [this repository](https://github.com/olbat/nvdcve) for a wide range of CVEs, but be warned that it is very large (277k+ CVEs at time of writing)!
+#### Steps
+Open a command line window and type `mongod --dbpath="{desired database folder location}"`. This should start running a MongoDB instance on your computer at `localhost:27017`. If you would like to use a database that is already running, skip this step. If you would like to use a more complicated configuration, such as on a different port, refer to the mongod documentation [here](https://www.mongodb.com/docs/manual/reference/program/mongod/). Once your database is running, *DO NOT CLOSE THIS WINDOW* until you are done, as this will close your database to connections.
+Open either `src/cve/mongodb-import.ps1` or `src/cve/mongodb-import.sh`, whichever seems more appropriate for your system. Replace the default directory path with the path to your CVE collection folder. If you used the default configuration provided by `mongod`, this is all that needs to be changed. If the target database is not on localhost and/or is running on a different port than the default, you will need to change the `mongoHost` and `mongoPort` fields respectively.
+Once your chosen script is set up for your system, you can open a new terminal window and run it. Be warned that if your CVE collection is very large, this may take a long time to run!
