@@ -408,9 +408,9 @@ class CVE_Analysis:
 			self.add_output(projects, header="Projects Rust Can't Prevent")
 		return self
 
-	def pi_chart(self, output=True) -> Self | str:
+	def pie_chart(self, output=True) -> Self | str:
 		"""
-		Generates a pi chart string representation of CVE data categorized by CWE types.
+		Generates a pie chart string representation of CVE data categorized by CWE types.
 
 		If output flag is True, adds the chart to internal output buffer and returns self.
 		If output flag is False, returns the chart as a string.
@@ -421,23 +421,23 @@ class CVE_Analysis:
 		- CVEs: Total number of CVEs in that category
 
 		Example:
-			>>> analyzer.pi_chart()
+			>>> analyzer.pie_chart()
 			Category    Projects    CVEs
 			Virtuall..     12          45
 			No help from..      8           23
 			...
 		"""
-		pi_chart = "Category\tProjects\tCVEs\n"
+		pie_chart = "Category\tProjects\tCVEs\n"
 		# Category, #Projects, #Cves
 		self.total_cves(by_category=True, output=False)
 		self.total_unique_projects(by_category=True, output=False)
 		for category in self._categorzied_cwes:
-			pi_chart += f"{category}\t{self._total_unique_projects[category]}\t{self._total_cves[category]}\n"
+			pie_chart += f"{category}\t{self._total_unique_projects[category]}\t{self._total_cves[category]}\n"
 		if output:
-			self.add_output(pi_chart, header="Pi Chart")
+			self.add_output(pie_chart, header="Pie Chart")
 			return self
 		else:
-			return pi_chart
+			return pie_chart
 
 	def print(self):
 		print(self.output)
@@ -456,7 +456,7 @@ def main():
 	(
    analyzer
    	.total_unique_projects(by_category=True)
-		.pi_chart()
+		.pie_chart()
 		.print()
 	)
 
