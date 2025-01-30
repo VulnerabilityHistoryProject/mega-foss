@@ -87,8 +87,8 @@ select_most_common_cwe_query = os.path.join(os.path.dirname(__file__), 'queries/
 create_c_cve_cwe_project = os.path.join(os.path.dirname(__file__), 'queries/create_c_cve_cwe_project.sql')
 
 # Output files
-output_file = os.path.join(os.path.dirname(__file__), 'output/pi_chart_data.txt')
-missing_cwe = os.path.join(os.path.dirname(__file__), 'output/pi_chart_missing.txt')
+output_file = os.path.join(os.path.dirname(__file__), 'output/pie_chart_data.txt')
+missing_cwe = os.path.join(os.path.dirname(__file__), 'output/pie_chart_missing.txt')
 cve_no_cwe_out = os.path.join(os.path.dirname(__file__), 'output/cve_no_cwe.txt')
 
 # Connection details
@@ -225,7 +225,7 @@ def load_c_cve_found_cwe(cursor: psycopg2.extensions.cursor):
 		exit()
 
 """
-PI CHART DATA ANALYSIS
+PIE CHART DATA ANALYSIS
 """
 def analyze_single_project(cursor, rust_cwes: dict[str, RustCSVData], vendor, product, found_missing_data, prev_category_data=None):
 	project = f"{vendor}/{product}"

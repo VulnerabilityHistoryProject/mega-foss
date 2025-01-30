@@ -69,7 +69,7 @@ python src/cve/generate_pi_chart.py
 ```
 
 Output can be configured to print in the console or save to a file as well as printing out CVEs with no CWEs.
-Output will print out tab-seperated data to be copied into the spreadsheet which will auto-update the pi chart.
+Output will print out tab-seperated data to be copied into the spreadsheet which will auto-update the pie chart.
 Output will also print out data for specific projects.
 Output will also display a list of CWEs that had no vote mapping.
 
