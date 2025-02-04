@@ -54,6 +54,44 @@ PATCH_FIXED_CHANGES:dict[str,dict[str,str]] = {}
 VULN_COMMIT_HASH:str = ""
 VULN_CHANGES:list[str] = []
 
+
+def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PATH_FFMPEG_REPO) -> set[ModifiedFile]:
+    """
+    Given a specific commit hash and repo via a path, returns a set of ModifiedFile objects. All items in the set are modified
+    by the original commit hash.
+
+    Args:
+        commit_hash (str, optional): The hash to be analyzed. Defaults to PATCH_COMMIT_HASH.
+        repo_path (str, optional): Path to repo used to analyze a commit hash. Defaults to PATH_FFMPEG_REPO.
+
+    Returns:
+        set[ModifiedFile]: Set of ModifiedFile objects that were all modified by the commit.
+    """
+    
+    # Create empty set for files that were modified by the fixed commit
+    modified_file_paths_from_fix:set[ModifiedFile] = set()
+
+    # converting path to a Git object --> ffmpeg git repo
+    ffmpeg_git_repo= Git(repo_path)
+
+    # Getting the commit object from the fixed commit hash the fixed the vulnerability
+    fixed_commit:Commit = ffmpeg_git_repo.get_commit(commit_hash)
+
+    
+
+    # Add modified files to the set for later reference
+    for modified_file in fixed_commit.modified_files:
+
+        # Always add the old path because that is the one what won't change
+        modified_file_paths_from_fix.add(modified_file)
+        PATCH_MODIFIED_FILES.add(modified_file.old_path)
+
+        PATCH_FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I want to add the changes so I can look at them later
+        
+
+    return modified_file_paths_from_fix
+   
+
 def git_blame(file_path:str,line_start:int,line_end:int,repo_path:str=PATH_FFMPEG_REPO) -> str:
     """
     Executes git blame command on line_start and line_end then returns the result.
@@ -212,42 +250,7 @@ def get_lines_changed_in_fix(modified_file:ModifiedFile)-> tuple[int,int]:
     return (int(earliest_added_line),int(last_added_line))
 
 
-def find_modified_files(commit_hash:str = PATCH_COMMIT_HASH, repo_path:str = PATH_FFMPEG_REPO) -> set[ModifiedFile]:
-    """
-    Given a specific commit hash and repo via a path, returns a set of ModifiedFile objects. All items in the set were modified
-    by the original commit hash.
 
-    Args:
-        commit_hash (str, optional): The hash to be analyzed. Defaults to PATCH_COMMIT_HASH.
-        repo_path (str, optional): Path to repo used to analyze a commit hash. Defaults to PATH_FFMPEG_REPO.
-
-    Returns:
-        set[ModifiedFile]: Set of ModifiedFile objects that were all modified by the commit.
-    """
-    
-    # Create empty set for files that were modified by the fixed commit
-    modified_file_paths_from_fix:set[ModifiedFile] = set()
-
-    # converting path to a Git object --> ffmpeg git repo
-    ffmpeg_git_repo= Git(repo_path)
-
-    # Getting the commit object from the fixed commit hash the fixed the vulnerability
-    fixed_commit:Commit = ffmpeg_git_repo.get_commit(commit_hash)
-
-    
-
-    # Add modified files to the set for later reference
-    for modified_file in fixed_commit.modified_files:
-
-        # Always add the old path because that is the one what won't change
-        modified_file_paths_from_fix.add(modified_file)
-        PATCH_MODIFIED_FILES.add(modified_file.old_path)
-
-        PATCH_FIXED_CHANGES[modified_file.old_path] = modified_file.diff_parsed # I want to add the changes so I can look at them later
-        
-
-    return modified_file_paths_from_fix
-   
 def save_solution(commit_hash:str =VULN_COMMIT_HASH) -> None:
     """
     Writed the full original commit hash to a directory location.
