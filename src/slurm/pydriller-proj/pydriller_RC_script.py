@@ -109,7 +109,8 @@ CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
 # write code to write the original patch commit, directly prev commit, and the suspected vuln commit (or replace with error if unable to find), and changes to a new json file --> This is the solution
 # write correct shebang at the top of script aka find location of python3 on RC
 # put all paths into the .env file when I login to RC and find everything on my terminal. Can I carry the .env file with me??? How are env vars handled on RC?
-# write code to 
+# write code to write the commit changes to the json file (this is already kinda done, but I need to clean it up)
+# add env variables to .env 
 
 
 def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
@@ -133,7 +134,7 @@ def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
     handler.setLevel(logging.DEBUG)
 
     # Define the log format
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - Line: %(lineno)d')
     handler.setFormatter(formatter)
 
     # Add the handler to the root logger
@@ -179,7 +180,10 @@ def find_modified_files(patch_commit_hash: str = HASH_PATCH_COMMIT, selected_rep
         try:
             # Always add the old path because that's the one that won't change
             modified_file_objects.add(modified_file_obj)
-        
+
+            ### Uncomment line below on subsequent iterations after runnning script once ###
+            # track_commit_changes(modified_file_obj)
+
         except AttributeError as e:
             logging.warning(f"Failed to process file '{modified_file_obj}': Missing attributes: {e}")
             continue
@@ -190,15 +194,53 @@ def find_modified_files(patch_commit_hash: str = HASH_PATCH_COMMIT, selected_rep
     return modified_file_objects
 
 
+
+# Make sure CHANGES_PATCH_COMMIT is initialized as a dictionary (assuming it's global)
+if not isinstance(CHANGES_PATCH_COMMIT, dict):
+    CHANGES_PATCH_COMMIT = {}
+
 def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
     """
     Tracks the added and deleted code in a modified file. Stores the changes in the global variable
-    CHANGES_PATCH_COMMIT.
+    CHANGES_PATCH_COMMIT dictionary.
 
     Args:
         modified_file_obj (ModifiedFile): This is a file that was modified by a patch commit, vulnerability commit, or general commit.
     """
-    CHANGES_PATCH_COMMIT[modified_file_obj.old_path] = modified_file_obj.diff_parsed
+    try:
+        # Check if 'modified_file_obj' has required attributes 'old_path' and 'diff_parsed'
+        if not hasattr(modified_file_obj, 'old_path') or not hasattr(modified_file_obj, 'diff_parsed'):
+            raise AttributeError(f"Missing required attributes in modified_file_obj: {modified_file_obj}")
+
+        old_path = modified_file_obj.old_path
+        diff_parsed = modified_file_obj.diff_parsed
+
+        # Ensure old_path is a valid string
+        if not isinstance(old_path, str) or not old_path:
+            raise ValueError(f"Invalid 'old_path' in modified_file_obj: {old_path}")
+
+        # Ensure diff_parsed is of an acceptable type (e.g., string, dict, list)
+        if not isinstance(diff_parsed, (str, dict, list)):
+            raise TypeError(f"Invalid 'diff_parsed' type in modified_file_obj: {type(diff_parsed)}")
+
+        # Ensure CHANGES_PATCH_COMMIT is a dictionary
+        if not isinstance(CHANGES_PATCH_COMMIT, dict):
+            logging.error("CHANGES_PATCH_COMMIT is not a dictionary!")
+            return
+
+        # Update the CHANGES_PATCH_COMMIT dictionary
+        CHANGES_PATCH_COMMIT[old_path] = diff_parsed
+
+    except AttributeError as e:
+        logging.error("AttributeError while processing modified_file_obj: %s", e)
+    except ValueError as e:
+        logging.error("ValueError: %s", e)
+    except TypeError as e:
+        logging.error("TypeError: %s", e)
+    except Exception as e:
+        logging.error("An unexpected error occurred while tracking commit changes: %s", e)
+
+
 
 
 
