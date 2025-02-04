@@ -36,10 +36,13 @@ Citations:
 """
 
 import subprocess
+import os 
 from collections import Counter
 from dotenv import load_dotenv
 from pathlib import Path
-import os 
+import logging
+from logging.handlers import RotatingFileHandler
+
 import pprint
 import json
 
@@ -52,7 +55,7 @@ from pydriller import Git,ModifiedFile, Commit
     PATH_SELECTED_REPO (str): Path to the specific repo. This changes as the script iterates through the different patch commits in the json file.
     PATH_PATCH_COMMITS (str): Path to the json file containing all of the patch commits that fix vulnerabilities.
     PATH_OUTPUT_DIR (str): Path to the output directory where the json file with vulnerable commits will be written to.
-    
+    PATH_LOG_OUTPUT_DIR (str): Path to the output directory where the logs and errors will be stored.
 
     HASH_PATCH_COMMIT (str): Commit hash of the patch commit to a vulnerability.
     HASH_VULN_COMMIT (str): Commit hash of the original commit that introduced the vulnerability.
@@ -76,7 +79,10 @@ PATH_SELECTED_REPO:str = ""
 
 PATH_PATCH_COMMITS:str = os.getenv("PATCH_COMMITS_JSON")
 PATH_OUTPUT_DIR:str = os.getenv("OUTPUT_DIR_JSON")
- 
+
+PATH_LOG_OUTPUT_DIR: str = os.getenv("LOGGING_DIR")
+
+
 
 HASH_PATCH_COMMIT:str = ""
 HASH_VULN_COMMIT:str = ""
@@ -93,7 +99,6 @@ CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
                               list[ # list contains a tuple(line number, code)
                                   tuple[int,str]]]] = {}
 
-
 ### TO-DO ###
 # copy all code over and adjust variable names and add necessary error handling for skipping messed up cases
 # write code to get the previous commit (the one directly before the patch) this way we can compare that to the other hash.
@@ -107,7 +112,36 @@ CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
 # write code to 
 
 
-def find_modified_files(patch_commit_hash:str = HASH_PATCH_COMMIT, selected_repo:str = PATH_SELECTED_REPO) -> set[ModifiedFile]:
+def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
+    # Ensure the log directory exists
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)  # Create the directory if it doesn't exist
+
+    log_file = 'error_log.txt'
+    log_path = os.path.join(log_directory, log_file)
+
+    # Check if the log file already exists in the specified directory
+    if os.path.exists(log_path):
+        # If the file exists, add a number suffix (e.g., error_log.txt2, error_log.txt3, etc.)
+        i = 2
+        while os.path.exists(os.path.join(log_directory, f'error_log.txt{i}')):
+            i += 1
+        log_path = os.path.join(log_directory, f'error_log.txt{i}')
+    
+    # Set up the rotating log file handler
+    handler = RotatingFileHandler(log_path, maxBytes=5*1024*1024, backupCount=10)  # 5MB per log file, up to 10 backup files
+    handler.setLevel(logging.DEBUG)
+
+    # Define the log format
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+
+    # Add the handler to the root logger
+    logging.getLogger().addHandler(handler)
+
+
+
+def find_modified_files(patch_commit_hash: str = HASH_PATCH_COMMIT, selected_repo: str = PATH_SELECTED_REPO) -> set[ModifiedFile]:
     """
     Given a specific patch commit hash and a repo corresponding to the FOSS project, via a path, returns a set of ModifiedFile objects. 
     All items in the set are modified files by the patch commit hash.
@@ -120,34 +154,41 @@ def find_modified_files(patch_commit_hash:str = HASH_PATCH_COMMIT, selected_repo
         set[ModifiedFile]: Set of ModifiedFile objects that were all modified by the patch commit to eliminate the CVE.
     """
     
-    # Create empty set for files that were modified by the patch commit
+    # Create an empty set for files that were modified by the patch commit
+    modified_file_objects: set[ModifiedFile] = set()
 
-    modified_file_objects:set[ModifiedFile] = set()
+    try:
+        # Converting selected repo (path) to a Git object
+        selected_git_repo_obj = Git(selected_repo)
+        
+        # Getting the commit object (patch) from the commit hash git object (git repo obj)
+        patch_commit_obj: Commit = selected_git_repo_obj.get_commit(patch_commit_hash)
 
-    
-    # Converting selected repo (path) to a Git object
-    # Getting the commit object (patch) from the commit hash git object (git repo obj)
- 
-    selected_git_repo_obj = Git(selected_repo)
-    patch_commit_obj: Commit = selected_git_repo_obj.get_commit(patch_commit_hash)
-    
+    except FileNotFoundError as e:
+        logging.error(f"Repository path '{selected_repo}' not found: {e}")
+        return modified_file_objects
+    except ValueError as e:
+        logging.error(f"Invalid commit hash '{patch_commit_hash}': {e}")
+        return modified_file_objects
+    except Exception as e:
+        logging.critical(f"Unexpected error while accessing the repo or commit: {e}")
+        return modified_file_objects
 
-    ### CONTINUE HERE
-    # Add files modified by the patch commit to a set for later reference
+    # Process modified files and log any errors encountered
     for modified_file_obj in patch_commit_obj.modified_files:
-
-        # Always add the old path because that is the one what won't change
-        modified_file_objects.add(modified_file_obj)
+        try:
+            # Always add the old path because that's the one that won't change
+            modified_file_objects.add(modified_file_obj)
         
-
-        # un-comment if changes should be tracked and stored in json
-        # CHANGES_PATCH_COMMIT[modified_file_obj.old_path] = modified_file_obj.diff_parsed
-        
-        ### TO-DO ### 
-        # Also include error handling in case anything goes wrong
+        except AttributeError as e:
+            logging.warning(f"Failed to process file '{modified_file_obj}': Missing attributes: {e}")
+            continue
+        except Exception as e:
+            logging.error(f"Unexpected error while processing file '{modified_file_obj}': {e}")
+            continue
 
     return modified_file_objects
-   
+
 
 def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
     """
@@ -158,3 +199,7 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
         modified_file_obj (ModifiedFile): This is a file that was modified by a patch commit, vulnerability commit, or general commit.
     """
     CHANGES_PATCH_COMMIT[modified_file_obj.old_path] = modified_file_obj.diff_parsed
+
+
+
+
