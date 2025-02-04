@@ -59,12 +59,14 @@ from pydriller import Git,ModifiedFile, Commit
     
     MOD_FILES_BY_PATCH set[str]: Set of paths to files modified by the patch commit.
     
-    CHANGES_PATCH_COMMIT dict[str,dict[str,str]]: The key of the outer dictionary is the name of the modified file. The value is another dictionary. The second
+    CHANGES_PATCH_COMMIT dict[str,dict[str,list[tuple[int,str]]]] (dict): The key of the outer dictionary is the name of the modified file by the patch commit. The value is another dictionary. The second
                                                   dictionary has two keys, either "added" or "deleted". The added section has the code that was added by the
-                                                 commit and vice-versa.
-    CHANGES_VULN_COMMIT dict[str, dict[str,str]]: Tke key of the dictionarhy is the modified file by the suspected vulnerable commit. The value is another dictionary. The second
+                                                 commit and vice-versa. The changes are in a list of tuples where the first index of the tuple is the line number, and the second tuple is the code change.
+
+    CHANGES_VULN_COMMIT dict[str,dict[str,list[tuple[int,str]]]] (dict): Tke key of the dictionary is the modified file by the suspected vulnerable commit. The value is another dictionary. The second
                                                  dictionary has two keys, either "added" or "deleted". The added section has the code that was added by the
-                                                 commit and vice-versa. The changes are a code snippet for verification and validation purposes against the CHANGES_PATCH_COMMIT
+                                                 commit and vice-versa. The changes are a code snippet for verification and validation purposes against the CHANGES_PATCH_COMMIT. The changes are in a list 
+                                                 of tuples where the first index of the tuple is the line number, and the second tuple is the code change.
     
 """
 
@@ -82,8 +84,14 @@ HASH_VULN_COMMIT:str = ""
 MOD_FILES_BY_PATCH:set[str] = set()
 
 
-CHANGES_PATCH_COMMIT:dict[str, dict[str,str]] = {}
-CHANGES_VULN_COMMIT:dict[str, dict[str,str]] = {}
+CHANGES_PATCH_COMMIT:dict[str, # str = name of modified file
+                          dict[str, # str = either 'added' or 'deleted'
+                               list[ # list contains a tuple(line number, code)
+                                   tuple[int,str]]]] = {}
+CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
+                         dict[str, # str = either 'added' or 'deleted'
+                              list[ # list contains a tuple(line number, code)
+                                  tuple[int,str]]]] = {}
 
 
 ### TO-DO ###
@@ -126,16 +134,27 @@ def find_modified_files(patch_commit_hash:str = HASH_PATCH_COMMIT, selected_repo
 
     ### CONTINUE HERE
     # Add files modified by the patch commit to a set for later reference
-    for modified_file in patch_commit_obj.modified_files:
+    for modified_file_obj in patch_commit_obj.modified_files:
 
         # Always add the old path because that is the one what won't change
-        modified_file_objects.add(modified_file)
-        MOD_FILES_BY_PATCH.add(modified_file.old_path)
-
-        CHANGES_PATCH_COMMIT[modified_file.old_path] = modified_file.diff_parsed # I want to add the changes so I can look at them later
+        modified_file_objects.add(modified_file_obj)
         
-        ### TO-DO ### What does modified_file.diff_parsed do again? What other options do I have
+
+        # un-comment if changes should be tracked and stored in json
+        # CHANGES_PATCH_COMMIT[modified_file_obj.old_path] = modified_file_obj.diff_parsed
+        
+        ### TO-DO ### 
         # Also include error handling in case anything goes wrong
 
     return modified_file_objects
    
+
+def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
+    """
+    Tracks the added and deleted code in a modified file. Stores the changes in the global variable
+    CHANGES_PATCH_COMMIT.
+
+    Args:
+        modified_file_obj (ModifiedFile): This is a file that was modified by a patch commit, vulnerability commit, or general commit.
+    """
+    CHANGES_PATCH_COMMIT[modified_file_obj.old_path] = modified_file_obj.diff_parsed
