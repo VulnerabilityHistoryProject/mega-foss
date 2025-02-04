@@ -13,6 +13,8 @@ Description:
     Once found, the vulnerability inducing commit hashes will be written to a new json file corresponding to their
     respective patch inducing commit & CVE.
 
+    This first version of the script won't be able to guarantee any degree of accuracy because it simply gathers data.
+
     Algorithm Process & Steps:
         1. 
 
@@ -37,6 +39,7 @@ Citations:
 
 import subprocess
 import os 
+import sys
 from collections import Counter
 from dotenv import load_dotenv
 from pathlib import Path
@@ -111,6 +114,81 @@ CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
 # put all paths into the .env file when I login to RC and find everything on my terminal. Can I carry the .env file with me??? How are env vars handled on RC?
 # write code to write the commit changes to the json file (this is already kinda done, but I need to clean it up)
 # add env variables to .env 
+
+# answer this question --> Where am I getting path selected repo, 
+
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger()
+
+def initialize_globals():
+    """
+    Ensures that all global variables are initialized. If they are not, logs an error and initializes them.
+    If the environment variables required for initialization are not found, logs the error and exits.
+    """
+    # Try loading environment variables
+    try:
+        load_dotenv()
+    except Exception as e:
+        logger.error(f"Error loading environment variables from .env file: {e}")
+        sys.exit(1)
+
+    # Get environment variables
+    PATH_ALL_PROJ_REPOS = os.getenv("GIT_ALL_REPOS_DIR")
+    PATH_PATCH_COMMITS = os.getenv("PATCH_COMMITS_JSON")
+    PATH_OUTPUT_DIR = os.getenv("OUTPUT_DIR_JSON")
+    PATH_LOG_OUTPUT_DIR = os.getenv("LOGGING_DIR")
+
+    # Check if required environment variables are set
+    if not PATH_ALL_PROJ_REPOS or not PATH_PATCH_COMMITS or not PATH_OUTPUT_DIR or not PATH_LOG_OUTPUT_DIR:
+        logger.error("One or more required environment variables are missing. Exiting.")
+        sys.exit(1)
+
+    # If any global variables are not initialized or are empty, initialize them
+    global_vars = {
+        "PATH_SELECTED_REPO": "",
+        "HASH_PATCH_COMMIT": "", # getting this 
+        "HASH_VULN_COMMIT": "",
+        "MOD_FILES_BY_PATCH": set(),
+        "CHANGES_PATCH_COMMIT": {},
+        "CHANGES_VULN_COMMIT": {},
+    }
+
+    for var_name, value in global_vars.items():
+        if value is None or value == "":
+            logger.error(f"Global variable '{var_name}' is not initialized or is empty. Initializing it.")
+            if var_name == "PATH_SELECTED_REPO":
+                global_vars[var_name] = "/default/path/to/selected/repo"  # Default value for this global var
+            elif var_name == "HASH_PATCH_COMMIT":
+                global_vars[var_name] = "default_patch_commit_hash"  # Default value for this global var
+            elif var_name == "HASH_VULN_COMMIT":
+                global_vars[var_name] = "default_vuln_commit_hash"  # Default value for this global var
+            elif var_name == "MOD_FILES_BY_PATCH":
+                global_vars[var_name] = set()  # Initialize as empty set
+            elif var_name == "CHANGES_PATCH_COMMIT":
+                global_vars[var_name] = {}  # Initialize as empty dict
+            elif var_name == "CHANGES_VULN_COMMIT":
+                global_vars[var_name] = {}  # Initialize as empty dict
+        else:
+            logger.info(f"Global variable '{var_name}' is already initialized.")
+
+    # Apply the global variable values
+    for var_name, value in global_vars.items():
+        globals()[var_name] = value
+
+    # Apply environment variables to the global variables
+    globals()["PATH_ALL_PROJ_REPOS"] = PATH_ALL_PROJ_REPOS
+    globals()["PATH_PATCH_COMMITS"] = PATH_PATCH_COMMITS
+    globals()["PATH_OUTPUT_DIR"] = PATH_OUTPUT_DIR
+    globals()["PATH_LOG_OUTPUT_DIR"] = PATH_LOG_OUTPUT_DIR
+
+    logger.info("All global variables are initialized successfully.")
+
+# Call the function to initialize the globals
+initialize_globals()
+
+
 
 
 def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
