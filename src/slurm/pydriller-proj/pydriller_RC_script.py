@@ -76,31 +76,6 @@ from pydriller import Git,ModifiedFile, Commit
     
 """
 
-load_dotenv()
-PATH_ALL_PROJ_REPOS:str = os.getenv("GIT_ALL_REPOS_DIR")
-PATH_SELECTED_REPO:str = ""
-
-PATH_PATCH_COMMITS:str = os.getenv("PATCH_COMMITS_JSON")
-PATH_OUTPUT_DIR:str = os.getenv("OUTPUT_DIR_JSON")
-
-PATH_LOG_OUTPUT_DIR: str = os.getenv("LOGGING_DIR")
-
-
-
-HASH_PATCH_COMMIT:str = ""
-HASH_VULN_COMMIT:str = ""
-
-MOD_FILES_BY_PATCH:set[str] = set()
-
-
-CHANGES_PATCH_COMMIT:dict[str, # str = name of modified file
-                          dict[str, # str = either 'added' or 'deleted'
-                               list[ # list contains a tuple(line number, code)
-                                   tuple[int,str]]]] = {}
-CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
-                         dict[str, # str = either 'added' or 'deleted'
-                              list[ # list contains a tuple(line number, code)
-                                  tuple[int,str]]]] = {}
 
 ### TO-DO ###
 # copy all code over and adjust variable names and add necessary error handling for skipping messed up cases
@@ -121,75 +96,6 @@ CHANGES_VULN_COMMIT:dict[str, # str = name of modified file
 # Set up logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger()
-
-def initialize_globals():
-    """
-    Ensures that all global variables are initialized. If they are not, logs an error and initializes them.
-    If the environment variables required for initialization are not found, logs the error and exits.
-    """
-    # Try loading environment variables
-    try:
-        load_dotenv()
-    except Exception as e:
-        logger.error(f"Error loading environment variables from .env file: {e}")
-        sys.exit(1)
-
-    # Get environment variables
-    PATH_ALL_PROJ_REPOS = os.getenv("GIT_ALL_REPOS_DIR")
-    PATH_PATCH_COMMITS = os.getenv("PATCH_COMMITS_JSON")
-    PATH_OUTPUT_DIR = os.getenv("OUTPUT_DIR_JSON")
-    PATH_LOG_OUTPUT_DIR = os.getenv("LOGGING_DIR")
-
-    # Check if required environment variables are set
-    if not PATH_ALL_PROJ_REPOS or not PATH_PATCH_COMMITS or not PATH_OUTPUT_DIR or not PATH_LOG_OUTPUT_DIR:
-        logger.error("One or more required environment variables are missing. Exiting.")
-        sys.exit(1)
-
-    # If any global variables are not initialized or are empty, initialize them
-    global_vars = {
-        "PATH_SELECTED_REPO": "",
-        "HASH_PATCH_COMMIT": "", # getting this 
-        "HASH_VULN_COMMIT": "",
-        "MOD_FILES_BY_PATCH": set(),
-        "CHANGES_PATCH_COMMIT": {},
-        "CHANGES_VULN_COMMIT": {},
-    }
-
-    for var_name, value in global_vars.items():
-        if value is None or value == "":
-            logger.error(f"Global variable '{var_name}' is not initialized or is empty. Initializing it.")
-            if var_name == "PATH_SELECTED_REPO":
-                global_vars[var_name] = "/default/path/to/selected/repo"  # Default value for this global var
-            elif var_name == "HASH_PATCH_COMMIT":
-                global_vars[var_name] = "default_patch_commit_hash"  # Default value for this global var
-            elif var_name == "HASH_VULN_COMMIT":
-                global_vars[var_name] = "default_vuln_commit_hash"  # Default value for this global var
-            elif var_name == "MOD_FILES_BY_PATCH":
-                global_vars[var_name] = set()  # Initialize as empty set
-            elif var_name == "CHANGES_PATCH_COMMIT":
-                global_vars[var_name] = {}  # Initialize as empty dict
-            elif var_name == "CHANGES_VULN_COMMIT":
-                global_vars[var_name] = {}  # Initialize as empty dict
-        else:
-            logger.info(f"Global variable '{var_name}' is already initialized.")
-
-    # Apply the global variable values
-    for var_name, value in global_vars.items():
-        globals()[var_name] = value
-
-    # Apply environment variables to the global variables
-    globals()["PATH_ALL_PROJ_REPOS"] = PATH_ALL_PROJ_REPOS
-    globals()["PATH_PATCH_COMMITS"] = PATH_PATCH_COMMITS
-    globals()["PATH_OUTPUT_DIR"] = PATH_OUTPUT_DIR
-    globals()["PATH_LOG_OUTPUT_DIR"] = PATH_LOG_OUTPUT_DIR
-
-    logger.info("All global variables are initialized successfully.")
-
-# Call the function to initialize the globals
-initialize_globals()
-
-
-
 
 def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
     # Ensure the log directory exists
@@ -217,6 +123,66 @@ def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
 
     # Add the handler to the root logger
     logging.getLogger().addHandler(handler)
+
+
+def initialize_globals():
+    
+    """
+    Ensures that all global variables are initialized. If they are not, logs an error and initializes them.
+    If the environment variables required for initialization are not found, logs the error and exits.
+    """
+    try:
+        load_dotenv()  # Load environment variables from .env file
+
+        # Fetch and assign the environment variables to global variables
+        globals()["PATH_ALL_PROJ_REPOS"] = os.getenv("GIT_ALL_REPOS_DIR")
+        globals()["PATH_PATCH_COMMITS"] = os.getenv("PATCH_COMMITS_JSON")
+        globals()["PATH_OUTPUT_DIR"] = os.getenv("OUTPUT_DIR_JSON")
+        globals()["PATH_LOG_OUTPUT_DIR"] = os.getenv("LOGGING_DIR")
+
+        # Check if essential environment variables were set
+        if not globals().get("PATH_ALL_PROJ_REPOS") or \
+           not globals().get("PATH_PATCH_COMMITS") or \
+           not globals().get("PATH_OUTPUT_DIR") or \
+           not globals().get("PATH_LOG_OUTPUT_DIR"):
+            logger.error("One or more required environment variables are missing. Exiting.")
+            sys.exit(1)
+
+    except Exception as e:
+        logger.error(f"Error loading environment variables or assigning global variables: {e}")
+        sys.exit(1)
+
+    logger.info("Global variables initialized successfully.") 
+
+
+
+    # If any global variables are not initialized or are empty, initialize them
+    global_vars = {
+        "PATH_SELECTED_REPO": "", # call separate function to initialize this
+        "HASH_PATCH_COMMIT": "", # call function to retrieve commit from viable_patches json
+        "HASH_VULN_COMMIT": "",
+        "MOD_FILES_BY_PATCH": set(),
+        "CHANGES_PATCH_COMMIT": {},
+        "CHANGES_VULN_COMMIT": {},
+    }
+
+    # Initialize global variables
+    for var_name, value in global_vars.items():
+        if globals().get(var_name) is None or globals().get(var_name) == "":
+            logger.error(f"Global variable '{var_name}' is not initialized or is empty. Initializing it.")
+            globals()[var_name] = value  # Set the value to the empty placeholder (empty string, set, or dict)
+        else:
+            logger.info(f"Global variable '{var_name}' is already initialized.")
+
+    logger.info("All global variables are initialized as empty values.")
+
+
+
+
+
+
+
+
 
 
 
@@ -323,3 +289,33 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
 
 
 
+if __name__ == "__main__":
+
+
+
+    # Basic logging setup for initialization phase
+    log_file_path = 'setup_logs.txt'
+
+    # Ensure the log file is in the same directory as the script
+    log_dir = os.path.dirname(os.path.abspath(__file__))
+    log_file = os.path.join(log_dir, log_file_path)
+
+    # Set up file logging with rotation (in case the file grows large)
+    logging.basicConfig(
+        level=logging.DEBUG,  # Set the logging level to DEBUG
+        format='%(asctime)s - %(levelname)s - %(message)s',  # Log format
+        handlers=[logging.FileHandler(log_file)]  # Only log to the file, no console output
+    )
+
+    # Get the logger
+    logger = logging.getLogger()
+
+    # Example logging message
+    logger.info("Basic logging setup complete.")
+
+
+    # Call the function to initialize the globals
+    initialize_globals()
+
+    # Setup the more robust logging setup
+    
