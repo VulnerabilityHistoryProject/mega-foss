@@ -38,11 +38,13 @@ Citations:
 """
 
 import subprocess
+
 import os 
 import sys
 from collections import Counter
 from dotenv import load_dotenv
 from pathlib import Path
+from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -202,7 +204,8 @@ def setup_robust_logging(log_directory: str = "") -> None:
     if not os.path.exists(log_directory):
         os.makedirs(log_directory, exist_ok=True)
 
-    log_file:str = 'error_log.txt'
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    log_file:str = f'error_log_{timestamp}.txt'
     log_path:str = os.path.join(log_directory, log_file)
 
     # Check if the log file exists, and if so, increment the name
