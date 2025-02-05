@@ -92,40 +92,40 @@ from pydriller import Git,ModifiedFile, Commit
 
 # answer this question --> Where am I getting path selected repo, 
 
+# Custom Exception Classes
+class MissingEnvironmentVariableError(Exception):
+    """Raised when a required environment variable is missing."""
+    pass
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger()
+class GlobalVariableNotInitializedError(Exception):
+    """Raised when a global variable is not initialized."""
+    pass
 
-def setup_logging(log_directory: str = PATH_LOG_OUTPUT_DIR):
-    # Ensure the log directory exists
-    if not os.path.exists(log_directory):
-        os.makedirs(log_directory)  # Create the directory if it doesn't exist
+def setup_initial_logging() -> None:
+    """
+    This function will be called inside of main before calling subsequent functions.
+    """
+    # Basic logging setup for initialization phase
+    log_file_path: str = 'setup_logs.txt'
 
-    log_file = 'error_log.txt'
-    log_path = os.path.join(log_directory, log_file)
+    # Ensure the log file is in the same directory as the script
+    log_dir: str = os.path.dirname(os.path.abspath(__file__))
+    log_file: str = os.path.join(log_dir, log_file_path)
 
-    # Check if the log file already exists in the specified directory
-    if os.path.exists(log_path):
-        # If the file exists, add a number suffix (e.g., error_log.txt2, error_log.txt3, etc.)
-        i = 2
-        while os.path.exists(os.path.join(log_directory, f'error_log.txt{i}')):
-            i += 1
-        log_path = os.path.join(log_directory, f'error_log.txt{i}')
-    
-    # Set up the rotating log file handler
-    handler = RotatingFileHandler(log_path, maxBytes=5*1024*1024, backupCount=10)  # 5MB per log file, up to 10 backup files
-    handler.setLevel(logging.DEBUG)
+    # Set up file logging with rotation (in case the file grows large)
+    logging.basicConfig(
+        level=logging.DEBUG,  # Set the logging level to DEBUG
+        format='%(asctime)s - %(levelname)s - %(message)s',  # Log format
+        handlers=[logging.FileHandler(log_file)]  # Only log to the file, no console output
+    )
 
-    # Define the log format
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - Line: %(lineno)d')
-    handler.setFormatter(formatter)
+    # Get the logger
+    logger: logging.Logger = logging.getLogger()
 
-    # Add the handler to the root logger
-    logging.getLogger().addHandler(handler)
+    # Example logging message
+    logger.info("Basic logging setup complete.")
 
-
-def initialize_globals():
+def initialize_globals() -> None:
     
     """
     Ensures that all global variables are initialized. If they are not, logs an error and initializes them.
@@ -141,12 +141,17 @@ def initialize_globals():
         globals()["PATH_LOG_OUTPUT_DIR"] = os.getenv("LOGGING_DIR")
 
         # Check if essential environment variables were set
-        if not globals().get("PATH_ALL_PROJ_REPOS") or \
-           not globals().get("PATH_PATCH_COMMITS") or \
-           not globals().get("PATH_OUTPUT_DIR") or \
-           not globals().get("PATH_LOG_OUTPUT_DIR"):
-            logger.error("One or more required environment variables are missing. Exiting.")
-            sys.exit(1)
+        missing_vars = []
+        for var in ["PATH_ALL_PROJ_REPOS", "PATH_PATCH_COMMITS", "PATH_OUTPUT_DIR", "PATH_LOG_OUTPUT_DIR"]:
+            if not globals().get(var):
+                missing_vars.append(var)
+        
+        if missing_vars:
+            raise MissingEnvironmentVariableError(f"Missing environment variables: {', '.join(missing_vars)}")
+
+    except MissingEnvironmentVariableError as e:
+        logger.error(f"Error: {e}")
+        sys.exit(1)
 
     except Exception as e:
         logger.error(f"Error loading environment variables or assigning global variables: {e}")
@@ -176,17 +181,55 @@ def initialize_globals():
 
     logger.info("All global variables are initialized as empty values.")
 
+def setup_robust_logging(log_directory: str = "") -> None:
+    """
 
+    Set up logging to a file with rotation, using a specified directory.
+    If no directory is provided, use the global PATH_LOG_OUTPUT_DIR.
 
+    Args:
+        log_directory (str, optional): Defaults to "" in preparation for assignment to global variable.
+    """
 
+    log_directory:str = log_directory or globals().get("PATH_LOG_OUTPUT_DIR")
+    
+    if not log_directory:
+        logger.error("Log directory is not set. Cannot initialize logging.")
+        sys.exit(1)
 
+    # Ensure the log directory exists
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory, exist_ok=True)
 
+    log_file:str = 'error_log.txt'
+    log_path:str = os.path.join(log_directory, log_file)
 
+    # Check if the log file exists, and if so, increment the name
+    if os.path.exists(log_path):
+        i = 2
+        while os.path.exists(os.path.join(log_directory, f'error_log.txt{i}')):
+            i += 1
+        log_path = os.path.join(log_directory, f'error_log.txt{i}')
+    
+    # Set up rotating log file handler
+    handler: RotatingFileHandler = RotatingFileHandler(log_path, maxBytes=5*1024*1024, backupCount=10)  # 5MB per log file, 10 backups
+    handler.setLevel(logging.DEBUG)
 
+    # Define log format
+    formatter:logging.Formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - Line: %(lineno)d')
+    handler.setFormatter(formatter)
 
+    # Add handler to the root logger
+    logging.getLogger().addHandler(handler)
 
+    logger.info("File-based logging has been set up successfully.")
 
-def find_modified_files(patch_commit_hash: str = HASH_PATCH_COMMIT, selected_repo: str = PATH_SELECTED_REPO) -> set[ModifiedFile]:
+def get_selected_repo_path() -> None:
+    return None
+def get_hash_patch_commit() -> None:
+    return None
+
+def find_modified_files(patch_commit_hash: str = None, selected_repo: str = None) -> set[ModifiedFile]:
     """
     Given a specific patch commit hash and a repo corresponding to the FOSS project, via a path, returns a set of ModifiedFile objects. 
     All items in the set are modified files by the patch commit hash.
@@ -198,13 +241,18 @@ def find_modified_files(patch_commit_hash: str = HASH_PATCH_COMMIT, selected_rep
     Returns:
         set[ModifiedFile]: Set of ModifiedFile objects that were all modified by the patch commit to eliminate the CVE.
     """
-    
+
+    # Assign global variables with more control
+    patch_commit_hash = patch_commit_hash or globals().get("HASH_PATCH_COMMIT")
+    selected_repo = selected_repo or globals().get("PATH_SELECTED_REPO") 
+
+
     # Create an empty set for files that were modified by the patch commit
     modified_file_objects: set[ModifiedFile] = set()
 
     try:
         # Converting selected repo (path) to a Git object
-        selected_git_repo_obj = Git(selected_repo)
+        selected_git_repo_obj: Git = Git(selected_repo)
         
         # Getting the commit object (patch) from the commit hash git object (git repo obj)
         patch_commit_obj: Commit = selected_git_repo_obj.get_commit(patch_commit_hash)
@@ -237,12 +285,6 @@ def find_modified_files(patch_commit_hash: str = HASH_PATCH_COMMIT, selected_rep
 
     return modified_file_objects
 
-
-
-# Make sure CHANGES_PATCH_COMMIT is initialized as a dictionary (assuming it's global)
-if not isinstance(CHANGES_PATCH_COMMIT, dict):
-    CHANGES_PATCH_COMMIT = {}
-
 def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
     """
     Tracks the added and deleted code in a modified file. Stores the changes in the global variable
@@ -256,8 +298,8 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
         if not hasattr(modified_file_obj, 'old_path') or not hasattr(modified_file_obj, 'diff_parsed'):
             raise AttributeError(f"Missing required attributes in modified_file_obj: {modified_file_obj}")
 
-        old_path = modified_file_obj.old_path
-        diff_parsed = modified_file_obj.diff_parsed
+        old_path: str = modified_file_obj.old_path
+        diff_parsed: dict = modified_file_obj.diff_parsed
 
         # Ensure old_path is a valid string
         if not isinstance(old_path, str) or not old_path:
@@ -267,12 +309,10 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
         if not isinstance(diff_parsed, (str, dict, list)):
             raise TypeError(f"Invalid 'diff_parsed' type in modified_file_obj: {type(diff_parsed)}")
 
-        # Ensure CHANGES_PATCH_COMMIT is a dictionary
-        if not isinstance(CHANGES_PATCH_COMMIT, dict):
-            logging.error("CHANGES_PATCH_COMMIT is not a dictionary!")
-            return
+        
 
-        # Update the CHANGES_PATCH_COMMIT dictionary
+        # update the CHANGES_PATCH_COMMIT dictionary. The changes may take up too much space, so by default function isn't called.
+        CHANGES_PATCH_COMMIT: dict = globals().get("CHANGES_PATCH_COMMIT")
         CHANGES_PATCH_COMMIT[old_path] = diff_parsed
 
     except AttributeError as e:
@@ -285,20 +325,14 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
         logging.error("An unexpected error occurred while tracking commit changes: %s", e)
 
 
-
-
-
-
 if __name__ == "__main__":
 
-
-
-    # Basic logging setup for initialization phase
-    log_file_path = 'setup_logs.txt'
+   # Basic logging setup for initialization phase
+    log_file_path: str = 'setup_logs.txt'
 
     # Ensure the log file is in the same directory as the script
-    log_dir = os.path.dirname(os.path.abspath(__file__))
-    log_file = os.path.join(log_dir, log_file_path)
+    log_dir: str = os.path.dirname(os.path.abspath(__file__))
+    log_file: str = os.path.join(log_dir, log_file_path)
 
     # Set up file logging with rotation (in case the file grows large)
     logging.basicConfig(
@@ -308,14 +342,27 @@ if __name__ == "__main__":
     )
 
     # Get the logger
-    logger = logging.getLogger()
+    logger: logging.Logger = logging.getLogger()
 
     # Example logging message
     logger.info("Basic logging setup complete.")
 
 
+    
+
     # Call the function to initialize the globals
     initialize_globals()
 
     # Setup the more robust logging setup
+    setup_robust_logging()
+
+    # Initialize global variables 
+    """
+    These parts below will be in some sort of loop in main iterating through all of the repos in the json
+    """
+    get_selected_repo_path()
+    get_hash_patch_commit()
+
+    # Find the modified files by patch commit
+    find_modified_files()
     
