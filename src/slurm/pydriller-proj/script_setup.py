@@ -78,6 +78,7 @@ from pydriller import Git,ModifiedFile, Commit
 
 
 ### TO-DO ###
+# RUN MYPY on script setup
 # copy all code over and adjust variable names and add necessary error handling for skipping messed up cases
 # write code to get the previous commit (the one directly before the patch) this way we can compare that to the other hash.
 # write code to get the specific path to the git repo of the selected FOSS Project for the specific patch commit from list in json. Fill PATH_SELECTED_REPO:str = "" variable 
