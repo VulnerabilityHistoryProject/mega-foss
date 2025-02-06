@@ -85,7 +85,8 @@ from pydriller import Git, ModifiedFile, Commit
 
 
 ### TO-DO ###
-# RUN MYPY on script setup
+# make sure that when I call functions in error_handling, to use Pass or continue keyword to skip to the next thing
+## ***** above is very important    
 # copy all code over and adjust variable names and add necessary error handling for skipping messed up cases
 # write code to get the previous commit (the one directly before the patch) this way we can compare that to the other hash.
 # write code to get the specific path to the git repo of the selected FOSS Project for the specific patch commit from list in json. Fill PATH_SELECTED_REPO:str = "" variable 
@@ -245,46 +246,30 @@ def find_modified_files(patch_commit_hash: str = "", selected_repo: str = "") ->
     Returns:
         set[ModifiedFile]: Set of ModifiedFile objects that were all modified by the patch commit to eliminate the CVE.
     """
+    # Create an empty set for files that were modified by the patch commit
+    modified_file_objects: set[ModifiedFile] = set()
+
 
     # Assign global variables with more control
     patch_commit_hash: str = handle.get_global_variable("HASH_PATCH_COMMIT", str)
     selected_repo: str = handle.get_global_variable("PATH_SELECTED_REPO", str)
     
-    # Create an empty set for files that were modified by the patch commit
-    modified_file_objects: set[ModifiedFile] = set()
+    # Get Git object and get the commit objects
+    selected_git_repo_obj: Git = handle.git_repo_conversion(selected_repo) 
+    patch_commit_obj: Commit = handle.fetch_commmit_obj(selected_git_repo_obj,patch_commit_hash)
 
-    try:
-        # Converting selected repo (path) to a Git object
-        selected_git_repo_obj: Git = Git(selected_repo)
-        
-        # Getting the commit object (patch) from the commit hash git object (git repo obj)
-        patch_commit_obj: Commit = selected_git_repo_obj.get_commit(patch_commit_hash)
 
-    except FileNotFoundError as e:
-        logging.error(f"Repository path '{selected_repo}' not found: {e}")
-        return modified_file_objects
-    except ValueError as e:
-        logging.error(f"Invalid commit hash '{patch_commit_hash}': {e}")
-        return modified_file_objects
-    except Exception as e:
-        logging.critical(f"Unexpected error while accessing the repo or commit: {e}")
-        return modified_file_objects
-
-    # Process modified files and log any errors encountered
     for modified_file_obj in patch_commit_obj.modified_files:
-        try:
-            # Always add the old path because that's the one that won't change
+
+        if handle.validate_modified_file(modified_file_obj) == False:
+            continue
+        
+
+        try: # add to the set 
             modified_file_objects.add(modified_file_obj)
-
-            ### Uncomment line below on subsequent iterations after runnning script once ###
-            # track_commit_changes(modified_file_obj)
-
-        except AttributeError as e:
-            logging.warning(f"Failed to process file '{modified_file_obj}': Missing attributes: {e}")
-            continue
+        
         except Exception as e:
-            logging.error(f"Unexpected error while processing file '{modified_file_obj}': {e}")
-            continue
+            logging.error(f"Unexpected error while processing file '{modified_file_obj}': {e} for {patch_commit_hash} in {selected_repo}")
 
     return modified_file_objects
 
