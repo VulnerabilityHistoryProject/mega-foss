@@ -274,6 +274,5 @@ if __name__ == "__main__":
     get_selected_repo_path()
     get_hash_patch_commit()
 
-    # Find the modified files by patch commit
-    find_modified_files()
+    
     
