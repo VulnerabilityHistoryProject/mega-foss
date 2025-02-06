@@ -37,21 +37,26 @@ Citations:
 
 """
 
-import subprocess
-
 import os 
 import sys
+import subprocess
+import logging
+import pprint
+import json
+
+import error_handling as handle
+
 from collections import Counter
 from dotenv import load_dotenv
 from pathlib import Path
 from datetime import datetime
-import logging
+
 from logging.handlers import RotatingFileHandler
+from typing import Dict, Any, Type
 
-import pprint
-import json
+from pydriller import Git, ModifiedFile, Commit
 
-from pydriller import Git,ModifiedFile, Commit
+
 
 
 """global variables:
@@ -95,14 +100,7 @@ from pydriller import Git,ModifiedFile, Commit
 
 # answer this question --> Where am I getting path selected repo, 
 
-# Custom Exception Classes
-class MissingEnvironmentVariableError(Exception):
-    """Raised when a required environment variable is missing."""
-    pass
 
-class GlobalVariableNotInitializedError(Exception):
-    """Raised when a global variable is not initialized."""
-    pass
 
 def setup_initial_logging() -> None:
     """
@@ -150,9 +148,9 @@ def initialize_globals() -> None:
                 missing_vars.append(var)
         
         if missing_vars:
-            raise MissingEnvironmentVariableError(f"Missing environment variables: {', '.join(missing_vars)}")
+            raise handle.MissingEnvironmentVariableError(f"Missing environment variables: {', '.join(missing_vars)}")
 
-    except MissingEnvironmentVariableError as e:
+    except handle.MissingEnvironmentVariableError as e:
         logger.error(f"Error: {e}")
         sys.exit(1)
 
@@ -184,6 +182,7 @@ def initialize_globals() -> None:
 
     logger.info("All global variables are initialized as empty values.")
 
+
 def setup_robust_logging(log_directory: str = "") -> None:
     """
 
@@ -194,7 +193,8 @@ def setup_robust_logging(log_directory: str = "") -> None:
         log_directory (str, optional): Defaults to "" in preparation for assignment to global variable.
     """
 
-    log_directory:str = log_directory or globals().get("PATH_LOG_OUTPUT_DIR")
+    if log_directory == "":
+        globals().get("PATH_LOG_OUTPUT_DIR")
     
     if not log_directory:
         logger.error("Log directory is not set. Cannot initialize logging.")
@@ -233,7 +233,7 @@ def get_selected_repo_path() -> None:
 def get_hash_patch_commit() -> None:
     return None
 
-def find_modified_files(patch_commit_hash: str = None, selected_repo: str = None) -> set[ModifiedFile]:
+def find_modified_files(patch_commit_hash: str = "", selected_repo: str = "") -> set[ModifiedFile]:
     """
     Given a specific patch commit hash and a repo corresponding to the FOSS project, via a path, returns a set of ModifiedFile objects. 
     All items in the set are modified files by the patch commit hash.
@@ -247,10 +247,9 @@ def find_modified_files(patch_commit_hash: str = None, selected_repo: str = None
     """
 
     # Assign global variables with more control
-    patch_commit_hash = patch_commit_hash or globals().get("HASH_PATCH_COMMIT")
-    selected_repo = selected_repo or globals().get("PATH_SELECTED_REPO") 
-
-
+    patch_commit_hash: str = handle.get_global_variable("HASH_PATCH_COMMIT", str)
+    selected_repo: str = handle.get_global_variable("PATH_SELECTED_REPO", str)
+    
     # Create an empty set for files that were modified by the patch commit
     modified_file_objects: set[ModifiedFile] = set()
 
@@ -297,36 +296,16 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
     Args:
         modified_file_obj (ModifiedFile): This is a file that was modified by a patch commit, vulnerability commit, or general commit.
     """
-    try:
-        # Check if 'modified_file_obj' has required attributes 'old_path' and 'diff_parsed'
-        if not hasattr(modified_file_obj, 'old_path') or not hasattr(modified_file_obj, 'diff_parsed'):
-            raise AttributeError(f"Missing required attributes in modified_file_obj: {modified_file_obj}")
+    
+    handle.validate_modified_file(modified_file_obj)
 
-        old_path: str = modified_file_obj.old_path
-        diff_parsed: dict = modified_file_obj.diff_parsed
+    # Access validated attributes
+    old_path: str = modified_file_obj.old_path
+    diff_parsed: dict = modified_file_obj.diff_parsed
 
-        # Ensure old_path is a valid string
-        if not isinstance(old_path, str) or not old_path:
-            raise ValueError(f"Invalid 'old_path' in modified_file_obj: {old_path}")
-
-        # Ensure diff_parsed is of an acceptable type (e.g., string, dict, list)
-        if not isinstance(diff_parsed, (str, dict, list)):
-            raise TypeError(f"Invalid 'diff_parsed' type in modified_file_obj: {type(diff_parsed)}")
-
-        
-
-        # update the CHANGES_PATCH_COMMIT dictionary. The changes may take up too much space, so by default function isn't called.
-        CHANGES_PATCH_COMMIT: dict = globals().get("CHANGES_PATCH_COMMIT")
-        CHANGES_PATCH_COMMIT[old_path] = diff_parsed
-
-    except AttributeError as e:
-        logging.error("AttributeError while processing modified_file_obj: %s", e)
-    except ValueError as e:
-        logging.error("ValueError: %s", e)
-    except TypeError as e:
-        logging.error("TypeError: %s", e)
-    except Exception as e:
-        logging.error("An unexpected error occurred while tracking commit changes: %s", e)
+    # Update the CHANGES_PATCH_COMMIT dictionary
+    CHANGES_PATCH_COMMIT: dict = handle.get_global_variable("CHANGES_PATCH_COMMIT", dict)
+    handle.safe_dict_set(CHANGES_PATCH_COMMIT, old_path, diff_parsed)
 
 
 if __name__ == "__main__":
