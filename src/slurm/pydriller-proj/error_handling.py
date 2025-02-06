@@ -53,13 +53,34 @@ def safe_dict_set(d: Dict[Any, Any], key: Any, value: Any) -> None:
     try:
         d[key] = value
     except TypeError as e:
-        logging.error(f"Dictionary is not valid (TypeError): {e}")
+        logging.error(f"Dictionary is not valid (TypeError): {e} --> dictionary {d}")
         sys.exit(1)
     except KeyError as e:
         logging.error(f"Error setting dictionary[{key}]: {e}")
         sys.exit(1)
     except Exception as e:  # Catch unexpected errors
-        logging.error(f"Unexpected error when updating dictionary[{key}]: {e}")
+        logging.error(f"Unexpected error when updating dictionary {d} with key [{key}]: {e}")
+        sys.exit(1)
+
+def safe_dict_get(d: Dict[Any, Any], key: Any) -> Any:
+    """
+    Safely retrieves a value for a given key in a dictionary, with error handling.
+    
+    :param d: The dictionary to query.
+    :param key: The key to retrieve.
+    
+    :return: The value associated with the key if it exists, or None if an error occurs.
+    """
+    try:
+        return d[key]
+    except KeyError as e:
+        logging.error(f"Key '{key}' not found in dictionary: {e} --> dictionary {d}")
+        return None  # Return None if the key is not found
+    except TypeError as e:
+        logging.error(f"Invalid dictionary or key type (TypeError): {e} --> dictionary {d}, key {key}")
+        sys.exit(1)  # Exit if the types are not compatible
+    except Exception as e:  # Catch unexpected errors
+        logging.error(f"Unexpected error when accessing dictionary {d} with key [{key}]: {e}")
         sys.exit(1)
 
 

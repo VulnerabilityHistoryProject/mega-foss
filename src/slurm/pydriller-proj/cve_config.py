@@ -4,7 +4,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Define global variables in a controlled way
-class GlobalConfig:
+class CVE:
     PATH_SELECTED_REPO: str = ""
     HASH_PATCH_COMMIT: str = ""
     HASH_VULN_COMMIT: str = ""
@@ -20,5 +20,7 @@ class GlobalConfig:
             if not attr.startswith("__") and getattr(cls, attr) in (None, ""):
                 logger.error(f"Global variable '{attr}' is not initialized. Initializing it.")
                 setattr(cls, attr, default)
+    @classmethod
+    def set_selected_repo_path():
 
 logger.info("GlobalConfig initialized.")
