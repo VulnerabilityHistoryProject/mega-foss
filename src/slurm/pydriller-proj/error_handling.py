@@ -5,6 +5,8 @@ import sys
 from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
 
+logger = logging.getLogger(__name__)
+
 ### To-Do ### 
 # incude detailed logs so that I know what hash, file , repo correlates with an error (when possible)
 

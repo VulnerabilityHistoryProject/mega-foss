@@ -169,6 +169,7 @@ def initialize_globals() -> None:
         "HASH_PATCH_COMMIT": "", # call function to retrieve commit from viable_patches json
         "HASH_VULN_COMMIT": "",
         "MOD_FILES_BY_PATCH": set(),
+        "MOD_FILES_BY_VULN_COMMIT": set(),
         "CHANGES_PATCH_COMMIT": {},
         "CHANGES_VULN_COMMIT": {},
     }
@@ -195,7 +196,7 @@ def setup_robust_logging(log_directory: str = "") -> None:
     """
 
     if log_directory == "":
-        globals().get("PATH_LOG_OUTPUT_DIR")
+        log_directory = globals().get("PATH_LOG_OUTPUT_DIR")
     
     if not log_directory:
         logger.error("Log directory is not set. Cannot initialize logging.")
@@ -229,7 +230,8 @@ def setup_robust_logging(log_directory: str = "") -> None:
 
     logger.info("File-based logging has been set up successfully.")
 
-def get_selected_repo_path() -> None:
+def get_selected_repo_path() -> str:
+
     return None
 def get_hash_patch_commit() -> None:
     return None

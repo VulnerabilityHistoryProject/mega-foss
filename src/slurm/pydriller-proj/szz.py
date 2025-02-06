@@ -44,6 +44,8 @@ def find_modified_files(patch_commit_hash: str = "", selected_repo: str = "") ->
         except Exception as e:
             logging.error(f"Unexpected error while processing file '{modified_file_obj}': {e} for {patch_commit_hash} in {selected_repo}")
 
+
+    globals().get()
     return modified_file_objects
 
 
