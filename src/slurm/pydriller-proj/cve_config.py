@@ -52,14 +52,21 @@ class SCRIPT_CONFIG:
 
 
 class CVE:
-    def __init__(self,):
+    def __init__(self,cve_id:str = "",path_selected_repo: str = "",hash_patch_commit:str = ""):
         """Initialize an instance of CVE with default empty values."""
         # Get the robust logger first
         self.robust_logger = logging.getLogger("robust_logger")
-        self._cve_id: str = ""
-        self._path_selected_repo: str = ""
-        self._hash_patch_commit: str = ""
-        self._hash_vuln_commit: str = ""
+        
+        self._cve_id:str = cve_id
+        self._path_selected_repo: str = path_selected_repo
+        self._hash_patch_commit: str = hash_patch_commit
+        
+        
+        ### This is the object of this script.
+        self._hash_vuln_commit: list[str] = []
+
+
+
         self._mod_files_by_patch: set = set()
         self._mod_files_by_vuln_commit: set = set()
         self._changes_patch_commit: dict = {}
@@ -95,7 +102,7 @@ class CVE:
 
     @hash_vuln_commit.setter
     def hash_vuln_commit(self, value: str) -> None:
-        self._hash_vuln_commit = value
+        self._hash_vuln_commit.append(value)
 
     @property
     def mod_files_by_patch(self) -> set:
