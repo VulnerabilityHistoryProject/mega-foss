@@ -1,9 +1,10 @@
 
-
+import os
 import logging
 import sys
 from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
@@ -169,3 +170,40 @@ def fetch_commmit_obj(selected_git_repo_obj: Git, patch_commit_hash: str) -> Com
     
     # Return None if there was an error but continue execution
     return None
+
+
+
+def safe_get_env_vars(cls: , variables_to_check, missing_vars_error_class):
+    """
+    General function to handle loading and checking of environment variables.
+    
+    Args:
+    - cls: The class calling this function (for logging and setting class variables).
+    - variables_to_check: A list of environment variable names to check.
+    - missing_vars_error_class: Exception class to raise if environment variables are missing.
+    
+    Returns:
+    - None: If successful, environment variables are set as class attributes.
+    """
+    try:
+        load_dotenv()  # Load environment variables from .env file
+
+        # Fetch and assign the environment variables to class variables
+        for var in variables_to_check:
+            setattr(cls, var, os.getenv(var))
+
+        # Check if essential environment variables were set
+        missing_vars = [var for var in variables_to_check if not getattr(cls, var, None)]
+
+        if missing_vars:
+            raise missing_vars_error_class(f"Missing environment variables: {', '.join(missing_vars)}")
+
+    except missing_vars_error_class as e:
+        cls.logger.error(f"Error: {e}")
+        sys.exit(1)
+
+    except Exception as e:
+        cls.logger.error(f"Error loading environment variables or assigning class variables: {e}")
+        sys.exit(1)
+
+    cls.logger.info("Environment variables initialized successfully.")

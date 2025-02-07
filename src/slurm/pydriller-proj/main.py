@@ -25,7 +25,7 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
         hash_patch_commit: str = handle.safe_dict_get(cve_entry,"commit")
 
         
-
+        cve = cve_config.CVE.
 
 
 
