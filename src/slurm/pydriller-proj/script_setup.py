@@ -100,7 +100,8 @@ from pydriller import Git, ModifiedFile, Commit
 # add env variables to .env 
 
 # answer this question --> Where am I getting path selected repo, 
-
+## Create another file / section that focuses on analyzing the dataset that we have with python. Doesn't necessarily have to be 
+## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
 
 
 
