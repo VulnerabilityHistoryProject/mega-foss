@@ -49,28 +49,64 @@ class SCRIPT_CONFIG:
             cls.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
             sys.exit(1)
 
-
-
-class CVE:
-    def __init__(self,cve_id:str = "",path_selected_repo: str = "",hash_patch_commit:str = ""):
-        """Initialize an instance of CVE with default empty values."""
-        # Get the robust logger first
-        self.robust_logger = logging.getLogger("robust_logger")
-        
+class Vulnerability_Classifier:
+    def __init__(self,cve_id:str = ""):
+        """ Classify's vulnerability based on factors related to implementation and severity"""
         self._cve_id:str = cve_id
+        self._adds_code: bool = False
+        self._deletes_code:bool = False
+        self._refactors_code: bool = False
+        self._changes_lines: bool = False
+        self._changes_functions: bool = False
+        self._changes_files: bool = False
+        self._is_prev_commit_to_patch: bool = False
+        self._number_of_patch_commits_for_vuln: int = 1 # if tihs 
+        self._number_of_vulns_fixed_by_patch: int = 1
+
+
+# patch commit class
+# vuln commit class
+# CVE / vulnerability class...
+# I guess. When I iterate through the json, I want to just instantiate one class. I don't
+# want a bunch of classes flying around.
+
+
+class CVE(Vulnerability_Classifier):
+    def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = ""):
+        """"""
+        
+        ### Setup Robust Logging ###
+        self.robust_logger = logging.getLogger("robust_logger")
+
+        ### Repo Info ###
+        ############################################################################
         self._path_selected_repo: str = path_selected_repo
-        self._hash_patch_commit: str = hash_patch_commit
+
+        ### Patch Commit Info ###
+        ############################################################################
+        self._hash_patch_commits: list[str] = []
+        self._hash_patch_commits.append(hash_patch_commit)
+
+        self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
+        self._changes_by_patch_commit: dict = {}
+       
+        
+
+
+
         
         
-        ### This is the object of this script.
-        self._hash_vuln_commit: list[str] = []
+        
+        
 
 
-
-        self._mod_files_by_patch: set = set()
-        self._mod_files_by_vuln_commit: set = set()
-        self._changes_patch_commit: dict = {}
+        ### Vuln Commit Info ###
+        ############################################################################
+        self._hash_vuln_commits: list[str] = []  ### This is the object of this entire project ###
+        self._mod_files_by_vuln_commit: list[str] = []
         self._changes_vuln_commit: dict = {}
+
+
 
     @property
     def cve_id(self) -> str:
@@ -138,5 +174,5 @@ class CVE:
 
     
 
-    
+
 
