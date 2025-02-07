@@ -19,12 +19,12 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
 
     for cve_entry in cve_data:
 
-        handle.safe_dict_set(cve_entry,)
-        cve_id: str = cve_entry["cve_id"]
-        repo: str = cve_entry["repo"]
-        commit: str = cve_entry["commit"]
+        cve_id:str = handle.safe_dict_get(cve_entry,"cve_id")
+        
+        repo: str = handle.safe_dict_get(cve_entry,"repo")
+        hash_patch_commit: str = handle.safe_dict_get(cve_entry,"commit")
 
-        handle.
+        
 
 
 

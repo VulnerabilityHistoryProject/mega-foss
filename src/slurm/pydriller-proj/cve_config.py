@@ -5,6 +5,7 @@ logger = logging.getLogger(__name__)
 
 # Define global variables in a controlled way
 class CVE:
+    CVE_ID: str = ""
     PATH_SELECTED_REPO: str = ""
     HASH_PATCH_COMMIT: str = ""
     HASH_VULN_COMMIT: str = ""

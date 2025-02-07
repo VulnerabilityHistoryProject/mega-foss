@@ -42,7 +42,7 @@ def get_global_variable(var_name: str, expected_type: Type[Any]) -> Any:
 
     return value
 
-def safe_dict_set(d: Dict[Any, Any], key: Any, value: Any) -> None:
+def safe_dict_set(d: Dict[Any, Any], key: Any, value: Any) -> bool:
     """
     Safely sets a value for a given key in a dictionary, with error handling.
     
@@ -54,15 +54,17 @@ def safe_dict_set(d: Dict[Any, Any], key: Any, value: Any) -> None:
         d[key] = value
     except TypeError as e:
         logging.error(f"Dictionary is not valid (TypeError): {e} --> dictionary {d}")
-        sys.exit(1)
+        return False
     except KeyError as e:
         logging.error(f"Error setting dictionary[{key}]: {e}")
-        sys.exit(1)
+        return False
     except Exception as e:  # Catch unexpected errors
         logging.error(f"Unexpected error when updating dictionary {d} with key [{key}]: {e}")
-        sys.exit(1)
+        return False
+    
+    return True
 
-def safe_dict_get(d: Dict[Any, Any], key: Any) -> Any:
+def safe_dict_get(d: Dict[Any, Any], key: Any) -> tuple(Any,bool): # type: ignore
     """
     Safely retrieves a value for a given key in a dictionary, with error handling.
     
@@ -72,16 +74,17 @@ def safe_dict_get(d: Dict[Any, Any], key: Any) -> Any:
     :return: The value associated with the key if it exists, or None if an error occurs.
     """
     try:
-        return d[key]
+        return (True,d[key])
     except KeyError as e:
         logging.error(f"Key '{key}' not found in dictionary: {e} --> dictionary {d}")
-        return None  # Return None if the key is not found
+        return (False,None)  # Return None if the key is not found
     except TypeError as e:
         logging.error(f"Invalid dictionary or key type (TypeError): {e} --> dictionary {d}, key {key}")
-        sys.exit(1)  # Exit if the types are not compatible
+        return (False,None)
     except Exception as e:  # Catch unexpected errors
         logging.error(f"Unexpected error when accessing dictionary {d} with key [{key}]: {e}")
-        sys.exit(1)
+        return (False,None)
+
 
 
 def validate_modified_file(modified_file_obj: ModifiedFile) -> bool:
