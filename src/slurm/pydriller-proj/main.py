@@ -32,7 +32,8 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
 
         if json_cve_id in processed_cve:
             ## How can I associate the cve id with the existing CVE and corresponding cve object?
-        
+            ## Create a class that has certain flags set for the type of vulnerability
+            ## maybe CVE inherits from a Vulnerability class!
         cve: cve_config.CVE = cve_config.CVE()
 
         cve.cve_id = json_cve_id
