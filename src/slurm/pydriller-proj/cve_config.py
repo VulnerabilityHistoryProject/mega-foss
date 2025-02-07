@@ -1,20 +1,10 @@
 import logging
+import os
+import sys
 
 import error_handling as handle
 
 
-
-import logging
-import os
-
-import logging
-import os
-
-import logging
-import sys
-
-import logging
-import sys
 
 class SCRIPT_CONFIG:
     # Initialize the class-level logger and immutability flag
@@ -62,7 +52,7 @@ class SCRIPT_CONFIG:
 
 
 class CVE:
-    def __init__(self):
+    def __init__(self,):
         """Initialize an instance of CVE with default empty values."""
         # Get the robust logger first
         self.robust_logger = logging.getLogger("robust_logger")
