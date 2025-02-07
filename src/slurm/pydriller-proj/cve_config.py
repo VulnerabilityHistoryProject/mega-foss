@@ -56,13 +56,17 @@ class Vulnerability_Classifier:
         self._adds_code: bool = False
         self._deletes_code:bool = False
         self._refactors_code: bool = False
+
         self._changes_lines: bool = False
         self._changes_functions: bool = False
         self._changes_files: bool = False
+        
         self._is_prev_commit_to_patch: bool = False
+        self._patch_partial_fix: bool = False
+
         self._number_of_patch_commits_for_vuln: int = 1 # if tihs 
         self._number_of_vulns_fixed_by_patch: int = 1
-
+        
 
 # patch commit class
 # vuln commit class
