@@ -17,6 +17,9 @@ robust_logger = logging.getLogger("robust_logging")
 
 
 def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
+
+    processed_cve: set[str] = set() # o(1) lookup
+
     with open(json_file_path, 'r') as file:
         cve_data: list[dict[str, Any]] = json.load(file)
 
@@ -27,6 +30,8 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
         repo: str = handle.safe_dict_get(cve_entry,"repo")
         hash_patch_commit: str = handle.safe_dict_get(cve_entry,"commit")
 
+        if json_cve_id in processed_cve:
+            ## How can I associate the cve id with the existing CVE and corresponding cve object?
         
         cve: cve_config.CVE = cve_config.CVE()
 
