@@ -4,24 +4,99 @@ import error_handling as handle
 
 
 
+import logging
+import os
+
+import logging
+import os
+
+import logging
+import sys
+
 class SCRIPT_CONFIG:
     
-
     def __init__(self):
-        # Get the basic logger
+        # Initialize the logger
         self.basic_logger = logging.getLogger("basic_logger")
-        # Call the class method to load environment variables
+        # Call the method to load environment variables
         self._initialize_environment_variables()
+
+        
+        # Flag to indicate if any environment variables have been set
+        self._variables_set = False
 
     @classmethod
     def _initialize_environment_variables(cls):
+        """
+        Loads essential environment variables and stores them as class attributes.
+        Calls the safe_get_env_vars function to validate environment variables.
+        """
         variables_to_check = [
             "GIT_ALL_REPOS_DIR", 
             "PATCH_COMMITS_JSON", 
             "OUTPUT_DIR_JSON", 
             "LOGGING_DIR"
         ]
-        handle.safe_get_env_vars(cls,variables_to_check)
+        handle.safe_get_env_vars(cls, variables_to_check)
+
+    def _ensure_immutable(self, variable_name: str) -> None:
+        """
+        Helper method to enforce immutability once a variable has been set.
+        Logs the error and exits the program if the variable has already been set.
+        """
+        if self._variables_set:
+            # Log the error using the basic logger
+            self.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
+            # Quit the program
+            sys.exit(1)
+
+    @property
+    def git_all_repos_dir(self):
+        """Getter for the GIT_ALL_REPOS_DIR environment variable."""
+        return self._git_all_repos_dir
+
+    @git_all_repos_dir.setter
+    def git_all_repos_dir(self, value: str):
+        """Setter for the GIT_ALL_REPOS_DIR environment variable."""
+        self._ensure_immutable("GIT_ALL_REPOS_DIR")
+        self._git_all_repos_dir = value
+        self._variables_set = True
+
+    @property
+    def patch_commits_json(self):
+        """Getter for the PATCH_COMMITS_JSON environment variable."""
+        return self._patch_commits_json
+
+    @patch_commits_json.setter
+    def patch_commits_json(self, value: str):
+        """Setter for the PATCH_COMMITS_JSON environment variable."""
+        self._ensure_immutable("PATCH_COMMITS_JSON")
+        self._patch_commits_json = value
+        self._variables_set = True
+
+    @property
+    def output_dir_json(self):
+        """Getter for the OUTPUT_DIR_JSON environment variable."""
+        return self._output_dir_json
+
+    @output_dir_json.setter
+    def output_dir_json(self, value: str):
+        """Setter for the OUTPUT_DIR_JSON environment variable."""
+        self._ensure_immutable("OUTPUT_DIR_JSON")
+        self._output_dir_json = value
+        self._variables_set = True
+
+    @property
+    def logging_dir(self):
+        """Getter for the LOGGING_DIR environment variable."""
+        return self._logging_dir
+
+    @logging_dir.setter
+    def logging_dir(self, value: str):
+        """Setter for the LOGGING_DIR environment variable."""
+        self._ensure_immutable("LOGGING_DIR")
+        self._logging_dir = value
+        self._variables_set = True
 
 class CVE:
     def __init__(self):
