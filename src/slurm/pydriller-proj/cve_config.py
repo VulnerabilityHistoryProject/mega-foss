@@ -13,23 +13,28 @@ import os
 import logging
 import sys
 
+import logging
+import sys
+
 class SCRIPT_CONFIG:
-    
+    # Initialize the class-level logger and immutability flag
+    basic_logger = logging.getLogger("basic_logger")
+    _variables_set = False
+
+    # Class-level environment variable placeholders
+    GIT_ALL_REPOS_DIR = None
+    PATCH_COMMITS_JSON = None
+    OUTPUT_DIR_JSON = None
+    LOGGING_DIR = None
+
     def __init__(self):
-        # Initialize the logger
-        self.basic_logger = logging.getLogger("basic_logger")
         # Call the method to load environment variables
         self._initialize_environment_variables()
-
-        
-        # Flag to indicate if any environment variables have been set
-        self._variables_set = False
 
     @classmethod
     def _initialize_environment_variables(cls):
         """
-        Loads essential environment variables and stores them as class attributes.
-        Calls the safe_get_env_vars function to validate environment variables.
+        Calls the external method to load and validate environment variables.
         """
         variables_to_check = [
             "GIT_ALL_REPOS_DIR", 
@@ -37,66 +42,24 @@ class SCRIPT_CONFIG:
             "OUTPUT_DIR_JSON", 
             "LOGGING_DIR"
         ]
+        
+        # Call the function from the other file to load the environment variables
         handle.safe_get_env_vars(cls, variables_to_check)
 
-    def _ensure_immutable(self, variable_name: str) -> None:
+        # Set the flag indicating that the variables have been loaded
+        cls._variables_set = True
+
+    @classmethod
+    def _ensure_immutable(cls, variable_name: str) -> None:
         """
         Helper method to enforce immutability once a variable has been set.
         Logs the error and exits the program if the variable has already been set.
         """
-        if self._variables_set:
-            # Log the error using the basic logger
-            self.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
-            # Quit the program
+        if getattr(cls, variable_name, None) is not None:
+            cls.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
             sys.exit(1)
 
-    @property
-    def git_all_repos_dir(self):
-        """Getter for the GIT_ALL_REPOS_DIR environment variable."""
-        return self._git_all_repos_dir
 
-    @git_all_repos_dir.setter
-    def git_all_repos_dir(self, value: str):
-        """Setter for the GIT_ALL_REPOS_DIR environment variable."""
-        self._ensure_immutable("GIT_ALL_REPOS_DIR")
-        self._git_all_repos_dir = value
-        self._variables_set = True
-
-    @property
-    def patch_commits_json(self):
-        """Getter for the PATCH_COMMITS_JSON environment variable."""
-        return self._patch_commits_json
-
-    @patch_commits_json.setter
-    def patch_commits_json(self, value: str):
-        """Setter for the PATCH_COMMITS_JSON environment variable."""
-        self._ensure_immutable("PATCH_COMMITS_JSON")
-        self._patch_commits_json = value
-        self._variables_set = True
-
-    @property
-    def output_dir_json(self):
-        """Getter for the OUTPUT_DIR_JSON environment variable."""
-        return self._output_dir_json
-
-    @output_dir_json.setter
-    def output_dir_json(self, value: str):
-        """Setter for the OUTPUT_DIR_JSON environment variable."""
-        self._ensure_immutable("OUTPUT_DIR_JSON")
-        self._output_dir_json = value
-        self._variables_set = True
-
-    @property
-    def logging_dir(self):
-        """Getter for the LOGGING_DIR environment variable."""
-        return self._logging_dir
-
-    @logging_dir.setter
-    def logging_dir(self, value: str):
-        """Setter for the LOGGING_DIR environment variable."""
-        self._ensure_immutable("LOGGING_DIR")
-        self._logging_dir = value
-        self._variables_set = True
 
 class CVE:
     def __init__(self):
@@ -177,26 +140,6 @@ class CVE:
         self._changes_vuln_commit = value
 
     
-class CVE:
-    CVE_ID: str = ""
-    PATH_SELECTED_REPO: str = ""
-    HASH_PATCH_COMMIT: str = ""
-    HASH_VULN_COMMIT: str = ""
-    MOD_FILES_BY_PATCH: set = set()
-    MOD_FILES_BY_VULN_COMMIT: set = set()
-    CHANGES_PATCH_COMMIT: dict = {}
-    CHANGES_VULN_COMMIT: dict = {}
 
-    @classmethod
-    def initialize(cls):
-        """Initialize missing global variables with default values."""
-        for attr, default in cls.__dict__.items():
-            if not attr.startswith("__") and getattr(cls, attr) in (None, ""):
-                logger.error(f"Global variable '{attr}' is not initialized. Initializing it.")
-                setattr(cls, attr, default)
-
-        logger.info("CVE config initialized.")
-
-    @classmethod
     
 

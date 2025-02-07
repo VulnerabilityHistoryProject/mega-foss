@@ -198,16 +198,16 @@ def safe_get_env_vars(cls: config.SCRIPT_CONFIG, variables_to_check: list[str]):
 
         # Check if essential environment variables were set
         missing_vars = [var for var in variables_to_check if not getattr(cls, var, None)]
-
+    
         if missing_vars:
             raise MissingEnvironmentVariableError(f"Missing environment variables: {', '.join(missing_vars)}")
 
     except MissingEnvironmentVariableError as e:
-        cls.logger.error(f"Error: {e}")
+        cls.basic_logger.error(f"Error: {e}")
         sys.exit(1)
 
     except Exception as e:
-        cls.logger.error(f"Error loading environment variables or assigning class variables: {e}")
+        cls.basic_logger.error(f"Error loading environment variables or assigning class variables: {e}")
         sys.exit(1)
 
-    cls.logger.info("Environment variables initialized successfully.")
+    cls.basic_logger.info("Environment variables initialized successfully.")
