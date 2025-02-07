@@ -2,12 +2,14 @@ import logging
 
 import error_handling as handle
 
-logger = logging.getLogger(__name__)
+
 
 class SCRIPT_CONFIG:
-    logger = logging.getLogger(__name__)
+    
 
     def __init__(self):
+        # Get the basic logger
+        self.basic_logger = logging.getLogger("basic_logger")
         # Call the class method to load environment variables
         self._initialize_environment_variables()
 
@@ -19,15 +21,13 @@ class SCRIPT_CONFIG:
             "OUTPUT_DIR_JSON", 
             "LOGGING_DIR"
         ]
-        handle.safe_get_env_vars(
-            cls,
-            variables_to_check,
-            handle.MissingEnvironmentVariableError
-        )
+        handle.safe_get_env_vars(cls,variables_to_check)
 
 class CVE:
     def __init__(self):
         """Initialize an instance of CVE with default empty values."""
+        # Get the robust logger first
+        self.robust_logger = logging.getLogger("robust_logger")
         self._cve_id: str = ""
         self._path_selected_repo: str = ""
         self._hash_patch_commit: str = ""

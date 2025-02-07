@@ -2,9 +2,13 @@
 import os
 import logging
 import sys
+
+
 from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
 from dotenv import load_dotenv
+
+import cve_config as config
 
 logger = logging.getLogger(__name__)
 
@@ -173,7 +177,7 @@ def fetch_commmit_obj(selected_git_repo_obj: Git, patch_commit_hash: str) -> Com
 
 
 
-def safe_get_env_vars(cls: , variables_to_check, missing_vars_error_class):
+def safe_get_env_vars(cls: config.SCRIPT_CONFIG, variables_to_check: list[str]):
     """
     General function to handle loading and checking of environment variables.
     
@@ -196,9 +200,9 @@ def safe_get_env_vars(cls: , variables_to_check, missing_vars_error_class):
         missing_vars = [var for var in variables_to_check if not getattr(cls, var, None)]
 
         if missing_vars:
-            raise missing_vars_error_class(f"Missing environment variables: {', '.join(missing_vars)}")
+            raise MissingEnvironmentVariableError(f"Missing environment variables: {', '.join(missing_vars)}")
 
-    except missing_vars_error_class as e:
+    except MissingEnvironmentVariableError as e:
         cls.logger.error(f"Error: {e}")
         sys.exit(1)
 
