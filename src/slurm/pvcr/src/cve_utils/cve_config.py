@@ -58,9 +58,11 @@ class SCRIPT_CONFIG:
     
 
 class Vulnerability_Classifier:
-    def __init__(self,cve_id:str = ""):
+    def __init__(self):
+
+        super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""
-        self._cve_id:str = cve_id
+       
         self._adds_code: bool = False
         self._deletes_code:bool = False
         self._refactors_code: bool = False
@@ -74,7 +76,32 @@ class Vulnerability_Classifier:
 
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
+
+   
         
+class Patch_Commit:
+    def __init__(self, hash_patch_commit:str = ""):
+
+        super().__init__() # Calls the next class in MRO
+
+        ### Patch Commit Info ###
+        ############################################################################
+        self._hash_patch_commits: list[str] = []
+        self._hash_patch_commits.append(hash_patch_commit)
+
+        self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
+        self._changes_by_patch_commit: dict = {}
+
+class Vuln_Commit(Patch_Commit):
+    def __init__(self):
+        super().__init__() # Calls the next class in MRO
+
+        ### Vuln Commit Info ###
+        ############################################################################
+        self._hash_vuln_commits: list[str] = []  ### This is the object of this entire project ###
+        self._mod_files_by_vuln_commit: list[str] = []
+        self._changes_vuln_commit: dict = {}
+
 
 # patch commit class
 # vuln commit class
@@ -86,37 +113,22 @@ class Vulnerability_Classifier:
 # I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
 
 class CVE(Vulnerability_Classifier):
-    def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = ""):
+    def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = "",cve_id:str = ""):
         """"""
         
+
+        super().__init__() # Calls the next class in MRO
         ### Repo Info ###
         ############################################################################
         self._path_selected_repo: str = path_selected_repo
 
-        ### Patch Commit Info ###
-        ############################################################################
-        self._hash_patch_commits: list[str] = []
-        self._hash_patch_commits.append(hash_patch_commit)
 
-        self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
-        self._changes_by_patch_commit: dict = {}
+        ### CVE Info ###
+        ############################################################################
+        self._cve_id:str = cve_id
        
         
-        ### Vuln Commit Info ###
-        ############################################################################
-        self._hash_vuln_commits: list[str] = []  ### This is the object of this entire project ###
-        self._mod_files_by_vuln_commit: list[str] = []
-        self._changes_vuln_commit: dict = {}
-
-
-
-    @property
-    def cve_id(self) -> str:
-        return self._cve_id
-
-    @cve_id.setter
-    def cve_id(self, value: str) -> None:
-        self._cve_id = value
+    
 
     @property
     def path_selected_repo(self) -> str:
@@ -125,6 +137,19 @@ class CVE(Vulnerability_Classifier):
     @path_selected_repo.setter
     def path_selected_repo(self, value: str) -> None:
         self._path_selected_repo = value
+    
+    @property
+    def cve_id(self) -> str:
+        return self._cve_id
+
+    @cve_id.setter
+    def cve_id(self, value: str) -> None:
+        self._cve_id = value
+
+
+    
+
+   
 
     @property
     def hash_patch_commit(self) -> str:
