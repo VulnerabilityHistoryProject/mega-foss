@@ -49,7 +49,8 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
             cve_vuln = handle.safe_dict_get(processed_cve,json_cve_id)
 
             # Add the patch commit hash to the list of patch commits inside of the CVE object
-            cve_vuln.add_new_patch_commit_to_CVE(patch_commit_hash)
+            cve_vuln.add_patch_commit_obj_to_CVE(
+                                                cve_vuln.create_patch_commit_obj(patch_commit_hash))
 
             
 

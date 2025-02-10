@@ -160,7 +160,7 @@ class CVE():
         
         return patch_commit_obj
     
-    def add_new_patch_commit_obj_to_CVE(self,patch_commit_obj:Patch_Commit)->None:
+    def add_patch_commit_obj_to_CVE(self,patch_commit_obj:Patch_Commit)->None:
         """
         This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
         Args:
