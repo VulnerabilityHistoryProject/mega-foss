@@ -86,6 +86,11 @@ class SCRIPT_CONFIG:
         cls.robust_logger = logging.getLogger("robust_logger")
     
 
+def get_full_repo_path(partial_repo_path:str) -> str:
+
+    return ""
+
+
 if __name__ == "__main__":
     config = SCRIPT_CONFIG()
 

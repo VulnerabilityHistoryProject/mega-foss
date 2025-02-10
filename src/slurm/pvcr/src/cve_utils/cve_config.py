@@ -5,6 +5,7 @@ from typing import Any
 
 import src.error_handling.handle_errors as handle
 import src.szz_utils.szz as szz
+import src.configuration.script_setup as setup
 
 from pydriller import Repository, Commit, ModifiedFile
 
@@ -31,74 +32,6 @@ class Patch_Commit_Classifier:
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         # The field above is going to be interesting to try and track... tuff problem
   
-    
-    @property
-    def adds_code(self):
-        return self._adds_code
-
-    @adds_code.setter
-    def adds_code(self, value: bool):
-        self._adds_code = value
-
-    @property
-    def deletes_code(self):
-        return self._deletes_code
-
-    @deletes_code.setter
-    def deletes_code(self, value: bool):
-        self._deletes_code = value
-
-    @property
-    def refactors_code(self):
-        return self._refactors_code
-
-    @refactors_code.setter
-    def refactors_code(self, value: bool):
-        self._refactors_code = value
-
-    @property
-    def changes_lines(self):
-        return self._changes_lines
-
-    @changes_lines.setter
-    def changes_lines(self, value: bool):
-        self._changes_lines = value
-
-    @property
-    def changes_functions(self):
-        return self._changes_functions
-
-    @changes_functions.setter
-    def changes_functions(self, value: bool):
-        self._changes_functions = value
-
-    @property
-    def changes_files(self):
-        return self._changes_files
-
-    @changes_files.setter
-    def changes_files(self, value: bool):
-        self._changes_files = value
-
-
-    @property
-    def patch_partial_fix(self):
-        return self._patch_partial_fix
-
-    @patch_partial_fix.setter
-    def patch_partial_fix(self, value: bool):
-        self._patch_partial_fix = value
-
-    
-    @property
-    def number_of_vulns_fixed_by_patch(self):
-        return self._number_of_vulns_fixed_by_patch
-
-    @number_of_vulns_fixed_by_patch.setter
-    def number_of_vulns_fixed_by_patch(self, value: int):
-        self._number_of_vulns_fixed_by_patch = value
-
-
 class Patch_Commits(Commit):
     """
     All the data to capture from the Patch commits
@@ -107,7 +40,9 @@ class Patch_Commits(Commit):
 
         super().__init__() # Calls the next class in MRO
 
-        Repository(full_repo_path,single=hash_patch_commit).traverse_commits()
+
+        ### How do I get the corresponding commit object for this class???
+        
 
         ### Patch Commit Info ###
         ############################################################################
@@ -119,31 +54,6 @@ class Patch_Commits(Commit):
         self._changes_by_patch_commit: dict = {}
 
 
-    
-    @property
-    def hash_patch_commits(self) -> str:
-        return self._hash_patch_commits
-
-    @hash_patch_commits.setter
-    def hash_patch_commits(self, value: str) -> None:
-        self._hash_patch_commits.append(value)
-
-    @property
-    def mod_files_by_patch(self) -> set:
-        return self._mod_files_by_patch
-
-    @mod_files_by_patch.setter
-    def mod_files_by_patch(self, value: str) -> None:
-        self._mod_files_by_patch.append(value)
-
-    @property
-    def changes_by_patch_commit(self) -> dict:
-        return self._changes_by_patch_commit
-
-    
-    def set_changes_by_patch_commit(self, key: Any, value: dict) -> None:
-        """Custom method to safely update the dictionary."""
-        handle.safe_dict_set(self._changes_by_patch_commit,key,value)
 
 class Vuln_Commit_Classifier:
     """
@@ -169,97 +79,9 @@ class Vuln_Commit_Classifier:
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
   
     
-    @property
-    def adds_code(self):
-        return self._adds_code
+   
 
-    @adds_code.setter
-    def adds_code(self, value: bool):
-        self._adds_code = value
-
-    @property
-    def deletes_code(self):
-        return self._deletes_code
-
-    @deletes_code.setter
-    def deletes_code(self, value: bool):
-        self._deletes_code = value
-
-    @property
-    def refactors_code(self):
-        return self._refactors_code
-
-    @refactors_code.setter
-    def refactors_code(self, value: bool):
-        self._refactors_code = value
-
-    @property
-    def changes_lines(self):
-        return self._changes_lines
-
-    @changes_lines.setter
-    def changes_lines(self, value: bool):
-        self._changes_lines = value
-
-    @property
-    def changes_functions(self):
-        return self._changes_functions
-
-    @changes_functions.setter
-    def changes_functions(self, value: bool):
-        self._changes_functions = value
-
-    @property
-    def changes_files(self):
-        return self._changes_files
-
-    @changes_files.setter
-    def changes_files(self, value: bool):
-        self._changes_files = value
-
-    @property
-    def prev_commit_to_patch(self):
-        return self._prev_commit_to_patch
-
-    @prev_commit_to_patch.setter
-    def prev_commit_to_patch(self, value: str):
-        """
-        Use the szz utils file to write a function that does this.
-        This function should be called irrespective of the outcome of the actual bug inducing commit algo!
-        """
-        self._prev_commit_to_patch = value
-
-    @property
-    def patch_partial_fix(self):
-        return self._patch_partial_fix
-
-    @patch_partial_fix.setter
-    def patch_partial_fix(self, value: bool):
-        self._patch_partial_fix = value
-
-    @property
-    def number_of_patch_commits_for_vuln(self):
-        return self._number_of_patch_commits_for_vuln
-
-    @number_of_patch_commits_for_vuln.setter
-    def number_of_patch_commits_for_vuln(self, value: int):
-        """
-        Once the cve has been completely initialized in the child classes I can call this.
-
-        Returns:
-            int: _description_
-        """
-        self._number_of_patch_commits_for_vuln = value
-
-    @property
-    def number_of_vulns_fixed_by_patch(self):
-        return self._number_of_vulns_fixed_by_patch
-
-    @number_of_vulns_fixed_by_patch.setter
-    def number_of_vulns_fixed_by_patch(self, value: int):
-        self._number_of_vulns_fixed_by_patch = value
-
-class Vuln_Commits(Patch_Commits):
+class Vuln_Commits(Vuln_Commit_Classifier):
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
     There can also be multiple vulns that correspond to a single patch commit
@@ -276,33 +98,7 @@ class Vuln_Commits(Patch_Commits):
         self._changes_vuln_commits: dict = {}
     
     
-    @property
-    def hash_vuln_commits(self) -> str:
-        return self._hash_vuln_commits
-
-    @hash_vuln_commits.setter
-    def hash_vuln_commits(self, value: str) -> None:
-        self._hash_vuln_commits.append(value)
-
     
-
-    @property
-    def mod_files_by_vuln_commits(self) -> set:
-        return self._mod_files_by_vuln_commits
-
-    @mod_files_by_vuln_commits.setter
-    def mod_files_by_vuln_commits(self, value: set) -> None:
-        self._mod_files_by_vuln_commits = value
-
-    
-
-    @property
-    def changes_vuln_commits(self) -> dict:
-        return self._changes_vuln_commits
-
-    @changes_vuln_commits.setter
-    def changes_vuln_commits(self, value: dict) -> None:
-        self._changes_vuln_commits = value
 
 # patch commit class
 # vuln commit class
@@ -322,7 +118,6 @@ class CVE():
         Vuln_Commits (_type_): _description_
     """
     def __init__(self,cve_id: str, partial_repo_path: str,hash_patch_commit:str):
-        """"""
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -330,16 +125,23 @@ class CVE():
         # and full repo path field!
 
         super().__init__() # Calls the next class in MRO
-        ### Repo Info ###
-        ############################################################################
-        
-        self._partial_repo_path = partial_repo_path
-        self._path_selected_repo: str = szz.get_full_repo_path(self._partial_repo_path)
-
 
         ### CVE Info ###
         ############################################################################
         self._cve_id:str = cve_id
+
+
+
+        ### Repo Info ###
+        ############################################################################
+        
+        self._partial_repo_path: str = partial_repo_path
+        self._full_repo_path: str = setup.get_full_repo_path(self._partial_repo_path)
+        self._hash_patch_commit_obj: Commit = Repository(self._full_repo_path,single=hash_patch_commit).traverse_commits()
+
+        Repository(self._full_repo_path,single=hash_patch_commit,to_commit=hash_patch_commit).traverse_commits()
+
+        
        
     
     @property

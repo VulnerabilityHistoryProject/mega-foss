@@ -66,8 +66,6 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
     CHANGES_PATCH_COMMIT: dict = handle.get_global_variable("CHANGES_PATCH_COMMIT", dict)
     handle.safe_dict_set(CHANGES_PATCH_COMMIT, old_path, diff_parsed)
 
-def get_full_repo_path(partial_repo_path:str) -> str:
 
-    return ""
 def get_hash_patch_commit() -> None:
     return None
