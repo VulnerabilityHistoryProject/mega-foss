@@ -128,11 +128,8 @@ class CVE():
         self._partial_repo_path: str = partial_repo_path
         self._full_repo_path: str = setup.get_full_repo_path(self._partial_repo_path)
 
-        self._hash_patch_commit_obj: Commit = next(Repository(
-                                                                self._full_repo_path,
-                                                                single = hash_patch_commit).traverse_commits())
-
-        self._commits_up_to_patch: Generator = Repository(
+        
+        self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
                                                             single = hash_patch_commit,
                                                             to_commit = hash_patch_commit).traverse_commits()
@@ -140,26 +137,60 @@ class CVE():
         ### Patch Commit Info ###
         ############################################################################
         self._hash_patch_commits: list[Patch_Commit] = []
-        primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,self._hash_patch_commit_obj)
-        self._hash_patch_commits.append(primary_patch_commit)
+
+        hash_patch_commit_obj: Commit = next(Repository( # Only get the hash patch commit object
+                                                                self._full_repo_path,
+                                                                single = hash_patch_commit).traverse_commits())
+
+        self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,hash_patch_commit_obj)
+        self._hash_patch_commits.append(self._primary_patch_commit)
 
         ### Vuln Commit Info ###
         ### Objective of project ###
         ############################################################################
         self._hash_vuln_commits: list[Vuln_Commit] = []
     
+        
     @property
-    def path_selected_repo(self) -> str:
-        return self._path_selected_repo
+    def _cve_id(self) -> str:
+        return self._cve_id
+    
+    @_cve_id.setter
+    def _cve_id(self,value:str) -> None:
+        self._cve_id = value
 
-    @path_selected_repo.setter
-    def path_selected_repo(self, value: str) -> None:
-        self._path_selected_repo = value
+    @property
+    def _partial_repo_path(self) -> str:
+        return self._partial_repo_path
+
+    @_partial_repo_path.setter
+    def _partial_repo_path(self, value: str) -> None:
+        self._partial_repo_path = value
+
+    @property
+    def _full_repo_path(self) -> str:
+        return self._full_repo_path
+
+    @_full_repo_path.setter
+    def _full_repo_path(self, value: str) -> None:
+        self._full_repo_path = value
+
+    @property
+    def _commits_up_to_hash(self) -> Generator:
+        return self._commits_up_to_hash
     
     @property
-    def cve_id(self) -> str:
-        return self._cve_id
+    def _primary_patch_commit(self) -> Commit:
+        return self._primary_patch_commit
 
-    @cve_id.setter
-    def cve_id(self, value: str) -> None:
-        self._cve_id = value
+    @_primary_patch_commit.setter
+    def _primary_patch_commit(self, value: Commit) -> None:
+        self._primary_patch_commit = value
+    
+    @property
+    def _hash_patch_commits(self) -> list[Commit]:
+        return self._hash_patch_commits
+
+    @_hash_patch_commits.setter
+    def _hash_patch_commits(self, value: Patch_Commit) -> None:
+        self._hash_patch_commits.append(value)
