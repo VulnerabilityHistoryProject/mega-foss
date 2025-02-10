@@ -4,6 +4,7 @@ import sys
 from typing import Any
 
 import src.error_handling.handle_errors as handle
+import src.szz_utils.szz as szz
 
 from pydriller import Repository, Commit, ModifiedFile
 
@@ -102,14 +103,17 @@ class Patch_Commits(Commit):
     """
     All the data to capture from the Patch commits
     """
-    def __init__(self, hash_patch_commit:str = ""):
+    def __init__(self, full_repo_path: str, hash_patch_commit:str):
 
         super().__init__() # Calls the next class in MRO
 
+        Repository(full_repo_path,single=hash_patch_commit).traverse_commits()
+
         ### Patch Commit Info ###
         ############################################################################
-        self._hash_patch_commits: list[str] = []
-        self._hash_patch_commits.append(hash_patch_commit)
+        self._hash_patch_commits: list[Commit] = []
+        hash_patch_commit_obj = Commit(hash_patch_commit)
+        self._hash_patch_commits.append(hash_patch_commit_obj)
 
         self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
         self._changes_by_patch_commit: dict = {}
@@ -328,7 +332,9 @@ class CVE():
         super().__init__() # Calls the next class in MRO
         ### Repo Info ###
         ############################################################################
-        self._path_selected_repo: str = path_selected_repo
+        
+        self._partial_repo_path = partial_repo_path
+        self._path_selected_repo: str = szz.get_full_repo_path(self._partial_repo_path)
 
 
         ### CVE Info ###

@@ -44,8 +44,6 @@ def find_modified_files(patch_commit_hash: str = "", selected_repo: str = "") ->
         except Exception as e:
             logging.error(f"Unexpected error while processing file '{modified_file_obj}': {e} for {patch_commit_hash} in {selected_repo}")
 
-
-    globals().get()
     return modified_file_objects
 
 
@@ -68,8 +66,8 @@ def track_commit_changes(modified_file_obj: ModifiedFile) -> None:
     CHANGES_PATCH_COMMIT: dict = handle.get_global_variable("CHANGES_PATCH_COMMIT", dict)
     handle.safe_dict_set(CHANGES_PATCH_COMMIT, old_path, diff_parsed)
 
-def get_selected_repo_path() -> str:
+def get_full_repo_path(partial_repo_path:str) -> str:
 
-    return None
+    return ""
 def get_hash_patch_commit() -> None:
     return None

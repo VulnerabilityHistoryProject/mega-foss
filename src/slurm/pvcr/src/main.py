@@ -43,6 +43,7 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
             processed_cve_id.add(json_cve_id)
         else: # what happens if the cve id is already in the set
             # don't create a new cve object, rather add the hash patch commit to the list from the patch commits class
+            # CVE class should have a list 
 
 
 
