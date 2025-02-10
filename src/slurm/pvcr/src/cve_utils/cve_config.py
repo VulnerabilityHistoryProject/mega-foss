@@ -71,13 +71,21 @@ class Vulnerability_Classifier:
         self._changes_functions: bool = False
         self._changes_files: bool = False
         
-        self._is_prev_commit_to_patch: bool = False
+        self._is_prev_commit_to_patch: dict[bool,str] = {False,""} # change to True, 'commit hash' or directly prev commit
         self._patch_partial_fix: bool = False
 
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
-        self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
 
-   
+
+        self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
+        # The field above is going to be interesting to try and track... tuff problem
+
+    @classmethod
+    def get_prev_commit_to_patch():
+        """
+        Use the szz utils file to write a function that does this
+        """
+        pass
         
 class Patch_Commit:
     def __init__(self, hash_patch_commit:str = ""):
@@ -107,16 +115,17 @@ class Patch_Commit:
         return self._mod_files_by_patch
 
     @mod_files_by_patch.setter
-    def mod_files_by_patch(self, value: set) -> None:
+    def mod_files_by_patch(self, value: str) -> None:
         self._mod_files_by_patch.append(value)
 
     @property
     def changes_by_patch_commit(self) -> dict:
         return self._changes_by_patch_commit
 
-    @changes_by_patch_commit.setter
-    def changes_by_patch_commit(self, key: Any, value: dict) -> None:
-        handle.safe_dict_set(self.changes_by_patch_commit,key,value)
+    
+    def set_changes_by_patch_commit(self, key: Any, value: dict) -> None:
+        """Custom method to safely update the dictionary."""
+        handle.safe_dict_set(self._changes_by_patch_commit,key,value)
 
 class Vuln_Commit(Patch_Commit):
     def __init__(self):
@@ -138,7 +147,7 @@ class Vuln_Commit(Patch_Commit):
 
 # I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
 
-class CVE(Vulnerability_Classifier):
+class CVE(Vulnerability_Classifier,Vuln_Commit):
     def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = "",cve_id:str = ""):
         """"""
         
