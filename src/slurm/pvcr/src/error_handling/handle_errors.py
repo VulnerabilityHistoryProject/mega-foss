@@ -8,7 +8,7 @@ from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
 from dotenv import load_dotenv
 
-import src.cve_utils.cve_config as cve_config
+import src.cve_utils.cve_config as config
 
 logger = logging.getLogger(__name__)
 

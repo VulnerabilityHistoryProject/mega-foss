@@ -59,29 +59,7 @@ from pydriller import Git, ModifiedFile, Commit
 
 
 
-"""global variables:
 
-    PATH_ALL_PROJ_REPOS (str): Path to the directory containing all the FOSS project git repos.
-    PATH_SELECTED_REPO (str): Path to the specific repo. This changes as the script iterates through the different patch commits in the json file.
-    PATH_PATCH_COMMITS (str): Path to the json file containing all of the patch commits that fix vulnerabilities.
-    PATH_OUTPUT_DIR (str): Path to the output directory where the json file with vulnerable commits will be written to.
-    PATH_LOG_OUTPUT_DIR (str): Path to the output directory where the logs and errors will be stored.
-
-    HASH_PATCH_COMMIT (str): Commit hash of the patch commit to a vulnerability.
-    HASH_VULN_COMMIT (str): Commit hash of the original commit that introduced the vulnerability.
-    
-    MOD_FILES_BY_PATCH set[str]: Set of paths to files modified by the patch commit.
-    
-    CHANGES_PATCH_COMMIT dict[str,dict[str,list[tuple[int,str]]]] (dict): The key of the outer dictionary is the name of the modified file by the patch commit. The value is another dictionary. The second
-                                                  dictionary has two keys, either "added" or "deleted". The added section has the code that was added by the
-                                                 commit and vice-versa. The changes are in a list of tuples where the first index of the tuple is the line number, and the second tuple is the code change.
-
-    CHANGES_VULN_COMMIT dict[str,dict[str,list[tuple[int,str]]]] (dict): Tke key of the dictionary is the modified file by the suspected vulnerable commit. The value is another dictionary. The second
-                                                 dictionary has two keys, either "added" or "deleted". The added section has the code that was added by the
-                                                 commit and vice-versa. The changes are a code snippet for verification and validation purposes against the CHANGES_PATCH_COMMIT. The changes are in a list 
-                                                 of tuples where the first index of the tuple is the line number, and the second tuple is the code change.
-    
-"""
 
 
 ### TO-DO ###
@@ -104,55 +82,67 @@ from pydriller import Git, ModifiedFile, Commit
 ## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
 
 
+class SCRIPT_CONFIG:
+    """
+    There will only be 1 instance of the SCRIPT_CONFIG class at any one time.
+    Class methods should primarily be used here.
+    """
+    # Initialize the class-level logger and immutability flag
+    basic_logger = logging.getLogger("basic_logger")
+    robust_logger = None
+    _variables_set = False
 
+    # Class-level environment variable placeholders
+    GIT_ALL_REPOS_DIR = None
+    PATCH_COMMITS_JSON = None
+    OUTPUT_DIR_JSON = None
+    LOGGING_DIR = None
 
+    def __init__(self):
+        # Call the method to load environment variables
+        self._initialize_environment_variables()
+        self._ensure_immutable()
+        self._initialize_robust_logging()
 
+    @classmethod
+    def _initialize_environment_variables(cls):
+        """
+        Calls the external method to load and validate environment variables.
+        """
+        variables_to_check = [
+            "GIT_ALL_REPOS_DIR", 
+            "PATCH_COMMITS_JSON", 
+            "OUTPUT_DIR_JSON", 
+            "LOGGING_DIR"
+        ]
+        
+        # Call the function from the other file to load the environment variables
+        handle.safe_get_env_vars(cls, variables_to_check)
 
-def get_selected_repo_path() -> str:
+        # Set the flag indicating that the variables have been loaded
+        cls._variables_set = True
 
-    return None
-def get_hash_patch_commit() -> None:
-    return None
+    @classmethod
+    def _ensure_immutable(cls, variable_name: str) -> None:
+        """
+        Helper method to enforce immutability once a variable has been set.
+        Logs the error and exits the program if the variable has already been set.
+        """
+        if getattr(cls, variable_name, None) is not None:
+            cls.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
+            sys.exit(1)
+    
+    @classmethod
+    def _initialize_robust_logging(cls)->None:
+        ### Setup Robust Logging ###
+        cls.robust_logger = logging.getLogger("robust_logger")
+    
+
 
 
 
 if __name__ == "__main__":
 
-   # Basic logging setup for initialization phase
-    log_file_path: str = 'setup_logs.txt'
-
-    # Ensure the log file is in the same directory as the script
-    log_dir: str = os.path.dirname(os.path.abspath(__file__))
-    log_file: str = os.path.join(log_dir, log_file_path)
-
-    # Set up file logging with rotation (in case the file grows large)
-    logging.basicConfig(
-        level=logging.DEBUG,  # Set the logging level to DEBUG
-        format='%(asctime)s - %(levelname)s - %(message)s',  # Log format
-        handlers=[logging.FileHandler(log_file)]  # Only log to the file, no console output
-    )
-
-    # Get the logger
-    logger: logging.Logger = logging.getLogger()
-
-    # Example logging message
-    logger.info("Basic logging setup complete.")
-
-
-    
-
-    # Call the function to initialize the globals
-    initialize_globals()
-
-    # Setup the more robust logging setup
-    setup_robust_logging()
-
-    # Initialize global variables 
-    """
-    These parts below will be in some sort of loop in main iterating through all of the repos in the json
-    """
-    get_selected_repo_path()
-    get_hash_patch_commit()
 
     
     

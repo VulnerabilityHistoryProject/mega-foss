@@ -5,64 +5,20 @@ from typing import Any
 
 import src.error_handling.handle_errors as handle
 
+#from pydriller import Repository, Commit, ModifiedFile
+import pydriller
 
-class SCRIPT_CONFIG:
-    # Initialize the class-level logger and immutability flag
-    basic_logger = logging.getLogger("basic_logger")
-    robust_logger = None
-    _variables_set = False
 
-    # Class-level environment variable placeholders
-    GIT_ALL_REPOS_DIR = None
-    PATCH_COMMITS_JSON = None
-    OUTPUT_DIR_JSON = None
-    LOGGING_DIR = None
-
-    def __init__(self):
-        # Call the method to load environment variables
-        self._initialize_environment_variables()
-        self._ensure_immutable()
-
-    @classmethod
-    def _initialize_environment_variables(cls):
-        """
-        Calls the external method to load and validate environment variables.
-        """
-        variables_to_check = [
-            "GIT_ALL_REPOS_DIR", 
-            "PATCH_COMMITS_JSON", 
-            "OUTPUT_DIR_JSON", 
-            "LOGGING_DIR"
-        ]
-        
-        # Call the function from the other file to load the environment variables
-        handle.safe_get_env_vars(cls, variables_to_check)
-
-        # Set the flag indicating that the variables have been loaded
-        cls._variables_set = True
-
-    @classmethod
-    def _ensure_immutable(cls, variable_name: str) -> None:
-        """
-        Helper method to enforce immutability once a variable has been set.
-        Logs the error and exits the program if the variable has already been set.
-        """
-        if getattr(cls, variable_name, None) is not None:
-            cls.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
-            sys.exit(1)
     
-    @classmethod
-    def _initialize_robust_logging(cls)->None:
-        ### Setup Robust Logging ###
-        cls.robust_logger = logging.getLogger("robust_logger")
-    
-
-class Vulnerability_Classifier:
+class Patch_Commit_Classifier:
+    """
+    The goal of this class is to answer the question: What has been changed by the patch commit??
+    """
     def __init__(self):
 
         super().__init__() # Calls the next class in MRO
-        """ Classify's vulnerability based on factors related to implementation and severity"""
-       
+        ### TO-DO ###
+        # Continue reading papers to refine this list of fieds
         self._adds_code: bool = False
         self._deletes_code:bool = False
         self._refactors_code: bool = False
@@ -71,32 +27,146 @@ class Vulnerability_Classifier:
         self._changes_functions: bool = False
         self._changes_files: bool = False
         
-        self._prev_commit_to_patch: str = ""
+        
         self._patch_partial_fix: bool = False
-
-        self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
-
 
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         # The field above is going to be interesting to try and track... tuff problem
+  
+    
+    @property
+    def adds_code(self):
+        return self._adds_code
 
-        
+    @adds_code.setter
+    def adds_code(self, value: bool):
+        self._adds_code = value
+
+    @property
+    def deletes_code(self):
+        return self._deletes_code
+
+    @deletes_code.setter
+    def deletes_code(self, value: bool):
+        self._deletes_code = value
+
+    @property
+    def refactors_code(self):
+        return self._refactors_code
+
+    @refactors_code.setter
+    def refactors_code(self, value: bool):
+        self._refactors_code = value
+
+    @property
+    def changes_lines(self):
+        return self._changes_lines
+
+    @changes_lines.setter
+    def changes_lines(self, value: bool):
+        self._changes_lines = value
+
+    @property
+    def changes_functions(self):
+        return self._changes_functions
+
+    @changes_functions.setter
+    def changes_functions(self, value: bool):
+        self._changes_functions = value
+
+    @property
+    def changes_files(self):
+        return self._changes_files
+
+    @changes_files.setter
+    def changes_files(self, value: bool):
+        self._changes_files = value
+
+
+    @property
+    def patch_partial_fix(self):
+        return self._patch_partial_fix
+
+    @patch_partial_fix.setter
+    def patch_partial_fix(self, value: bool):
+        self._patch_partial_fix = value
 
     
-    def _get_prev_commit_to_patch(self) -> str:
-        """
-        Use the szz utils file to write a function that does this.
-        This function should be called irrespective of the outcome of the actual bug inducing commit algo!
-        """
-        pass
+    @property
+    def number_of_vulns_fixed_by_patch(self):
+        return self._number_of_vulns_fixed_by_patch
 
-    def _get_number_of_patch_commits_for_vuln(self) -> int:
-        """
-        Once the cve has been completely initialized in the child classes I can call this.
+    @number_of_vulns_fixed_by_patch.setter
+    def number_of_vulns_fixed_by_patch(self, value: int):
+        self._number_of_vulns_fixed_by_patch = value
 
-        Returns:
-            int: _description_
-        """
+
+class Patch_Commits(pydriller.Commit):
+    """
+    All the data to capture from the Patch commits
+    """
+    def __init__(self, hash_patch_commit:str = ""):
+
+        super().__init__() # Calls the next class in MRO
+
+        ### Patch Commit Info ###
+        ############################################################################
+        self._hash_patch_commits: list[str] = []
+        self._hash_patch_commits.append(hash_patch_commit)
+
+        self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
+        self._changes_by_patch_commit: dict = {}
+
+
+    
+    @property
+    def hash_patch_commits(self) -> str:
+        return self._hash_patch_commits
+
+    @hash_patch_commits.setter
+    def hash_patch_commits(self, value: str) -> None:
+        self._hash_patch_commits.append(value)
+
+    @property
+    def mod_files_by_patch(self) -> set:
+        return self._mod_files_by_patch
+
+    @mod_files_by_patch.setter
+    def mod_files_by_patch(self, value: str) -> None:
+        self._mod_files_by_patch.append(value)
+
+    @property
+    def changes_by_patch_commit(self) -> dict:
+        return self._changes_by_patch_commit
+
+    
+    def set_changes_by_patch_commit(self, key: Any, value: dict) -> None:
+        """Custom method to safely update the dictionary."""
+        handle.safe_dict_set(self._changes_by_patch_commit,key,value)
+
+class Vuln_Commit_Classifier:
+    """
+    The goal of this class is to answer the question: What has been changed by the 
+    """
+    def __init__(self):
+
+        super().__init__() # Calls the next class in MRO
+        """ Classify's vulnerability based on factors related to implementation and severity"""
+        ### TO-DO ###
+        # Continue reading papers to refine this list of fieds
+        self._adds_code: bool = False
+        self._deletes_code:bool = False
+        self._refactors_code: bool = False
+
+        self._changes_lines: bool = False
+        self._changes_functions: bool = False
+        self._changes_files: bool = False
+        
+        self._is_prev_commit_to_patch = False
+        self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
+
+        self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
+  
     
     @property
     def adds_code(self):
@@ -187,50 +257,6 @@ class Vulnerability_Classifier:
     @number_of_vulns_fixed_by_patch.setter
     def number_of_vulns_fixed_by_patch(self, value: int):
         self._number_of_vulns_fixed_by_patch = value
-
-
-class Patch_Commits:
-    """
-    All the data to capture from the Patch commits
-    """
-    def __init__(self, hash_patch_commit:str = ""):
-
-        super().__init__() # Calls the next class in MRO
-
-        ### Patch Commit Info ###
-        ############################################################################
-        self._hash_patch_commits: list[str] = []
-        self._hash_patch_commits.append(hash_patch_commit)
-
-        self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
-        self._changes_by_patch_commit: dict = {}
-
-
-    
-    @property
-    def hash_patch_commits(self) -> str:
-        return self._hash_patch_commits
-
-    @hash_patch_commits.setter
-    def hash_patch_commits(self, value: str) -> None:
-        self._hash_patch_commits.append(value)
-
-    @property
-    def mod_files_by_patch(self) -> set:
-        return self._mod_files_by_patch
-
-    @mod_files_by_patch.setter
-    def mod_files_by_patch(self, value: str) -> None:
-        self._mod_files_by_patch.append(value)
-
-    @property
-    def changes_by_patch_commit(self) -> dict:
-        return self._changes_by_patch_commit
-
-    
-    def set_changes_by_patch_commit(self, key: Any, value: dict) -> None:
-        """Custom method to safely update the dictionary."""
-        handle.safe_dict_set(self._changes_by_patch_commit,key,value)
 
 class Vuln_Commits(Patch_Commits):
     """
