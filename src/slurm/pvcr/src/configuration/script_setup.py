@@ -98,7 +98,7 @@ from pydriller import Git, ModifiedFile, Commit
 # put all paths into the .env file when I login to RC and find everything on my terminal. Can I carry the .env file with me??? How are env vars handled on RC?
 # write code to write the commit changes to the json file (this is already kinda done, but I need to clean it up)
 # add env variables to .env 
-
+# go back through all setters in cve_config and write functions to actually get the data in the fields. Like for Vuln classifier. How do I get that info ?
 # answer this question --> Where am I getting path selected repo, the repo that's selected for that particular iteration of for loop
 ## Create another file / section that focuses on analyzing the dataset once json data is processed that we have with python. Doesn't necessarily have to be 
 ## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?

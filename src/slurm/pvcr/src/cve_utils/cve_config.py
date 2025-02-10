@@ -189,7 +189,10 @@ class Vulnerability_Classifier:
         self._number_of_vulns_fixed_by_patch = value
 
 
-class Patch_Commit:
+class Patch_Commits:
+    """
+    All the data to capture from the Patch commits
+    """
     def __init__(self, hash_patch_commit:str = ""):
 
         super().__init__() # Calls the next class in MRO
@@ -229,16 +232,50 @@ class Patch_Commit:
         """Custom method to safely update the dictionary."""
         handle.safe_dict_set(self._changes_by_patch_commit,key,value)
 
-class Vuln_Commit(Patch_Commit):
+class Vuln_Commits(Patch_Commits):
+    """
+    Every Vulnerable Commit has a corresponding patch commit to go along with it.
+    There can also be multiple vulns that correspond to a single patch commit
+    Args:
+        Patch_Commit (_type_): _description_
+    """
     def __init__(self):
         super().__init__() # Calls the next class in MRO
 
         ### Vuln Commit Info ###
         ############################################################################
         self._hash_vuln_commits: list[str] = []  ### This is the object of this entire project ###
-        self._mod_files_by_vuln_commit: list[str] = []
-        self._changes_vuln_commit: dict = {}
+        self._mod_files_by_vuln_commits: list[str] = []
+        self._changes_vuln_commits: dict = {}
+    
+    
+    @property
+    def hash_vuln_commits(self) -> str:
+        return self._hash_vuln_commits
 
+    @hash_vuln_commits.setter
+    def hash_vuln_commits(self, value: str) -> None:
+        self._hash_vuln_commits.append(value)
+
+    
+
+    @property
+    def mod_files_by_vuln_commits(self) -> set:
+        return self._mod_files_by_vuln_commits
+
+    @mod_files_by_vuln_commits.setter
+    def mod_files_by_vuln_commits(self, value: set) -> None:
+        self._mod_files_by_vuln_commits = value
+
+    
+
+    @property
+    def changes_vuln_commits(self) -> dict:
+        return self._changes_vuln_commits
+
+    @changes_vuln_commits.setter
+    def changes_vuln_commits(self, value: dict) -> None:
+        self._changes_vuln_commits = value
 
 # patch commit class
 # vuln commit class
@@ -249,7 +286,14 @@ class Vuln_Commit(Patch_Commit):
 
 # I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
 
-class CVE(Vulnerability_Classifier,Vuln_Commit):
+
+class CVE(Vulnerability_Classifier,Vuln_Commits):
+    """
+    A CVE instance should contain everything. Vuln classifier, vuln commits, patch commits
+    Args:
+        Vulnerability_Classifier (_type_): _description_
+        Vuln_Commits (_type_): _description_
+    """
     def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = "",cve_id:str = ""):
         """"""
         
@@ -264,9 +308,7 @@ class CVE(Vulnerability_Classifier,Vuln_Commit):
         ############################################################################
         self._cve_id:str = cve_id
        
-        
     
-
     @property
     def path_selected_repo(self) -> str:
         return self._path_selected_repo
@@ -282,43 +324,3 @@ class CVE(Vulnerability_Classifier,Vuln_Commit):
     @cve_id.setter
     def cve_id(self, value: str) -> None:
         self._cve_id = value
-
-
-    
-
-   
-
-    
-
-    @property
-    def hash_vuln_commit(self) -> str:
-        return self._hash_vuln_commit
-
-    @hash_vuln_commit.setter
-    def hash_vuln_commit(self, value: str) -> None:
-        self._hash_vuln_commit.append(value)
-
-    
-
-    @property
-    def mod_files_by_vuln_commit(self) -> set:
-        return self._mod_files_by_vuln_commit
-
-    @mod_files_by_vuln_commit.setter
-    def mod_files_by_vuln_commit(self, value: set) -> None:
-        self._mod_files_by_vuln_commit = value
-
-    
-
-    @property
-    def changes_vuln_commit(self) -> dict:
-        return self._changes_vuln_commit
-
-    @changes_vuln_commit.setter
-    def changes_vuln_commit(self, value: dict) -> None:
-        self._changes_vuln_commit = value
-
-    
-
-
-
