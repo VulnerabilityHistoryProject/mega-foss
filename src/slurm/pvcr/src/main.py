@@ -1,12 +1,13 @@
+
+import src.error_handling.logger_config as logger_config
 import src.configuration.script_setup as script_setup
-import src.cve_utils.cve_config as cve_config
+import src.cve_utils.cve as cve
 import src.szz_utils.szz as szz
 import src.error_handling.handle_errors as handle
 
 
 import logging
 import json
-import ijson
 
 from typing import Any,Generator
 
@@ -14,19 +15,19 @@ from typing import Any,Generator
 basic_logger = logging.getLogger("basic_logger")
 robust_logger = logging.getLogger("robust_logging")
 
-def stream_json_entries(json_file_path: str) -> Generator[dict[str, Any], None, None]:
+def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, None]:
     """Generator that yields each entry from a JSON list one by one."""
     with open(json_file_path, "r", encoding="utf-8") as f:
-        data: list[dict[str, Any]] = json.load(f)  # Explicitly defining type as a list of dictionaries
+        data: list[dict[str, str]] = json.load(f)  # Explicitly defining type as a list of dictionaries
         for entry in data:
             yield entry  # Yielding each entry one by one
 
 
-def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
+def process_JSON_CVE(json_file_path: str) -> cve.CVE:
 
-    processed_cve: dict[str,cve_config.CVE]
+    processed_cve: dict[str,cve.CVE]
 
-    cve_data: Generator = stream_json_entries(json_file_path)
+    cve_data: Generator[dict[str,str], None, None] = stream_json_entries(json_file_path)
 
     for cve_entry in cve_data:
 
@@ -37,7 +38,7 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
         if json_cve_id not in processed_cve:
 
             # Create a new instance of the cve class
-            cve_vuln: cve_config.CVE = cve_config.CVE(json_cve_id,partial_repo_path,patch_commit_hash)
+            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash)
             handle.safe_dict_set(processed_cve,json_cve_id,cve_vuln)
 
             return cve_vuln
@@ -59,7 +60,7 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
 if __name__ == "__main__":
 
     # Setup Basic logging cofiguration in case anything goes wrong during setup
-    script_setup.setup_initial_logging()
+    logger_config.setup_initial_logging()
 
     # Find the modified files by patch commit
     szz.find_modified_files()
