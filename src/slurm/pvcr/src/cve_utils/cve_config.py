@@ -143,12 +143,12 @@ class CVE():
                                                                 single = hash_patch_commit).traverse_commits())
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,hash_patch_commit_obj)
-        self._hash_patch_commits.append(self._primary_patch_commit)
+        self._patch_commit_objects.append(self._primary_patch_commit)
 
         ### Vuln Commit Info ###
         ### Objective of project ###
         ############################################################################
-        self._hash_vuln_commits: list[Vuln_Commit] = []
+        self._vuln_commit_objects: list[Vuln_Commit] = []
     
         
     @property
@@ -176,8 +176,8 @@ class CVE():
         self._full_repo_path = value
 
     @property
-    def _commits_up_to_hash(self) -> Generator:
-        return self._commits_up_to_hash
+    def _commits_up_to_patch(self) -> Generator:
+        return self._commits_up_to_patch
     
     @property
     def _primary_patch_commit(self) -> Commit:
@@ -188,9 +188,17 @@ class CVE():
         self._primary_patch_commit = value
     
     @property
-    def _hash_patch_commits(self) -> list[Commit]:
-        return self._hash_patch_commits
+    def _patch_commit_objects(self) -> list[Patch_Commit]:
+        return self._patch_commit_objects
 
-    @_hash_patch_commits.setter
-    def _hash_patch_commits(self, value: Patch_Commit) -> None:
-        self._hash_patch_commits.append(value)
+    @_patch_commit_objects.setter
+    def _patch_commit_objects(self, value: Patch_Commit) -> None:
+        self._patch_commit_objects.append(value)
+
+    @property
+    def _vuln_commit_objects(self) -> list[Patch_Commit]:
+        return self._vuln_commit_objects
+
+    @_vuln_commit_objects.setter
+    def _vuln_commit_objects(self, value: Patch_Commit) -> None:
+        self._vuln_commit_objects.append(value)
