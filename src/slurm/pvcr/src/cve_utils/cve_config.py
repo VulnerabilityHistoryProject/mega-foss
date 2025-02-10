@@ -2,13 +2,14 @@ import logging
 import os
 import sys
 
-import error_handling as handle
+import src.error_handling.handle_errors as handle
 
 
 
 class SCRIPT_CONFIG:
     # Initialize the class-level logger and immutability flag
     basic_logger = logging.getLogger("basic_logger")
+    robust_logger = None
     _variables_set = False
 
     # Class-level environment variable placeholders
@@ -48,6 +49,12 @@ class SCRIPT_CONFIG:
         if getattr(cls, variable_name, None) is not None:
             cls.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
             sys.exit(1)
+    
+    @classmethod
+    def _initialize_robust_logging(cls)->None:
+        ### Setup Robust Logging ###
+        cls.robust_logger = logging.getLogger("robust_logger")
+    
 
 class Vulnerability_Classifier:
     def __init__(self,cve_id:str = ""):
@@ -64,8 +71,8 @@ class Vulnerability_Classifier:
         self._is_prev_commit_to_patch: bool = False
         self._patch_partial_fix: bool = False
 
-        self._number_of_patch_commits_for_vuln: int = 1 # if tihs 
-        self._number_of_vulns_fixed_by_patch: int = 1
+        self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
+        self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         
 
 # patch commit class
@@ -79,8 +86,7 @@ class CVE(Vulnerability_Classifier):
     def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = ""):
         """"""
         
-        ### Setup Robust Logging ###
-        self.robust_logger = logging.getLogger("robust_logger")
+        
 
         ### Repo Info ###
         ############################################################################
