@@ -53,7 +53,9 @@ def process_JSON_CVE(json_file_path: str) -> cve.CVE:
             cve_vuln.add_patch_commit_obj_to_CVE(
                                                 cve_vuln.create_patch_commit_obj(patch_commit_hash))
 
-            
+#### Next step ### 
+### Figure out how to extend the functionality of the existing Commit, Repository, and Modified file
+### classes from pydriller library!
 
 
 
