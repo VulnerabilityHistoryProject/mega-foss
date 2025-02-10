@@ -5,11 +5,8 @@ from typing import Any
 
 import src.error_handling.handle_errors as handle
 
-#from pydriller import Repository, Commit, ModifiedFile
-import pydriller
+from pydriller import Repository, Commit, ModifiedFile
 
-
-    
 class Patch_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the patch commit??
@@ -101,7 +98,7 @@ class Patch_Commit_Classifier:
         self._number_of_vulns_fixed_by_patch = value
 
 
-class Patch_Commits(pydriller.Commit):
+class Patch_Commits(Commit):
     """
     All the data to capture from the Patch commits
     """
@@ -313,16 +310,20 @@ class Vuln_Commits(Patch_Commits):
 # I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
 
 
-class CVE(Vulnerability_Classifier,Vuln_Commits):
+class CVE():
     """
     A CVE instance should contain everything. Vuln classifier, vuln commits, patch commits
     Args:
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
-    def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = "",cve_id:str = ""):
+    def __init__(self,partial_repo_path: str = "",hash_patch_commit:str = "",cve_id:str = ""):
         """"""
         
+        # I need to get the full repo path from the partial repo path 
+        # the full repo path is the path on the super computer
+        # create a partial repo path field
+        # and full repo path field!
 
         super().__init__() # Calls the next class in MRO
         ### Repo Info ###
