@@ -6,26 +6,31 @@ import src.error_handling.handle_errors as handle
 
 import logging
 import json
+import ijson
 
-from typing import Any
+from typing import Any,Generator
 
 
 basic_logger = logging.getLogger("basic_logger")
 robust_logger = logging.getLogger("robust_logging")
 
-
+def stream_json_entries(json_file_path: str) -> Generator[dict[str, Any], None, None]:
+    """Generator that yields each entry from a JSON list one by one."""
+    with open(json_file_path, "r", encoding="utf-8") as f:
+        data: list[dict[str, Any]] = json.load(f)  # Explicitly defining type as a list of dictionaries
+        for entry in data:
+            yield entry  # Yielding each entry one by one
 
 
 def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
 
     processed_cve_id: set[str] = set() # o(1) lookup
 
-    with open(json_file_path, 'r') as file:
-        cve_data: list[dict[str, str]] = json.load(file)
+    cve_data: Generator = stream_json_entries(json_file_path)
 
     for cve_entry in cve_data:
 
-        json_cve_id:str = handle.safe_dict_get(cve_entry,"cve_id")
+        json_cve_id: str = handle.safe_dict_get(cve_entry,"cve_id")
         partial_repo_path: str = handle.safe_dict_get(cve_entry,"repo")
         hash_patch_commit: str = handle.safe_dict_get(cve_entry,"commit")
 

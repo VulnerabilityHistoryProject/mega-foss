@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from typing import Any
+from typing import Any,Generator
 
 import src.error_handling.handle_errors as handle
 import src.szz_utils.szz as szz
@@ -32,25 +32,18 @@ class Patch_Commit_Classifier:
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         # The field above is going to be interesting to try and track... tuff problem
   
-class Patch_Commits(Commit):
+class Patch_Commit(Commit):
     """
     All the data to capture from the Patch commits
     """
-    def __init__(self, full_repo_path: str, hash_patch_commit:str):
+
+    ### I want each patch commit to have a classifier for that patch (this means a new instance of patch commit classifier)
+    def __init__(self, full_repo_path: str, hash_patch_commit_obj:Commit):
 
         super().__init__() # Calls the next class in MRO
 
 
-        ### How do I get the corresponding commit object for this class???
-        
-
-        ### Patch Commit Info ###
-        ############################################################################
-        self._hash_patch_commits: list[Commit] = []
-        hash_patch_commit_obj = Commit(hash_patch_commit)
-        self._hash_patch_commits.append(hash_patch_commit_obj)
-
-        self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
+        self._mod_files_by_patch_commit: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
         self._changes_by_patch_commit: dict = {}
 
 
@@ -81,21 +74,20 @@ class Vuln_Commit_Classifier:
     
    
 
-class Vuln_Commits(Vuln_Commit_Classifier):
+class Vuln_Commit(Vuln_Commit_Classifier):
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
     There can also be multiple vulns that correspond to a single patch commit
     Args:
         Patch_Commit (_type_): _description_
     """
+
+    ### I want each vulnerable commit to have a classifier for that commit!! ###
     def __init__(self):
         super().__init__() # Calls the next class in MRO
 
-        ### Vuln Commit Info ###
-        ############################################################################
-        self._hash_vuln_commits: list[str] = []  ### This is the object of this entire project ###
-        self._mod_files_by_vuln_commits: list[str] = []
-        self._changes_vuln_commits: dict = {}
+        self._mod_files_by_vuln_commit: list[str] = []
+        self._changes_vuln_commit: dict = {}
     
     
     
@@ -130,19 +122,31 @@ class CVE():
         ############################################################################
         self._cve_id:str = cve_id
 
-
-
         ### Repo Info ###
         ############################################################################
         
         self._partial_repo_path: str = partial_repo_path
         self._full_repo_path: str = setup.get_full_repo_path(self._partial_repo_path)
-        self._hash_patch_commit_obj: Commit = Repository(self._full_repo_path,single=hash_patch_commit).traverse_commits()
 
-        Repository(self._full_repo_path,single=hash_patch_commit,to_commit=hash_patch_commit).traverse_commits()
+        self._hash_patch_commit_obj: Commit = next(Repository(
+                                                                self._full_repo_path,
+                                                                single = hash_patch_commit).traverse_commits())
 
-        
-       
+        self._commits_up_to_patch: Generator = Repository(
+                                                            self._full_repo_path,
+                                                            single = hash_patch_commit,
+                                                            to_commit = hash_patch_commit).traverse_commits()
+
+        ### Patch Commit Info ###
+        ############################################################################
+        self._hash_patch_commits: list[Patch_Commit] = []
+        primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,self._hash_patch_commit_obj)
+        self._hash_patch_commits.append(primary_patch_commit)
+
+        ### Vuln Commit Info ###
+        ### Objective of project ###
+        ############################################################################
+        self._hash_vuln_commits: list[Vuln_Commit] = []
     
     @property
     def path_selected_repo(self) -> str:
