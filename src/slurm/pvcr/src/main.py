@@ -35,12 +35,14 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
             ## maybe CVE inherits from a Vulnerability class!
 
             # Create a new instance of the cve class
-            cve_vuln: cve_config.CVE = cve_config.CVE()
+            cve_vuln: cve_config.CVE = cve_config.CVE(json_cve_id,partial_repo_path,hash_patch_commit)
 
             # Set the id field of cve_vuln
             cve_vuln.cve_id = json_cve_id
 
-            processed_cve_id.add(cve)
+            processed_cve_id.add(json_cve_id)
+        else: # what happens if the cve id is already in the set
+            # don't create a new cve object, rather add the hash patch commit to the list from the patch commits class
 
 
 

@@ -317,7 +317,7 @@ class CVE():
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
-    def __init__(self,partial_repo_path: str = "",hash_patch_commit:str = "",cve_id:str = ""):
+    def __init__(self,cve_id: str, partial_repo_path: str,hash_patch_commit:str):
         """"""
         
         # I need to get the full repo path from the partial repo path 
