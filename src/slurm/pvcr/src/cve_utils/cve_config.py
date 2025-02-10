@@ -21,6 +21,7 @@ class SCRIPT_CONFIG:
     def __init__(self):
         # Call the method to load environment variables
         self._initialize_environment_variables()
+        self._ensure_immutable()
 
     @classmethod
     def _initialize_environment_variables(cls):
@@ -82,12 +83,12 @@ class Vulnerability_Classifier:
 # want a bunch of classes flying around.
 
 
+# I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
+
 class CVE(Vulnerability_Classifier):
     def __init__(self,path_selected_repo: str = "",hash_patch_commit:str = ""):
         """"""
         
-        
-
         ### Repo Info ###
         ############################################################################
         self._path_selected_repo: str = path_selected_repo
@@ -101,15 +102,6 @@ class CVE(Vulnerability_Classifier):
         self._changes_by_patch_commit: dict = {}
        
         
-
-
-
-        
-        
-        
-        
-
-
         ### Vuln Commit Info ###
         ############################################################################
         self._hash_vuln_commits: list[str] = []  ### This is the object of this entire project ###
