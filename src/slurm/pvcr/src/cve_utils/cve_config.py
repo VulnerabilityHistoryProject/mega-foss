@@ -1,9 +1,9 @@
 import logging
 import os
 import sys
+from typing import Any
 
 import src.error_handling.handle_errors as handle
-
 
 
 class SCRIPT_CONFIG:
@@ -92,6 +92,32 @@ class Patch_Commit:
         self._mod_files_by_patch: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
         self._changes_by_patch_commit: dict = {}
 
+
+    
+    @property
+    def hash_patch_commits(self) -> str:
+        return self._hash_patch_commits
+
+    @hash_patch_commits.setter
+    def hash_patch_commits(self, value: str) -> None:
+        self._hash_patch_commits.append(value)
+
+    @property
+    def mod_files_by_patch(self) -> set:
+        return self._mod_files_by_patch
+
+    @mod_files_by_patch.setter
+    def mod_files_by_patch(self, value: set) -> None:
+        self._mod_files_by_patch.append(value)
+
+    @property
+    def changes_by_patch_commit(self) -> dict:
+        return self._changes_by_patch_commit
+
+    @changes_by_patch_commit.setter
+    def changes_by_patch_commit(self, key: Any, value: dict) -> None:
+        handle.safe_dict_set(self.changes_by_patch_commit,key,value)
+
 class Vuln_Commit(Patch_Commit):
     def __init__(self):
         super().__init__() # Calls the next class in MRO
@@ -151,13 +177,7 @@ class CVE(Vulnerability_Classifier):
 
    
 
-    @property
-    def hash_patch_commit(self) -> str:
-        return self._hash_patch_commit
-
-    @hash_patch_commit.setter
-    def hash_patch_commit(self, value: str) -> None:
-        self._hash_patch_commit = value
+    
 
     @property
     def hash_vuln_commit(self) -> str:
@@ -167,13 +187,7 @@ class CVE(Vulnerability_Classifier):
     def hash_vuln_commit(self, value: str) -> None:
         self._hash_vuln_commit.append(value)
 
-    @property
-    def mod_files_by_patch(self) -> set:
-        return self._mod_files_by_patch
-
-    @mod_files_by_patch.setter
-    def mod_files_by_patch(self, value: set) -> None:
-        self._mod_files_by_patch = value
+    
 
     @property
     def mod_files_by_vuln_commit(self) -> set:
@@ -183,13 +197,7 @@ class CVE(Vulnerability_Classifier):
     def mod_files_by_vuln_commit(self, value: set) -> None:
         self._mod_files_by_vuln_commit = value
 
-    @property
-    def changes_patch_commit(self) -> dict:
-        return self._changes_patch_commit
-
-    @changes_patch_commit.setter
-    def changes_patch_commit(self, value: dict) -> None:
-        self._changes_patch_commit = value
+    
 
     @property
     def changes_vuln_commit(self) -> dict:
