@@ -71,7 +71,7 @@ class Vulnerability_Classifier:
         self._changes_functions: bool = False
         self._changes_files: bool = False
         
-        self._is_prev_commit_to_patch: dict[bool,str] = {False,""} # change to True, 'commit hash' or directly prev commit
+        self._prev_commit_to_patch: str = ""
         self._patch_partial_fix: bool = False
 
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
@@ -80,13 +80,115 @@ class Vulnerability_Classifier:
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         # The field above is going to be interesting to try and track... tuff problem
 
-    @classmethod
-    def get_prev_commit_to_patch():
+        
+
+    
+    def _get_prev_commit_to_patch(self) -> str:
         """
-        Use the szz utils file to write a function that does this
+        Use the szz utils file to write a function that does this.
+        This function should be called irrespective of the outcome of the actual bug inducing commit algo!
         """
         pass
-        
+
+    def _get_number_of_patch_commits_for_vuln(self) -> int:
+        """
+        Once the cve has been completely initialized in the child classes I can call this.
+
+        Returns:
+            int: _description_
+        """
+    
+    @property
+    def adds_code(self):
+        return self._adds_code
+
+    @adds_code.setter
+    def adds_code(self, value: bool):
+        self._adds_code = value
+
+    @property
+    def deletes_code(self):
+        return self._deletes_code
+
+    @deletes_code.setter
+    def deletes_code(self, value: bool):
+        self._deletes_code = value
+
+    @property
+    def refactors_code(self):
+        return self._refactors_code
+
+    @refactors_code.setter
+    def refactors_code(self, value: bool):
+        self._refactors_code = value
+
+    @property
+    def changes_lines(self):
+        return self._changes_lines
+
+    @changes_lines.setter
+    def changes_lines(self, value: bool):
+        self._changes_lines = value
+
+    @property
+    def changes_functions(self):
+        return self._changes_functions
+
+    @changes_functions.setter
+    def changes_functions(self, value: bool):
+        self._changes_functions = value
+
+    @property
+    def changes_files(self):
+        return self._changes_files
+
+    @changes_files.setter
+    def changes_files(self, value: bool):
+        self._changes_files = value
+
+    @property
+    def prev_commit_to_patch(self):
+        return self._prev_commit_to_patch
+
+    @prev_commit_to_patch.setter
+    def prev_commit_to_patch(self, value: str):
+        """
+        Use the szz utils file to write a function that does this.
+        This function should be called irrespective of the outcome of the actual bug inducing commit algo!
+        """
+        self._prev_commit_to_patch = value
+
+    @property
+    def patch_partial_fix(self):
+        return self._patch_partial_fix
+
+    @patch_partial_fix.setter
+    def patch_partial_fix(self, value: bool):
+        self._patch_partial_fix = value
+
+    @property
+    def number_of_patch_commits_for_vuln(self):
+        return self._number_of_patch_commits_for_vuln
+
+    @number_of_patch_commits_for_vuln.setter
+    def number_of_patch_commits_for_vuln(self, value: int):
+        """
+        Once the cve has been completely initialized in the child classes I can call this.
+
+        Returns:
+            int: _description_
+        """
+        self._number_of_patch_commits_for_vuln = value
+
+    @property
+    def number_of_vulns_fixed_by_patch(self):
+        return self._number_of_vulns_fixed_by_patch
+
+    @number_of_vulns_fixed_by_patch.setter
+    def number_of_vulns_fixed_by_patch(self, value: int):
+        self._number_of_vulns_fixed_by_patch = value
+
+
 class Patch_Commit:
     def __init__(self, hash_patch_commit:str = ""):
 
