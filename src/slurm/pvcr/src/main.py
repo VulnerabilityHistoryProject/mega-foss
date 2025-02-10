@@ -32,12 +32,12 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
 
         json_cve_id: str = handle.safe_dict_get(cve_entry,"cve_id")
         partial_repo_path: str = handle.safe_dict_get(cve_entry,"repo")
-        hash_patch_commit: str = handle.safe_dict_get(cve_entry,"commit")
+        patch_commit_hash: str = handle.safe_dict_get(cve_entry,"commit")
 
         if json_cve_id not in processed_cve:
 
             # Create a new instance of the cve class
-            cve_vuln: cve_config.CVE = cve_config.CVE(json_cve_id,partial_repo_path,hash_patch_commit)
+            cve_vuln: cve_config.CVE = cve_config.CVE(json_cve_id,partial_repo_path,patch_commit_hash)
             handle.safe_dict_set(processed_cve,json_cve_id,cve_vuln)
 
             return cve_vuln
@@ -45,8 +45,11 @@ def process_JSON_CVE(json_file_path: str) -> cve_config.CVE:
             # don't create a new cve object, rather add the hash patch commit to the list from the patch commits class
             # CVE class should have a list 
 
+            # Safely get the CVE class object from the dictionary
             cve_vuln = handle.safe_dict_get(processed_cve,json_cve_id)
-            cve_vuln.
+
+            # Add the patch commit hash to the list of patch commits inside of the CVE object
+            cve_vuln.add_new_patch_commit_to_CVE(patch_commit_hash)
 
             
 

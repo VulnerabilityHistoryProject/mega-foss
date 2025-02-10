@@ -32,13 +32,13 @@ class Patch_Commit_Classifier:
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         # The field above is going to be interesting to try and track... tuff problem
   
-class Patch_Commit(Commit):
+class Patch_Commit(Commit,Patch_Commit_Classifier):
     """
     All the data to capture from the Patch commits
     """
 
     ### I want each patch commit to have a classifier for that patch (this means a new instance of patch commit classifier)
-    def __init__(self, full_repo_path: str, hash_patch_commit_obj:Commit):
+    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit):
 
         super().__init__() # Calls the next class in MRO
 
@@ -74,7 +74,7 @@ class Vuln_Commit_Classifier:
     
    
 
-class Vuln_Commit(Vuln_Commit_Classifier):
+class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
     There can also be multiple vulns that correspond to a single patch commit
@@ -83,7 +83,7 @@ class Vuln_Commit(Vuln_Commit_Classifier):
     """
 
     ### I want each vulnerable commit to have a classifier for that commit!! ###
-    def __init__(self):
+    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit):
         super().__init__() # Calls the next class in MRO
 
         self._mod_files_by_vuln_commit: list[str] = []
@@ -136,21 +136,48 @@ class CVE():
 
         ### Patch Commit Info ###
         ############################################################################
-        self._hash_patch_commits: list[Patch_Commit] = []
+        self._patch_commit_objects: list[Patch_Commit] = []
 
-        hash_patch_commit_obj: Commit = next(Repository( # Only get the hash patch commit object
+        commit_hash_obj: Commit = next(Repository( # Only get the hash patch commit object
                                                                 self._full_repo_path,
                                                                 single = hash_patch_commit).traverse_commits())
 
-        self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,hash_patch_commit_obj)
+        self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
         self._patch_commit_objects.append(self._primary_patch_commit)
 
         ### Vuln Commit Info ###
         ### Objective of project ###
         ############################################################################
         self._vuln_commit_objects: list[Vuln_Commit] = []
-    
+
+
+    def create_patch_commit_obj(self,patch_commit_hash:str) -> Patch_Commit:
+        commit_obj: Commit = next(Repository( # Only get the hash patch commit object
+                                                                self._full_repo_path,
+                                                                single = patch_commit_hash).traverse_commits())
         
+        patch_commit_obj: Patch_Commit = Patch_Commit(self._full_repo_path,commit_obj)
+        
+        return patch_commit_obj
+    
+    def add_new_patch_commit_obj_to_CVE(self,patch_commit_obj:Patch_Commit)->None:
+        """
+        This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
+        Args:
+            patch_commit_hash (str): Commit hash that patches the cve
+        """
+        self._patch_commit_objects.append(patch_commit_obj)
+        
+    
+    def create_vuln_commit_obj(self,vuln_commit_hash:str) -> Vuln_Commit:
+        commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
+                                                                self._full_repo_path,
+                                                                single = vuln_commit_hash).traverse_commits())
+        
+        vuln_commit_obj: Vuln_Commit = Vuln_Commit(self._full_repo_path,commit_obj)
+        
+        return vuln_commit_obj
+
     @property
     def _cve_id(self) -> str:
         return self._cve_id
