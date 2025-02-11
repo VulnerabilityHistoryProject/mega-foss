@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from typing import Any,Generator, ClassVar
+from typing import Any,Generator, Optional
 
 from error_handling import handle_errors as handle
 from szz_utils import szz
@@ -165,19 +165,35 @@ class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commi
         # Maps vulnerabilities to a list of patch commits that fix them
         self.vuln_to_patches: dict = {}
 
-    def add_mapping(self, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
+        self._cve_mapping: dict[str, 
+                        list[
+                            dict[Patch_Commit, set[Vuln_Commit]],  # patch -> vuln mapping
+                            dict[Vuln_Commit, set[Patch_Commit]]   # vuln -> patch mapping
+                        ]]
+
+        
+    def add_mapping(self, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
         """Adds a bidirectional mapping between a patch commit and a vulnerability commit."""
         
         ## *** Be aware. Not using safe version of adding retrieving from dictionary
-        # Add patch -> vuln relationship
-        if patch not in self.patch_to_vulns:
-            self.patch_to_vulns[patch] = set()
-        self.patch_to_vulns[patch].add(vuln)
+        
+        if patch and vuln:
 
-        # Add vuln -> patch relationship
-        if vuln not in self.vuln_to_patches:
-            self.vuln_to_patches[vuln] = set()
-        self.vuln_to_patches[vuln].add(patch)
+            # Add patch -> vuln relationship
+            self.patch_to_vulns.setdefault(patch, set()).add(vuln)
+
+            # Add vuln -> patch relationship
+            self.vuln_to_patches.setdefault(vuln, set()).add(patch)
+
+        elif patch:# Add patch -> vuln relationship
+            self.patch_to_vulns.setdefault(patch, set())
+
+
+        elif vuln: # Add vuln -> patch relationship
+            self.vuln_to_patches.setdefault(vuln, set())
+
+        
+        
 
     def get_vulns_for_patch(self, patch: Patch_Commit) -> set:
         """Returns the vulnerabilities fixed by a given patch commit."""
@@ -226,6 +242,10 @@ class CVE(BaseModel):
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
+
+    ### Bi-Directional Map used to keep track of relationships of all CVE's ###
+    _patch_vuln_map: PatchVulnBiMap = PatchVulnBiMap()
+
     def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG) -> None:
         
         # I need to get the full repo path from the partial repo path 
@@ -253,19 +273,15 @@ class CVE(BaseModel):
 
         ### Patch Commit Info ###
         ############################################################################
-        ### Bi-Directional Map used to keep track of relationships ###
-        self._patch_vuln_map: PatchVulnBiMap = PatchVulnBiMap()
-        '''
-        CONTINUE HERE. Finish implementing the map in the CVE class.
         
-        '''
+        
 
         commit_hash_obj: Commit = next(Repository( # Only get the hash patch commit object
                                                                 self._full_repo_path,
                                                                 single = hash_patch_commit).traverse_commits())
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
-        self._patch_vuln_map.append(self._primary_patch_commit)
+        self._patch_vuln_map.add_mapping(self._primary_patch_commit) ### Just add the patch commit for now. Will add vuln later when found.
 
         ### Vuln Commit Info ###
         ### Objective of project ###
@@ -288,7 +304,7 @@ class CVE(BaseModel):
         Args:
             patch_commit_hash (str): Commit hash that patches the cve
         """
-        self._patch_vuln_map.append(patch_commit_obj)
+        
         
     
     def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
