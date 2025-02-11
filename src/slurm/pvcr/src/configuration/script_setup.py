@@ -1,6 +1,7 @@
 
 import sys
-import logging
+import logging 
+from error_handling import logger_config
 from error_handling import handle_errors as handle
 from typing import ClassVar
 from pydantic import BaseModel
@@ -36,13 +37,13 @@ class SCRIPT_CONFIG(BaseModel):
     Class methods should primarily be used here.
     """
     # Initialize the class-level logger and immutability flag
-    _basic_logger: ClassVar[logging.Logger] = logging.getLogger("basic_logger")
+    # _basic_logger: ClassVar[logging.Logger] = logging.getLogger("basic_logger")
     _robust_logger: ClassVar[logging.Logger] = None
     _variables_set: ClassVar[bool] = False
 
     # Class-level environment variable placeholders
     _ROOT_DIR: ClassVar[str] = None # directory that holds all of the open source projects
-    _PATCH_COMMITS_JSON: ClassVar[str] = None
+    _PATCH_COMMITS_JSON_FILE: ClassVar[str] = None
     _OUTPUT_DIR_JSON: ClassVar[str] = None
     _LOGGING_DIR: ClassVar[str] = None
 
@@ -56,9 +57,9 @@ class SCRIPT_CONFIG(BaseModel):
         """
         Calls the external method to load and validate environment variables.
         """
-        variables_to_check = [
+        variables_to_check: list[str] = [
             "_ROOT_DIR", 
-            "_PATCH_COMMITS_JSON", 
+            "_PATCH_COMMITS_JSON_FILE", 
             "_OUTPUT_DIR_JSON", 
             "_LOGGING_DIR"
         ]
@@ -72,7 +73,7 @@ class SCRIPT_CONFIG(BaseModel):
     @classmethod
     def _initialize_robust_logging(cls)->None:
         ### Setup Robust Logging ###
-        cls._robust_logger = logging.getLogger("robust_logger")
+        cls._robust_logger = logger_config.setup_robust_logging()
 
      # Class-level getter for _ROOT_DIR
     @classmethod
@@ -87,20 +88,30 @@ class SCRIPT_CONFIG(BaseModel):
 
     # Class-level setter for _ROOT_DIR
     @classmethod
-    def set_ROOT_DIR(cls, value):
+    def set_ROOT_DIR(cls, value: str) -> None:
         cls._ROOT_DIR = value
 
-    # Class-level getter for PATCH_COMMITS_JSON
+    # Class-level getter for PATCH_COMMITS_JSON_FILE
     @classmethod
-    def get_PATCH_COMMITS_JSON(cls):
-        return cls._PATCH_COMMITS_JSON
+    def get_PATCH_COMMITS_JSON_FILE(cls) -> str:
+        return cls._PATCH_COMMITS_JSON_FILE
 
-    # Class-level setter for PATCH_COMMITS_JSON
+    # Class-level setter for PATCH_COMMITS_JSON_FILE
     @classmethod
-    def set_PATCH_COMMITS_JSON(cls, value):
-        cls._PATCH_COMMITS_JSON = value
+    def set_PATCH_COMMITS_JSON_FILE(cls, value: str) -> None:
+        cls._PATCH_COMMITS_JSON_FILE = value
+    '''
+    
+    '''
+    # Class-level getter for OUTPUT_DIR_JSON
+    @classmethod
+    def get_OUTPUT_DIR_JSON(cls) -> str:
+        return cls._OUTPUT_DIR_JSON
 
-    # Similarly, you can define other getter and setter methods for OUTPUT_DIR_JSON and LOGGING_DIR
+    # Class-level setter for OUTPUT_DIR_JSON
+    @classmethod
+    def set_OUTPUT_DIR_JSON(cls, value: str)-> None:
+        cls._OUTPUT_DIR_JSON = value
 
 
 

@@ -34,7 +34,7 @@ def setup_initial_logging() -> None:
     logger.info("Basic logging setup complete.")
 
 
-def setup_robust_logging(configs: setup.SCRIPT_CONFIG, log_directory: str) -> None:
+def setup_robust_logging(configs: setup.SCRIPT_CONFIG, log_directory: str) -> logging.Logger:
     """
     Set up logging to a file with rotation, using a specified directory.
     If no directory is provided, use the global PATH_LOG_OUTPUT_DIR.
@@ -49,7 +49,7 @@ def setup_robust_logging(configs: setup.SCRIPT_CONFIG, log_directory: str) -> No
     
     
     # Provide logging directory
-    log_directory = configs.LOGGING_DIR
+    log_directory = configs.get
     
     # If log directory is still not set, exit
     if not log_directory:

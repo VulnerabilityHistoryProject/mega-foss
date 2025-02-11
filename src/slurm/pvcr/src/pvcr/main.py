@@ -68,9 +68,14 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG) -> dict[s
 
 if __name__ == "__main__":
 
-    ### Singleton Config Instance ###
+    ### Setup Basic Logging ###
+    
 
+    ### Singleton Config Instance ###
+    CONFIG = setup.SCRIPT_CONFIG()
     ### Dependency Injection ### 
+    CVE_dict: dict[cve.CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)
+
 
     # Setup Basic logging cofiguration in case anything goes wrong during setup
     logger_config.setup_initial_logging()
