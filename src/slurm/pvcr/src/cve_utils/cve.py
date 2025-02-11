@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from typing import Any,Generator, Optional
+from typing import Any,Generator, Optional, ClassVar
 
 from error_handling import handle_errors as handle
 from szz_utils import szz
@@ -158,7 +158,10 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     
 
 class PatchVulnBiMap:
-    """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID."""
+    """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
+
+    There will only be one instance of this class. This will be a class level variable for the CVE class. It will collect all the processed CVEs
+    """
     
     def __init__(self):
         # Maps CVE ID to a list of two dictionaries:
@@ -238,7 +241,7 @@ class CVE(BaseModel):
     """
 
     ### Bi-Directional Map used to keep track of relationships of all CVE's ###
-    _patch_vuln_map: PatchVulnBiMap = PatchVulnBiMap()
+    _patch_vuln_map: ClassVar[PatchVulnBiMap] = PatchVulnBiMap()
 
     def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG) -> None:
         
@@ -275,7 +278,9 @@ class CVE(BaseModel):
                                                                 single = hash_patch_commit).traverse_commits())
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
-        self._patch_vuln_map.add_mapping(self._primary_patch_commit) ### Just add the patch commit for now. Will add vuln later when found.
+        
+        
+        
 
         ### Vuln Commit Info ###
         ### Objective of project ###
@@ -292,7 +297,8 @@ class CVE(BaseModel):
         
         return patch_commit_obj
     
-    def add_patch_commit_obj_to_CVE(self,patch_commit_obj:Patch_Commit)->None:
+    @classmethod
+    def add_patch_commit_obj_to_BiMap(self,patch_commit_obj:Patch_Commit)->None:
         """
         This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
         Args:
