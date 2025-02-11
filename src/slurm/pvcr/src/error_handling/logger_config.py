@@ -9,7 +9,7 @@ from configuration import script_setup as setup
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
 
-def setup_initial_logging() -> None:
+def setup_initial_logging() -> logging.Logger:
     """
     This function will be called inside of main before calling subsequent functions.
     """
@@ -32,6 +32,8 @@ def setup_initial_logging() -> None:
 
     # Example logging message
     logger.info("Basic logging setup complete.")
+
+    return logger
 
 
 def setup_robust_logging(configs: setup.SCRIPT_CONFIG, log_directory: str) -> logging.Logger:
@@ -85,3 +87,5 @@ def setup_robust_logging(configs: setup.SCRIPT_CONFIG, log_directory: str) -> lo
 
     # Confirm that logging has been set up successfully
     logger.info("File-based logging has been set up successfully.")
+
+    return logger

@@ -60,6 +60,8 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG) -> dict[s
             cve_vuln.add_patch_commit_obj_to_CVE(
                                                 cve_vuln.create_patch_commit_obj(patch_commit_hash))
     return processed_cves
+
+
 #### Next step ### 
 ### Figure out how to extend the functionality of the existing Commit, Repository, and Modified file
 ### classes from pydriller library!
@@ -81,16 +83,14 @@ def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:
 if __name__ == "__main__":
 
     ### Setup Basic Logging ###
-
+    basic_logger = logger_config.setup_initial_logging()
 
     ### Singleton Config Instance ###
-    CONFIG = setup.SCRIPT_CONFIG()
+    CONFIG = setup.SCRIPT_CONFIG(basic_logger)
+
     ### Dependency Injection ### 
     CVE_dict: dict[cve.CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)
-
-
-    # Setup Basic logging cofiguration in case anything goes wrong during setup
-    logger_config.setup_initial_logging()
+    
 
     # Find the modified files by patch commit
     #szz.find_modified_files()

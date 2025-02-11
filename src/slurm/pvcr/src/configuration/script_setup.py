@@ -47,8 +47,9 @@ class SCRIPT_CONFIG(BaseModel):
     _OUTPUT_DIR_JSON: ClassVar[str] = None
     _LOGGING_DIR: ClassVar[str] = None
 
-    def __init__(self)-> None:
+    def __init__(self, basic_logger:logging.Logger)-> None:
         # Call the method to load environment variables
+        self._basic_logger = basic_logger
         self._initialize_environment_variables()
         self._initialize_robust_logging()
 
@@ -70,12 +71,26 @@ class SCRIPT_CONFIG(BaseModel):
         # Set the flag indicating that the variables have been loaded
         cls._variables_set = True
 
+    # Class-Level getter for _basic_logger
+    @classmethod
+    def get_basic_logger(cls) -> logging.Logger:
+        return cls._basic_logger
+
+    # Class-level getter for _robust_logger
+    @classmethod
+    def get_robust_logger(cls) -> logging.Logger:
+        return cls._robust_logger
+
     @classmethod
     def _initialize_robust_logging(cls)->None:
         ### Setup Robust Logging ###
         cls._robust_logger = logger_config.setup_robust_logging()
 
-     # Class-level getter for _ROOT_DIR
+    
+
+    
+    
+    # Class-level getter for _ROOT_DIR
     @classmethod
     def get_ROOT_DIR(cls):
         """
