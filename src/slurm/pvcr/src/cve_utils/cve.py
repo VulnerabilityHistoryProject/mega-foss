@@ -7,6 +7,7 @@ from error_handling import handle_errors as handle
 from szz_utils import szz
 from configuration import script_setup as setup
 from pydriller import Repository, Commit
+from pydantic import BaseModel
 
 class Patch_Commit_Classifier:
     """
@@ -101,7 +102,7 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
 # I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
 
 
-class CVE():
+class CVE(BaseModel):
     """
     A CVE instance should contain everything. Vuln classifier, vuln commits, patch commits
     Args:

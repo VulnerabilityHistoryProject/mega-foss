@@ -70,7 +70,7 @@ def safe_dict_set(d: Dict[Any, Any], key: Any, value: Any) -> bool:
     
     return True
 
-def safe_dict_get(d: Dict[Any, Any], key: Any) -> tuple(Any,bool): # type: ignore
+def safe_dict_get(d: Dict[Any, Any], key: Any) -> tuple[Any,bool]: # type: ignore
     """
     Safely retrieves a value for a given key in a dictionary, with error handling.
     

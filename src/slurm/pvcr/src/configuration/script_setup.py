@@ -3,7 +3,7 @@ import sys
 import logging
 from error_handling import handle_errors as handle
 from typing import ClassVar
-
+from pydantic import BaseModel
 
 
 
@@ -30,15 +30,15 @@ from typing import ClassVar
 ## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
 
 
-class SCRIPT_CONFIG:
+class SCRIPT_CONFIG(BaseModel):
     """
     There will only be 1 instance of the SCRIPT_CONFIG class at any one time.
     Class methods should primarily be used here.
     """
     # Initialize the class-level logger and immutability flag
-    basic_logger: ClassVar = logging.getLogger("basic_logger")
-    robust_logger: ClassVar = None
-    _variables_set: ClassVar = False
+    basic_logger: logging.Logger = logging.getLogger("basic_logger")
+    robust_logger: logging.Logger = None
+    _variables_set: bool = False
 
     # Class-level environment variable placeholders
     GIT_ALL_REPOS_DIR: ClassVar = None
@@ -71,16 +71,6 @@ class SCRIPT_CONFIG:
         cls._variables_set = True
 
     @classmethod
-    def _ensure_immutable(cls, variable_name: str) -> None:
-        """
-        Helper method to enforce immutability once a variable has been set.
-        Logs the error and exits the program if the variable has already been set.
-        """
-        if getattr(cls, variable_name, None) is not None:
-            cls.basic_logger.error(f"Attempt to modify {variable_name} after it has been set.")
-            sys.exit(1)
-    
-    @classmethod
     def _initialize_robust_logging(cls)->None:
         ### Setup Robust Logging ###
         cls.robust_logger = logging.getLogger("robust_logger")
@@ -109,9 +99,9 @@ class SCRIPT_CONFIG:
 
     # Similarly, you can define other getter and setter methods for OUTPUT_DIR_JSON and LOGGING_DIR
 
-def get_full_repo_path(partial_repo_path:str) -> str:
+    def get_full_repo_path(partial_repo_path:str) -> str:
 
-    return ""
+        return ""
 
 
 if __name__ == "__main__":
