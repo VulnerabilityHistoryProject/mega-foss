@@ -150,13 +150,61 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     def __init__(self, full_repo_path: str, vuln_commit_obj: Commit, patch_commit_obj: Patch_Commit) -> None:
         super().__init__() # Calls the next class in MRO
         
-        self._vuln_commit_hash_obj: Commit = vuln_commit_hash_obj
+        self._vuln_commit_hash_obj: Commit = vuln_commit_obj
         self._full_repo_path: str = full_repo_path
-        self._patch_commit_hash_objs: list[Patch_Commit] = patch_commit_hash_obj
+        self._patch_commit_hash_objs: list[Patch_Commit] = patch_commit_obj
         self._mod_files_by_vuln_commit: list[str] = []
         self._changes_vuln_commit: dict = {}
     
-    # How do I like vuln commit objects and patch commit objects?
+    
+
+class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commits and vice-versa
+    def __init__(self):
+        # Maps patch commits to a list of vulnerabilities they fix
+        self.patch_to_vulns = {}
+        # Maps vulnerabilities to a list of patch commits that fix them
+        self.vuln_to_patches = {}
+
+    def add_mapping(self, patch: str, vuln: str):
+        """Adds a bidirectional mapping between a patch commit and a vulnerability commit."""
+        
+        # Add patch -> vuln relationship
+        if patch not in self.patch_to_vulns:
+            self.patch_to_vulns[patch] = set()
+        self.patch_to_vulns[patch].add(vuln)
+
+        # Add vuln -> patch relationship
+        if vuln not in self.vuln_to_patches:
+            self.vuln_to_patches[vuln] = set()
+        self.vuln_to_patches[vuln].add(patch)
+
+    def get_vulns_for_patch(self, patch: str) -> set:
+        """Returns the vulnerabilities fixed by a given patch commit."""
+        return self.patch_to_vulns.get(patch, set())
+
+    def get_patches_for_vuln(self, vuln: str) -> set:
+        """Returns the patch commits that fix a given vulnerability commit."""
+        return self.vuln_to_patches.get(vuln, set())
+
+    def remove_mapping(self, patch: str, vuln: str):
+        """Removes a specific patch-vulnerability relationship."""
+        if patch in self.patch_to_vulns:
+            self.patch_to_vulns[patch].discard(vuln)    
+            if not self.patch_to_vulns[patch]:  # Remove empty entries
+                del self.patch_to_vulns[patch]
+
+        if vuln in self.vuln_to_patches:
+            self.vuln_to_patches[vuln].discard(patch)
+            if not self.vuln_to_patches[vuln]:  # Remove empty entries
+                del self.vuln_to_patches[vuln]
+
+    def get_all_mappings(self):
+        """Returns the full bidirectional mapping as a dictionary."""
+        return {
+            "patch_to_vulns": self.patch_to_vulns,
+            "vuln_to_patches": self.vuln_to_patches
+        }
+
     
 class CVE(BaseModel):
     """
