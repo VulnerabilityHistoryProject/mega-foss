@@ -1,11 +1,11 @@
 import logging
 import os
 import sys
-from typing import Any,Generator
+from typing import Any,Generator, ClassVar
 
-import src.error_handling.handle_errors as handle
-import src.szz_utils.szz as szz
-import src.configuration.script_setup as setup
+from error_handling import handle_errors as handle
+from szz_utils import szz
+from configuration import script_setup as setup
 
 from pydriller import Repository, Commit, ModifiedFile
 
@@ -13,7 +13,7 @@ class Patch_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the patch commit??
     """
-    def __init__(self):
+    def __init__(self) -> None:
 
         super().__init__() # Calls the next class in MRO
         ### TO-DO ###
@@ -38,7 +38,7 @@ class Patch_Commit(Commit,Patch_Commit_Classifier):
     """
 
     ### I want each patch commit to have a classifier for that patch (this means a new instance of patch commit classifier)
-    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit):
+    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
 
@@ -52,7 +52,7 @@ class Vuln_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the 
     """
-    def __init__(self):
+    def __init__(self) -> None:
 
         super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""
@@ -83,7 +83,7 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     """
 
     ### I want each vulnerable commit to have a classifier for that commit!! ###
-    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit):
+    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit) -> None:
         super().__init__() # Calls the next class in MRO
 
         self._mod_files_by_vuln_commit: list[str] = []
@@ -109,7 +109,7 @@ class CVE():
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
-    def __init__(self,cve_id: str, partial_repo_path: str,hash_patch_commit:str):
+    def __init__(self,cve_id: str, partial_repo_path: str,hash_patch_commit:str) -> None:
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -205,6 +205,10 @@ class CVE():
     @property
     def _commits_up_to_patch(self) -> Generator:
         return self._commits_up_to_patch
+    
+    @_commits_up_to_patch.setter
+    def _commits_up_to_patch(self,value:Generator) -> None:
+        self._commits_up_to_patch = value
     
     @property
     def _primary_patch_commit(self) -> Commit:

@@ -8,7 +8,8 @@ from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
 from dotenv import load_dotenv
 
-import src.cve_utils.cve as config
+from cve_utils import cve
+from configuration import script_setup as setup
 
 logger = logging.getLogger(__name__)
 
@@ -177,7 +178,7 @@ def fetch_commmit_obj(selected_git_repo_obj: Git, patch_commit_hash: str) -> Com
 
 
 
-def safe_get_env_vars(cls: config.SCRIPT_CONFIG, variables_to_check: list[str]):
+def safe_get_env_vars(cls: setup.SCRIPT_CONFIG, variables_to_check: list[str]):
     """
     General function to handle loading and checking of environment variables.
     

@@ -3,7 +3,7 @@ import os
 import sys
 import logging
 
-import src.cve_utils.cve as config
+from cve_utils import cve
 
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
