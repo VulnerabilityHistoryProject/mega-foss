@@ -56,7 +56,7 @@ class Patch_Commit():
 
         super().__init__() # Calls the next class in MRO
 
-        self._fulle_repo_path: str = full_repo_path
+        self._full_repo_path: str = full_repo_path
         self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
         self._mod_files_by_patch_commit: list[ModifiedFile] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
         self._changes_by_patch_commit: dict = {}
@@ -147,27 +147,17 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     """
 
     ### I want each vulnerable commit to have a classifier for that commit!! ###
-    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit) -> None:
+    def __init__(self, full_repo_path: str, vuln_commit_obj: Commit, patch_commit_obj: Patch_Commit) -> None:
         super().__init__() # Calls the next class in MRO
-
+        
+        self._vuln_commit_hash_obj: Commit = vuln_commit_hash_obj
         self._full_repo_path: str = full_repo_path
-        self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
+        self._patch_commit_hash_objs: list[Patch_Commit] = patch_commit_hash_obj
         self._mod_files_by_vuln_commit: list[str] = []
         self._changes_vuln_commit: dict = {}
     
+    # How do I like vuln commit objects and patch commit objects?
     
-    
-
-# patch commit class
-# vuln commit class
-# CVE / vulnerability class...
-# I guess. When I iterate through the json, I want to just instantiate one class. I don't
-# want a bunch of classes flying around.
-
-
-# I want a CVE to have, a vuln classifier, a patch commit class, and a vuln commit class
-
-
 class CVE(BaseModel):
     """
     A CVE instance should contain everything. Vuln classifier, vuln commits, patch commits
@@ -186,7 +176,7 @@ class CVE(BaseModel):
 
         ### CVE Info ###
         ############################################################################
-        self._cve_id:str = cve_id
+        self._cve_id: str = cve_id
 
         ### Repo Info ###
         ############################################################################
@@ -202,14 +192,15 @@ class CVE(BaseModel):
 
         ### Patch Commit Info ###
         ############################################################################
-        self._patch_commit_objects: list[Patch_Commit] = []
+        ### key 1 = cve_id, value 1: dict --> key 2 = patch commit obj, value 2: list of potential vuln inducing commits
+        self._patch_vuln_map: dict[str,dict[Patch_Commit,list[Vuln_Commit]]]
 
         commit_hash_obj: Commit = next(Repository( # Only get the hash patch commit object
                                                                 self._full_repo_path,
                                                                 single = hash_patch_commit).traverse_commits())
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
-        self._patch_commit_objects.append(self._primary_patch_commit)
+        self._patch_vuln_map.append(self._primary_patch_commit)
 
         ### Vuln Commit Info ###
         ### Objective of project ###
@@ -232,15 +223,15 @@ class CVE(BaseModel):
         Args:
             patch_commit_hash (str): Commit hash that patches the cve
         """
-        self._patch_commit_objects.append(patch_commit_obj)
+        self._patch_vuln_map.append(patch_commit_obj)
         
     
-    def create_vuln_commit_obj(self,vuln_commit_hash:str) -> Vuln_Commit:
+    def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
         commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
                                                                 self._full_repo_path,
                                                                 single = vuln_commit_hash).traverse_commits())
         
-        vuln_commit_obj: Vuln_Commit = Vuln_Commit(self._full_repo_path,commit_obj)
+        vuln_commit_obj: Vuln_Commit = Vuln_Commit(self._full_repo_path,vuln_commit_obj=commit_obj,)
         
         return vuln_commit_obj
     
@@ -318,12 +309,12 @@ class CVE(BaseModel):
         self._primary_patch_commit = value
     
     @property
-    def _patch_commit_objects(self) -> list[Patch_Commit]:
-        return self._patch_commit_objects
+    def _patch_vuln_map(self) -> list[Patch_Commit]:
+        return self._patch_vuln_map
 
-    @_patch_commit_objects.setter
-    def _patch_commit_objects(self, value: Patch_Commit) -> None:
-        self._patch_commit_objects.append(value)
+    @_patch_vuln_map.setter
+    def _patch_vuln_map(self, value: Patch_Commit) -> None:
+        self._patch_vuln_map.append(value)
 
     @property
     def _vuln_commit_objects(self) -> list[Patch_Commit]:
