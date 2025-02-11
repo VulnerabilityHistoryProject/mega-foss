@@ -36,32 +36,31 @@ class SCRIPT_CONFIG(BaseModel):
     Class methods should primarily be used here.
     """
     # Initialize the class-level logger and immutability flag
-    basic_logger: logging.Logger = logging.getLogger("basic_logger")
-    robust_logger: logging.Logger = None
-    _variables_set: bool = False
+    _basic_logger: ClassVar[logging.Logger] = logging.getLogger("basic_logger")
+    _robust_logger: ClassVar[logging.Logger] = None
+    _variables_set: ClassVar[bool] = False
 
     # Class-level environment variable placeholders
-    GIT_ALL_REPOS_DIR: ClassVar = None
-    PATCH_COMMITS_JSON: ClassVar = None
-    OUTPUT_DIR_JSON: ClassVar = None
-    LOGGING_DIR: ClassVar = None
+    _ROOT_DIR: ClassVar[str] = None # directory that holds all of the open source projects
+    _PATCH_COMMITS_JSON: ClassVar[str] = None
+    _OUTPUT_DIR_JSON: ClassVar[str] = None
+    _LOGGING_DIR: ClassVar[str] = None
 
-    def __init__(self):
+    def __init__(self)-> None:
         # Call the method to load environment variables
         self._initialize_environment_variables()
-        self._ensure_immutable()
         self._initialize_robust_logging()
 
     @classmethod
-    def _initialize_environment_variables(cls):
+    def _initialize_environment_variables(cls) -> None:
         """
         Calls the external method to load and validate environment variables.
         """
         variables_to_check = [
-            "GIT_ALL_REPOS_DIR", 
-            "PATCH_COMMITS_JSON", 
-            "OUTPUT_DIR_JSON", 
-            "LOGGING_DIR"
+            "_ROOT_DIR", 
+            "_PATCH_COMMITS_JSON", 
+            "_OUTPUT_DIR_JSON", 
+            "_LOGGING_DIR"
         ]
         
         # Call the function from the other file to load the environment variables
@@ -73,18 +72,23 @@ class SCRIPT_CONFIG(BaseModel):
     @classmethod
     def _initialize_robust_logging(cls)->None:
         ### Setup Robust Logging ###
-        cls.robust_logger = logging.getLogger("robust_logger")
+        cls._robust_logger = logging.getLogger("robust_logger")
 
-     # Class-level getter for GIT_ALL_REPOS_DIR
+     # Class-level getter for _ROOT_DIR
     @classmethod
-    def get_GIT_ALL_REPOS_DIR(cls):
-        return cls._GIT_ALL_REPOS_DIR
+    def get_ROOT_DIR(cls):
+        """
+        Get the root 
 
-    # Class-level setter for GIT_ALL_REPOS_DIR
+        Returns:
+            _type_: _description_
+        """
+        return cls._ROOT_DIR
+
+    # Class-level setter for _ROOT_DIR
     @classmethod
-    def set_GIT_ALL_REPOS_DIR(cls, value):
-        cls._ensure_immutable("_GIT_ALL_REPOS_DIR")
-        cls._GIT_ALL_REPOS_DIR = value
+    def set_ROOT_DIR(cls, value):
+        cls._ROOT_DIR = value
 
     # Class-level getter for PATCH_COMMITS_JSON
     @classmethod
@@ -94,14 +98,10 @@ class SCRIPT_CONFIG(BaseModel):
     # Class-level setter for PATCH_COMMITS_JSON
     @classmethod
     def set_PATCH_COMMITS_JSON(cls, value):
-        cls._ensure_immutable("_PATCH_COMMITS_JSON")
         cls._PATCH_COMMITS_JSON = value
 
     # Similarly, you can define other getter and setter methods for OUTPUT_DIR_JSON and LOGGING_DIR
 
-    def get_full_repo_path(partial_repo_path:str) -> str:
-
-        return ""
 
 
 if __name__ == "__main__":

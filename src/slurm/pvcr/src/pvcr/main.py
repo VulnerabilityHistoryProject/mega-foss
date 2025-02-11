@@ -14,6 +14,14 @@ from typing import Any,Generator
 basic_logger = logging.getLogger("basic_logger")
 robust_logger = logging.getLogger("robust_logging")
 
+
+def init_configuration() -> None:
+    """
+    Get the full ROOT directory
+
+    """
+    pass
+
 def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, None]:
     """Generator that yields each entry from a JSON list one by one."""
     with open(json_file_path, "r", encoding="utf-8") as f:
@@ -33,6 +41,7 @@ def process_JSON_CVE(json_file_path: str) -> dict[str,cve.CVE]:
         json_cve_id: str = handle.safe_dict_get(cve_entry,"cve_id")
         partial_repo_path: str = handle.safe_dict_get(cve_entry,"repo")
         patch_commit_hash: str = handle.safe_dict_get(cve_entry,"commit")
+
 
         if json_cve_id not in processed_cves:
 

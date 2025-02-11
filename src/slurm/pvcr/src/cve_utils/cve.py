@@ -109,7 +109,7 @@ class CVE(BaseModel):
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
-    def __init__(self,cve_id: str, partial_repo_path: str,hash_patch_commit:str) -> None:
+    def __init__(self,cve_id: str, partial_repo_path: str,full_repo_path: str, hash_patch_commit:str) -> None:
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -126,7 +126,7 @@ class CVE(BaseModel):
         ############################################################################
         
         self._partial_repo_path: str = partial_repo_path
-        self._full_repo_path: str = setup.get_full_repo_path(self._partial_repo_path)
+        self._full_repo_path: str = full_repo_path
 
         
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
