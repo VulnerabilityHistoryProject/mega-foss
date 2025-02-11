@@ -189,9 +189,6 @@ class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commi
         if exists: 
             return vulns
         
-        
-        
-
     def get_patches_for_vuln(self, vuln: Vuln_Commit) -> set:
         """Returns the patch commits that fix a given vulnerability commit."""
         vulns: set
@@ -202,7 +199,7 @@ class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commi
         if exists: 
             return vulns
 
-    def remove_mapping(self, patch: str, vuln: str):
+    def remove_mapping(self, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
         """Removes a specific patch-vulnerability relationship."""
         if patch in self.patch_to_vulns:
             self.patch_to_vulns[patch].discard(vuln)    
@@ -256,8 +253,12 @@ class CVE(BaseModel):
 
         ### Patch Commit Info ###
         ############################################################################
-        ### key 1 = cve_id, value 1: dict --> key 2 = patch commit obj, value 2: list of potential vuln inducing commits
-        self._patch_vuln_map: dict[str,dict[Patch_Commit,list[Vuln_Commit]]]
+        ### Bi-Directional Map used to keep track of relationships ###
+        self._patch_vuln_map: PatchVulnBiMap = PatchVulnBiMap()
+        '''
+        CONTINUE HERE. Finish implementing the map in the CVE class.
+        
+        '''
 
         commit_hash_obj: Commit = next(Repository( # Only get the hash patch commit object
                                                                 self._full_repo_path,
