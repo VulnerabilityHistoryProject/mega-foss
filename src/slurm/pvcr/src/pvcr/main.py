@@ -64,12 +64,24 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG) -> dict[s
 ### Figure out how to extend the functionality of the existing Commit, Repository, and Modified file
 ### classes from pydriller library!
 
+def export_cve_objects_as_json(processed_cves: dict[str,cve.CVE]) -> None:
+    pass
 
+def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:
+    """
+    Pickle cve objects and store them in the data_sources/output_data/cve_pickle_objets directory
+
+    Caution: For instance, if the class depends on a function from a different module, that module should be imported before unpickling.
+
+    Args:
+        processed_cves (dict[str,cve.CVE]): _description_
+    """
+    pass
 
 if __name__ == "__main__":
 
     ### Setup Basic Logging ###
-    
+
 
     ### Singleton Config Instance ###
     CONFIG = setup.SCRIPT_CONFIG()
