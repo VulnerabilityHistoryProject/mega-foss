@@ -26,7 +26,7 @@ class Patch_Commit_Classifier(BaseModel):
         self._patch_partial_fix: bool = False
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         
-
+        ### Complexity ### 
         self._dmm_unit_size: float = None
         self._dmm_unit_complexity: float = None
         self._dmm_unit_interfacing: float = None
@@ -44,8 +44,6 @@ class Patch_Commit_Classifier(BaseModel):
         self._number_of_vulns_fixed_by_patch: int = 1
         
         
-         ### Complexity ### 
-        
         self._dmm_unit_size = patch_commit_hash_obj.dmm_unit_size
         self._dmm_unit_complexity = patch_commit_hash_obj.dmm_unit_complexity
         self._dmm_unit_interfacing = patch_commit_hash_obj.dmm_unit_interfacing
@@ -54,8 +52,6 @@ class Patch_Commit():
     """
     All the data to capture from the Patch commits
     """
-
-    ### I want each patch commit to have a classifier for that patch (this means a new instance of patch commit classifier)
     def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
@@ -72,11 +68,6 @@ class Patch_Commit():
 
         ### Changes Made By Patch Commit ###
         self._mod_files_by_patch_commit.extend(patch_commit_hash_obj.modified_files) 
-        
-
-       
-
-
         
     def get_classifier_info(self) -> dict:
         """
@@ -121,7 +112,32 @@ class Vuln_Commit_Classifier:
         self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
 
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
-  
+        
+        ### Complexity ### 
+        self._dmm_unit_size: float = None
+        self._dmm_unit_complexity: float = None
+        self._dmm_unit_interfacing: float = None
+
+
+
+    def classify_vuln_commit(self, vuln_commit_hash_obj: Commit) -> None:
+        # Update the fields based on the vuln commit analysis (simplified here)
+        self._adds_code = vuln_commit_hash_obj.insertions > 0
+        self._deletes_code = vuln_commit_hash_obj.deletions > 0
+        self._refactors_code: bool = False
+        
+        self._changes_lines = None
+        self._changes_functions: bool = False
+        self._changes_files = vuln_commit_hash_obj.files > 0
+
+        self._patch_partial_fix: bool = False
+        self._number_of_patch_commits_for_vuln = 1 ### IF this wasn't 1, this would be a unfixed vulnerability
+        
+        self._dmm_unit_size = vuln_commit_hash_obj.dmm_unit_size
+        self._dmm_unit_complexity = vuln_commit_hash_obj.dmm_unit_complexity
+        self._dmm_unit_interfacing = vuln_commit_hash_obj.dmm_unit_interfacing
+
+
 class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
@@ -240,7 +256,7 @@ class CVE(BaseModel):
         """
         pass
     
-    def compare_patch_and_vuln():
+    def compare_patch_and_vuln_modifications():
         """
         Previously, the issue has been: How do you prove that you found the vulnerability with a specific
         percentage of accuracy. 
@@ -254,9 +270,12 @@ class CVE(BaseModel):
         Ex: 
         - modified files: patch commit could be doing more than just fixing the vuln. But if some of the vuln modified files are in 
         the list of modified files by the patch commit, then we're cooking! 
+
+        - basically compare all of the fields present in the Commit and Vuln classifiers contextually.
         """
         pass
-
+    def compaure_patch_and_vuln_complexity():
+        pass
 
     @property
     def _cve_id(self) -> str:
