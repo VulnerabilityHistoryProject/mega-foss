@@ -100,9 +100,7 @@ class SCRIPT_CONFIG(BaseModel):
     @classmethod
     def set_PATCH_COMMITS_JSON_FILE(cls, value: str) -> None:
         cls._PATCH_COMMITS_JSON_FILE = value
-    '''
     
-    '''
     # Class-level getter for OUTPUT_DIR_JSON
     @classmethod
     def get_OUTPUT_DIR_JSON(cls) -> str:
@@ -112,6 +110,18 @@ class SCRIPT_CONFIG(BaseModel):
     @classmethod
     def set_OUTPUT_DIR_JSON(cls, value: str)-> None:
         cls._OUTPUT_DIR_JSON = value
+    '''
+    
+    '''
+    # Class-level getter for LOGGING_DIR
+    @classmethod
+    def get_LOGGING_DIR(cls) -> str:
+        return cls._LOGGING_DIR
+
+    # Class-level setter for LOGGING_DIR
+    @classmethod
+    def set_LOGGING_DIR(cls, value: str)-> None:
+        cls._LOGGING_DIR = value
 
 
 
