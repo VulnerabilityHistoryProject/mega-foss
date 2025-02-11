@@ -1,7 +1,7 @@
 
 import sys
 import logging
-import error_handling as handle
+from error_handling import handle_errors as handle
 
 
 

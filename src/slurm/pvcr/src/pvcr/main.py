@@ -1,9 +1,9 @@
 
-import src.error_handling.logger_config as logger_config
-import src.configuration.script_setup as script_setup
-import src.cve_utils.cve as cve
-import src.szz_utils.szz as szz
-import src.error_handling.handle_errors as handle
+from error_handling import logger_config
+from configuration import script_setup
+from cve_utils import cve
+from szz_utils import szz
+from error_handling import handle_errors as handle
 
 
 import logging
