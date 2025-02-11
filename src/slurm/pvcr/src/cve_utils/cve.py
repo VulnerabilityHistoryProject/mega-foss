@@ -156,83 +156,77 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
         self._mod_files_by_vuln_commit: list[str] = []
         self._changes_vuln_commit: dict = {}
     
+
+class PatchVulnBiMap:
+    """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID."""
     
-
-class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commits and vice-versa
     def __init__(self):
-        # Maps patch commits to a list of vulnerabilities they fix
-        self.patch_to_vulns: dict = {}
-        # Maps vulnerabilities to a list of patch commits that fix them
-        self.vuln_to_patches: dict = {}
-
+        # Maps CVE ID to a list of two dictionaries:
+        # [0] = patch_to_vulns (maps patch commits to vulnerabilities they fix)
+        # [1] = vuln_to_patches (maps vulnerabilities to patch commits that fix them)
         self._cve_mapping: dict[str, 
-                        list[
-                            dict[Patch_Commit, set[Vuln_Commit]],  # patch -> vuln mapping
-                            dict[Vuln_Commit, set[Patch_Commit]]   # vuln -> patch mapping
-                        ]]
+                               list[
+                                   dict[Patch_Commit, set[Vuln_Commit]],  # patch -> vuln mapping
+                                   dict[Vuln_Commit, set[Patch_Commit]]   # vuln -> patch mapping
+                               ]] = {}
 
+    def add_mapping(self, cve_id: str, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
+        """Adds a bidirectional mapping between a patch commit and a vulnerability commit for a given CVE ID."""
         
-    def add_mapping(self, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
-        """Adds a bidirectional mapping between a patch commit and a vulnerability commit."""
-        
-        ## *** Be aware. Not using safe version of adding retrieving from dictionary
-        
+        # Initialize the mapping if the CVE ID is not yet present
+        if cve_id not in self._cve_mapping:
+            self._cve_mapping[cve_id] = [
+                {Patch_Commit: set[Vuln_Commit]},  # patch_to_vulns
+                {Vuln_Commit: set[Patch_Commit]}   # vuln_to_patches
+            ]
+
         if patch and vuln:
+            # Add patch -> vuln relationship for the CVE
+            self._cve_mapping[cve_id][0].setdefault(patch, set()).add(vuln)
 
-            # Add patch -> vuln relationship
-            self.patch_to_vulns.setdefault(patch, set()).add(vuln)
+            # Add vuln -> patch relationship for the CVE
+            self._cve_mapping[cve_id][1].setdefault(vuln, set()).add(patch)
 
-            # Add vuln -> patch relationship
-            self.vuln_to_patches.setdefault(vuln, set()).add(patch)
+        elif patch:
+            # Add patch -> vuln relationship for the CVE
+            self._cve_mapping[cve_id][0].setdefault(patch, set())
 
-        elif patch:# Add patch -> vuln relationship
-            self.patch_to_vulns.setdefault(patch, set())
+        elif vuln:
+            # Add vuln -> patch relationship for the CVE
+            self._cve_mapping[cve_id][1].setdefault(vuln, set())
 
-
-        elif vuln: # Add vuln -> patch relationship
-            self.vuln_to_patches.setdefault(vuln, set())
-
-        
-        
-
-    def get_vulns_for_patch(self, patch: Patch_Commit) -> set:
-        """Returns the vulnerabilities fixed by a given patch commit."""
-        vulns: set
-        exists: bool
-
-        vulns, exists = handle.safe_dict_get(self.patch_to_vulns,patch)
-
-        if exists: 
+    def get_vulns_for_patch(self, cve_id: str, patch: Patch_Commit) -> set:
+        """Returns the vulnerabilities fixed by a given patch commit for the specified CVE ID."""
+        if cve_id in self._cve_mapping:
+            vulns = self._cve_mapping[cve_id][0].get(patch, set())
             return vulns
-        
-    def get_patches_for_vuln(self, vuln: Vuln_Commit) -> set:
-        """Returns the patch commits that fix a given vulnerability commit."""
-        vulns: set
-        exists: bool
+        return set()
 
-        vulns, exists = handle.safe_dict_get(self.vuln_to_patches,vuln)
+    def get_patches_for_vuln(self, cve_id: str, vuln: Vuln_Commit) -> set:
+        """Returns the patch commits that fix a given vulnerability commit for the specified CVE ID."""
+        if cve_id in self._cve_mapping:
+            patches = self._cve_mapping[cve_id][1].get(vuln, set())
+            return patches
+        return set()
 
-        if exists: 
-            return vulns
+    def remove_mapping(self, cve_id: str, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
+        """Removes a specific patch-vulnerability relationship for the given CVE ID."""
+        if cve_id in self._cve_mapping:
+            # Remove patch -> vuln relationship
+            if patch in self._cve_mapping[cve_id][0]:
+                self._cve_mapping[cve_id][0][patch].discard(vuln)
+                if not self._cve_mapping[cve_id][0][patch]:  # Remove empty entries
+                    del self._cve_mapping[cve_id][0][patch]
 
-    def remove_mapping(self, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
-        """Removes a specific patch-vulnerability relationship."""
-        if patch in self.patch_to_vulns:
-            self.patch_to_vulns[patch].discard(vuln)    
-            if not self.patch_to_vulns[patch]:  # Remove empty entries
-                del self.patch_to_vulns[patch]
-
-        if vuln in self.vuln_to_patches:
-            self.vuln_to_patches[vuln].discard(patch)
-            if not self.vuln_to_patches[vuln]:  # Remove empty entries
-                del self.vuln_to_patches[vuln]
+            # Remove vuln -> patch relationship
+            if vuln in self._cve_mapping[cve_id][1]:
+                self._cve_mapping[cve_id][1][vuln].discard(patch)
+                if not self._cve_mapping[cve_id][1][vuln]:  # Remove empty entries
+                    del self._cve_mapping[cve_id][1][vuln]
 
     def get_all_mappings(self):
-        """Returns the full bidirectional mapping as a dictionary."""
-        return {
-            "patch_to_vulns": self.patch_to_vulns,
-            "vuln_to_patches": self.vuln_to_patches
-        }
+        """Returns the full bidirectional mapping for all CVE IDs."""
+        return self._cve_mapping
 
     
 class CVE(BaseModel):
