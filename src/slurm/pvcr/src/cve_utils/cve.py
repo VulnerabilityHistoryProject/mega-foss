@@ -6,10 +6,10 @@ from typing import Any,Generator, ClassVar
 from error_handling import handle_errors as handle
 from szz_utils import szz
 from configuration import script_setup as setup
-from pydriller import Repository, Commit
+from pydriller import Repository, Commit, ModifiedFile
 from pydantic import BaseModel
 
-class Patch_Commit_Classifier:
+class Patch_Commit_Classifier(BaseModel):
     """
     The goal of this class is to answer the question: What has been changed by the patch commit??
     """
@@ -20,16 +20,35 @@ class Patch_Commit_Classifier:
         self._adds_code: bool = False
         self._deletes_code:bool = False
         self._refactors_code: bool = False
-
         self._changes_lines: bool = False
         self._changes_functions: bool = False
         self._changes_files: bool = False
-        
-        
         self._patch_partial_fix: bool = False
-
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
-        # The field above is going to be interesting to try and track... tuff problem
+        
+
+        self._dmm_unit_size: float = None
+        self._dmm_unit_complexity: float = None
+        self._dmm_unit_interfacing: float = None
+    def classify_patch_commit(self, patch_commit_hash_obj: Commit) -> None:
+        # Update the fields based on the patch commit analysis (simplified here)
+        self._adds_code = patch_commit_hash_obj.insertions > 0
+        self._deletes_code = patch_commit_hash_obj.deletions > 0
+        self._refactors_code: bool = False
+        
+        self._changes_lines = None
+        self._changes_functions: bool = False
+        self._changes_files = patch_commit_hash_obj.files > 0
+
+        self._patch_partial_fix: bool = False
+        self._number_of_vulns_fixed_by_patch: int = 1
+        
+        
+         ### Complexity ### 
+        
+        self._dmm_unit_size = patch_commit_hash_obj.dmm_unit_size
+        self._dmm_unit_complexity = patch_commit_hash_obj.dmm_unit_complexity
+        self._dmm_unit_interfacing = patch_commit_hash_obj.dmm_unit_interfacing
   
 class Patch_Commit():
     """
@@ -41,23 +60,42 @@ class Patch_Commit():
 
         super().__init__() # Calls the next class in MRO
 
-        ### Changes Made By Patch Commit ###
-        patch_commit_hash_obj.insertions
-        patch_commit_hash_obj.deletions
-        patch_commit_hash_obj.modified_files 
-        patch_commit_hash_obj.files
+        self._fulle_repo_path: str = full_repo_path
+        self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
+        self._mod_files_by_patch_commit: list[ModifiedFile] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
+        self._changes_by_patch_commit: dict = {}
 
-        ### Complexity ### 
-        patch_commit_hash_obj.dmm_unit_size
-        patch_commit_hash_obj.dmm_unit_complexity
-        patch_commit_hash_obj.dmm_unit_interfacing
+        # Create an instance of Patch_Commit_Classifier and associate it with this Patch_Commit instance
+        self.classifier = Patch_Commit_Classifier()
+        # Call the classifier method to update fields based on the patch commit object
+        self.classifier.classify_patch_commit(patch_commit_hash_obj)
+
+        ### Changes Made By Patch Commit ###
+        self._mod_files_by_patch_commit.extend(patch_commit_hash_obj.modified_files) 
+        
+
+       
 
 
         
-        self._fulle_repo_path: str = full_repo_path
-        self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
-        self._mod_files_by_patch_commit: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
-        self._changes_by_patch_commit: dict = {}
+    def get_classifier_info(self) -> dict:
+        """
+        Returns a dictionary containing classifier-related information.
+        """
+        return {
+            "adds_code": self.classifier._adds_code,
+            "deletes_code": self.classifier._deletes_code,
+            "refactors_code": self.classifier._refactors_code,
+            "changes_lines": self.classifier._changes_lines,
+            "changes_functions": self.classifier._changes_functions,
+            "changes_files": self.classifier._changes_files,
+            "patch_partial_fix": self.classifier._patch_partial_fix,
+            "number_of_vulns_fixed_by_patch": self.classifier._number_of_vulns_fixed_by_patch,
+            "dmm_unit_size": self.classifier._dmm_unit_size,
+            "dmm_unit_complexity": self.classifier._dmm_unit_complexity,
+            "dmm_unit_interfacing": self.classifier._dmm_unit_interfacing,
+        }
+
 
 
 
@@ -201,7 +239,23 @@ class CVE(BaseModel):
             str: _description_
         """
         pass
+    
+    def compare_patch_and_vuln():
+        """
+        Previously, the issue has been: How do you prove that you found the vulnerability with a specific
+        percentage of accuracy. 
 
+        Below we're going to do that! If anything differs (caveat some things can differ like file path because things change), 
+        we know we don't have the correct commit that introduced the vulnerability.
+
+        *** How do I develop a probability prediction metric system? *** I want to know with a certain degree of confidence
+        that the vuln commit/ commits are in fact what I went looking for.
+
+        Ex: 
+        - modified files: patch commit could be doing more than just fixing the vuln. But if some of the vuln modified files are in 
+        the list of modified files by the patch commit, then we're cooking! 
+        """
+        pass
 
 
     @property
