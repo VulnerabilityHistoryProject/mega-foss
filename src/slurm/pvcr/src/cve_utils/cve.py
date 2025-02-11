@@ -31,7 +31,7 @@ class Patch_Commit_Classifier:
         self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
         # The field above is going to be interesting to try and track... tuff problem
   
-class Patch_Commit(Commit,Patch_Commit_Classifier):
+class Patch_Commit():
     """
     All the data to capture from the Patch commits
     """
@@ -41,10 +41,19 @@ class Patch_Commit(Commit,Patch_Commit_Classifier):
 
         super().__init__() # Calls the next class in MRO
 
+        ### Changes Made By Patch Commit ###
+        patch_commit_hash_obj.insertions
         patch_commit_hash_obj.deletions
+        patch_commit_hash_obj.modified_files 
+        patch_commit_hash_obj.files
+
+        ### Complexity ### 
+        patch_commit_hash_obj.dmm_unit_size
         patch_commit_hash_obj.dmm_unit_complexity
         patch_commit_hash_obj.dmm_unit_interfacing
-        ### CONTINUE here ### keep analyzing sub methods for commit... maybe I don't actually ahve to inherit it???
+
+
+        
         self._fulle_repo_path: str = full_repo_path
         self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
         self._mod_files_by_patch_commit: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained

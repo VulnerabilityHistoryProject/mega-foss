@@ -82,6 +82,10 @@ def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:
 
 if __name__ == "__main__":
 
+    '''
+    Question: do the people maintian pydriller well?? The docs seem kinda off no cap
+    '''
+
     ### Setup Basic Logging ###
     basic_logger = logger_config.setup_initial_logging()
 
