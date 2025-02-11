@@ -14,7 +14,6 @@ class Patch_Commit_Classifier:
     The goal of this class is to answer the question: What has been changed by the patch commit??
     """
     def __init__(self) -> None:
-
         super().__init__() # Calls the next class in MRO
         ### TO-DO ###
         # Continue reading papers to refine this list of fieds
@@ -42,7 +41,12 @@ class Patch_Commit(Commit,Patch_Commit_Classifier):
 
         super().__init__() # Calls the next class in MRO
 
-
+        patch_commit_hash_obj.deletions
+        patch_commit_hash_obj.dmm_unit_complexity
+        patch_commit_hash_obj.dmm_unit_interfacing
+        ### CONTINUE here ### keep analyzing sub methods for commit... maybe I don't actually ahve to inherit it???
+        self._fulle_repo_path: str = full_repo_path
+        self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
         self._mod_files_by_patch_commit: list[str] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
         self._changes_by_patch_commit: dict = {}
 
@@ -50,7 +54,7 @@ class Patch_Commit(Commit,Patch_Commit_Classifier):
 
 class Vuln_Commit_Classifier:
     """
-    The goal of this class is to answer the question: What has been changed by the 
+    The goal of this class is to answer the question: What has been changed by the vulnerability?
     """
     def __init__(self) -> None:
 
@@ -71,9 +75,6 @@ class Vuln_Commit_Classifier:
 
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
   
-    
-   
-
 class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
@@ -86,6 +87,8 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit) -> None:
         super().__init__() # Calls the next class in MRO
 
+        self._full_repo_path: str = full_repo_path
+        self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
         self._mod_files_by_vuln_commit: list[str] = []
         self._changes_vuln_commit: dict = {}
     
