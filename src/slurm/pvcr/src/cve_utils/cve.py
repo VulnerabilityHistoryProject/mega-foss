@@ -161,13 +161,14 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
 class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commits and vice-versa
     def __init__(self):
         # Maps patch commits to a list of vulnerabilities they fix
-        self.patch_to_vulns = {}
+        self.patch_to_vulns: dict = {}
         # Maps vulnerabilities to a list of patch commits that fix them
-        self.vuln_to_patches = {}
+        self.vuln_to_patches: dict = {}
 
-    def add_mapping(self, patch: str, vuln: str):
+    def add_mapping(self, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
         """Adds a bidirectional mapping between a patch commit and a vulnerability commit."""
         
+        ## *** Be aware. Not using safe version of adding retrieving from dictionary
         # Add patch -> vuln relationship
         if patch not in self.patch_to_vulns:
             self.patch_to_vulns[patch] = set()
@@ -178,13 +179,28 @@ class PatchVulnBiMap: ### Bi-directional Mapping for patch commits to vuln commi
             self.vuln_to_patches[vuln] = set()
         self.vuln_to_patches[vuln].add(patch)
 
-    def get_vulns_for_patch(self, patch: str) -> set:
+    def get_vulns_for_patch(self, patch: Patch_Commit) -> set:
         """Returns the vulnerabilities fixed by a given patch commit."""
-        return self.patch_to_vulns.get(patch, set())
+        vulns: set
+        exists: bool
 
-    def get_patches_for_vuln(self, vuln: str) -> set:
+        vulns, exists = handle.safe_dict_get(self.patch_to_vulns,patch)
+
+        if exists: 
+            return vulns
+        
+        
+        
+
+    def get_patches_for_vuln(self, vuln: Vuln_Commit) -> set:
         """Returns the patch commits that fix a given vulnerability commit."""
-        return self.vuln_to_patches.get(vuln, set())
+        vulns: set
+        exists: bool
+
+        vulns, exists = handle.safe_dict_get(self.vuln_to_patches,vuln)
+
+        if exists: 
+            return vulns
 
     def remove_mapping(self, patch: str, vuln: str):
         """Removes a specific patch-vulnerability relationship."""
