@@ -109,7 +109,7 @@ class CVE(BaseModel):
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
-    def __init__(self,cve_id: str, partial_repo_path: str,full_repo_path: str, hash_patch_commit:str) -> None:
+    def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG) -> None:
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -126,7 +126,7 @@ class CVE(BaseModel):
         ############################################################################
         
         self._partial_repo_path: str = partial_repo_path
-        self._full_repo_path: str = full_repo_path
+        self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config)
 
         
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
@@ -177,6 +177,20 @@ class CVE(BaseModel):
         vuln_commit_obj: Vuln_Commit = Vuln_Commit(self._full_repo_path,commit_obj)
         
         return vuln_commit_obj
+    
+    def get_full_repo_path(partial_repo_path: str, config: setup.SCRIPT_CONFIG) -> str:
+        """
+        Use the global config ROOT DIR field to get to the specific repo for the project. 
+        Make sure that there is a .git! That's a little check that can go a long way.
+        Args:
+            partial_repo_path (str): _description_
+
+        Returns:
+            str: _description_
+        """
+        pass
+
+
 
     @property
     def _cve_id(self) -> str:

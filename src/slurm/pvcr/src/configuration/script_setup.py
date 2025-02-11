@@ -78,7 +78,7 @@ class SCRIPT_CONFIG(BaseModel):
     @classmethod
     def get_ROOT_DIR(cls):
         """
-        Get the root 
+        Get the root diretory that has all the FOSS Projects
 
         Returns:
             _type_: _description_

@@ -30,7 +30,7 @@ def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, 
             yield entry  # Yielding each entry one by one
 
 
-def process_JSON_CVE(json_file_path: str) -> dict[str,cve.CVE]:
+def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG) -> dict[str,cve.CVE]:
 
     processed_cves: dict[str,cve.CVE]
 
@@ -46,7 +46,7 @@ def process_JSON_CVE(json_file_path: str) -> dict[str,cve.CVE]:
         if json_cve_id not in processed_cves:
 
             # Create a new instance of the cve class
-            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash)
+            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash, config) ### Dependency Injection here ###
             handle.safe_dict_set(processed_cves,json_cve_id,cve_vuln)
 
         else: # what happens if the cve id is already in the set
@@ -67,6 +67,10 @@ def process_JSON_CVE(json_file_path: str) -> dict[str,cve.CVE]:
 
 
 if __name__ == "__main__":
+
+    ### Singleton Config Instance ###
+
+    ### Dependency Injection ### 
 
     # Setup Basic logging cofiguration in case anything goes wrong during setup
     logger_config.setup_initial_logging()
