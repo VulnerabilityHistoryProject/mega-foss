@@ -2,7 +2,7 @@
 import sys
 import logging
 from error_handling import handle_errors as handle
-
+from typing import ClassVar
 
 
 
@@ -36,15 +36,15 @@ class SCRIPT_CONFIG:
     Class methods should primarily be used here.
     """
     # Initialize the class-level logger and immutability flag
-    basic_logger = logging.getLogger("basic_logger")
-    robust_logger = None
-    _variables_set = False
+    basic_logger: ClassVar = logging.getLogger("basic_logger")
+    robust_logger: ClassVar = None
+    _variables_set: ClassVar = False
 
     # Class-level environment variable placeholders
-    GIT_ALL_REPOS_DIR = None
-    PATCH_COMMITS_JSON = None
-    OUTPUT_DIR_JSON = None
-    LOGGING_DIR = None
+    GIT_ALL_REPOS_DIR: ClassVar = None
+    PATCH_COMMITS_JSON: ClassVar = None
+    OUTPUT_DIR_JSON: ClassVar = None
+    LOGGING_DIR: ClassVar = None
 
     def __init__(self):
         # Call the method to load environment variables
@@ -84,7 +84,30 @@ class SCRIPT_CONFIG:
     def _initialize_robust_logging(cls)->None:
         ### Setup Robust Logging ###
         cls.robust_logger = logging.getLogger("robust_logger")
-    
+
+     # Class-level getter for GIT_ALL_REPOS_DIR
+    @classmethod
+    def get_GIT_ALL_REPOS_DIR(cls):
+        return cls._GIT_ALL_REPOS_DIR
+
+    # Class-level setter for GIT_ALL_REPOS_DIR
+    @classmethod
+    def set_GIT_ALL_REPOS_DIR(cls, value):
+        cls._ensure_immutable("_GIT_ALL_REPOS_DIR")
+        cls._GIT_ALL_REPOS_DIR = value
+
+    # Class-level getter for PATCH_COMMITS_JSON
+    @classmethod
+    def get_PATCH_COMMITS_JSON(cls):
+        return cls._PATCH_COMMITS_JSON
+
+    # Class-level setter for PATCH_COMMITS_JSON
+    @classmethod
+    def set_PATCH_COMMITS_JSON(cls, value):
+        cls._ensure_immutable("_PATCH_COMMITS_JSON")
+        cls._PATCH_COMMITS_JSON = value
+
+    # Similarly, you can define other getter and setter methods for OUTPUT_DIR_JSON and LOGGING_DIR
 
 def get_full_repo_path(partial_repo_path:str) -> str:
 

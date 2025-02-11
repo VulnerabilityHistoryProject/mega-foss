@@ -22,9 +22,9 @@ def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, 
             yield entry  # Yielding each entry one by one
 
 
-def process_JSON_CVE(json_file_path: str) -> cve.CVE:
+def process_JSON_CVE(json_file_path: str) -> dict[str,cve.CVE]:
 
-    processed_cve: dict[str,cve.CVE]
+    processed_cves: dict[str,cve.CVE]
 
     cve_data: Generator[dict[str,str], None, None] = stream_json_entries(json_file_path)
 
@@ -34,24 +34,23 @@ def process_JSON_CVE(json_file_path: str) -> cve.CVE:
         partial_repo_path: str = handle.safe_dict_get(cve_entry,"repo")
         patch_commit_hash: str = handle.safe_dict_get(cve_entry,"commit")
 
-        if json_cve_id not in processed_cve:
+        if json_cve_id not in processed_cves:
 
             # Create a new instance of the cve class
             cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash)
-            handle.safe_dict_set(processed_cve,json_cve_id,cve_vuln)
+            handle.safe_dict_set(processed_cves,json_cve_id,cve_vuln)
 
-            return cve_vuln
         else: # what happens if the cve id is already in the set
             # don't create a new cve object, rather add the hash patch commit to the list from the patch commits class
             # CVE class should have a list 
 
             # Safely get the CVE class object from the dictionary
-            cve_vuln = handle.safe_dict_get(processed_cve,json_cve_id)
+            cve_vuln = handle.safe_dict_get(processed_cves,json_cve_id)
 
             # Add the patch commit hash to the list of patch commits inside of the CVE object
             cve_vuln.add_patch_commit_obj_to_CVE(
                                                 cve_vuln.create_patch_commit_obj(patch_commit_hash))
-
+    return processed_cves
 #### Next step ### 
 ### Figure out how to extend the functionality of the existing Commit, Repository, and Modified file
 ### classes from pydriller library!

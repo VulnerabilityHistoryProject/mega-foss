@@ -4,6 +4,7 @@ import sys
 import logging
 
 from cve_utils import cve
+from configuration import script_setup as setup
 
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
@@ -33,7 +34,7 @@ def setup_initial_logging() -> None:
     logger.info("Basic logging setup complete.")
 
 
-def setup_robust_logging(configs: config.SCRIPT_CONFIG, log_directory: str = "") -> None:
+def setup_robust_logging(configs: setup.SCRIPT_CONFIG, log_directory: str) -> None:
     """
     Set up logging to a file with rotation, using a specified directory.
     If no directory is provided, use the global PATH_LOG_OUTPUT_DIR.
@@ -47,9 +48,8 @@ def setup_robust_logging(configs: config.SCRIPT_CONFIG, log_directory: str = "")
 
     
     
-    # Check if log directory is provided or use default global variable
-    if log_directory == "":
-        log_directory = configs
+    # Provide logging directory
+    log_directory = configs.LOGGING_DIR
     
     # If log directory is still not set, exit
     if not log_directory:

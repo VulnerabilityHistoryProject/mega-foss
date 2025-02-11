@@ -6,8 +6,7 @@ from typing import Any,Generator, ClassVar
 from error_handling import handle_errors as handle
 from szz_utils import szz
 from configuration import script_setup as setup
-
-from pydriller import Repository, Commit, ModifiedFile
+from pydriller import Repository, Commit
 
 class Patch_Commit_Classifier:
     """
