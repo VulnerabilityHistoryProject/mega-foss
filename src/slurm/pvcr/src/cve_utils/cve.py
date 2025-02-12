@@ -242,7 +242,7 @@ class CVE(BaseModel):
 
     ### Bi-Directional Map used to keep track of relationships of all CVE's ###
     _patch_vuln_map: ClassVar[PatchVulnBiMap] = PatchVulnBiMap()
-
+    
     def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG) -> None:
         
         # I need to get the full repo path from the partial repo path 
@@ -279,6 +279,9 @@ class CVE(BaseModel):
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
         
+        ###  Add first patch commit to the Bi Map ###
+        ### Don't have a vuln commit to add yet ###
+        self.__class__._add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
         
         
 
@@ -298,14 +301,17 @@ class CVE(BaseModel):
         return patch_commit_obj
     
     @classmethod
-    def add_patch_commit_obj_to_BiMap(self,patch_commit_obj:Patch_Commit)->None:
+    def _add_to_BiMap(self,**kwargs)->None:
         """
         This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
         Args:
-            patch_commit_hash (str): Commit hash that patches the cve
+           
         """
-        
-        
+        cve_id: str = kwargs.get("cve_id",None)
+        patch_commit: Patch_Commit = kwargs.get("patch_commit", None)
+        vuln_commit: Vuln_Commit = kwargs.get("vuln_commit", None)
+
+        self.__class__._patch_vuln_map.add_mapping(cve_id,patch=patch_commit,vuln=vuln_commit)
     
     def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
         commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
@@ -388,14 +394,6 @@ class CVE(BaseModel):
     @_primary_patch_commit.setter
     def _primary_patch_commit(self, value: Commit) -> None:
         self._primary_patch_commit = value
-    
-    @property
-    def _patch_vuln_map(self) -> list[Patch_Commit]:
-        return self._patch_vuln_map
-
-    @_patch_vuln_map.setter
-    def _patch_vuln_map(self, value: Patch_Commit) -> None:
-        self._patch_vuln_map.append(value)
 
     @property
     def _vuln_commit_objects(self) -> list[Patch_Commit]:
