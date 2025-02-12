@@ -30,9 +30,8 @@ def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, 
             yield entry  # Yielding each entry one by one
 
 
-def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG) -> dict[str,cve.CVE]:
+def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: cve.PatchVulnBiMap) -> dict[str,cve.CVE]:
 
-    processed_cves: dict[str,cve.CVE]
 
     cve_data: Generator[dict[str,str], None, None] = stream_json_entries(json_file_path)
 
@@ -43,22 +42,37 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG) -> dict[s
         patch_commit_hash: str = handle.safe_dict_get(cve_entry,"commit")
 
 
-        if json_cve_id not in processed_cves:
+        if json_cve_id not in cve_map: ### Check if cve is already in the bi map ###
 
             # Create a new instance of the cve class
-            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash, config) ### Dependency Injection here ###
-            handle.safe_dict_set(processed_cves,json_cve_id,cve_vuln)
+            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash, config,patch_vuln_bi_map=cve_map) ### Dependency Injection here ###
+            
+            ### Add primary patch commit to bi map if it hasn't been added yet ###
+            cve_vuln.add_to_BiMap(cve_id=json_cve_id,patch_commit=cve_vuln._primary_patch_commit)
 
         else: # what happens if the cve id is already in the set
-            # don't create a new cve object, rather add the hash patch commit to the list from the patch commits class
-            # CVE class should have a list 
+            
 
-            # Safely get the CVE class object from the dictionary
-            cve_vuln = handle.safe_dict_get(processed_cves,json_cve_id)
+            '''
+            There's a case where there are multiple patches (cves for a single vuln)
+            '''
 
-            # Add the patch commit hash to the list of patch commits inside of the CVE object
-            cve_vuln.add_patch_commit_obj_to_CVE(
-                                                cve_vuln.create_patch_commit_obj(patch_commit_hash))
+            # Want to create a new Patch commit object and add it to the bi map
+            # How do I just create a new patch commit obejct
+            
+
+            # Get the cve value from the map (perform a lookup!)
+            ## next --> create the get patch for cve id
+            ## based on json_cve_id ... create a new Patch object and add it under
+
+            '''
+            issue... two patches have the same cve id, but they have different patch hashes and I don't have the vulnerability yet
+
+            op 1) try and find the vuln in this function (that gonna take a sec)
+            op 2) figure it out
+            '''
+            cve_map.
+           
     return processed_cves
 
 
@@ -91,6 +105,9 @@ if __name__ == "__main__":
 
     ### Singleton Config Instance ###
     CONFIG = setup.SCRIPT_CONFIG(basic_logger)
+
+    ### Singleton Bidirectional Map Instance ###
+    CVE_MAP = cve.PatchVulnBiMap()
 
     ### Dependency Injection ### 
     CVE_dict: dict[cve.CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)

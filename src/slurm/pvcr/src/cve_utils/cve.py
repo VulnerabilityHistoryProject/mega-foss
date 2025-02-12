@@ -173,6 +173,9 @@ class PatchVulnBiMap:
                                    dict[Vuln_Commit, set[Patch_Commit]]   # vuln -> patch mapping
                                ]] = {}
 
+
+    def get_patch_for_cve_id() -> Patch_Commit:
+        pass
     def add_mapping(self, cve_id: str, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
         """Adds a bidirectional mapping between a patch commit and a vulnerability commit for a given CVE ID."""
         
@@ -239,11 +242,8 @@ class CVE(BaseModel):
         Vulnerability_Classifier (_type_): _description_
         Vuln_Commits (_type_): _description_
     """
-
-    ### Bi-Directional Map used to keep track of relationships of all CVE's ###
-    _patch_vuln_map: ClassVar[PatchVulnBiMap] = PatchVulnBiMap()
     
-    def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG) -> None:
+    def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG,patch_vuln_bi_map: PatchVulnBiMap) -> None:
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -251,6 +251,9 @@ class CVE(BaseModel):
         # and full repo path field!
 
         super().__init__() # Calls the next class in MRO
+
+        ### Bi-Directional Map used to keep track of relationships of all CVE's ###
+        self._patch_vuln_bi_map:PatchVulnBiMap = patch_vuln_bi_map ### Dependency injection is being used
 
         ### CVE Info ###
         ############################################################################
@@ -260,7 +263,7 @@ class CVE(BaseModel):
         ############################################################################
         
         self._partial_repo_path: str = partial_repo_path
-        self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config)
+        self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config) ### Dependency injection is being used
 
         
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
@@ -268,28 +271,13 @@ class CVE(BaseModel):
                                                             single = hash_patch_commit,
                                                             to_commit = hash_patch_commit).traverse_commits()
 
-        ### Patch Commit Info ###
-        ############################################################################
-        
-        
-
-        commit_hash_obj: Commit = next(Repository( # Only get the hash patch commit object
-                                                                self._full_repo_path,
-                                                                single = hash_patch_commit).traverse_commits())
+        commit_hash_obj: Commit = self.create_patch_commit_obj(patch_commit_hash=hash_patch_commit)
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
         
         ###  Add first patch commit to the Bi Map ###
         ### Don't have a vuln commit to add yet ###
         self.__class__.add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
-        
-        
-
-        ### Vuln Commit Info ###
-        ### Objective of project ###
-        ############################################################################
-        self._vuln_commit_objects: list[Vuln_Commit] = []
-
 
     def create_patch_commit_obj(self,patch_commit_hash:str) -> Patch_Commit:
         commit_obj: Commit = next(Repository( # Only get the hash patch commit object
@@ -300,7 +288,9 @@ class CVE(BaseModel):
         
         return patch_commit_obj
     
-    @classmethod
+
+    ### Bi-Map Helper Methods ###
+    ############################################################################
     def add_to_BiMap(self,**kwargs)->None:
         """
         This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
@@ -311,23 +301,23 @@ class CVE(BaseModel):
         patch_commit: Patch_Commit = kwargs.get("patch_commit", None)
         vuln_commit: Vuln_Commit = kwargs.get("vuln_commit", None)
 
-        self.__class__._patch_vuln_map.add_mapping(cve_id,patch=patch_commit,vuln=vuln_commit)
+        self._patch_vuln_bi_map.add_mapping(cve_id,patch=patch_commit,vuln=vuln_commit)
 
-    @classmethod
     def get_vulns_for_patch(self,cve_id: str, patch: Patch_Commit) -> None:
         
-        return self.__class__._patch_vuln_map.get_vulns_for_patch(self.__class__._patch_vuln_map,cve_id,patch)
-    @classmethod
+        return self._patch_vuln_bi_map.get_vulns_for_patch(self._patch_vuln_bi_map,cve_id,patch)
     def get_patches_for_vuln(self,cve_id: str, vuln: Vuln_Commit) -> None:
-        return self.__class__._patch_vuln_map.get_patches_for_vuln(self.__class__._patch_vuln_map,cve_id,vuln)
+        return self._patch_vuln_bi_map.get_patches_for_vuln(self._patch_vuln_bi_map,cve_id,vuln)
     
-    @classmethod
+    
     def remove_mapping(self, cve_id: str, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
-        self.__class__._patch_vuln_map.remove_mapping(cve_id,patch,vuln)
+        self._patch_vuln_bi_map.remove_mapping(cve_id,patch,vuln)
     
-    @classmethod
+    
     def get_all_cve_mappings(self):
-        return self.__class__._patch_vuln_map.get_all_mappings(self.__class__._patch_vuln_map)
+        return self._patch_vuln_bi_map.get_all_mappings(self._patch_vuln_bi_map)
+
+
 
     def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
         commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
@@ -411,10 +401,4 @@ class CVE(BaseModel):
     def _primary_patch_commit(self, value: Commit) -> None:
         self._primary_patch_commit = value
 
-    @property
-    def _vuln_commit_objects(self) -> list[Patch_Commit]:
-        return self._vuln_commit_objects
-
-    @_vuln_commit_objects.setter
-    def _vuln_commit_objects(self, value: Patch_Commit) -> None:
-        self._vuln_commit_objects.append(value)
+    
