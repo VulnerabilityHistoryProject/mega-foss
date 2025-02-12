@@ -8,7 +8,8 @@ from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
 from dotenv import load_dotenv
 
-import src.cve_utils.cve as config
+from cve_utils import cve
+from configuration import script_setup as setup
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +70,7 @@ def safe_dict_set(d: Dict[Any, Any], key: Any, value: Any) -> bool:
     
     return True
 
-def safe_dict_get(d: Dict[Any, Any], key: Any) -> tuple(Any,bool): # type: ignore
+def safe_dict_get(d: Dict[Any, Any], key: Any) -> tuple[Any,bool]: # type: ignore
     """
     Safely retrieves a value for a given key in a dictionary, with error handling.
     
@@ -177,7 +178,7 @@ def fetch_commmit_obj(selected_git_repo_obj: Git, patch_commit_hash: str) -> Com
 
 
 
-def safe_get_env_vars(cls: config.SCRIPT_CONFIG, variables_to_check: list[str]):
+def safe_get_env_vars(config: setup.SCRIPT_CONFIG, variables_to_check: list[str]) -> None:
     """
     General function to handle loading and checking of environment variables.
     
@@ -189,25 +190,31 @@ def safe_get_env_vars(cls: config.SCRIPT_CONFIG, variables_to_check: list[str]):
     Returns:
     - None: If successful, environment variables are set as class attributes.
     """
+
+    basic_logger = config.get_basic_logger()
+
     try:
         load_dotenv()  # Load environment variables from .env file
 
         # Fetch and assign the environment variables to class variables
         for var in variables_to_check:
-            setattr(cls, var, os.getenv(var))
+            setattr(config, var, os.getenv(var))
 
         # Check if essential environment variables were set
-        missing_vars = [var for var in variables_to_check if not getattr(cls, var, None)]
+        missing_vars = [var for var in variables_to_check if not getattr(config, var, None)]
     
         if missing_vars:
             raise MissingEnvironmentVariableError(f"Missing environment variables: {', '.join(missing_vars)}")
 
     except MissingEnvironmentVariableError as e:
-        cls.basic_logger.error(f"Error: {e}")
+        
+        basic_logger.error(f"Error: {e}")
         sys.exit(1)
 
     except Exception as e:
-        cls.basic_logger.error(f"Error loading environment variables or assigning class variables: {e}")
+        
+        
+        basic_logger.error(f"Error loading environment variables or assigning class variables: {e}")
         sys.exit(1)
 
-    cls.basic_logger.info("Environment variables initialized successfully.")
+    basic_logger.info("Environment variables initialized successfully.")

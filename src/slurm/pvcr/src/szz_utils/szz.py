@@ -4,10 +4,10 @@ import logging
 import sys
 from typing import Any, Type, Dict,Optional
 from pydriller import ModifiedFile, Git, Commit
-import error_handling as handle
+from error_handling import handle_errors as handle
 
 
-def find_modified_files(patch_commit_hash: str = "", selected_repo: str = "") -> set[ModifiedFile]:
+def find_modified_files(patch_commit_hash: str, selected_repo: str) -> set[ModifiedFile]:
     """
     Given a specific patch commit hash and a repo corresponding to the FOSS project, via a path, returns a set of ModifiedFile objects. 
     All items in the set are modified files by the patch commit hash.
@@ -24,8 +24,8 @@ def find_modified_files(patch_commit_hash: str = "", selected_repo: str = "") ->
 
 
     # Assign global variables with more control
-    patch_commit_hash: str = handle.get_global_variable("HASH_PATCH_COMMIT", str)
-    selected_repo: str = handle.get_global_variable("PATH_SELECTED_REPO", str)
+    patch_commit_hash = handle.get_global_variable("HASH_PATCH_COMMIT", str)
+    selected_repo  = handle.get_global_variable("PATH_SELECTED_REPO", str)
     
     # Get Git object and get the commit objects
     selected_git_repo_obj: Git = handle.git_repo_conversion(selected_repo) 
