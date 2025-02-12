@@ -281,7 +281,7 @@ class CVE(BaseModel):
         
         ###  Add first patch commit to the Bi Map ###
         ### Don't have a vuln commit to add yet ###
-        self.__class__._add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
+        self.__class__.add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
         
         
 
@@ -301,7 +301,7 @@ class CVE(BaseModel):
         return patch_commit_obj
     
     @classmethod
-    def _add_to_BiMap(self,**kwargs)->None:
+    def add_to_BiMap(self,**kwargs)->None:
         """
         This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
         Args:
@@ -312,7 +312,23 @@ class CVE(BaseModel):
         vuln_commit: Vuln_Commit = kwargs.get("vuln_commit", None)
 
         self.__class__._patch_vuln_map.add_mapping(cve_id,patch=patch_commit,vuln=vuln_commit)
+
+    @classmethod
+    def get_vulns_for_patch(self,cve_id: str, patch: Patch_Commit) -> None:
+        
+        return self.__class__._patch_vuln_map.get_vulns_for_patch(self.__class__._patch_vuln_map,cve_id,patch)
+    @classmethod
+    def get_patches_for_vuln(self,cve_id: str, vuln: Vuln_Commit) -> None:
+        return self.__class__._patch_vuln_map.get_patches_for_vuln(self.__class__._patch_vuln_map,cve_id,vuln)
     
+    @classmethod
+    def remove_mapping(self, cve_id: str, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
+        self.__class__._patch_vuln_map.remove_mapping(cve_id,patch,vuln)
+    
+    @classmethod
+    def get_all_cve_mappings(self):
+        return self.__class__._patch_vuln_map.get_all_mappings(self.__class__._patch_vuln_map)
+
     def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
         commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
                                                                 self._full_repo_path,
