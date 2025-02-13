@@ -14,7 +14,7 @@ class Patch_Commit():
     """
     All the data to capture from the Patch commits
     """
-    def __init__(self, full_repo_path: str, base_commit_obj:Commit) -> None:
+    def __init__(self, full_repo_path: str, _base_commit_obj:Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
 
@@ -206,31 +206,31 @@ class Vuln_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
     """
-    def __init__(self) -> None:
+    def __init__(self,_base_commit_obj: Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""
         ### TO-DO ###
         # Continue reading papers to refine this list of fieds
-
+        self.__base_commit_obj: Commit = _base_commit_obj
         self._initialize_fields()
         
 
        
-    def _initialize_fields(self, base_commit_obj: Commit) -> None: 
-        self.classify_vuln_commit_basic(self,base_commit_obj)
+    def _initialize_fields(self, _base_commit_obj: Commit) -> None: 
+        self.classify_vuln_commit_basic(self,_base_commit_obj)
 
-    def classify_vuln_commit_basic(self, base_commit_obj: Commit) -> None:
+    def classify_vuln_commit_basic(self, _base_commit_obj: Commit) -> None:
         
         #### Used for comparing Patch Commit to Vuln Commit ###
         ### Classifications for V1 ###
-        self._adds_code: bool = base_commit_obj.insertions > 0
-        self._deletes_code: bool = base_commit_obj.deletions > 0
+        self._adds_code: bool = _base_commit_obj.insertions > 0
+        self._deletes_code: bool = _base_commit_obj.deletions > 0
         
         if self._adds_code or self._deletes_code:
             self._changes_lines: bool = True
 
-        base_commit_obj.modified_files
+        _base_commit_obj.modified_files
         
         self._changes_functions: bool = False
         self._changes_files: bool = False
@@ -244,21 +244,24 @@ class Vuln_Commit_Classifier:
         self._dmm_unit_interfacing: float = None
         #######################################################
 
-    def classify_vuln_commit_advanced(self, base_commit_obj: Commit) -> None:
+    def classify_vuln_commit_advanced(self, _base_commit_obj: Commit) -> None:
         ### Classifications for V2 ###
         self._refactors_code: bool = False
         self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
 
 
-    def vuln_changes_lines(self,base_commit_obj: Commit) -> bool:
+    def vuln_changes_lines(self,_base_commit_obj: Commit) -> bool:
         pass
     
-    def vuln_changes_functions(self,base_commit_obj:Commit) -> bool:
-
-    ### Classifications for V2 ###
-    def vuln_refactors_code(self,base_commit_obj) -> bool:
+    def vuln_changes_functions(self,_base_commit_obj:Commit) -> bool:
         pass
-    def vuln_
+
+    
+    ### Classifications for V2 ###
+    def vuln_refactors_code(self,_base_commit_obj) -> bool:
+        pass
+    def vuln_hash_partial_patch_commit_fixes() -> bool:
+        pass
 
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
