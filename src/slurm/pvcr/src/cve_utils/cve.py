@@ -233,28 +233,29 @@ class Vuln_Commit_Classifier:
 
 
     def classify_vuln_commit(self, base_commit_obj: Commit) -> None:
-        # Update the fields based on the vuln commit analysis (simplified here)
-        self._adds_code = base_commit_obj.insertions > 0
-        self._deletes_code = base_commit_obj.deletions > 0
-        self._refactors_code: bool = False
         
-        self._changes_lines = None
+        ### Classifications for V1 ###
+        self._adds_code: bool = base_commit_obj.insertions > 0
+        self._deletes_code: bool = base_commit_obj.deletions > 0
+        self._changes_lines: bool = None
         self._changes_functions: bool = False
-        self._changes_files = base_commit_obj.files > 0 ### I have no expensive how long these lookups take? ###
+        self._changes_files: bool = base_commit_obj.files > 0 ### I have no expensive how long these lookups take? ###
 
         self._patch_partial_fix: bool = False
-        self._number_of_patch_commits_for_vuln = 1 ### IF this wasn't 1, this would be a unfixed vulnerability
+        self._number_of_patch_commits_for_vuln = 
         
-        self._dmm_unit_size = base_commit_obj.dmm_unit_size
-        self._dmm_unit_complexity = base_commit_obj.dmm_unit_complexity
-        self._dmm_unit_interfacing = base_commit_obj.dmm_unit_interfacing
+        self._dmm_unit_size: float = base_commit_obj.dmm_unit_size
+        self._dmm_unit_complexity: float = base_commit_obj.dmm_unit_complexity
+        self._dmm_unit_interfacing: float = base_commit_obj.dmm_unit_interfacing
 
+        ### Classifications for V2 ###
+        self._refactors_code: bool = False
     
     def vuln_changes_lines(self,base_commit_obj: Commit) -> bool:
         pass
     
     def vuln_changes_functions(self,base_commit_obj:Commit) -> bool:
-        
+
     ### Classifications for V2 ###
     def vuln_refactors_code(self,base_commit_obj) -> bool:
         pass
