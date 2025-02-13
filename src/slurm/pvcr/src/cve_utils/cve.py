@@ -57,8 +57,14 @@ class Patch_Commit():
         super().__init__() # Calls the next class in MRO
 
         self._full_repo_path: str = full_repo_path
+
+
         self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
+
+
         self._mod_files_by_patch_commit: list[ModifiedFile] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
+        
+        
         self._changes_by_patch_commit: dict = {}
 
         # Create an instance of Patch_Commit_Classifier and associate it with this Patch_Commit instance
@@ -145,7 +151,7 @@ class Vuln_Commit_Classifier:
         self._dmm_unit_interfacing = vuln_commit_hash_obj.dmm_unit_interfacing
 
 
-class Vuln_Commit(Commit,Vuln_Commit_Classifier):
+class Vuln_Commit():
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
     There can also be multiple vulns that correspond to a single patch commit
@@ -157,17 +163,51 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
     def __init__(self, full_repo_path: str, vuln_commit_obj: Commit, patch_commit_obj: Patch_Commit) -> None:
         super().__init__() # Calls the next class in MRO
         
-        self._vuln_commit_hash_obj: Commit = vuln_commit_obj
         self._full_repo_path: str = full_repo_path
-        self._patch_commit_hash_objs: list[Patch_Commit] = patch_commit_obj
-        self._mod_files_by_vuln_commit: list[str] = []
+
+
+        self._vuln_commit_hash_obj: Commit = vuln_commit_obj
+
+
+        
+        
+        self._mod_files_by_vuln_commit: list[ModifiedFile] = []
+        
+        
         self._changes_vuln_commit: dict = {}
+
+        # Create an instance of Patch_Commit_Classifier and associate it with this Patch_Commit instance
+        self.classifier = Patch_Commit_Classifier()
+        # Call the classifier method to update fields based on the patch commit object
+        self.classifier.classify_patch_commit(patch_commit_hash_obj)
+
+        ### Changes Made By Patch Commit ###
+        self._mod_files_by_patch_commit.extend(patch_commit_hash_obj.modified_files) 
     
     def __eq__(self, other:object):
         return isinstance(other,Vuln_Commit) and self._vuln_commit_hash_obj.hash == other._vuln_commit_hash_obj.hash
 
     def __hash__(self):
         return hash(self._vuln_commit_hash_obj.hash)
+    
+    def get_classifier_info(self) -> dict:
+
+        """
+        Returns a dictionary containing classifier-related information.
+        """
+        return {
+            "adds_code": self.classifier._adds_code,
+            "deletes_code": self.classifier._deletes_code,
+            "refactors_code": self.classifier._refactors_code,
+            "changes_lines": self.classifier._changes_lines,
+            "changes_functions": self.classifier._changes_functions,
+            "changes_files": self.classifier._changes_files,
+            "patch_partial_fix": self.classifier._patch_partial_fix,
+            "number_of_vulns_fixed_by_patch": self.classifier._number_of_vulns_fixed_by_patch,
+            "dmm_unit_size": self.classifier._dmm_unit_size,
+            "dmm_unit_complexity": self.classifier._dmm_unit_complexity,
+            "dmm_unit_interfacing": self.classifier._dmm_unit_interfacing,
+        }
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
 
@@ -307,14 +347,7 @@ class CVE(BaseModel):
         ### Don't have a vuln commit to add yet ###
         self.__class__.add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
 
-    def create_patch_commit_obj(self,patch_commit_hash:str) -> Patch_Commit:
-        commit_obj: Commit = next(Repository( # Only get the hash patch commit object
-                                                                self._full_repo_path,
-                                                                single = patch_commit_hash).traverse_commits())
-        
-        patch_commit_obj: Patch_Commit = Patch_Commit(self._full_repo_path,commit_obj)
-        
-        return patch_commit_obj
+    
     
 
     ### Bi-Map Helper Methods ###
@@ -331,10 +364,12 @@ class CVE(BaseModel):
         Args:
            
         """
+
         cve_id: str = kwargs.get("cve_id",None)
         patch_commit: Patch_Commit = kwargs.get("patch_commit", None)
         vuln_commit: Vuln_Commit = kwargs.get("vuln_commit", None)
 
+        ### Where everyting is being added to the map ###
         self._patch_vuln_bi_map.add_mapping(cve_id,patch=patch_commit,vuln=vuln_commit)
 
     def get_vulns_for_patch(self,cve_id: str, patch: Patch_Commit) -> None:
@@ -352,7 +387,15 @@ class CVE(BaseModel):
         return self._patch_vuln_bi_map.get_all_mappings(self._patch_vuln_bi_map)
 
 
-
+    def create_patch_commit_obj(self,patch_commit_hash:str) -> Patch_Commit:
+        commit_obj: Commit = next(Repository( # Only get the hash patch commit object
+                                                                self._full_repo_path,
+                                                                single = patch_commit_hash).traverse_commits())
+        
+        patch_commit_obj: Patch_Commit = Patch_Commit(self._full_repo_path,commit_obj)
+        
+        return patch_commit_obj
+    
     def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
         commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
                                                                 self._full_repo_path,
