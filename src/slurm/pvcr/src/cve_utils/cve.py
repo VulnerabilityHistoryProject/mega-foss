@@ -52,14 +52,14 @@ class Patch_Commit():
     """
     All the data to capture from the Patch commits
     """
-    def __init__(self, full_repo_path: str, patch_commit_hash_obj:Commit) -> None:
+    def __init__(self, full_repo_path: str, base_commit_obj:Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
 
         self._full_repo_path: str = full_repo_path
 
 
-        self._patch_commit_hash_obj: Commit = patch_commit_hash_obj
+        self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Patch Commit Object ###
 
 
         self._mod_files_by_patch_commit: list[ModifiedFile] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
@@ -68,18 +68,18 @@ class Patch_Commit():
         self._changes_by_patch_commit: dict = {}
 
         # Create an instance of Patch_Commit_Classifier and associate it with this Patch_Commit instance
-        self.classifier = Patch_Commit_Classifier()
+        self._classifier = Patch_Commit_Classifier()
         # Call the classifier method to update fields based on the patch commit object
-        self.classifier.classify_patch_commit(patch_commit_hash_obj)
+        self._classifier.classify_patch_commit(base_commit_obj)
 
         ### Changes Made By Patch Commit ###
-        self._mod_files_by_patch_commit.extend(patch_commit_hash_obj.modified_files) 
+        self._mod_files_by_patch_commit.extend(base_commit_obj.modified_files) 
     
     def __eq__(self, other:object):
-        return isinstance(other,Patch_Commit) and self._patch_commit_hash_obj.hash == other._patch_commit_hash_obj.hash
+        return isinstance(other,Patch_Commit) and self._base_commit_obj.hash == other._base_commit_obj.hash
 
     def __hash__(self):
-        return hash(self._patch_commit_hash_obj.hash)
+        return hash(self._base_commit_obj.hash)
     
     def get_classifier_info(self) -> dict:
 
@@ -101,8 +101,101 @@ class Patch_Commit():
         }
 
 
+    @property
+    def full_repo_path(self) -> str:
+        return self._full_repo_path
+
+    @property
+    def base_commit_obj(self) -> Commit:
+        return self._base_commit_obj
+
+    @property
+    def mod_files_by_patch_commit(self) -> list[ModifiedFile]:
+        return self._mod_files_by_patch_commit
+
+    @property
+    def changes_by_patch_commit(self) -> dict:
+        return self._changes_by_patch_commit
+    @property
+    def classifier(self) -> Patch_Commit_Classifier:
+        return self._classifier
 
 
+
+class Vuln_Commit():
+    """
+    Every Vulnerable Commit has a corresponding patch commit to go along with it.
+    There can also be multiple vulns that correspond to a single patch commit
+    Args:
+
+    ### I want each vulnerable commit to have a classifier for that commit!! ###
+        
+    """
+
+    
+    def __init__(self, full_repo_path: str, base_commit_obj: Commit) -> None:
+        super().__init__() # Calls the next class in MRO
+        
+        self._full_repo_path: str = full_repo_path
+
+
+        self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Vuln Commit object ###
+
+        
+        self._mod_files_by_vuln_commit: list[ModifiedFile] = []
+        
+        
+        self._changes_vuln_commit: dict = {}
+
+        # Create an instance of Vuln_Commit_Classifier and associate it with this Vuln_Commit instance
+        self._classifier = Vuln_Commit_Classifier()
+        # Call the classifier method to update fields based on the Vuln commit object
+        self._classifier.classify_Vuln_commit()
+
+        ### Changes Made By Patch Commit ###
+        self._mod_files_by_vuln_commit.extend(base_commit_obj.modified_files) 
+    
+    def __eq__(self, other:object):
+        return isinstance(other,Vuln_Commit) and self._base_commit_obj.hash == other._base_commit_obj.hash
+
+    def __hash__(self):
+        return hash(self._base_commit_obj.hash)
+    
+    def get_classifier_info(self) -> dict:
+
+        """
+        Returns a dictionary containing classifier-related information.
+        """
+        return {
+            "adds_code": self.classifier._adds_code,
+            "deletes_code": self.classifier._deletes_code,
+            "refactors_code": self.classifier._refactors_code,
+            "changes_lines": self.classifier._changes_lines,
+            "changes_functions": self.classifier._changes_functions,
+            "changes_files": self.classifier._changes_files,
+            "patch_partial_fix": self.classifier._patch_partial_fix,
+            "number_of_vulns_fixed_by_patch": self.classifier._number_of_vulns_fixed_by_patch,
+            "dmm_unit_size": self.classifier._dmm_unit_size,
+            "dmm_unit_complexity": self.classifier._dmm_unit_complexity,
+            "dmm_unit_interfacing": self.classifier._dmm_unit_interfacing,
+        }
+    
+    @property
+    def full_repo_path(self) -> str:
+        return self._full_repo_path
+
+    @property
+    def base_commit_obj(self) -> Commit:
+        return self._base_commit_obj
+
+    @property
+    def mod_files_by_vuln_commit(self) -> list[ModifiedFile]:
+        return self._mod_files_by_vuln_commit
+
+    @property
+    def changes_vuln_commit(self) -> dict:
+        return self._changes_vuln_commit
+    
 class Vuln_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
@@ -133,81 +226,24 @@ class Vuln_Commit_Classifier:
 
 
 
-    def classify_vuln_commit(self, vuln_commit_hash_obj: Commit) -> None:
+    def classify_vuln_commit(self, base_commit_obj: Vuln_Commit._bas ##write getter ## ) -> None:
         # Update the fields based on the vuln commit analysis (simplified here)
-        self._adds_code = vuln_commit_hash_obj.insertions > 0
-        self._deletes_code = vuln_commit_hash_obj.deletions > 0
+        self._adds_code = base_commit_obj.insertions > 0
+        self._deletes_code = base_commit_obj.deletions > 0
         self._refactors_code: bool = False
         
         self._changes_lines = None
         self._changes_functions: bool = False
-        self._changes_files = vuln_commit_hash_obj.files > 0
+        self._changes_files = base_commit_obj.files > 0
 
         self._patch_partial_fix: bool = False
         self._number_of_patch_commits_for_vuln = 1 ### IF this wasn't 1, this would be a unfixed vulnerability
         
-        self._dmm_unit_size = vuln_commit_hash_obj.dmm_unit_size
-        self._dmm_unit_complexity = vuln_commit_hash_obj.dmm_unit_complexity
-        self._dmm_unit_interfacing = vuln_commit_hash_obj.dmm_unit_interfacing
+        self._dmm_unit_size = base_commit_obj.dmm_unit_size
+        self._dmm_unit_complexity = base_commit_obj.dmm_unit_complexity
+        self._dmm_unit_interfacing = base_commit_obj.dmm_unit_interfacing
 
 
-class Vuln_Commit():
-    """
-    Every Vulnerable Commit has a corresponding patch commit to go along with it.
-    There can also be multiple vulns that correspond to a single patch commit
-    Args:
-        Patch_Commit (_type_): _description_
-    """
-
-    ### I want each vulnerable commit to have a classifier for that commit!! ###
-    def __init__(self, full_repo_path: str, vuln_commit_obj: Commit, patch_commit_obj: Patch_Commit) -> None:
-        super().__init__() # Calls the next class in MRO
-        
-        self._full_repo_path: str = full_repo_path
-
-
-        self._vuln_commit_hash_obj: Commit = vuln_commit_obj
-
-
-        
-        
-        self._mod_files_by_vuln_commit: list[ModifiedFile] = []
-        
-        
-        self._changes_vuln_commit: dict = {}
-
-        # Create an instance of Patch_Commit_Classifier and associate it with this Patch_Commit instance
-        self.classifier = Patch_Commit_Classifier()
-        # Call the classifier method to update fields based on the patch commit object
-        self.classifier.classify_patch_commit(patch_commit_hash_obj)
-
-        ### Changes Made By Patch Commit ###
-        self._mod_files_by_patch_commit.extend(patch_commit_hash_obj.modified_files) 
-    
-    def __eq__(self, other:object):
-        return isinstance(other,Vuln_Commit) and self._vuln_commit_hash_obj.hash == other._vuln_commit_hash_obj.hash
-
-    def __hash__(self):
-        return hash(self._vuln_commit_hash_obj.hash)
-    
-    def get_classifier_info(self) -> dict:
-
-        """
-        Returns a dictionary containing classifier-related information.
-        """
-        return {
-            "adds_code": self.classifier._adds_code,
-            "deletes_code": self.classifier._deletes_code,
-            "refactors_code": self.classifier._refactors_code,
-            "changes_lines": self.classifier._changes_lines,
-            "changes_functions": self.classifier._changes_functions,
-            "changes_files": self.classifier._changes_files,
-            "patch_partial_fix": self.classifier._patch_partial_fix,
-            "number_of_vulns_fixed_by_patch": self.classifier._number_of_vulns_fixed_by_patch,
-            "dmm_unit_size": self.classifier._dmm_unit_size,
-            "dmm_unit_complexity": self.classifier._dmm_unit_complexity,
-            "dmm_unit_interfacing": self.classifier._dmm_unit_interfacing,
-        }
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
 

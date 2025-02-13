@@ -96,6 +96,26 @@ def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:
 
 if __name__ == "__main__":
 
+    ### TO-DO ###
+# make sure that when I call functions in error_handling, to use Pass or continue keyword to skip to the next thing
+## ***** above is very important    
+# copy all code over and adjust variable names and add necessary error handling for skipping messed up cases
+# write code to get the previous commit (the one directly before the patch) this way we can compare that to the other hash.
+# write code to get the specific path to the git repo of the selected FOSS Project for the specific patch commit from list in json. Fill PATH_SELECTED_REPO:str = "" variable 
+# write code to get the vuln changes for CHANGES VULN COMMIT in the same format as the patch commit. Reusability!
+# write code to get the parent directory with all the .git repos. Use error handling to make sure there is a .git file
+# write code to get the name / directory of the FOSS project in the json and verify it exists in the parent directory with all .git repos.
+# write code to write the original patch commit, directly prev commit, and the suspected vuln commit (or replace with error if unable to find), and changes to a new json file --> This is the solution
+# write correct shebang at the top of script aka find location of python3 on RC
+# put all paths into the .env file when I login to RC and find everything on my terminal. Can I carry the .env file with me??? How are env vars handled on RC?
+# write code to write the commit changes to the json file (this is already kinda done, but I need to clean it up)
+# add env variables to .env 
+# go back through all setters in cve_config and write functions to actually get the data in the fields. Like for Vuln classifier. How do I get that info ?
+# answer this question --> Where am I getting path selected repo, the repo that's selected for that particular iteration of for loop
+## Create another file / section that focuses on analyzing the dataset once json data is processed that we have with python. Doesn't necessarily have to be 
+## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
+## create a recursive algorithm that traverses the modified files and changes in each commit object / vuln object commit in the bi map ???
+
     '''
     Question: do the people maintian pydriller well?? The docs seem kinda off no cap
     '''
