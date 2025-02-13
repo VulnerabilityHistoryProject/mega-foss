@@ -73,7 +73,7 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
             '''
             cve_map.
            
-    return processed_cves ## remove this
+    return 
 
 
 #### Next step ### 

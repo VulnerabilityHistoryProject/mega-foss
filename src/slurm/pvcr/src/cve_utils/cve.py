@@ -174,8 +174,6 @@ class PatchVulnBiMap:
                                ]] = {}
 
 
-    def get_patch_for_cve_id() -> Patch_Commit:
-        pass
     def add_mapping(self, cve_id: str, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
         """Adds a bidirectional mapping between a patch commit and a vulnerability commit for a given CVE ID."""
         
@@ -201,6 +199,7 @@ class PatchVulnBiMap:
             # Add vuln -> patch relationship for the CVE
             self._cve_mapping[cve_id][1].setdefault(vuln, set())
 
+    def get_patch_for_cve_id()
     def get_vulns_for_patch(self, cve_id: str, patch: Patch_Commit) -> set:
         """Returns the vulnerabilities fixed by a given patch commit for the specified CVE ID."""
         if cve_id in self._cve_mapping:
@@ -291,6 +290,12 @@ class CVE(BaseModel):
 
     ### Bi-Map Helper Methods ###
     ############################################################################
+
+    def get_patch_for_cve_id(self,cve_id: str) -> Optional[Patch_Commit]:
+
+        if cve_id in self._patch_vuln_bi_map:
+            
+
     def add_to_BiMap(self,**kwargs)->None:
         """
         This function is used when a cve id appears twice in the json file which implies multiple patch commits for a single cve.
