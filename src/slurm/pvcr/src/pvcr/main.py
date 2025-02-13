@@ -69,11 +69,11 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
             issue... two patches have the same cve id, but they have different patch hashes and I don't have the vulnerability yet
 
             op 1) try and find the vuln in this function (that gonna take a sec)
-            op 2) figure it out
+            op 2) create an empty vuln object that I later add the details for once I find it THIS ONE I THINK
             '''
             cve_map.
            
-    return processed_cves
+    return processed_cves ## remove this
 
 
 #### Next step ### 
