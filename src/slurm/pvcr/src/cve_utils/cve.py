@@ -9,45 +9,7 @@ from configuration import script_setup as setup
 from pydriller import Repository, Commit, ModifiedFile
 from pydantic import BaseModel
 
-class Patch_Commit_Classifier(BaseModel):
-    """
-    The goal of this class is to answer the question: What has been changed by the patch commit??
-    """
-    def __init__(self) -> None:
-        super().__init__() # Calls the next class in MRO
-        ### TO-DO ###
-        # Continue reading papers to refine this list of fieds
-        self._adds_code: bool = False
-        self._deletes_code:bool = False
-        self._refactors_code: bool = False
-        self._changes_lines: bool = False
-        self._changes_functions: bool = False
-        self._changes_files: bool = False
-        self._patch_partial_fix: bool = False
-        self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
-        
-        ### Complexity ### 
-        self._dmm_unit_size: float = None
-        self._dmm_unit_complexity: float = None
-        self._dmm_unit_interfacing: float = None
-    def classify_patch_commit(self, patch_commit_hash_obj: Commit) -> None:
-        # Update the fields based on the patch commit analysis (simplified here)
-        self._adds_code = patch_commit_hash_obj.insertions > 0
-        self._deletes_code = patch_commit_hash_obj.deletions > 0
-        self._refactors_code: bool = False
-        
-        self._changes_lines = None
-        self._changes_functions: bool = False
-        self._changes_files = patch_commit_hash_obj.files > 0
 
-        self._patch_partial_fix: bool = False
-        self._number_of_vulns_fixed_by_patch: int = 1
-        
-        
-        self._dmm_unit_size = patch_commit_hash_obj.dmm_unit_size
-        self._dmm_unit_complexity = patch_commit_hash_obj.dmm_unit_complexity
-        self._dmm_unit_interfacing = patch_commit_hash_obj.dmm_unit_interfacing
-  
 class Patch_Commit():
     """
     All the data to capture from the Patch commits
@@ -68,7 +30,8 @@ class Patch_Commit():
         self._changes_by_patch_commit: dict = {}
 
         # Create an instance of Patch_Commit_Classifier and associate it with this Patch_Commit instance
-        self._classifier = Patch_Commit_Classifier()
+        self._classifier: Patch_Commit_Classifier = Patch_Commit_Classifier()
+
         # Call the classifier method to update fields based on the patch commit object
         self._classifier.classify_patch_commit(base_commit_obj)
 
@@ -117,9 +80,48 @@ class Patch_Commit():
     def changes_by_patch_commit(self) -> dict:
         return self._changes_by_patch_commit
     @property
-    def classifier(self) -> Patch_Commit_Classifier:
+    def classifier(self) -> "Patch_Commit_Classifier": ### Forward declaration ###
         return self._classifier
 
+class Patch_Commit_Classifier(BaseModel):
+    """
+    The goal of this class is to answer the question: What has been changed by the patch commit??
+    """
+    def __init__(self) -> None:
+        super().__init__() # Calls the next class in MRO
+        ### TO-DO ###
+        # Continue reading papers to refine this list of fieds
+        self._adds_code: bool = False
+        self._deletes_code:bool = False
+        self._refactors_code: bool = False
+        self._changes_lines: bool = False
+        self._changes_functions: bool = False
+        self._changes_files: bool = False
+        self._patch_partial_fix: bool = False
+        self._number_of_vulns_fixed_by_patch: int = 1 # Sometimes multiple vulns are fixed by a single patch
+        
+        ### Complexity ### 
+        self._dmm_unit_size: float = None
+        self._dmm_unit_complexity: float = None
+        self._dmm_unit_interfacing: float = None
+    def classify_patch_commit(self, patch_commit_hash_obj: Commit) -> None:
+        # Update the fields based on the patch commit analysis (simplified here)
+        self._adds_code = patch_commit_hash_obj.insertions > 0
+        self._deletes_code = patch_commit_hash_obj.deletions > 0
+        self._refactors_code: bool = False
+        
+        self._changes_lines = None
+        self._changes_functions: bool = False
+        self._changes_files = patch_commit_hash_obj.files > 0
+
+        self._patch_partial_fix: bool = False
+        self._number_of_vulns_fixed_by_patch: int = 1
+        
+        
+        self._dmm_unit_size = patch_commit_hash_obj.dmm_unit_size
+        self._dmm_unit_complexity = patch_commit_hash_obj.dmm_unit_complexity
+        self._dmm_unit_interfacing = patch_commit_hash_obj.dmm_unit_interfacing
+  
 
 
 class Vuln_Commit():
@@ -149,8 +151,9 @@ class Vuln_Commit():
 
         # Create an instance of Vuln_Commit_Classifier and associate it with this Vuln_Commit instance
         self._classifier = Vuln_Commit_Classifier()
+
         # Call the classifier method to update fields based on the Vuln commit object
-        self._classifier.classify_Vuln_commit()
+        self._classifier.classify_vuln_commit(base_commit_obj)
 
         ### Changes Made By Patch Commit ###
         self._mod_files_by_vuln_commit.extend(base_commit_obj.modified_files) 
@@ -167,17 +170,17 @@ class Vuln_Commit():
         Returns a dictionary containing classifier-related information.
         """
         return {
-            "adds_code": self.classifier._adds_code,
-            "deletes_code": self.classifier._deletes_code,
-            "refactors_code": self.classifier._refactors_code,
-            "changes_lines": self.classifier._changes_lines,
-            "changes_functions": self.classifier._changes_functions,
-            "changes_files": self.classifier._changes_files,
-            "patch_partial_fix": self.classifier._patch_partial_fix,
-            "number_of_vulns_fixed_by_patch": self.classifier._number_of_vulns_fixed_by_patch,
-            "dmm_unit_size": self.classifier._dmm_unit_size,
-            "dmm_unit_complexity": self.classifier._dmm_unit_complexity,
-            "dmm_unit_interfacing": self.classifier._dmm_unit_interfacing,
+            "adds_code": self._classifier._adds_code,
+            "deletes_code": self._classifier._deletes_code,
+            "refactors_code": self._classifier._refactors_code,
+            "changes_lines": self._classifier._changes_lines,
+            "changes_functions": self._classifier._changes_functions,
+            "changes_files": self._classifier._changes_files,
+            "patch_partial_fix": self._classifier._patch_partial_fix,
+            "number_of_vulns_fixed_by_patch": self._classifier._number_of_vulns_fixed_by_patch,
+            "dmm_unit_size": self._classifier._dmm_unit_size,
+            "dmm_unit_complexity": self._classifier._dmm_unit_complexity,
+            "dmm_unit_interfacing": self._classifier._dmm_unit_interfacing,
         }
     
     @property
@@ -195,6 +198,9 @@ class Vuln_Commit():
     @property
     def changes_vuln_commit(self) -> dict:
         return self._changes_vuln_commit
+    @property
+    def classifier_(self) -> "Vuln_Commit_Classifier": ### Forward Declaration ###
+        return self._classifier
     
 class Vuln_Commit_Classifier:
     """
@@ -226,7 +232,7 @@ class Vuln_Commit_Classifier:
 
 
 
-    def classify_vuln_commit(self, base_commit_obj: Vuln_Commit._bas ##write getter ## ) -> None:
+    def classify_vuln_commit(self, base_commit_obj: Commit) -> None:
         # Update the fields based on the vuln commit analysis (simplified here)
         self._adds_code = base_commit_obj.insertions > 0
         self._deletes_code = base_commit_obj.deletions > 0
@@ -234,7 +240,7 @@ class Vuln_Commit_Classifier:
         
         self._changes_lines = None
         self._changes_functions: bool = False
-        self._changes_files = base_commit_obj.files > 0
+        self._changes_files = base_commit_obj.files > 0 ### I have no expensive how long these lookups take? ###
 
         self._patch_partial_fix: bool = False
         self._number_of_patch_commits_for_vuln = 1 ### IF this wasn't 1, this would be a unfixed vulnerability
@@ -243,6 +249,16 @@ class Vuln_Commit_Classifier:
         self._dmm_unit_complexity = base_commit_obj.dmm_unit_complexity
         self._dmm_unit_interfacing = base_commit_obj.dmm_unit_interfacing
 
+    
+    def vuln_changes_lines(self,base_commit_obj: Commit) -> bool:
+        pass
+    
+    def vuln_changes_functions(self,base_commit_obj:Commit) -> bool:
+        
+    ### Classifications for V2 ###
+    def vuln_refactors_code(self,base_commit_obj) -> bool:
+        pass
+    def vuln_
 
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
