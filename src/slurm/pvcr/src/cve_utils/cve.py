@@ -68,8 +68,15 @@ class Patch_Commit():
 
         ### Changes Made By Patch Commit ###
         self._mod_files_by_patch_commit.extend(patch_commit_hash_obj.modified_files) 
-        
+    
+    def __eq__(self, other:object):
+        return isinstance(other,Patch_Commit) and self._patch_commit_hash_obj.hash == other._patch_commit_hash_obj.hash
+
+    def __hash__(self):
+        return hash(self._patch_commit_hash_obj.hash)
+    
     def get_classifier_info(self) -> dict:
+
         """
         Returns a dictionary containing classifier-related information.
         """
@@ -156,7 +163,11 @@ class Vuln_Commit(Commit,Vuln_Commit_Classifier):
         self._mod_files_by_vuln_commit: list[str] = []
         self._changes_vuln_commit: dict = {}
     
+    def __eq__(self, other:object):
+        return isinstance(other,Vuln_Commit) and self._vuln_commit_hash_obj.hash == other._vuln_commit_hash_obj.hash
 
+    def __hash__(self):
+        return hash(self._vuln_commit_hash_obj.hash)
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
 
@@ -199,7 +210,25 @@ class PatchVulnBiMap:
             # Add vuln -> patch relationship for the CVE
             self._cve_mapping[cve_id][1].setdefault(vuln, set())
 
-    def get_patch_for_cve_id()
+    def get_patch_commits_for_cve_id(self,cve_id: str)-> set[Patch_Commit]:
+        if cve_id in self._cve_mapping:
+            patches: set[Patch_Commit] = self._cve_mapping[cve_id][0].keys()
+            patches.add(self._cve_mapping[cve_id][1].values())
+
+            return patches
+        else:
+            return None
+        
+    def get_vuln_commits_for_cve_id(self,cve_id: str)-> set[Vuln_Commit]:
+        if cve_id in self._cve_mapping:
+            vulns: set[Vuln_Commit] = self._cve_mapping[cve_id][0].values()
+            vulns.add(self._cve_mapping[cve_id][1].keys())
+
+            return vulns
+        else:
+            return None
+        
+
     def get_vulns_for_patch(self, cve_id: str, patch: Patch_Commit) -> set:
         """Returns the vulnerabilities fixed by a given patch commit for the specified CVE ID."""
         if cve_id in self._cve_mapping:
@@ -294,7 +323,7 @@ class CVE(BaseModel):
     def get_patch_for_cve_id(self,cve_id: str) -> Optional[Patch_Commit]:
 
         if cve_id in self._patch_vuln_bi_map:
-            
+            pass
 
     def add_to_BiMap(self,**kwargs)->None:
         """
