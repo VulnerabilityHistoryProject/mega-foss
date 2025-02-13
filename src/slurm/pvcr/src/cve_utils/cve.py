@@ -6,7 +6,11 @@ from typing import Any,Generator, Optional, ClassVar
 from error_handling import handle_errors as handle
 from szz_utils import szz
 from configuration import script_setup as setup
+
+
+### In the same directory ###
 import patch_vuln_commit as pvc
+import BiMap
 
 from pydriller import Repository, Commit, ModifiedFile
 from pydantic import BaseModel

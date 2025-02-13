@@ -1,12 +1,20 @@
+from typing import Any,Generator, Optional, ClassVar
+from pydantic import BaseModel
+
+### In the same directory ###
+import cve
+import BiMap
 
 
+### pydriller imports ###
+from pydriller import Repository, Commit, ModifiedFile
 
 
 class Patch_Commit():
     """
     All the data to capture from the Patch commits
     """
-    def __init__(self, full_repo_path: str, _base_commit_obj:Commit) -> None:
+    def __init__(self, full_repo_path: str, base_commit_obj:Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
 
