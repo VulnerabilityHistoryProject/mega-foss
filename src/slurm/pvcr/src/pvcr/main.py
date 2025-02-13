@@ -1,7 +1,12 @@
 
+
+
+### Project Imports ###
 from error_handling import logger_config
-from configuration import script_setup as setup
-from cve_utils import cve
+from configuration.script_setup import SCRIPT_CONFIG
+from cve_utils.cve import CVE
+from cve_utils.BiMap import PatchVulnBiMap
+from cve_utils import patch_vuln_commit as pvc
 from szz_utils import szz
 from error_handling import handle_errors as handle
 
@@ -30,7 +35,7 @@ def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, 
             yield entry  # Yielding each entry one by one
 
 
-def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: cve.PatchVulnBiMap) -> dict[str,cve.CVE]:
+def process_JSON_CVE(json_file_path: str, config: SCRIPT_CONFIG, cve_map: PatchVulnBiMap) -> dict[str,CVE]:
 
 
     cve_data: Generator[dict[str,str], None, None] = stream_json_entries(json_file_path)
@@ -45,7 +50,7 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
         if json_cve_id not in cve_map: ### Check if cve is already in the bi map ###
 
             # Create a new instance of the cve class
-            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash, config,patch_vuln_bi_map=cve_map) ### Dependency Injection here ###
+            cve_vuln: CVE = CVE(json_cve_id,partial_repo_path,patch_commit_hash, config,patch_vuln_bi_map=cve_map) ### Dependency Injection here ###
             
             ### Add primary patch commit to bi map if it hasn't been added yet ###
             cve_vuln.add_to_BiMap(cve_id=json_cve_id,patch_commit=cve_vuln._primary_patch_commit)
@@ -83,14 +88,14 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
 def export_cve_objects_as_json(processed_cves:) -> None:
     pass
 
-def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:
+def pickle_cve_objects(processed_cves: dict[str,CVE]) -> None:
     """
     Pickle cve objects and store them in the data_sources/output_data/cve_pickle_objets directory
 
     Caution: For instance, if the class depends on a function from a different module, that module should be imported before unpickling.
 
     Args:
-        processed_cves (dict[str,cve.CVE]): _description_
+        processed_cves (dict[str,CVE]): _description_
     """
     pass
 
@@ -115,7 +120,7 @@ if __name__ == "__main__":
 ## Create another file / section that focuses on analyzing the dataset once json data is processed that we have with python. Doesn't necessarily have to be 
 ## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
 ## create a recursive algorithm that traverses the modified files and changes in each commit object / vuln object commit in the bi map ???
-
+## when debugging be aware of circular imports 
     '''
     Question: do the people maintian pydriller well?? The docs seem kinda off no cap
     '''
@@ -124,13 +129,13 @@ if __name__ == "__main__":
     basic_logger = logger_config.setup_initial_logging()
 
     ### Singleton Config Instance ###
-    CONFIG = setup.SCRIPT_CONFIG(basic_logger)
+    CONFIG = SCRIPT_CONFIG(basic_logger)
 
     ### Singleton Bidirectional Map Instance ###
-    CVE_MAP = cve.PatchVulnBiMap()
+    CVE_MAP = PatchVulnBiMap()
 
     ### Dependency Injection ### 
-    CVE_dict: dict[cve.CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)
+    CVE_dict: dict[CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)
     
 
     # Find the modified files by patch commit

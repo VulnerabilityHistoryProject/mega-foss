@@ -2,18 +2,21 @@ import logging
 import os
 import sys
 from typing import Any,Generator, Optional, ClassVar
+from pydantic import BaseModel
 
+### pydriller imports ###
+from pydriller import Repository, Commit, ModifiedFile
+
+
+### Project imports ###
 from error_handling import handle_errors as handle
 from szz_utils import szz
-from configuration import script_setup as setup
+from configuration.script_setup import SCRIPT_CONFIG
 
 
 ### In the same directory ###
-import patch_vuln_commit as pvc
-import BiMap
-
-from pydriller import Repository, Commit, ModifiedFile
-from pydantic import BaseModel
+from patch_vuln_commit import Patch_Commit, Vuln_Commit
+from BiMap import PatchVulnBiMap
 
 
 class CVE(BaseModel):
@@ -24,7 +27,7 @@ class CVE(BaseModel):
         Vuln_Commits (_type_): _description_
     """
     
-    def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: setup.SCRIPT_CONFIG,patch_vuln_bi_map: PatchVulnBiMap) -> None:
+    def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: SCRIPT_CONFIG,patch_vuln_bi_map: PatchVulnBiMap) -> None:
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -115,7 +118,7 @@ class CVE(BaseModel):
         
         return vuln_commit_obj
     
-    def get_full_repo_path(partial_repo_path: str, config: setup.SCRIPT_CONFIG) -> str:
+    def get_full_repo_path(partial_repo_path: str, config: SCRIPT_CONFIG) -> str:
         """
         Use the global config ROOT DIR field to get to the specific repo for the project. 
         Make sure that there is a .git! That's a little check that can go a long way.

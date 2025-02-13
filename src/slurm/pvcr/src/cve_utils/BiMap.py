@@ -1,12 +1,13 @@
 from typing import Any,Generator, Optional, ClassVar
 
+### pydriller imports ###
+from pydriller import Repository, Commit, ModifiedFile
+
 
 ### In the same directory ###
 import cve
 from patch_vuln_commit import Patch_Commit, Vuln_Commit
 
-### pydriller imports ###
-from pydriller import Repository, Commit, ModifiedFile
 
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.

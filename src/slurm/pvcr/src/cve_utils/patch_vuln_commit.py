@@ -2,8 +2,8 @@ from typing import Any,Generator, Optional, ClassVar
 from pydantic import BaseModel
 
 ### In the same directory ###
-import cve
-import BiMap
+from cve import CVE
+from BiMap import PatchVulnBiMap
 
 
 ### pydriller imports ###
@@ -152,7 +152,7 @@ class Vuln_Commit():
 
         # Call the classifier method to update fields based on the Vuln commit object
         self._classifier.classify_vuln_commit(base_commit_obj)
-
+        '''create function above so that it exists'''
         ### Changes Made By Patch Commit ###
         self._mod_files_by_vuln_commit.extend(base_commit_obj.modified_files) 
     
