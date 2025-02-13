@@ -5,7 +5,7 @@ from pydriller import Repository, Commit, ModifiedFile
 
 
 ### In the same directory ###
-import cve
+from cve import CVE
 from patch_vuln_commit import Patch_Commit, Vuln_Commit
 
 
@@ -103,4 +103,7 @@ class PatchVulnBiMap:
         """Returns the full bidirectional mapping for all CVE IDs."""
         return self._cve_mapping
 
-    
+
+
+if __name__ == "__main__":
+    bimap = PatchVulnBiMap()

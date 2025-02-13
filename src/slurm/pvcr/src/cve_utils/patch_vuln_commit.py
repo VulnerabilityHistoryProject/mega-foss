@@ -141,20 +141,19 @@ class Vuln_Commit():
 
         self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Vuln Commit object ###
 
-        
-        self._mod_files_by_vuln_commit: list[ModifiedFile] = []
-        
+        ### Capture Changes Made By Patch Commit ###
+        self._mod_files_by_vuln_commit: list[ModifiedFile] = [] 
+        self._mod_files_by_vuln_commit.extend(base_commit_obj.modified_files) 
         
         self._changes_vuln_commit: dict = {}
 
         # Create an instance of Vuln_Commit_Classifier and associate it with this Vuln_Commit instance
-        self._classifier = Vuln_Commit_Classifier()
+        self._classifier = Vuln_Commit_Classifier(base_commit_obj, self._mod_files_by_vuln_commit)
 
         # Call the classifier method to update fields based on the Vuln commit object
         self._classifier.classify_vuln_commit(base_commit_obj)
         '''create function above so that it exists'''
-        ### Changes Made By Patch Commit ###
-        self._mod_files_by_vuln_commit.extend(base_commit_obj.modified_files) 
+       
     
     def __eq__(self, other:object):
         return isinstance(other,Vuln_Commit) and self._base_commit_obj.hash == other._base_commit_obj.hash
@@ -162,20 +161,31 @@ class Vuln_Commit():
     def __hash__(self):
         return hash(self._base_commit_obj.hash)
     
-    def get_classifier_info(self) -> dict:
+    def get_classifier_info(self, basic: bool = True, advanced: bool = False) -> dict:
 
         """
         Returns a dictionary containing classifier-related information.
         """
-        return {
+
+
+        basic = {
             "adds_code": self._classifier._adds_code,
             "deletes_code": self._classifier._deletes_code,
-            "refactors_code": self._classifier._refactors_code,
             "changes_lines": self._classifier._changes_lines,
             "changes_functions": self._classifier._changes_functions,
             "changes_files": self._classifier._changes_files,
+            "is_prev_commit_to_patch": self._classifier._is_prev_commit_to_patch,
+            "number_of_patch_commits_for_vuln": self._classifier._number_of_patch_commits_for_vuln,
+            "dmm_unit_size": self._classifier._dmm_unit_size,
+            "dmm_unit_complexity": self._classifier._dmm_unit_complexity,
+            "dmm_unit_interfacing": self._classifier._dmm_unit_interfacing
+        }
+        return {
+            
+            "refactors_code": self._classifier._refactors_code,
+            
             "patch_partial_fix": self._classifier._patch_partial_fix,
-            "number_of_vulns_fixed_by_patch": self._classifier._number_of_vulns_fixed_by_patch,
+            
             "dmm_unit_size": self._classifier._dmm_unit_size,
             "dmm_unit_complexity": self._classifier._dmm_unit_complexity,
             "dmm_unit_interfacing": self._classifier._dmm_unit_interfacing,
@@ -204,7 +214,7 @@ class Vuln_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
     """
-    def __init__(self,base_commit_obj: Commit) -> None:
+    def __init__(self,base_commit_obj: Commit, modified_files_by_vuln_commit: list[ModifiedFile]) -> None:
 
         super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""

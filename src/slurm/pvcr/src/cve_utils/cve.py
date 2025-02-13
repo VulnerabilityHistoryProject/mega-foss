@@ -147,6 +147,8 @@ class CVE(BaseModel):
 
         - basically compare all of the fields present in the Commit and Vuln classifiers contextually.
         """
+
+        #### Maybe I can write a __eq__ method that does the calculations betwen
         pass
     def compaure_patch_and_vuln_complexity():
         pass
