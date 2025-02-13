@@ -168,7 +168,7 @@ class Vuln_Commit():
         """
 
 
-        basic = {
+        basic: dict[str, Any] = {
             "adds_code": self._classifier._adds_code,
             "deletes_code": self._classifier._deletes_code,
             "changes_lines": self._classifier._changes_lines,
@@ -180,16 +180,22 @@ class Vuln_Commit():
             "dmm_unit_complexity": self._classifier._dmm_unit_complexity,
             "dmm_unit_interfacing": self._classifier._dmm_unit_interfacing
         }
-        return {
+        advanced: dict[str,Any] = {
             
             "refactors_code": self._classifier._refactors_code,
+            "was_patch_partial_fix": self._classifier._was_patch_partial_fix,
             
-            "patch_partial_fix": self._classifier._patch_partial_fix,
             
-            "dmm_unit_size": self._classifier._dmm_unit_size,
-            "dmm_unit_complexity": self._classifier._dmm_unit_complexity,
-            "dmm_unit_interfacing": self._classifier._dmm_unit_interfacing,
         }
+
+        if basic and advanced:
+            return basic.update(advanced) ### Add dictionaries together ###
+        elif basic:
+            return basic
+        elif advanced:
+            return advanced
+        else:
+            return None
     
     @property
     def full_repo_path(self) -> str:
