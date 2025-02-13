@@ -125,7 +125,7 @@ class Patch_Commit_Classifier(BaseModel):
         self._dmm_unit_complexity = patch_commit_hash_obj.dmm_unit_complexity
         self._dmm_unit_interfacing = patch_commit_hash_obj.dmm_unit_interfacing
 
-class Vuln_Commit():
+class Parent_Commit():
     """
     Every Vulnerable Commit has a corresponding patch commit to go along with it.
     There can also be multiple vulns that correspond to a single patch commit

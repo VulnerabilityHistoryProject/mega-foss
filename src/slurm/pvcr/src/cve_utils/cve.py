@@ -43,7 +43,7 @@ class CVE(BaseModel):
         ### Each CVE object will have its own patch vuln analyzer ###
         self._patch_vuln_analyzer: Commit_Analyzer = Commit_Analyzer()
 
-        
+
         ### CVE Info ###
         ############################################################################
         self._cve_id: str = cve_id
@@ -54,7 +54,7 @@ class CVE(BaseModel):
         self._partial_repo_path: str = partial_repo_path
         self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config) ### Dependency injection is being used
 
-        ### Commit Info ###
+        ### Parent Commits --> BINGO ###
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
                                                             single = hash_patch_commit,
