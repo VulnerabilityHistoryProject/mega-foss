@@ -89,6 +89,9 @@ class Patch_Commit_Classifier(BaseModel):
     """
     def __init__(self) -> None:
         super().__init__() # Calls the next class in MRO
+       
+        self._analyzer = Patch_Commit_Analyzer()
+       
         ### TO-DO ###
         # Continue reading papers to refine this list of fieds
         self._adds_code: bool = False
@@ -132,7 +135,6 @@ class Vuln_Commit():
         
     """
 
-    
     def __init__(self, full_repo_path: str, base_commit_obj: Commit) -> None:
         super().__init__() # Calls the next class in MRO
         
@@ -141,17 +143,11 @@ class Vuln_Commit():
 
         self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Vuln Commit object ###
 
-        ### Capture Changes Made By Patch Commit ###
-        self._mod_files_by_vuln_commit: list[ModifiedFile] = [] 
-        self._mod_files_by_vuln_commit.extend(base_commit_obj.modified_files) 
-        
-        self._changes_vuln_commit: dict = {}
-
         # Create an instance of Vuln_Commit_Classifier and associate it with this Vuln_Commit instance
         self._classifier = Vuln_Commit_Classifier(base_commit_obj, self._mod_files_by_vuln_commit)
 
         # Call the classifier method to update fields based on the Vuln commit object
-        self._classifier.classify_vuln_commit(base_commit_obj)
+        self._classifier.classify_vuln_commit_basic(base_commit_obj,)
         '''create function above so that it exists'''
        
     
@@ -166,7 +162,6 @@ class Vuln_Commit():
         """
         Returns a dictionary containing classifier-related information.
         """
-
 
         basic: dict[str, Any] = {
             "adds_code": self._classifier._adds_code,
@@ -184,8 +179,7 @@ class Vuln_Commit():
             
             "refactors_code": self._classifier._refactors_code,
             "was_patch_partial_fix": self._classifier._was_patch_partial_fix,
-            
-            
+        
         }
 
         if basic and advanced:
@@ -220,19 +214,36 @@ class Vuln_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
     """
-    def __init__(self,base_commit_obj: Commit, modified_files_by_vuln_commit: list[ModifiedFile]) -> None:
+    def __init__(self,base_commit_obj: Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""
-        ### TO-DO ###
-        # Continue reading papers to refine this list of fieds
+        
+        
+        
+        
+        
         self._base_commit_obj: Commit = base_commit_obj
+    
+        
+        ### Capture Changes Made By Vuln Commit ###
+        self._mod_files_by_vuln_commit: list[ModifiedFile] = [] 
+        self._mod_files_by_vuln_commit.extend(self._base_commit_obj.modified_files) 
+        
+        self._changes_vuln_commit: dict = {}
+
         self._initialize_fields(self,self._base_commit_obj)
+
+
+        self._analyzer = Vuln_Commit_Analyzer()
         
 
        
     def _initialize_fields(self, _base_commit_obj: Commit) -> None: 
         self.classify_vuln_commit_basic(self,_base_commit_obj)
+
+        ### For a later time
+        # self.classify_vuln_commit_advanced(_base_commit_obj)
 
     def classify_vuln_commit_basic(self, _base_commit_obj: Commit) -> None:
         
@@ -244,9 +255,9 @@ class Vuln_Commit_Classifier:
         if self._adds_code or self._deletes_code:
             self._changes_lines: bool = True
 
-        _base_commit_obj.modified_files
+       
         
-        self._changes_functions: bool = False
+        self._changes_functions: bool =  _base_commit_obj.modified_files
         self._changes_files: bool = False
         self._is_prev_commit_to_patch = False
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
@@ -264,19 +275,35 @@ class Vuln_Commit_Classifier:
         self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
 
 
-    def vuln_changes_lines(self,_base_commit_obj: Commit) -> bool:
-        pass
-    
-    def vuln_changes_functions(self,_base_commit_obj:Commit) -> bool:
-        pass
+    @property
+    def _base_commit_obj(self) -> Commit:
+        return self._base_commit_obj
 
     
-    ### Classifications for V2 ###
+    ### Code for V2 ###
     def vuln_refactors_code(self,_base_commit_obj) -> bool:
         pass
     def vuln_hash_partial_patch_commit_fixes() -> bool:
         pass
 
-    @property
-    def _base_commit_obj(self) -> Commit:
-        return self._base_commit_obj
+    
+
+
+
+
+
+class Patch_Commit_Analyzer:
+    def analyze_lines_changed(self,_base_commit_obj: Commit) -> bool:
+        pass
+    
+    def analyze_functions_changed(self,_base_commit_obj:Commit) -> bool:
+        pass
+    pass
+
+class Vuln_Commit_Analyzer:
+    def analyze_lines_changed(self,_base_commit_obj: Commit) -> bool:
+        pass
+    
+    def analyze_functions_changed(self,_base_commit_obj:Commit) -> bool:
+        pass
+    pass

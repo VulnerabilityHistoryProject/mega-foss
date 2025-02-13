@@ -101,6 +101,9 @@ def pickle_cve_objects(processed_cves: dict[str,CVE]) -> None:
 
 if __name__ == "__main__":
 
+
+### TO-DO ###
+        # Continue reading papers to refine this list of fieds
     ### TO-DO ###
 # make sure that when I call functions in error_handling, to use Pass or continue keyword to skip to the next thing
 ## ***** above is very important    
