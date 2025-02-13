@@ -206,14 +206,14 @@ class Vuln_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
     """
-    def __init__(self,_base_commit_obj: Commit) -> None:
+    def __init__(self,base_commit_obj: Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""
         ### TO-DO ###
         # Continue reading papers to refine this list of fieds
-        self.__base_commit_obj: Commit = _base_commit_obj
-        self._initialize_fields()
+        self._base_commit_obj: Commit = base_commit_obj
+        self._initialize_fields(self,self._base_commit_obj)
         
 
        
@@ -262,6 +262,10 @@ class Vuln_Commit_Classifier:
         pass
     def vuln_hash_partial_patch_commit_fixes() -> bool:
         pass
+
+    @property
+    def _base_commit_obj(self) -> Commit:
+        return self._base_commit_obj
 
 class PatchVulnBiMap:
     """Bi-directional Mapping for patch commits to vuln commits and vice-versa, indexed by CVE ID.
@@ -442,21 +446,18 @@ class CVE(BaseModel):
         return self._patch_vuln_bi_map.get_all_mappings(self._patch_vuln_bi_map)
 
 
-    def create_patch_commit_obj(self,patch_commit_hash:str) -> Patch_Commit:
+    def create_base_commit_obj(self, commit_hash: str) -> Commit:
         commit_obj: Commit = next(Repository( # Only get the hash patch commit object
                                                                 self._full_repo_path,
-                                                                single = patch_commit_hash).traverse_commits())
-        
-        patch_commit_obj: Patch_Commit = Patch_Commit(self._full_repo_path,commit_obj)
-        
+                                                                single = commit_hash).traverse_commits())
+        return commit_obj
+    def create_patch_commit_obj(self,commit_obj: Commit) -> Patch_Commit:
+        patch_commit_obj: Patch_Commit = Patch_Commit(self._full_repo_path,patch_commit_obj=commit_obj)
+
         return patch_commit_obj
     
-    def create_vuln_commit_obj(self,vuln_commit_hash:str, patch_commit_obj: Patch_Commit) -> Vuln_Commit:
-        commit_obj: Commit = next(Repository( # Only get the hash Vuln commit object
-                                                                self._full_repo_path,
-                                                                single = vuln_commit_hash).traverse_commits())
-        
-        vuln_commit_obj: Vuln_Commit = Vuln_Commit(self._full_repo_path,vuln_commit_obj=commit_obj,)
+    def create_vuln_commit_obj(self,commit_obj: Commit) -> Vuln_Commit:
+        vuln_commit_obj: Vuln_Commit = Vuln_Commit(self._full_repo_path,vuln_commit_obj=commit_obj)
         
         return vuln_commit_obj
     
