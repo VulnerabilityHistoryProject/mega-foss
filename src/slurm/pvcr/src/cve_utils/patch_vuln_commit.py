@@ -232,34 +232,41 @@ class Vuln_Commit_Classifier:
         
         self._changes_vuln_commit: dict = {}
 
-        self._initialize_fields(self,self._base_commit_obj)
+        self._initialize_fields(self,self._base_commit_obj, self._mod_files_by_vuln_commit)
 
 
         self._analyzer = Vuln_Commit_Analyzer()
         
 
        
-    def _initialize_fields(self, _base_commit_obj: Commit) -> None: 
-        self.classify_vuln_commit_basic(self,_base_commit_obj)
+    def _initialize_fields(self, base_commit_obj: Commit, modified_files_by_vuln_commit: list[ModifiedFile]) -> None: 
+        self.classify_vuln_commit_basic(base_commit_obj,modified_files_by_vuln_commit)
+        
 
         ### For a later time
-        # self.classify_vuln_commit_advanced(_base_commit_obj)
+        # self.classify_vuln_commit_advanced(_base_commit_obj, modified_files_by_vuln_commit)
 
-    def classify_vuln_commit_basic(self, _base_commit_obj: Commit) -> None:
+    def classify_vuln_commit_basic(self, base_commit_obj: Commit, modified_files_by_vuln_commit: list[ModifiedFile]) -> None:
         
         #### Used for comparing Patch Commit to Vuln Commit ###
         ### Classifications for V1 ###
-        self._adds_code: bool = _base_commit_obj.insertions > 0
-        self._deletes_code: bool = _base_commit_obj.deletions > 0
-        
-        if self._adds_code or self._deletes_code:
-            self._changes_lines: bool = True
+        self._adds_code: bool = base_commit_obj.insertions > 0
+        self._deletes_code: bool = base_commit_obj.deletions > 0
 
-       
+        self._changes_lines: bool = bool(self._adds_code or self._deletes_code)
+        self._changes_files: bool = len(modified_files_by_vuln_commit) > 1
+
+        for file in modified_files_by_vuln_commit:
+            self._changes_functions: bool = len(file.changed_methods) > 0
+
+
         
-        self._changes_functions: bool =  _base_commit_obj.modified_files
-        self._changes_files: bool = False
+        
+        ### this is gonna take a bit more work to define than I initially thought
         self._is_prev_commit_to_patch = False
+
+
+        ### lookup in the map
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
 
 
@@ -269,7 +276,7 @@ class Vuln_Commit_Classifier:
         self._dmm_unit_interfacing: float = None
         #######################################################
 
-    def classify_vuln_commit_advanced(self, _base_commit_obj: Commit) -> None:
+    def classify_vuln_commit_advanced(self, base_commit_obj: Commit) -> None:
         ### Classifications for V2 ###
         self._refactors_code: bool = False
         self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
@@ -279,7 +286,9 @@ class Vuln_Commit_Classifier:
     def _base_commit_obj(self) -> Commit:
         return self._base_commit_obj
 
-    
+    @property
+    def _modified_files_by_vuln_commit(self) -> list[ModifiedFile]:
+        return self._modified_files_by_vuln_commit
     ### Code for V2 ###
     def vuln_refactors_code(self,_base_commit_obj) -> bool:
         pass
@@ -288,19 +297,11 @@ class Vuln_Commit_Classifier:
 
     
 
+class Commit_Analyzer:
 
-
-
-
-class Patch_Commit_Analyzer:
-    def analyze_lines_changed(self,_base_commit_obj: Commit) -> bool:
+    def __init__(self,):
         pass
-    
-    def analyze_functions_changed(self,_base_commit_obj:Commit) -> bool:
-        pass
-    pass
-
-class Vuln_Commit_Analyzer:
+        
     def analyze_lines_changed(self,_base_commit_obj: Commit) -> bool:
         pass
     

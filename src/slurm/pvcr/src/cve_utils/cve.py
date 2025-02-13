@@ -15,7 +15,7 @@ from configuration.script_setup import SCRIPT_CONFIG
 
 
 ### In the same directory ###
-from patch_vuln_commit import Patch_Commit, Vuln_Commit
+from patch_vuln_commit import Patch_Commit, Vuln_Commit, Commit_Analyzer
 from BiMap import PatchVulnBiMap
 
 
@@ -38,7 +38,12 @@ class CVE(BaseModel):
 
         ### Bi-Directional Map used to keep track of relationships of all CVE's ###
         self._patch_vuln_bi_map: PatchVulnBiMap = patch_vuln_bi_map ### Dependency injection is being used
+        
+        
+        ### Each CVE object will have its own patch vuln analyzer ###
+        self._patch_vuln_analyzer: Commit_Analyzer = Commit_Analyzer()
 
+        
         ### CVE Info ###
         ############################################################################
         self._cve_id: str = cve_id
