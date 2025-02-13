@@ -80,7 +80,7 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
 ### Figure out how to extend the functionality of the existing Commit, Repository, and Modified file
 ### classes from pydriller library!
 
-def export_cve_objects_as_json(processed_cves: dict[str,cve.CVE]) -> None:
+def export_cve_objects_as_json(processed_cves:) -> None:
     pass
 
 def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:

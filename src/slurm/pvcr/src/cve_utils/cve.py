@@ -92,7 +92,7 @@ class Patch_Commit_Classifier(BaseModel):
         ### TO-DO ###
         # Continue reading papers to refine this list of fieds
         self._adds_code: bool = False
-        self._deletes_code:bool = False
+        self._deletes_code: bool = False
         self._refactors_code: bool = False
         self._changes_lines: bool = False
         self._changes_functions: bool = False
@@ -212,45 +212,44 @@ class Vuln_Commit_Classifier:
         """ Classify's vulnerability based on factors related to implementation and severity"""
         ### TO-DO ###
         # Continue reading papers to refine this list of fieds
-        self._adds_code: bool = False
-        self._deletes_code:bool = False
-        self._refactors_code: bool = False
 
-        self._changes_lines: bool = False
+        self._initialize_fields()
+        
+
+       
+    def _initialize_fields(self, base_commit_obj: Commit) -> None: 
+        self.classify_vuln_commit_basic(self,base_commit_obj)
+
+    def classify_vuln_commit_basic(self, base_commit_obj: Commit) -> None:
+        
+        #### Used for comparing Patch Commit to Vuln Commit ###
+        ### Classifications for V1 ###
+        self._adds_code: bool = base_commit_obj.insertions > 0
+        self._deletes_code: bool = base_commit_obj.deletions > 0
+        
+        if self._adds_code or self._deletes_code:
+            self._changes_lines: bool = True
+
+        base_commit_obj.modified_files
+        
         self._changes_functions: bool = False
         self._changes_files: bool = False
-        
         self._is_prev_commit_to_patch = False
-        self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
-
         self._number_of_patch_commits_for_vuln: int = 1 # Sometimes multiple patches are needed to fix a single vuln
-        
+
+
         ### Complexity ### 
         self._dmm_unit_size: float = None
         self._dmm_unit_complexity: float = None
         self._dmm_unit_interfacing: float = None
+        #######################################################
 
-
-
-    def classify_vuln_commit(self, base_commit_obj: Commit) -> None:
-        
-        ### Classifications for V1 ###
-        self._adds_code: bool = base_commit_obj.insertions > 0
-        self._deletes_code: bool = base_commit_obj.deletions > 0
-        self._changes_lines: bool = None
-        self._changes_functions: bool = False
-        self._changes_files: bool = base_commit_obj.files > 0 ### I have no expensive how long these lookups take? ###
-
-        self._patch_partial_fix: bool = False
-        self._number_of_patch_commits_for_vuln = 
-        
-        self._dmm_unit_size: float = base_commit_obj.dmm_unit_size
-        self._dmm_unit_complexity: float = base_commit_obj.dmm_unit_complexity
-        self._dmm_unit_interfacing: float = base_commit_obj.dmm_unit_interfacing
-
+    def classify_vuln_commit_advanced(self, base_commit_obj: Commit) -> None:
         ### Classifications for V2 ###
         self._refactors_code: bool = False
-    
+        self._was_patch_partial_fix: bool = False # did the patch only partially fix this vuln? True if num of patch commits (field below is greater than 1)
+
+
     def vuln_changes_lines(self,base_commit_obj: Commit) -> bool:
         pass
     
@@ -374,7 +373,7 @@ class CVE(BaseModel):
         super().__init__() # Calls the next class in MRO
 
         ### Bi-Directional Map used to keep track of relationships of all CVE's ###
-        self._patch_vuln_bi_map:PatchVulnBiMap = patch_vuln_bi_map ### Dependency injection is being used
+        self._patch_vuln_bi_map: PatchVulnBiMap = patch_vuln_bi_map ### Dependency injection is being used
 
         ### CVE Info ###
         ############################################################################
@@ -386,7 +385,7 @@ class CVE(BaseModel):
         self._partial_repo_path: str = partial_repo_path
         self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config) ### Dependency injection is being used
 
-        
+        ### Commit Info ###
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
                                                             single = hash_patch_commit,
