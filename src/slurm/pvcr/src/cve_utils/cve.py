@@ -74,7 +74,6 @@ class CVE(BaseModel):
         ### Don't have a vuln commit to add yet ###
         self.__class__.add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
 
-    
 
     def get_five_nearest_parent_commits(self) -> list[Parent_Commit]:
         """

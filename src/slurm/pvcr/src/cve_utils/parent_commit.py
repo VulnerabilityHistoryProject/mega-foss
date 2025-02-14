@@ -20,7 +20,7 @@ class Parent_Commit():
         # Create an instance of Parent_Commit_Classifier and associate it with this Parent_Commit instance
         self._classifier: Parent_Commit_Classifier = Parent_Commit_Classifier(base_commit_obj)
 
-        self._confidence_level: float = 0.0
+        self._CONFIDENCE_LEVEL: float = 0.0
        
     
     def __eq__(self, other:object):
