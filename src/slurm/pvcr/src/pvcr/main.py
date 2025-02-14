@@ -1,7 +1,12 @@
 
+
+
+### Project Imports ###
 from error_handling import logger_config
-from configuration import script_setup as setup
-from cve_utils import cve
+from configuration.script_setup import SCRIPT_CONFIG
+from cve_utils.cve import CVE
+from cve_utils.BiMap import PatchVulnBiMap
+from cve_utils import patch_commit as pvc
 from szz_utils import szz
 from error_handling import handle_errors as handle
 
@@ -30,7 +35,7 @@ def stream_json_entries(json_file_path: str) -> Generator[dict[str, str], None, 
             yield entry  # Yielding each entry one by one
 
 
-def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: cve.PatchVulnBiMap) -> dict[str,cve.CVE]:
+def process_JSON_CVE(json_file_path: str, config: SCRIPT_CONFIG, cve_map: PatchVulnBiMap) -> dict[str,CVE]:
 
 
     cve_data: Generator[dict[str,str], None, None] = stream_json_entries(json_file_path)
@@ -45,7 +50,7 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
         if json_cve_id not in cve_map: ### Check if cve is already in the bi map ###
 
             # Create a new instance of the cve class
-            cve_vuln: cve.CVE = cve.CVE(json_cve_id,partial_repo_path,patch_commit_hash, config,patch_vuln_bi_map=cve_map) ### Dependency Injection here ###
+            cve_vuln: CVE = CVE(json_cve_id,partial_repo_path,patch_commit_hash, config,patch_vuln_bi_map=cve_map) ### Dependency Injection here ###
             
             ### Add primary patch commit to bi map if it hasn't been added yet ###
             cve_vuln.add_to_BiMap(cve_id=json_cve_id,patch_commit=cve_vuln._primary_patch_commit)
@@ -69,33 +74,60 @@ def process_JSON_CVE(json_file_path: str, config: setup.SCRIPT_CONFIG, cve_map: 
             issue... two patches have the same cve id, but they have different patch hashes and I don't have the vulnerability yet
 
             op 1) try and find the vuln in this function (that gonna take a sec)
-            op 2) figure it out
+            op 2) create an empty vuln object that I later add the details for once I find it THIS ONE I THINK
             '''
             cve_map.
            
-    return processed_cves
+    return 
 
 
 #### Next step ### 
 ### Figure out how to extend the functionality of the existing Commit, Repository, and Modified file
 ### classes from pydriller library!
 
-def export_cve_objects_as_json(processed_cves: dict[str,cve.CVE]) -> None:
+def export_cve_objects_as_json(processed_cves:) -> None:
     pass
 
-def pickle_cve_objects(processed_cves: dict[str,cve.CVE]) -> None:
+def pickle_cve_objects(processed_cves: dict[str,CVE]) -> None:
     """
     Pickle cve objects and store them in the data_sources/output_data/cve_pickle_objets directory
 
     Caution: For instance, if the class depends on a function from a different module, that module should be imported before unpickling.
 
     Args:
-        processed_cves (dict[str,cve.CVE]): _description_
+        processed_cves (dict[str,CVE]): _description_
     """
     pass
 
 if __name__ == "__main__":
 
+
+### TO-DO ###
+        # Continue reading papers to refine this list of fieds
+    ### TO-DO ###
+# make sure that when I call functions in error_handling, to use Pass or continue keyword to skip to the next thing
+## ***** above is very important    
+# copy all code over and adjust variable names and add necessary error handling for skipping messed up cases
+# write code to get the previous commit (the one directly before the patch) this way we can compare that to the other hash.
+# write code to get the specific path to the git repo of the selected FOSS Project for the specific patch commit from list in json. Fill PATH_SELECTED_REPO:str = "" variable 
+# write code to get the vuln changes for CHANGES VULN COMMIT in the same format as the patch commit. Reusability!
+# write code to get the parent directory with all the .git repos. Use error handling to make sure there is a .git file
+# write code to get the name / directory of the FOSS project in the json and verify it exists in the parent directory with all .git repos.
+# write code to write the original patch commit, directly prev commit, and the suspected vuln commit (or replace with error if unable to find), and changes to a new json file --> This is the solution
+# write correct shebang at the top of script aka find location of python3 on RC
+# put all paths into the .env file when I login to RC and find everything on my terminal. Can I carry the .env file with me??? How are env vars handled on RC?
+# write code to write the commit changes to the json file (this is already kinda done, but I need to clean it up)
+# add env variables to .env 
+# go back through all setters in cve_config and write functions to actually get the data in the fields. Like for Vuln classifier. How do I get that info ?
+# answer this question --> Where am I getting path selected repo, the repo that's selected for that particular iteration of for loop
+## Create another file / section that focuses on analyzing the dataset once json data is processed that we have with python. Doesn't necessarily have to be 
+## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
+## create a recursive algorithm that traverses the modified files and changes in each commit object / vuln object commit in the bi map ???
+## when debugging be aware of circular imports 
+### Make sure that if two patch commits are aparts of same CVE , the later one "skips" the other one and doesn't count it in it's 5 parent commits (i guess??)
+
+### How to break the problem up.... Get all of the parent commits for each CVE in the vulnearbility database and store them somewhere. Like Mysql or redis.
+### We need fast retrieval
     '''
     Question: do the people maintian pydriller well?? The docs seem kinda off no cap
     '''
@@ -104,13 +136,13 @@ if __name__ == "__main__":
     basic_logger = logger_config.setup_initial_logging()
 
     ### Singleton Config Instance ###
-    CONFIG = setup.SCRIPT_CONFIG(basic_logger)
+    CONFIG = SCRIPT_CONFIG(basic_logger)
 
     ### Singleton Bidirectional Map Instance ###
-    CVE_MAP = cve.PatchVulnBiMap()
+    CVE_MAP = PatchVulnBiMap()
 
     ### Dependency Injection ### 
-    CVE_dict: dict[cve.CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)
+    CVE_dict: dict[CVE] = process_JSON_CVE(CONFIG.get_PATCH_COMMITS_JSON_FILE(),CONFIG)
     
 
     # Find the modified files by patch commit
