@@ -23,9 +23,30 @@ class PatchVulnBiMap:
         self._cve_mapping: dict[str, 
                                list[
                                    dict[Patch_Commit, set[Parent_Commit]],  # patch -> vuln mapping
-                                   dict[_Commit, set[Patch_Commit]]   # vuln -> patch mapping
+                                   dict[Parent_Commit, set[Patch_Commit]]   # vuln -> patch mapping
                                ]] = {}
+        
+        
+        
+        
+        
+        
+        
+        '''
+        I need a way to create a patch commit and associate it with a particular cve id
+        without creating an entire cve object
 
+
+        each cve_id needs to have the potential to connect to multiple patch commits
+
+        every patch commit needs to have corresponding parent commits
+        every patch commit needs to have corresponding vuln commits (I'm thinking confidence levels)
+        every vuln commit needs 
+
+        idea: group parent commits based on confidence level. Then use those confidence intervals as some sort of data structure for quick lookup
+
+        
+        '''
 
     def add_mapping(self, cve_id: str, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
         """Adds a bidirectional mapping between a patch commit and a vulnerability commit for a given CVE ID."""

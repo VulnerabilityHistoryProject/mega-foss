@@ -16,7 +16,7 @@ class Parent_Commit():
         
         self._full_repo_path: str = full_repo_path
         self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Vuln Commit object ###
-
+        self._date_created_
         # Create an instance of Parent_Commit_Classifier and associate it with this Parent_Commit instance
         self._classifier: Parent_Commit_Classifier = Parent_Commit_Classifier(base_commit_obj)
 
