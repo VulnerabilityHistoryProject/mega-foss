@@ -47,6 +47,7 @@ class CVE(BaseModel):
         ### CVE Info ###
         ############################################################################
         self._cve_id: str = cve_id
+        
 
         ### Repo Info ###
         ############################################################################
@@ -55,26 +56,43 @@ class CVE(BaseModel):
         self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config) ### Dependency injection is being used
 
         ### Parent Commits --> BINGO ###
+
+        self._five_closest_parent_commits: list[Commit] = None ### replace none with function call
         '''
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
                                                             single = patch_commit_hash, 
                                                             to_commit = patch_commit_hash).traverse_commits()
         ''' ### code for another time
-            
+
         
         generate_parent_commits(commits_up_to_patch) ### Creates the parent commits objects and adds them to the
 
 
         commit_hash_obj: Commit = self.create_patch_commit_obj(patch_commit_hash) 
 
-        self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
+        self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj) ### There can be multiple patch commits ###
         
         ###  Add first patch commit to the Bi Map ###
         ### Don't have a vuln commit to add yet ###
         self.__class__.add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
 
     
+
+    def get_five_nearest_parent_commits():
+        """
+        For this portion of research, I'm limiting the parent commits to 5. Any more, and the computational cost gets crazy.
+
+        """ 
+        self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
+                                                            self._full_repo_path,
+                                                            single = patch_commit_hash, 
+                                                            to_commit = patch_commit_hash).traverse_commits()
+
+
+        pass
+    def get_genesis_commit():
+        pass
     
 
     ### Bi-Map Helper Methods ###

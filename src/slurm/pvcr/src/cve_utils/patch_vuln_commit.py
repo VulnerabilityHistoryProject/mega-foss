@@ -1,5 +1,6 @@
 from typing import Any,Generator, Optional, ClassVar
 from pydantic import BaseModel
+import re
 
 ### In the same directory ###
 from cve import CVE
@@ -223,20 +224,36 @@ class Parent_Commit_Classifier:
     
         
         ### Capture Changes Made By Vuln Commit ###
-        self._mod_files_by_vuln_commit: list[ModifiedFile] = [] 
-        self._mod_files_by_vuln_commit.extend(self._base_commit_obj.modified_files) 
-        
-        self._changes_vuln_commit: dict = {}
+        self._mod_files_by_parent_commit: list[ModifiedFile] = [] 
+        self._mod_files_by_parent_commit.extend(self._base_commit_obj.modified_files) 
+
+        ### Another metric for measuring confidence
+        self._modified_file_types: set[str] = self.get_modified_file_types(self._mod_files_by_parent_commit)
+        self._changes_parent_commit: dict = {}
 
         self._initialize_fields(self,self._base_commit_obj, self._mod_files_by_vuln_commit)
 
 
-        self._vulnerability_confidence: float = 0.0
+        self._VULN_CONFIDENCE: float = 0.0
 
         self._analyzer = Vuln_Commit_Analyzer()
         
 
-       
+    def get_modified_file_types(self, modified_files_by_parent_commit: list[ModifiedFile]) -> set[str]:
+        # Regex pattern to capture file extensions
+        extension_pattern = r'\.[a-zA-Z0-9]+$'
+        
+        # Create a set to store unique file extensions
+        file_types = set()
+
+        # Iterate through modified files and extract the extensions
+        for file in modified_files_by_parent_commit:
+            match = re.search(extension_pattern, file.filename)
+            if match:
+                file_types.add(match.group(0))  # Add the file extension with dot
+
+        return file_types
+
     def _initialize_fields(self, base_commit_obj: Commit, modified_files_by_vuln_commit: list[ModifiedFile]) -> None: 
         self.classify_vuln_commit_basic(base_commit_obj,modified_files_by_vuln_commit)
         

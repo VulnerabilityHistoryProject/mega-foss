@@ -124,7 +124,7 @@ if __name__ == "__main__":
 ## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
 ## create a recursive algorithm that traverses the modified files and changes in each commit object / vuln object commit in the bi map ???
 ## when debugging be aware of circular imports 
-
+### Make sure that if two patch commits are aparts of same CVE , the later one "skips" the other one and doesn't count it in it's 5 parent commits (i guess??)
 
 ### How to break the problem up.... Get all of the parent commits for each CVE in the vulnearbility database and store them somewhere. Like Mysql or redis.
 ### We need fast retrieval
