@@ -20,15 +20,7 @@ class Parent_Commit():
         # Create an instance of Parent_Commit_Classifier and associate it with this Parent_Commit instance
         self._classifier: Parent_Commit_Classifier = Parent_Commit_Classifier(base_commit_obj)
 
-        
-
-
-        # Call the classifier method to update fields based on the Vuln commit object
-        self._classifier.classify_vuln_commit_basic(base_commit_obj,)
-        '''create function above so that it exists'''
-
-
-        self._confidence_level: Vuln_Confidence = Vuln_Confidence(self._classifier) ### Use classifier to quantify confidence level
+        self._confidence_level: float = 0.0
        
     
     def __eq__(self, other:object):

@@ -2,7 +2,6 @@ from pydriller import Commit
 
 
 ### 
-from vulnerable_commit import Vuln_Confidence
 from patch_commit import Patch_Commit
 from parent_commit import Parent_Commit
 class Commit_Analyzer:
@@ -13,7 +12,9 @@ class Commit_Analyzer:
 
     """
 
-    def __init__(self, patch_commit: Patch_Commit, parent_commit: Parent_Commit):
+    ### I analyze the parents against the patch here! So this is where I would derive the confidence
+
+    def __init__(self, patch_commit: Patch_Commit, parent_commits: list[Parent_Commit]) -> None:
 
 
         ### Challenge is match all of the changes from all 6 parent commits (5 parents + genesis commit) to the one patch commit
