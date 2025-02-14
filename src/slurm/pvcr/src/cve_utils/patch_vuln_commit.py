@@ -208,7 +208,7 @@ class Parent_Commit():
     def changes_vuln_commit(self) -> dict:
         return self._changes_vuln_commit
     @property
-    def classifier_(self) -> "Vuln_Commit_Classifier": ### Forward Declaration ###
+    def classifier_(self) -> "Parent_Commit_Classifier": ### Forward Declaration ###
         return self._classifier
     
 class Parent_Commit_Classifier:
@@ -236,7 +236,7 @@ class Parent_Commit_Classifier:
 
         self._VULN_CONFIDENCE: float = 0.0
 
-        self._analyzer = Vuln_Commit_Analyzer()
+        self._analyzer = Parent_Commit_Analyzer()
         
 
     def get_modified_file_types(self, modified_files_by_parent_commit: list[ModifiedFile]) -> set[str]:
@@ -318,16 +318,3 @@ class Parent_Commit_Classifier:
     def vuln_hash_partial_patch_commit_fixes() -> bool:
         pass
 
-    
-
-class Commit_Analyzer:
-
-    def __init__(self,):
-        pass
-        
-    def analyze_lines_changed(self,_base_commit_obj: Commit) -> bool:
-        pass
-    
-    def analyze_functions_changed(self,_base_commit_obj:Commit) -> bool:
-        pass
-    pass
