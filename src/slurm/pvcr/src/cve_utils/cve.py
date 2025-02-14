@@ -15,8 +15,11 @@ from configuration.script_setup import SCRIPT_CONFIG
 
 
 ### In the same directory ###
-from cve_utils.patch_commit import Patch_Commit, Vuln_Commit, Commit_Analyzer
+from patch_commit import Patch_Commit
+from parent_commit import Parent_Commit
+from commit_analyzer import Commit_Analyzer
 from BiMap import PatchVulnBiMap
+
 
 
 class CVE(BaseModel):
@@ -40,9 +43,7 @@ class CVE(BaseModel):
         self._patch_vuln_bi_map: PatchVulnBiMap = patch_vuln_bi_map ### Dependency injection is being used
         
         
-        ### Each CVE object will have its own patch vuln analyzer ###
-        self._patch_vuln_analyzer: Commit_Analyzer = Commit_Analyzer()
-
+        
 
         ### CVE Info ###
         ############################################################################
@@ -57,29 +58,24 @@ class CVE(BaseModel):
 
         ### Parent Commits --> BINGO ###
 
-        self._five_closest_parent_commits: list[Commit] = None ### replace none with function call
-        '''
-        self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
-                                                            self._full_repo_path,
-                                                            single = patch_commit_hash, 
-                                                            to_commit = patch_commit_hash).traverse_commits()
-        ''' ### code for another time
-
-        
-        generate_parent_commits(commits_up_to_patch) ### Creates the parent commits objects and adds them to the
+        self._five_closest_parent_commits: list[Parent_Commit] = None ### replace none with function call
+       
+    
 
 
         commit_hash_obj: Commit = self.create_patch_commit_obj(patch_commit_hash) 
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj) ### There can be multiple patch commits ###
         
+        ### Each CVE object will have its own patch-parent analyzer ###
+        self._analyzer: Commit_Analyzer = Commit_Analyzer(self._primary_patch_commit, )
+
         ###  Add first patch commit to the Bi Map ###
         ### Don't have a vuln commit to add yet ###
         self.__class__.add_to_BiMap(cve_id=cve_id,patch_commit=self._primary_patch_commit)
 
-    
 
-    def get_five_nearest_parent_commits():
+    def get_five_nearest_parent_commits(self) -> list[Parent_Commit]:
         """
         For this portion of research, I'm limiting the parent commits to 5. Any more, and the computational cost gets crazy.
 
@@ -87,8 +83,10 @@ class CVE(BaseModel):
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
                                                             single = patch_commit_hash, 
-                                                            to_commit = patch_commit_hash).traverse_commits()
-
+        
+        parent_commits = list[Parent_Commit] = None
+        return parent_commits                                                 to_commit = patch_commit_hash).traverse_commits()
+ 
 
         pass
     def get_genesis_commit():
@@ -236,3 +234,10 @@ class CVE(BaseModel):
         self._primary_patch_commit = value
 
     
+
+    '''
+        self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
+                                                            self._full_repo_path,
+                                                            single = patch_commit_hash, 
+                                                            to_commit = patch_commit_hash).traverse_commits()
+        ''' ### code for another time

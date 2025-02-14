@@ -1,6 +1,7 @@
 from typing import Any,Generator, Optional, ClassVar
 from pydantic import BaseModel
 import re
+from datetime import datetime
 
 ### In the same directory ###
 from cve import CVE
@@ -17,16 +18,12 @@ class Patch_Commit():
     """
     def __init__(self, full_repo_path: str, base_commit_obj:Commit) -> None:
 
-        super().__init__() # Calls the next class in MRO
+        super().__init__()
 
         self._full_repo_path: str = full_repo_path
-
-
         self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Patch Commit Object ###
-
-
         self._mod_files_by_patch_commit: list[ModifiedFile] = [] ### This list needs to be "ordered" so that order in which files are changed is maintained
-        
+        self._date_created: datetime
         
         self._changes_by_patch_commit: dict = {}
 

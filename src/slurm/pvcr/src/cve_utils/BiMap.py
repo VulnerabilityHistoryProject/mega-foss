@@ -1,12 +1,13 @@
 from typing import Any,Generator, Optional, ClassVar
-
+from collections import defaultdict
 ### pydriller imports ###
 from pydriller import Repository, Commit, ModifiedFile
 
 
 ### In the same directory ###
 from cve import CVE
-from cve_utils.patch_commit import Patch_Commit, Vuln_Commit
+from cve_utils.patch_commit import Patch_Commit
+from cve_utils.parent_commit import Parent_Commit
 
 
 class PatchVulnBiMap:
@@ -21,10 +22,31 @@ class PatchVulnBiMap:
         # [1] = vuln_to_patches (maps vulnerabilities to patch commits that fix them)
         self._cve_mapping: dict[str, 
                                list[
-                                   dict[Patch_Commit, set[Vuln_Commit]],  # patch -> vuln mapping
-                                   dict[Vuln_Commit, set[Patch_Commit]]   # vuln -> patch mapping
+                                   dict[Patch_Commit, set[Parent_Commit]],  # patch -> vuln mapping
+                                   dict[Parent_Commit, set[Patch_Commit]]   # vuln -> patch mapping
                                ]] = {}
+        
+        
+        
+        
+        
+        
+        
+        '''
+        I need a way to create a patch commit and associate it with a particular cve id
+        without creating an entire cve object
 
+
+        each cve_id needs to have the potential to connect to multiple patch commits
+
+        every patch commit needs to have corresponding parent commits
+        every patch commit needs to have corresponding vuln commits (I'm thinking confidence levels)
+        every vuln commit needs 
+
+        idea: group parent commits based on confidence level. Then use those confidence intervals as some sort of data structure for quick lookup
+
+        
+        '''
 
     def add_mapping(self, cve_id: str, patch: Optional[Patch_Commit] = None, vuln: Optional[Vuln_Commit] = None) -> None:
         """Adds a bidirectional mapping between a patch commit and a vulnerability commit for a given CVE ID."""
@@ -105,5 +127,13 @@ class PatchVulnBiMap:
 
 
 
+
+
+
+
+
+
 if __name__ == "__main__":
     bimap = PatchVulnBiMap()
+    # Example usage
+    
