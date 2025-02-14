@@ -231,6 +231,8 @@ class Parent_Commit_Classifier:
         self._initialize_fields(self,self._base_commit_obj, self._mod_files_by_vuln_commit)
 
 
+        self._vulnerability_confidence: float = 0.0
+
         self._analyzer = Vuln_Commit_Analyzer()
         
 

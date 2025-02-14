@@ -61,7 +61,7 @@ class CVE(BaseModel):
                                                             single = patch_commit_hash, 
                                                             to_commit = patch_commit_hash).traverse_commits()
         ''' ### code for another time
-        
+            
         
         generate_parent_commits(commits_up_to_patch) ### Creates the parent commits objects and adds them to the
 
