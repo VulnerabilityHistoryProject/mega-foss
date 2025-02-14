@@ -210,7 +210,7 @@ class Parent_Commit():
     def classifier_(self) -> "Vuln_Commit_Classifier": ### Forward Declaration ###
         return self._classifier
     
-class Vuln_Commit_Classifier:
+class Parent_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
     """
@@ -255,6 +255,13 @@ class Vuln_Commit_Classifier:
 
         self._changes_lines: bool = bool(self._adds_code or self._deletes_code)
         self._changes_files: bool = len(modified_files_by_vuln_commit) > 1
+
+        ### Unique to Parent Commits ###
+        ### Is the commit that directly preceeded the patch commit? ###
+        self._is_father_commit: bool
+
+        ### Is the genesis commit ###
+        self._is_genesis_commit: bool
 
         for file in modified_files_by_vuln_commit:
             self._changes_functions: bool = len(file.changed_methods) > 0

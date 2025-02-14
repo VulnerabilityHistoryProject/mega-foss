@@ -27,7 +27,7 @@ class CVE(BaseModel):
         Vuln_Commits (_type_): _description_
     """
     
-    def __init__(self,cve_id: str, partial_repo_path: str, hash_patch_commit:str, config: SCRIPT_CONFIG,patch_vuln_bi_map: PatchVulnBiMap) -> None:
+    def __init__(self,cve_id: str, partial_repo_path: str, patch_commit_hash: str, config: SCRIPT_CONFIG,patch_vuln_bi_map: PatchVulnBiMap) -> None:
         
         # I need to get the full repo path from the partial repo path 
         # the full repo path is the path on the super computer
@@ -57,10 +57,15 @@ class CVE(BaseModel):
         ### Parent Commits --> BINGO ###
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
-                                                            single = hash_patch_commit,
-                                                            to_commit = hash_patch_commit).traverse_commits()
+                                                            single = patch_commit_hash, 
+                                                            to_commit = patch_commit_hash).traverse_commits()
 
-        commit_hash_obj: Commit = self.create_patch_commit_obj(patch_commit_hash=hash_patch_commit)
+        
+        
+        generate_parent_commits(commits_up_to_patch) ### Creates the parent commits objects and adds them to the
+
+
+        commit_hash_obj: Commit = self.create_patch_commit_obj(patch_commit_hash) 
 
         self._primary_patch_commit: Patch_Commit = Patch_Commit(self._full_repo_path,commit_hash_obj)
         
@@ -103,10 +108,13 @@ class CVE(BaseModel):
     def remove_mapping(self, cve_id: str, patch: Patch_Commit, vuln: Vuln_Commit) -> None:
         self._patch_vuln_bi_map.remove_mapping(cve_id,patch,vuln)
     
-    
     def get_all_cve_mappings(self):
         return self._patch_vuln_bi_map.get_all_mappings(self._patch_vuln_bi_map)
 
+    ### Bi-Map Helper Methods Done ###
+    ############################################################################
+    
+    
 
     def create_base_commit_obj(self, commit_hash: str) -> Commit:
         commit_obj: Commit = next(Repository( # Only get the hash patch commit object
