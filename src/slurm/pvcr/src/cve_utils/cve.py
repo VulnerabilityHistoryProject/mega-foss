@@ -55,11 +55,12 @@ class CVE(BaseModel):
         self._full_repo_path: str = self.get_full_repo_path(partial_repo_path,config) ### Dependency injection is being used
 
         ### Parent Commits --> BINGO ###
+        '''
         self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
                                                             self._full_repo_path,
                                                             single = patch_commit_hash, 
                                                             to_commit = patch_commit_hash).traverse_commits()
-
+        ''' ### code for another time
         
         
         generate_parent_commits(commits_up_to_patch) ### Creates the parent commits objects and adds them to the
@@ -114,7 +115,17 @@ class CVE(BaseModel):
     ### Bi-Map Helper Methods Done ###
     ############################################################################
     
-    
+    def generate_parent_commits(commits_up_to_patch: Generator[Commit]) -> None:
+        """
+
+        I could do a lot of things here... I coule use git bisect to figure out which commits are worth 
+        turning into commit objects... But that might be a lot of work anyway so it might make sense to just 
+        turn them all into parent commits
+
+        Args:
+            commits_up_to_patch (Generator[Commit]): _description_
+        """
+        pass
 
     def create_base_commit_obj(self, commit_hash: str) -> Commit:
         commit_obj: Commit = next(Repository( # Only get the hash patch commit object

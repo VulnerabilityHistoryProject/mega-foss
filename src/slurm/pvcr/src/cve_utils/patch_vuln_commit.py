@@ -219,10 +219,6 @@ class Parent_Commit_Classifier:
         super().__init__() # Calls the next class in MRO
         """ Classify's vulnerability based on factors related to implementation and severity"""
         
-        
-        
-        
-        
         self._base_commit_obj: Commit = base_commit_obj
     
         
@@ -261,6 +257,7 @@ class Parent_Commit_Classifier:
         self._is_father_commit: bool
 
         ### Is the genesis commit ###
+        ### This means that from this commit you can't go back any farther with blames or anything else. It started the file / project. ###
         self._is_genesis_commit: bool
 
         for file in modified_files_by_vuln_commit:

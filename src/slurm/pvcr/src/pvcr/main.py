@@ -124,6 +124,10 @@ if __name__ == "__main__":
 ## run in the script. It can be run after we get the data. Maybe make a jupyter notebook?
 ## create a recursive algorithm that traverses the modified files and changes in each commit object / vuln object commit in the bi map ???
 ## when debugging be aware of circular imports 
+
+
+### How to break the problem up.... Get all of the parent commits for each CVE in the vulnearbility database and store them somewhere. Like Mysql or redis.
+### We need fast retrieval
     '''
     Question: do the people maintian pydriller well?? The docs seem kinda off no cap
     '''
