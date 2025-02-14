@@ -40,7 +40,7 @@ class CVE(BaseModel):
         self._patch_vuln_bi_map: PatchVulnBiMap = patch_vuln_bi_map ### Dependency injection is being used
         
         
-        ### Each CVE object will have its own patch vuln analyzer ###
+        ### Each CVE object will have its own patch-parent analyzer ###
         self._patch_vuln_analyzer: Commit_Analyzer = Commit_Analyzer()
 
 

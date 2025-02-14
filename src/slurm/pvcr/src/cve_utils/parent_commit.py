@@ -3,15 +3,11 @@
 
 ### Pydriller
 from pydriller import Commit, ModifiedFile
-
+from vulnerable_commit import Vuln_Confidence
 
 class Parent_Commit():
     """
-    Every Vulnerable Commit has a corresponding patch commit to go along with it.
-    There can also be multiple vulns that correspond to a single patch commit
-    Args:
-
-    ### I want each vulnerable commit to have a classifier for that commit!! ###
+    This is the class that creates the 5 previous parent commits relative to the patch commit
         
     """
 
@@ -19,16 +15,20 @@ class Parent_Commit():
         super().__init__() # Calls the next class in MRO
         
         self._full_repo_path: str = full_repo_path
-
-
         self._base_commit_obj: Commit = base_commit_obj ### Generic Commit Prior to being converted into a Vuln Commit object ###
 
-        # Create an instance of Vuln_Commit_Classifier and associate it with this Vuln_Commit instance
-        self._classifier = Vuln_Commit_Classifier(base_commit_obj, self._mod_files_by_vuln_commit)
+        # Create an instance of Parent_Commit_Classifier and associate it with this Parent_Commit instance
+        self._classifier: Parent_Commit_Classifier = Parent_Commit_Classifier(base_commit_obj)
+
+        
+
 
         # Call the classifier method to update fields based on the Vuln commit object
         self._classifier.classify_vuln_commit_basic(base_commit_obj,)
         '''create function above so that it exists'''
+
+
+        self._confidence_level: Vuln_Confidence = Vuln_Confidence(self._classifier) ### Use classifier to quantify confidence level
        
     
     def __eq__(self, other:object):
@@ -93,22 +93,24 @@ class Parent_Commit():
 class Parent_Commit_Classifier:
     """
     The goal of this class is to answer the question: What has been changed by the vulnerability?
+
+    Classify's vulnerability based on factors related to implementation and severity
     """
     def __init__(self,base_commit_obj: Commit) -> None:
 
         super().__init__() # Calls the next class in MRO
-        """ Classify's vulnerability based on factors related to implementation and severity"""
+        """ """
         
         self._base_commit_obj: Commit = base_commit_obj
     
         
-        ### Capture Changes Made By Vuln Commit ###
+        ### Get Modified Files & Modified File Types  ###
         self._mod_files_by_parent_commit: list[ModifiedFile] = [] 
         self._mod_files_by_parent_commit.extend(self._base_commit_obj.modified_files) 
-
-        ### Another metric for measuring confidence
         self._modified_file_types: set[str] = self.get_modified_file_types(self._mod_files_by_parent_commit)
-        self._changes_parent_commit: dict = {}
+     
+       
+        
 
         self._initialize_fields(self,self._base_commit_obj, self._mod_files_by_vuln_commit)
 
