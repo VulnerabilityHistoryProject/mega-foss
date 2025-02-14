@@ -58,16 +58,9 @@ class CVE(BaseModel):
 
         ### Parent Commits --> BINGO ###
 
-        self._five_closest_parent_commits: list[PareCommit] = None ### replace none with function call
-        '''
-        self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
-                                                            self._full_repo_path,
-                                                            single = patch_commit_hash, 
-                                                            to_commit = patch_commit_hash).traverse_commits()
-        ''' ### code for another time
-
-        
-        generate_parent_commits(commits_up_to_patch) ### Creates the parent commits objects and adds them to the
+        self._five_closest_parent_commits: list[Parent_Commit] = None ### replace none with function call
+       
+    
 
 
         commit_hash_obj: Commit = self.create_patch_commit_obj(patch_commit_hash) 
@@ -92,11 +85,9 @@ class CVE(BaseModel):
                                                             self._full_repo_path,
                                                             single = patch_commit_hash, 
         
-        parent_commits = list[Parent_Commit]
+        parent_commits = list[Parent_Commit] = None
         return parent_commits                                                 to_commit = patch_commit_hash).traverse_commits()
-    def analyze_parent_commits(self) -> None:
-        self._analyzer
-
+ 
 
         pass
     def get_genesis_commit():
@@ -244,3 +235,10 @@ class CVE(BaseModel):
         self._primary_patch_commit = value
 
     
+
+    '''
+        self._commits_up_to_patch: Generator = Repository( # Get all commits up to the patch commit (define order)
+                                                            self._full_repo_path,
+                                                            single = patch_commit_hash, 
+                                                            to_commit = patch_commit_hash).traverse_commits()
+        ''' ### code for another time

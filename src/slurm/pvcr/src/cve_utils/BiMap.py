@@ -6,7 +6,8 @@ from pydriller import Repository, Commit, ModifiedFile
 
 ### In the same directory ###
 from cve import CVE
-from cve_utils.patch_commit import Patch_Commit, Vuln_Commit
+from cve_utils.patch_commit import Patch_Commit
+from cve_utils.parent_commit import Parent_Commit
 
 
 class PatchVulnBiMap:
@@ -21,8 +22,8 @@ class PatchVulnBiMap:
         # [1] = vuln_to_patches (maps vulnerabilities to patch commits that fix them)
         self._cve_mapping: dict[str, 
                                list[
-                                   dict[Patch_Commit, set[Vuln_Commit]],  # patch -> vuln mapping
-                                   dict[Vuln_Commit, set[Patch_Commit]]   # vuln -> patch mapping
+                                   dict[Patch_Commit, set[Parent_Commit]],  # patch -> vuln mapping
+                                   dict[_Commit, set[Patch_Commit]]   # vuln -> patch mapping
                                ]] = {}
 
 

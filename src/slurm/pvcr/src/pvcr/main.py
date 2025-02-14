@@ -57,7 +57,17 @@ def process_JSON_CVE(json_file_path: str, config: SCRIPT_CONFIG, cve_map: PatchV
 
         else: # what happens if the cve id is already in the set
             
+            ### Check the patch commit to see if it's date is later or earlier than existing 
+            ### Make the primary patch commit THE EARLIEST one because it's closest in proximity to the vuln commit
+            ### At the end of the day... All of these commits are marked as patches by some important governing body!
 
+            ## first... create a new patch commit to correspond to the cve_id and put it in the map
+
+            cve_map.
+
+            for patch_commit in cve_map.get_patch_commits_for_cve_id(json_cve_id):
+                pass
+            
             '''
             There's a case where there are multiple patches (cves for a single vuln)
             '''
@@ -76,7 +86,7 @@ def process_JSON_CVE(json_file_path: str, config: SCRIPT_CONFIG, cve_map: PatchV
             op 1) try and find the vuln in this function (that gonna take a sec)
             op 2) create an empty vuln object that I later add the details for once I find it THIS ONE I THINK
             '''
-            cve_map.
+            
            
     return 
 
