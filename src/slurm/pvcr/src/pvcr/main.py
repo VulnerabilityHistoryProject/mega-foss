@@ -6,7 +6,7 @@ from error_handling import logger_config
 from configuration.script_setup import SCRIPT_CONFIG
 from cve_utils.cve import CVE
 from cve_utils.BiMap import PatchVulnBiMap
-from cve_utils import patch_vuln_commit as pvc
+from cve_utils import patch_commit as pvc
 from szz_utils import szz
 from error_handling import handle_errors as handle
 

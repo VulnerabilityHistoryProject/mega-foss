@@ -15,7 +15,7 @@ from configuration.script_setup import SCRIPT_CONFIG
 
 
 ### In the same directory ###
-from patch_vuln_commit import Patch_Commit, Vuln_Commit, Commit_Analyzer
+from cve_utils.patch_commit import Patch_Commit, Vuln_Commit, Commit_Analyzer
 from BiMap import PatchVulnBiMap
 
 

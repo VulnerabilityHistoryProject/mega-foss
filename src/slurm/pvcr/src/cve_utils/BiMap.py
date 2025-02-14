@@ -6,7 +6,7 @@ from pydriller import Repository, Commit, ModifiedFile
 
 ### In the same directory ###
 from cve import CVE
-from patch_vuln_commit import Patch_Commit, Vuln_Commit
+from cve_utils.patch_commit import Patch_Commit, Vuln_Commit
 
 
 class PatchVulnBiMap:
