@@ -1,5 +1,7 @@
 FROM codellama
 
+PARAMETER num_ctx 10000
+
 SYSTEM """
 
 Fix/Patch Commit Finder
