@@ -16,7 +16,7 @@ PROCESSED_JSON = "patch_vuln_match.json"
 
 
 # Base name for log file and log directory
-LOG_DIR = "logs"
+LOG_DIR = "drill_logs"
 LOG_FILE_BASE = "drill.log"
 
 # Make sure the log directory exists
@@ -34,7 +34,7 @@ while os.path.exists(log_file):
 
 # Configure logging
 logging.basicConfig(
-    filename=LOG_FILE,
+    filename=log_file,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
