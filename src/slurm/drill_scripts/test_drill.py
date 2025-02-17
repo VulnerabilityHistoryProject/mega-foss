@@ -43,68 +43,66 @@ def main():
     # Load JSON data
     cve_data = safe_load_json(PATCH_HASHES)
 
-    COUNT = 0
-    # Process each entry in the JSON
-    for entry in cve_data:
-        if COUNT > 3: ### For debugging purposes
-            sys.exit(1)
-            
-        try:
-            cve_id = entry["cve_id"]
-            repo_name = entry["repo"]
-            commit_hash = entry["commit"]
-
-            # Search for the repository in the directory
-            repo_path_variants = [
-                repo_name,
-                repo_name.replace("/", "_"),
-                repo_name.replace("/", "-"),
-            ]
-
-            matching_repos = []
-            for variant in repo_path_variants:
-                matching_repos += glob.glob(os.path.join(NVD_ALL_REPOS, f"*{variant}*"))
-
-            if not matching_repos:
-                logging.warning(f"Repo not found for {repo_name}. Skipping...")
-                continue
-
-            repo_path = matching_repos[0]  # Assume the first match is correct
-
-            # Analyze the Git repository
-            git_repo = Git(repo_path)
-
+    for i in range(3):
+        # Process each entry in the JSON
+        for entry in cve_data:
+                
             try:
-                patch_commit = git_repo.get_commit(commit_hash)
+                cve_id = entry["cve_id"]
+                repo_name = entry["repo"]
+                commit_hash = entry["commit"]
+
+                # Search for the repository in the directory
+                repo_path_variants = [
+                    repo_name,
+                    repo_name.replace("/", "_"),
+                    repo_name.replace("/", "-"),
+                ]
+
+                matching_repos = []
+                for variant in repo_path_variants:
+                    matching_repos += glob.glob(os.path.join(NVD_ALL_REPOS, f"*{variant}*"))
+
+                if not matching_repos:
+                    logging.warning(f"Repo not found for {repo_name}. Skipping...")
+                    continue
+
+                repo_path = matching_repos[0]  # Assume the first match is correct
+
+                # Analyze the Git repository
+                git_repo = Git(repo_path)
+
+                try:
+                    patch_commit = git_repo.get_commit(commit_hash)
+                except Exception as e:
+                    logging.error(f"Error retrieving commit {commit_hash} in {repo_name}: {e}")
+                    continue
+
+                try:
+                    results = git_repo.get_commits_last_modified_lines(patch_commit)
+                except Exception as e:
+                    logging.error(f"Error processing patch commit {commit_hash}: {e}")
+                    continue
+
+                # Store the processed result
+                processed_entry = {
+                    "cve_id": cve_id,
+                    "repo": repo_name,
+                    "patch_commit": commit_hash,
+                    "vuln_commits": results,
+                }
+
+                # Write to JSONL
+                with open(PROCESSED_JSON, "a") as file:  # Use "a" mode to append
+                    file.write(json.dumps(processed_entry) + "\n")  # Dump as a single line
+
+                logging.info(f"Processed {commit_hash} successfully.")
+
+
             except Exception as e:
-                logging.error(f"Error retrieving commit {commit_hash} in {repo_name}: {e}")
+                logging.error(f"Unexpected error processing {entry}: {e}")
                 continue
-
-            try:
-                results = git_repo.get_commits_last_modified_lines(patch_commit)
-            except Exception as e:
-                logging.error(f"Error processing patch commit {commit_hash}: {e}")
-                continue
-
-            # Store the processed result
-            processed_entry = {
-                "cve_id": cve_id,
-                "repo": repo_name,
-                "patch_commit": commit_hash,
-                "vuln_commits": results,
-            }
-
-            # Write to JSONL
-            with open(PROCESSED_JSON, "a") as file:  # Use "a" mode to append
-                file.write(json.dumps(processed_entry) + "\n")  # Dump as a single line
-
-            logging.info(f"Processed {commit_hash} successfully.")
-
-
-        except Exception as e:
-            logging.error(f"Unexpected error processing {entry}: {e}")
-            continue
-        COUNT+=1
+    sys.exit(1)
 
 
 if __name__ == "__main__":

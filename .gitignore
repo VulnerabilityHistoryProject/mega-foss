@@ -55,6 +55,10 @@ cover/
 *.mo
 *.pot
 
+# RC err and out
+.err
+.out
+
 # Django stuff:
 *.log
 local_settings.py
