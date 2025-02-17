@@ -9,17 +9,30 @@ import sys
 NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
 
 # JSON file with all CVEs, patch hashes, and source FOSS projects
-PATCH_HASHES = "viable_patches.json"
+PATCH_HASHES = "../viable_patches.json"
 
 # Output JSON file
 PROCESSED_JSON = "test_patch_vuln_match.json"
 
-# Log file
-LOG_FILE = "test_logs/test_drill.log"
+# Base name for log file and log directory
+LOG_DIR = "test_logs"
+LOG_FILE_BASE = "drill1.log"
+
+# Make sure the log directory exists
+os.makedirs(LOG_DIR, exist_ok=True)
+
+# Full path to the log file
+log_file = os.path.join(LOG_DIR, LOG_FILE_BASE)
+counter = 2
+
+
+while os.path.exists(log_file):
+    log_file = f"drill{counter}.log"
+    counter += 1
 
 # Configure logging
 logging.basicConfig(
-    filename=LOG_FILE,
+    filename=log_file,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -35,6 +48,18 @@ def safe_load_json(filepath):
     except (json.JSONDecodeError, IOError) as e:
         logging.error(f"Error reading {filepath}: {e}")
         return []
+    
+
+def convert_sets_to_lists(obj):
+    """Recursively convert sets to lists in a nested structure."""
+    if isinstance(obj, set):
+        return list(obj)  # Convert set to list
+    elif isinstance(obj, dict):
+        return {key: convert_sets_to_lists(value) for key, value in obj.items()}  # Recurse for dictionary values
+    elif isinstance(obj, list):
+        return [convert_sets_to_lists(item) for item in obj]  # Recurse for list items
+    else:
+        return obj  # Return the object if it's neither a set, list, nor dict
 
 
 def main():
@@ -45,7 +70,7 @@ def main():
 
    
     # Process only the first 10 entries in the JSON for debugging
-    for entry in cve_data[:3]:
+    for entry in cve_data[:50]:
             
         try:
             cve_id = entry["cve_id"]
@@ -89,7 +114,7 @@ def main():
                 "cve_id": cve_id,
                 "repo": repo_name,
                 "patch_commit": commit_hash,
-                "vuln_commits": results,
+                "vuln_commit": convert_sets_to_lists(results),  # Convert set to list
             }
 
             # Write to JSONL

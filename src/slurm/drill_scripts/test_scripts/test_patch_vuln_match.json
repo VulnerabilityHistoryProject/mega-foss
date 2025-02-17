@@ -1,1 +1,9 @@
-{"cve_id": "CVE-1999-0731", "repo": "KDE/kde1-kdebase", "patch_commit": "04906bd5de2f220bf100b605dad37b4a1d9a91a6", "vuln_commits": {}}
+{"cve_id": "CVE-1999-0731", "repo": "KDE/kde1-kdebase", "patch_commit": "04906bd5de2f220bf100b605dad37b4a1d9a91a6", "vuln_commit": {}}
+{"cve_id": "CVE-2005-10003", "repo": "mikexstudios/xcomic", "patch_commit": "6ed8e3cc336e29f09c7e791863d0559939da98bf", "vuln_commit": {}}
+{"cve_id": "CVE-2006-5331", "repo": "torvalds/linux", "patch_commit": "6c4841c2b6c32a134f9f36e5e08857138cc12b10", "vuln_commit": {}}
+{"cve_id": "CVE-2008-10003", "repo": "iGamingModules/flashgames", "patch_commit": "6e57683704885be32eea2ea614f80c9bb8f012c5", "vuln_commit": {}}
+{"cve_id": "CVE-2008-5619", "repo": "PHPMailer/PHPMailer", "patch_commit": "8beacc646acb67c995aea10ac5585970efc7355a", "vuln_commit": {}}
+{"cve_id": "CVE-2009-3111", "repo": "alandekok/freeradius-server", "patch_commit": "860cad9e02ba344edb0038419e415fe05a9a01f4", "vuln_commit": {}}
+{"cve_id": "CVE-2009-5145", "repo": "zopefoundation/Zope", "patch_commit": "2abdf14620f146857dc8e3ffd2b6a754884c331d", "vuln_commit": {}}
+{"cve_id": "CVE-2010-10007", "repo": "lierdakil/click-reminder", "patch_commit": "41213b660e8eb01b22c8074f06208f59a73ca8dc", "vuln_commit": {}}
+{"cve_id": "CVE-2010-10010", "repo": "StarsAlliance/PsychoStats", "patch_commit": "5d3b7311fd5085ec6ea1b1bfa9a05285964e07e4", "vuln_commit": {}}

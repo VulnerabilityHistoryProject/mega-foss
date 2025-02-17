@@ -10,9 +10,9 @@
 
 #SBATCH --time=0-00:30:00
 
-#SBATCH --output=logs/%x_%j.out
+#SBATCH --output=RC_logs/%x_%j.out
 
-#SBATCH --error=logs/%x_%j.err
+#SBATCH --error=RC_logs/%x_%j.err
 
 #SBATCH --mail-user=slack:@jmb7342
 
@@ -30,5 +30,5 @@ spack env activate -p gitmining-x86_64-24101401
 
 hostname
 
-python3 /shared/rc/sfs/mega-foss/src/slurm/drill_scripts/test_drill.py
+python3 /shared/rc/sfs/mega-foss/src/slurm/drill_scripts/test_scripts/test_drill.py
  
