@@ -16,18 +16,18 @@ PROCESSED_JSON = "test_patch_vuln_match.json"
 
 # Base name for log file and log directory
 LOG_DIR = "test_logs"
-LOG_FILE_BASE = "drill1.log"
+LOG_FILE_BASE = "test_drill.log"
 
 # Make sure the log directory exists
 os.makedirs(LOG_DIR, exist_ok=True)
 
 # Full path to the log file
 log_file = os.path.join(LOG_DIR, LOG_FILE_BASE)
-counter = 2
+counter = 1
 
 
 while os.path.exists(log_file):
-    log_file = f"drill{counter}.log"
+    log_file = f"test_drill{counter}.log"
     counter += 1
 
 # Configure logging
