@@ -18,7 +18,7 @@ from configuration.script_setup import SCRIPT_CONFIG
 from patch_commit import Patch_Commit
 from parent_commit import Parent_Commit
 from commit_analyzer import Commit_Analyzer
-from BiMap import PatchVulnBiMap
+from cve_utils.patch_parent_nexus import PatchVulnBiMap
 
 
 
