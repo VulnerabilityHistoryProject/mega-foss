@@ -10,9 +10,9 @@
 
 #SBATCH --time=0-00:30:00
 
-#SBATCH --output=%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
-#SBATCH --error=%x_%j.err
+#SBATCH --error=logs/%x_%j.err
 
 #SBATCH --mail-user=slack:@jmb7342
 
@@ -22,7 +22,7 @@
 
 #SBATCH --nodes=1
 
-#SBATCH --mem=10g
+#SBATCH --mem=1g
 
 echo "Script running!"
 
