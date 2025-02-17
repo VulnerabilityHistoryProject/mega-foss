@@ -12,10 +12,10 @@ NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
 PATCH_HASHES = "viable_patches.json"
 
 # Output JSON file
-PROCESSED_JSON = "patch_vuln_match.json"
+PROCESSED_JSON = "test_patch_vuln_match.json"
 
 # Log file
-LOG_FILE = "drill.log"
+LOG_FILE = "test_logs/test_drill.log"
 
 # Configure logging
 logging.basicConfig(

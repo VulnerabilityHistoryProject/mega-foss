@@ -13,8 +13,24 @@ PATCH_HASHES = "viable_patches.json"
 # Output JSON file
 PROCESSED_JSON = "patch_vuln_match.json"
 
-# Log file
-LOG_FILE = "drill.log"
+
+
+# Base name for log file and log directory
+LOG_DIR = "logs"
+LOG_FILE_BASE = "drill.log"
+
+# Make sure the log directory exists
+os.makedirs(LOG_DIR, exist_ok=True)
+
+# Full path to the log file
+log_file = os.path.join(LOG_DIR, LOG_FILE_BASE)
+counter = 1
+
+
+while os.path.exists(log_file):
+    log_file = f"drill{counter}.log"
+    counter += 1
+
 
 # Configure logging
 logging.basicConfig(
