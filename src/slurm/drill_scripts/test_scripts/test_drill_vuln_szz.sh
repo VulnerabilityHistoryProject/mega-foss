@@ -1,18 +1,18 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=NVD-Vuln-drill
+#SBATCH --job-name=test_vuln_drill
 
-#SBATCH --comment="Running pydriller SZZ on the NVD repos to get the vuln commit that matches the patch commit"
+#SBATCH --comment="Testing the SZZ algo on minimal number of commits for debugging"
 
 #SBATCH --account=sfs
 
-#SBATCH --partition=debug
+#SBATCH --partition=tier3
 
-#SBATCH --time=0-00:30:00
+#SBATCH --time=1-00:30:00
 
-#SBATCH --output=RC_logs/%x_%j.out
+#SBATCH --output=test_RC_logs/%x_%j.out
 
-#SBATCH --error=RC_logs/%x_%j.err
+#SBATCH --error=test_RC_logs/%x_%j.err
 
 #SBATCH --mail-user=slack:@jmb7342
 
