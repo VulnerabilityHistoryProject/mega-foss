@@ -56,7 +56,7 @@ cover/
 *.pot
 
 # RC err and out
-/slurm/drill_scripts/logs
+src/slurm/drill_scripts/logs/
 
 # Django stuff:
 *.log
