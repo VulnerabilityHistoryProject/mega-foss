@@ -8,7 +8,7 @@ from pydriller import Git
 NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
 
 # JSON file with all CVEs, patch hashes, and source FOSS projects
-PATCH_HASHES = "viable_patches.json"
+PATCH_HASHES = "../viable_patches.json"
 
 # Output JSON file
 PROCESSED_JSON = "patch_vuln_match.json"
@@ -51,6 +51,16 @@ def safe_load_json(filepath):
         logging.error(f"Error reading {filepath}: {e}")
         return []
 
+def convert_sets_to_lists(obj):
+    """Recursively convert sets to lists in a nested structure."""
+    if isinstance(obj, set):
+        return list(obj)  # Convert set to list
+    elif isinstance(obj, dict):
+        return {key: convert_sets_to_lists(value) for key, value in obj.items()}  # Recurse for dictionary values
+    elif isinstance(obj, list):
+        return [convert_sets_to_lists(item) for item in obj]  # Recurse for list items
+    else:
+        return obj  # Return the object if it's neither a set, list, nor dict
 
 def main():
     """Main function to process CVEs and extract vulnerability-inducing commits."""
@@ -103,7 +113,7 @@ def main():
                 "cve_id": cve_id,
                 "repo": repo_name,
                 "patch_commit": commit_hash,
-                "vuln_commits": results,
+                "vuln_commits": convert_sets_to_lists(results)
             }
 
             # Write to JSONL
