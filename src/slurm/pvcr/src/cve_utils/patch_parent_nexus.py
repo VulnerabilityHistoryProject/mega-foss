@@ -1,7 +1,7 @@
 from typing import Any,Generator, Optional, ClassVar
 from collections import defaultdict
 ### pydriller imports ###
-from pydriller import Repository, Commit, ModifiedFile
+from pydriller import Repository, Commit, ModifiedFile, Git
 
 
 ### In the same directory ###
@@ -136,4 +136,8 @@ class PatchVulnBiMap:
 if __name__ == "__main__":
     bimap = PatchVulnBiMap()
     # Example usage
+
+    git_ob = Git("asdfasd")
+
+    git_ob.get_commits_last_modified_lines()
     
