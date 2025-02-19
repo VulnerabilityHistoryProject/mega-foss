@@ -107,7 +107,7 @@ def main():
             except Exception as e:
                 logging.error(f"Error processing patch commit {commit_hash}: {e}")
                 continue
-
+            
             # Store the processed result
             processed_entry = {
                 "cve_id": cve_id,
