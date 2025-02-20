@@ -53,9 +53,7 @@ Output will give a file `cve/output/cve_no_cwe.txt` with a list of CVEs with no 
 
 ### 4. Generate Analysis Of CVEs Mapped to Rust Vulnerability Ratings
 #### Pre-requisite
-Ensure you have the 'Master' and 'CWE_Relative_Map' tables from the [spreadsheet](https://docs.google.com/spreadsheets/d/1JGei0TlPjIJVO8E0t_MqQcXFFn-qcEISHLBGJGBJfmQ/edit?gid=929266422#gid=929266422) downloaded
-	as `lists/rust_to_cwe.csv` and `lists/cwe_child_map.csv` respectively.
-	The former can be downloaded using `python src/cve/download_rust_cve_sheet.py`
+Ensure you have the `lists/rust_csv_data.csv` file available, which contains CWEs mapped to Rust vulnerability status.
 
 ```sh
 python src/cve/mg_analysis.py
