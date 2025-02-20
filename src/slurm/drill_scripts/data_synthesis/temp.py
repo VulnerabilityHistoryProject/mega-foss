@@ -6,7 +6,7 @@
 Obtaining ...
 
 1. Total size of the cloned repos
-2. Total number of vulnerability inducing commits (vuln commits) found & not found
+2. Total number of vulnerability inducing commits (vuln commits) found & (& num of patches missing a vuln (not found))
 3. Average number of months between vuln commit and patch commit (or fix)
 4. Average number of commits between the vuln commit & patch commit (or fix)
 5. Average number of vuln commits fixed by patch commit (or fix)
@@ -32,12 +32,13 @@ def get_directory_size(path: str) -> float:
     return size
 
 SIZE_OF_ALL_CLONED_REPOS: list[float] = 0 ### size in MB
-TOTAL_NUM_MONTHS: int = 0
+TOTAL_NUM_MONTHS_BETWEEN: int = 0
 
 TOTAL_NUM_COMMITS: int = 0
 
 TOTAL_PATCH_COMMITS_W_VULN_COMMIT: int = 0
-TOTAL_VULNS: int = 0 ### Another way to say this is total patch vuln pairs 
+TOTAL_VULNS: int = 0 ### Another way to say this is total patch vuln pairs
+PATCHES_WO_VULN: int = 0
 ### I can get the the number of patches without vulns / not found by doing total entires - total vulns
 BY_SAME_PERSON: int = 0 ### Num of vulns made by the same person
 PERCENTAGE_OF_VULN_N_PATCH_BY_SAME_PERSON: float = 0.0
@@ -72,81 +73,84 @@ for owner_repo, patch_commit, vuln_commits in zip(
     commits_to_analyze.extend(vuln_commits)
 
 
-    temp_repo: Repository = Repository(remote_url, only_commits=commits_to_analyze, order='reverse')
+    
 
+
+    ### Vars for point 3
+    temp_repo: Repository = Repository(remote_url, only_commits=commits_to_analyze, order='reverse')
     patch_author: str = ""
     patch_author_date: datetime = None
-
-    for commit in temp_repo.traverse_commits():
+    is_patch: bool = True
+    for commit in temp_repo.traverse_commits(): ### First commit will be 
        
-        
-        vuln_author: str = ""
-        vuln_author_date: datetime = None
-
-        if  TOTAL_VULNS == 0:
-            patch_author_date = commit.author_date
-            patch_author = commit.author ## is that the correct syntax? what type of object is being returned
-            TOTAL_PATCH_COMMITS_W_VULN_COMMIT += 1 ## this patch HAS at least one vuln commit
-            
-        else: ### reassing the value of vuln_author_date on each iteration after count > 1
-            vuln_author_date = commit.author_date
-            vuln_author = commit.author
-            
-        
-        ### Calculate difference between patch date and vuln date in months
-        difference: datetime = relativedelta(patch_author_date,vuln_author_date)
-
-        # Get the difference in months
-        months_difference = difference.year * 12 + difference.month
-        
-        
-        ### Logic for point 1
+        ### Code for point 1
         if commit.project_path not in unique_repo_paths:
             temp_repo_path = commit.project_path  # Path to the cloned repo
             unique_repo_paths.add(temp_repo_path)
             repo_size: float = get_directory_size(temp_repo_path) / (1024 * 1024)  # Convert to MB
+        
+
+        ### Code for point 3 & Point 6
+        ############################################################
+        vuln_author: str = ""
+        vuln_author_date: datetime = None
+
+        if is_patch:
+            patch_author_date = commit.author_date
+
+            ### Point 6
+            patch_author = commit.author.email ## is that the correct syntax? what type of object is being returned
+
+            ## this patch HAS at least one vuln commit
+            TOTAL_PATCH_COMMITS_W_VULN_COMMIT += 1 
+            is_patch = False
+        
+        ### Point 3
+        ### reassing the value of vuln_author_date on each iteration when is_patch is false
+        vuln_author_date = commit.author_date
+
+        ### Point 6
+        vuln_author = commit.author.email
             
-            
-
-
-
-        ### Logic for point 3
-
-
-    
+        ### Point 3
+        ### Calculate difference between patch date and vuln date in months
+        difference: datetime = relativedelta(patch_author_date,vuln_author_date)
+        months_difference = difference.year * 12 + difference.month
+        ############################################################
         
-        
-        
-        shutil.rmtree(temp_repo_path)
-    
-    for vuln_commit in temp_repo_vulns.traverse_commits():
-        temp_repo_path = vuln_commit.project_path  # Path to the cloned repo
-        
+        ### Point 6
+        ### Compare patch author and vuln author
+        if patch_author == vuln_author:
+            BY_SAME_PERSON += 1
+          
+        #shutil.rmtree(temp_repo_path)
 
-
-        ### Logic for point 3
-
-
-    
-        
-        
-        
-        shutil.rmtree(temp_repo_path)
-
+    ### Point 1
     SIZE_OF_ALL_CLONED_REPOS += repo_size
-    TOTAL_NUM_MONTHS += months_difference
+
+    ### Point 3
+    TOTAL_NUM_MONTHS_BETWEEN += months_difference
+
+    ### Point 2
     TOTAL_VULNS += len(vuln_commits) ### Getting total vulns
 
     
-    ### Point 2,Point 5
     
     
-        
+    
+### Point 2
+total_entires = len(patch_vuln_df)
+PATCHES_WO_VULN = total_entires - TOTAL_PATCH_COMMITS_W_VULN_COMMIT
 
-AVERAGE_NUM_OF_VULNS_TO_PATCH: float = (TOTAL_VULNS / TOTAL_PATCH_COMMITS_w_VULN_COMMIT)
-AVERAGE_NUM_MONTHS_BETWEEN_VULN_N_PATCH = (TOTAL_NUM_MONTHS / TOTAL_VULNS )
-PERCENTAGE_OF_VULN_N_PATCH_BY_SAME_PERSON = (TOTAL_VULNS / BY_SAME_PERSON )
+### Point 3
+AVERAGE_NUM_MONTHS_BETWEEN_VULN_N_PATCH: float = (TOTAL_NUM_MONTHS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT )
 
 
-### Checks
-assert(TOTAL_VULN_COMMITS_FOUND == TOTAL_VULNS)
+### Point 5
+AVERAGE_NUM_OF_VULNS_TO_PATCH: float = (TOTAL_VULNS / TOTAL_PATCH_COMMITS_W_VULN_COMMIT)
+
+
+### Point 6
+PERCENTAGE_OF_VULN_N_PATCH_BY_SAME_PERSON: float = (TOTAL_VULNS / BY_SAME_PERSON )
+
+
