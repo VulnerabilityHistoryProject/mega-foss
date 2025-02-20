@@ -13,9 +13,11 @@ PATCH_HASHES = "../viable_patches.json"
 # Output JSON file
 PROCESSED_JSON = "patch_vuln_match.json"
 
-repo = Repository("ayyy")
-repo.
+com = Commit()
+com.author_date
 
+repo = Repository()
+repo.
 # Base name for log file and log directory
 LOG_DIR = "drill_logs"
 LOG_FILE_BASE = "drill.log"
