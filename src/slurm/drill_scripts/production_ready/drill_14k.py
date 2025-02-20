@@ -2,7 +2,7 @@ import json
 import os
 import glob
 import logging
-from pydriller import Git
+from pydriller import Git, Commit, Repository
 
 # Base directory where repositories are stored
 NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
@@ -13,7 +13,10 @@ PATCH_HASHES = "../viable_patches.json"
 # Output JSON file
 PROCESSED_JSON = "patch_vuln_match.json"
 
+com = Commit()
+com.author_date
 
+repo = Repository("342",order='reverse',only_commits=["sdfs"])
 
 # Base name for log file and log directory
 LOG_DIR = "drill_logs"
