@@ -15,9 +15,9 @@ PROCESSED_JSON = "patch_vuln_match.json"
 
 com = Commit()
 com.author_date
-
+com.project_path
 repo = Repository("342",order='reverse',only_commits=["sdfs"])
-
+repo.
 # Base name for log file and log directory
 LOG_DIR = "drill_logs"
 LOG_FILE_BASE = "drill.log"
