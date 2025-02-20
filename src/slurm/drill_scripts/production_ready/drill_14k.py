@@ -2,7 +2,7 @@ import json
 import os
 import glob
 import logging
-from pydriller import Git
+from pydriller import Git, Commit
 
 # Base directory where repositories are stored
 NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
