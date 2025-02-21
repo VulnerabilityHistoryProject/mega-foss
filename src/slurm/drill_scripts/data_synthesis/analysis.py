@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
-filename="analysis.log",
+filename="py_logs/analysis1.log",
 level=logging.INFO,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -100,6 +100,30 @@ def safe_extract_vuln_files_commits(vuln_commits):
         logging.error(f"Error processing vuln_commits: {vuln_commits} - {e}", exc_info=True)
         return pd.Series([[], []])  # Return empty lists in case of failure
 
+
+
+def extract_file_paths(vuln_commits):
+    try:
+        if isinstance(vuln_commits, dict):
+            return list(vuln_commits.keys())
+        return []
+    except Exception as e:
+        print(f"Error extracting file paths: {e}")
+        return []
+
+# Function to extract commit hashes with error handling
+def extract_commit_hashes(vuln_commits):
+    try:
+        if isinstance(vuln_commits, dict):
+            return list({commit for commits in vuln_commits.values() if isinstance(commits, list) for commit in commits})
+        return []
+    except Exception as e:
+        print(f"Error extracting commit hashes: {e}")
+        return []
+
+
+
+
 def find_repo_path(owner_repo: str) -> str | None:
     """Finds the path of a repository inside NVD_ALL_REPOS.
 
@@ -134,7 +158,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
     unique_repo_paths: set[str] = set()
 
     # Point 1, 3, 4 , 6
-    for owner_repo, patch_commit, vuln_commits in zip(patch_vuln_df["repo"], patch_vuln_df["patch_commit"], patch_vuln_df["vuln_commits"]):
+    for owner_repo, patch_commit, vuln_commits in zip(patch_vuln_df["repo"], patch_vuln_df["patch_commit"], patch_vuln_df["vuln_hashes"]):
         
         # Skip if there are no vuln commits to analyze
         if vuln_commits == []:
@@ -322,11 +346,22 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
         try:
             # Write metrics to file
             with open(output_file, "w") as f:
-                f.write(f"Size of all cloned repos: {SIZE_OF_ALL_CLONED_REPOS}")
-                f.write
+                ### Get all global variable values for validation / debugging
+                f.write(f"Size of all cloned repos: {SIZE_OF_ALL_CLONED_REPOS}\n")
+                f.write(f"Total Vulns: {TOTAL_VULNS}\n")
+                f.write(f"Total patch commits with vuln commit (matches): {TOTAL_PATCH_COMMITS_W_VULN_COMMIT}\n")
+                f.write(f"Number of vulns fixed by the same person: {BY_SAME_PERSON}\n")
+                f.write(f"Percentage of vulns fixed by the same person: {PERCENTAGE_OF_VULN_N_PATCH_BY_SAME_PERSON}%\n")
+                f.write(f"Total number of months between commits: {TOTAL_NUM_MONTHS_BETWEEN}\n")
+                f.write(f"Total number of commits between: {TOTAL_NUM_COMMITS_BETWEEN}\n")
+                f.write(f"\n")
+                f.write(f"\n")
+                f.write(f"\n")
+                f.write(f"\n")
+                f.write(f"\n")
+                f.write(f"\n")
 
 
-                
                 f.write(f"### Point 2\n")
                 f.write(f"Total Entries: {total_entries}\n")
                 f.write(f"Patches Without Vulnerability: {patches_without_vuln}\n\n")
@@ -376,13 +411,21 @@ def main():
         logging.info("converted the df successfully")
         logging.info("First 5 rows of the DataFrame:\n%s", df.head().to_string())
 
-    try:
-        df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(safe_extract_vuln_files_commits, result_type="expand")
-        logging.info("Successfully processed 'vuln_commits' column.")
-    except Exception as e:
-        logging.critical(f"Critical failure while applying function to DataFrame: {e}", exc_info=True)
+    # Apply functions to create new columns
+    df["vuln_files"] = df["vuln_commits"].apply(extract_file_paths)
+    df["vuln_hashes"] = df["vuln_commits"].apply(extract_commit_hashes)
 
-    logging.info("added the columns for the vulns...")
+    # Drop the original vuln_commits column if not needed
+    df.drop(columns=["vuln_commits"], inplace=True)
+    logging.info("First 5 rows of UPDATED DataFrame:\n%s", df.head().to_string())
+
+    # try:
+    #     df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(safe_extract_vuln_files_commits).apply(pd.Ser)
+    #     logging.info("Successfully processed 'vuln_commits' column.")
+    # except Exception as e:
+    #     logging.critical(f"Critical failure while applying function to DataFrame: {e}", exc_info=True)
+
+    # logging.info("added the columns for the vulns...")
 
 
     ### Code to run on debug partition

@@ -10,9 +10,9 @@
 
 #SBATCH --time=0-01:00:00
 
-#SBATCH --output=%x_%j.out
+#SBATCH --output=RC_logs/%x_%j.out
 
-#SBATCH --error=%x_%j.err
+#SBATCH --error=RC_logs/%x_%j.err
 
 #SBATCH --mail-user=slack:@jmb7342
 
