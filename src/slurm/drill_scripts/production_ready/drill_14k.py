@@ -66,7 +66,7 @@ def main():
     # Load JSON data
     cve_data = safe_load_json(PATCH_HASHES)
 
-
+    
     # Process each entry in the JSON
     for entry in cve_data:
         try:
