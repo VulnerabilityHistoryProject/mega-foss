@@ -291,40 +291,65 @@ def get_commits_between(repo_path: str, vuln_hash: str, patch_hash: str) -> int:
         error_message = f"One or both commit hashes ({vuln_hash}, {patch_hash}) were not found in the repository at {repo_path}."
         logging.error(error_message)
         return 0  # Return a default value to indicate an error occurred
-    
 
 def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
     """
-    Calculating final values:
+    Calculating final values and logging the results to a file.
+
+    :param patch_vuln_df: The dataframe containing patch and vulnerability information.
     """
-    logging.info("about to calc the final values!")
-    # Define the values
-    total_entries = len(patch_vuln_df)
-    patches_without_vuln = total_entries - TOTAL_PATCH_COMMITS_W_VULN_COMMIT
-    average_num_months_between_vuln_n_patch = TOTAL_NUM_MONTHS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT
-    average_num_commits_between_vuln_n_patch = TOTAL_NUM_COMMITS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT
-    average_num_of_vulns_to_patch = TOTAL_VULNS / TOTAL_PATCH_COMMITS_W_VULN_COMMIT
-    percentage_of_vuln_n_patch_by_same_person = (TOTAL_VULNS / BY_SAME_PERSON) * 100
+    try:
+        logging.info("Starting the calculation of final values.")
 
-    output_file = "vuln_patch_metrics.txt"
-    with open(output_file, "w") as f:
-        f.write(f"### Point 2\n")
-        f.write(f"Total Entries: {total_entries}\n")
-        f.write(f"Patches Without Vulnerability: {patches_without_vuln}\n\n")
+        # Define the values
+        total_entries = len(patch_vuln_df)
+        if TOTAL_PATCH_COMMITS_W_VULN_COMMIT == 0:
+            logging.warning("TOTAL_PATCH_COMMITS_W_VULN_COMMIT is 0. Average calculations may be invalid.")
+            average_num_months_between_vuln_n_patch = 0
+            average_num_commits_between_vuln_n_patch = 0
+            average_num_of_vulns_to_patch = 0
+        else:
+            patches_without_vuln = total_entries - TOTAL_PATCH_COMMITS_W_VULN_COMMIT
+            average_num_months_between_vuln_n_patch = TOTAL_NUM_MONTHS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT
+            average_num_commits_between_vuln_n_patch = TOTAL_NUM_COMMITS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT
+            average_num_of_vulns_to_patch = TOTAL_VULNS / TOTAL_PATCH_COMMITS_W_VULN_COMMIT
 
-        f.write(f"### Point 3\n")
-        f.write(f"Average Number of Months Between Vulnerability and Patch: {average_num_months_between_vuln_n_patch:.2f}\n\n")
+        if BY_SAME_PERSON == 0:
+            logging.warning("BY_SAME_PERSON is 0. Percentage calculation may be invalid.")
+            percentage_of_vuln_n_patch_by_same_person = 0
+        else:
+            percentage_of_vuln_n_patch_by_same_person = (TOTAL_VULNS / BY_SAME_PERSON) * 100
 
-        f.write(f"### Point 4\n")
-        f.write(f"Average Number of Commits Between Vulnerability and Patch: {average_num_commits_between_vuln_n_patch:.2f}\n\n")
+        output_file = "vuln_patch_metrics.txt"
+        
+        try:
+            # Write metrics to file
+            with open(output_file, "w") as f:
+                f.write(f"### Point 2\n")
+                f.write(f"Total Entries: {total_entries}\n")
+                f.write(f"Patches Without Vulnerability: {patches_without_vuln}\n\n")
 
-        f.write(f"### Point 5\n")
-        f.write(f"Average Number of Vulnerabilities per Patch: {average_num_of_vulns_to_patch:.2f}\n\n")
+                f.write(f"### Point 3\n")
+                f.write(f"Average Number of Months Between Vulnerability and Patch: {average_num_months_between_vuln_n_patch:.2f}\n\n")
 
-        f.write(f"### Point 6\n")
-        f.write(f"Percentage of Vulnerabilities and Patches by the Same Person: {percentage_of_vuln_n_patch_by_same_person:.2f}%\n")
+                f.write(f"### Point 4\n")
+                f.write(f"Average Number of Commits Between Vulnerability and Patch: {average_num_commits_between_vuln_n_patch:.2f}\n\n")
 
-    logging.info(f"Metrics written to {output_file}")
+                f.write(f"### Point 5\n")
+                f.write(f"Average Number of Vulnerabilities per Patch: {average_num_of_vulns_to_patch:.2f}\n\n")
+
+                f.write(f"### Point 6\n")
+                f.write(f"Percentage of Vulnerabilities and Patches by the Same Person: {percentage_of_vuln_n_patch_by_same_person:.2f}%\n")
+
+            logging.info(f"Metrics written to {output_file}")
+        
+        except IOError as e:
+            logging.error(f"Error writing to file {output_file}. IOError: {str(e)}")
+            raise  # Re-raise the exception to handle it further up the stack if needed
+        
+    except Exception as e:
+        logging.error(f"An error occurred while calculating final values: {str(e)}")
+
 
 def main():
     
