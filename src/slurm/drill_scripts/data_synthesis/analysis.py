@@ -1,28 +1,28 @@
 
-import glob
 import logging
 import pandas as pd
 import jsonlines    
 
 import os
-import shutil
+import sys
 from pydriller import Repository, Commit
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from git import Repo
 
+
+from pathlib import Path
 
 
 # Configure logging
 logging.basicConfig(
-filename="analysis.txt",
+filename="analysis.log",
 level=logging.INFO,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
 
-NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
-
+# NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
+NVD_ALL_REPOS = Path("/shared/rc/sfs/nvd-all-repos")
 MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
 
 ### Point 1
@@ -48,28 +48,30 @@ TOTAL_NUM_COMMITS_BETWEEN: int = 0
 AVERAGE_NUM_COMMITS_BETWEEN_VULN_N_PATCH: float = 0.0
 
 
-def convert_jsonl_to_df(json_path:str) -> pd.DataFrame:
-
+def convert_jsonl_to_df(json_path: str) -> pd.DataFrame:
+    """Converts a JSONL file to a pandas DataFrame with error handling."""
+    
     data: list[object] = []
+    
+    try:
+        with jsonlines.open(json_path) as reader:
+            data = [entry for entry in reader]
 
-    with jsonlines.open(json_path) as reader:
+        # Convert the list of dictionaries into a pandas DataFrame
+        patch_vuln_df = pd.DataFrame(data)
+        logging.info(f"Successfully converted {json_path} to DataFrame with {len(patch_vuln_df)} rows.")
 
-        data = [entry for entry in reader]
+        return patch_vuln_df
 
-    # Convert the list of dictionaries into a pandas DataFrame
-    patch_vuln_df = pd.DataFrame(data)
+    except FileNotFoundError:
+        logging.error(f"File not found: {json_path}")
+    except jsonlines.jsonlines.Error as e:
+        logging.error(f"Error reading JSONL file {json_path}: {e}")
+    except Exception as e:
+        logging.error(f"Unexpected error while processing {json_path}: {e}")
 
-    logging.info("Converted json to df")
-    return patch_vuln_df
+    return pd.DataFrame()  # Return an empty DataFrame in case of failure
 
-# Define a function to extract the file paths and commits
-def extract_vuln_files_commits(vuln_commits):
-    if vuln_commits:
-        files = list(vuln_commits.keys())
-        commits = [commit for commits in vuln_commits.values() for commit in commits]
-        return pd.Series([files, commits])
-    else:
-        return pd.Series([[], []])  # Empty lists if no vuln_commits
 
 
 
@@ -85,8 +87,47 @@ def get_directory_size(path: str) -> float:
     return size
 
 
+def extract_vuln_files_commits(vuln_commits):
+    if isinstance(vuln_commits, dict):  # Ensure it's a dictionary
+        files = list(vuln_commits.keys())
+        commits = [commit for commit_list in vuln_commits.values() for commit in commit_list]
+        return pd.Series([files, commits])
+    else:
+        return pd.Series([[], []])  # Return empty lists if invalid
+    
+def safe_extract_vuln_files_commits(vuln_commits):
+    """Wrapper function for error handling and logging."""
+    try:
+        return extract_vuln_files_commits(vuln_commits)
+    except Exception as e:
+        logging.error(f"Error processing vuln_commits: {vuln_commits} - {e}", exc_info=True)
+        return pd.Series([[], []])  # Return empty lists in case of failure
 
+def find_repo_path(owner_repo: str) -> str | None:
+    """Finds the path of a repository inside NVD_ALL_REPOS.
 
+    Args:
+        owner_repo (str): The repository in 'owner/repo' format.
+
+    Returns:
+        str | None: The path to the repository if found, otherwise None.
+    """
+    try:
+        if not NVD_ALL_REPOS.exists() or not NVD_ALL_REPOS.is_dir():
+            logging.error(f"NVD_ALL_REPOS path {NVD_ALL_REPOS} does not exist or is not a directory.")
+            return None
+
+        for repo in NVD_ALL_REPOS.iterdir():
+            if owner_repo in repo.name:
+                logging.info(f"Found repository path for {owner_repo}: {repo}")
+                return str(repo)
+
+        logging.warning(f"Repo not found for {owner_repo}. Skipping...")
+        return None
+
+    except Exception as e:
+        logging.critical(f"Error while searching for repo path {owner_repo}: {e}", exc_info=True)
+        return None
 
 def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
     global NVD_ALL_REPOS, TOTAL_PATCH_COMMITS_W_VULN_COMMIT, TOTAL_NUM_MONTHS_BETWEEN,TOTAL_NUM_COMMITS_BETWEEN,BY_SAME_PERSON,SIZE_OF_ALL_CLONED_REPOS,TOTAL_VULNS
@@ -121,8 +162,8 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
         # matching_repos = []
         # for variant in repo_path_variants:
         #matching_repos += glob.glob(os.path.join(NVD_ALL_REPOS, f"*{owner_repo}*"))
-
-        repo_path = glob.glob(os.path.join(NVD_ALL_REPOS, f"*{owner_repo}*"))
+        repo_path = find_repo_path(owner_repo)
+        # repo_path = glob.glob(os.path.join(NVD_ALL_REPOS, f"*{owner_repo}*"))
         logging.info(f"got this path: {str(repo_path)}")
         # if not matching_repos:
         #     logging.warning(f"Repo not found for {owner_repo}. Skipping...")
@@ -138,7 +179,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
         # print("commits to analyze: " + str(commits_to_analyze))
 
         ### Vars for point 3 and point 4
-        temp_repo: Repository = Repository(repo_path, only_commits=commits_to_analyze, order='reverse')
+        temp_repo: Repository = Repository(str(repo_path), only_commits=commits_to_analyze, order='reverse')
         logging.info(f"got the temp repo: {temp_repo}")
         patch_author: str = ""
         patch_author_date: datetime = None
@@ -236,9 +277,6 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
             logging.info(f"Total vulns right now: {TOTAL_VULNS}")
 
     
-
-
-
 def get_commits_between(repo_path: str, vuln_hash: str, patch_hash: str) -> int:
     """
     Calculate the number of commits between two given commit hashes.
@@ -313,8 +351,6 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
 
     logging.info(f"Metrics written to {output_file}")
 
-
-    
 def main():
     
     """
@@ -330,10 +366,20 @@ def main():
 
     
     df = convert_jsonl_to_df(MATCH_FILES)
-    logging.info("converted the df successfully")
 
-    # Apply the function to create new columns
-    df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(extract_vuln_files_commits)
+    if df.empty:
+        logging.error("Dataframe is empty")
+        sys.exit(1)
+    else:
+        logging.info("converted the df successfully")
+        logging.info("First 5 rows of the DataFrame:\n%s", df.head().to_string())
+
+    try:
+        df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(safe_extract_vuln_files_commits, result_type="expand")
+        logging.info("Successfully processed 'vuln_commits' column.")
+    except Exception as e:
+        logging.critical(f"Critical failure while applying function to DataFrame: {e}", exc_info=True)
+
     logging.info("added the columns for the vulns...")
 
 
