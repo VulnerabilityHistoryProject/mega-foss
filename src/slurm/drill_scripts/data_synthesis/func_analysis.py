@@ -1,7 +1,7 @@
 import logging
 import jsonlines
 import pandas as pd
-from analysis import analyze_patch_vuln_data
+from slurm.drill_scripts.data_synthesis.test_analysis import analyze_patch_vuln_data
 
 def setup_logger():
     """Sets up the logger to write to analysis.log"""

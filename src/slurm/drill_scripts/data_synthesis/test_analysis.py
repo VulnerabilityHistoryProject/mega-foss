@@ -435,9 +435,9 @@ def main():
 
     ### Code to run on debug partition
     # Assuming patch_vuln_df is your existing DataFrame
-    # first_5_rows_df = df.head(5)
-    # iterate_and_calculate(first_5_rows_df)
-    # calc_final_values(first_5_rows_df)
+    first_5_rows_df = df.head(5)
+    iterate_and_calculate(first_5_rows_df)
+    calc_final_values(first_5_rows_df)
 
     # iterate_and_calculate(df)
     # calc_final_values(df)
