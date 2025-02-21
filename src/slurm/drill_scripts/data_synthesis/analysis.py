@@ -16,8 +16,8 @@ from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
-filename="py_logs/analysis4.log",
-level=logging.INFO,
+filename="py_logs/analysisBigBoi.log",
+level=logging.WARNING,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 

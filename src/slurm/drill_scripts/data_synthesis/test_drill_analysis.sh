@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=robust-analysisNVD
+#SBATCH --job-name=test-analysisNVD
 
 #SBATCH --comment="Analyzing the 13.8-ish vuln commits robustly now"
 
@@ -8,7 +8,7 @@
 
 #SBATCH --partition=debug
 
-#SBATCH --time=0-01:00:00
+#SBATCH --time=0-00:10:00
 
 #SBATCH --output=RC_logs/%x_%j.out
 

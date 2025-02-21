@@ -345,7 +345,7 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
         else:
             percentage_of_vuln_n_patch_by_same_person = (TOTAL_VULNS / BY_SAME_PERSON) #* 100
 
-        output_file = "vuln_patch_metrics.txt"
+        output_file = "test_vuln_patch_metrics.txt"
         
         try:
             # Write metrics to file
