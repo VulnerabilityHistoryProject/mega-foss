@@ -73,9 +73,6 @@ def convert_jsonl_to_df(json_path: str) -> pd.DataFrame:
     return pd.DataFrame()  # Return an empty DataFrame in case of failure
 
 
-
-
-
 # Calculate repo size
 def get_directory_size(path: str) -> float:
     size: float = 0
@@ -325,6 +322,11 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
         try:
             # Write metrics to file
             with open(output_file, "w") as f:
+                f.write(f"Size of all cloned repos: {SIZE_OF_ALL_CLONED_REPOS}")
+                f.write
+
+
+                
                 f.write(f"### Point 2\n")
                 f.write(f"Total Entries: {total_entries}\n")
                 f.write(f"Patches Without Vulnerability: {patches_without_vuln}\n\n")
@@ -383,8 +385,14 @@ def main():
     logging.info("added the columns for the vulns...")
 
 
-    iterate_and_calculate(df)
-    calc_final_values(df)
+    ### Code to run on debug partition
+    # Assuming patch_vuln_df is your existing DataFrame
+    first_5_rows_df = df.head(5)
+    iterate_and_calculate(first_5_rows_df)
+    calc_final_values(first_5_rows_df)
+
+    # iterate_and_calculate(df)
+    # calc_final_values(df)
     logging.info("Done! Done! Done!")
 
 

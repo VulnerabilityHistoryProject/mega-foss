@@ -1,14 +1,14 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=SZZdataanalysis
+#SBATCH --job-name=robust-analysisNVD
 
-#SBATCH --comment="Analyzing the 13.8-ish vuln commits now"
+#SBATCH --comment="Analyzing the 13.8-ish vuln commits robustly now"
 
 #SBATCH --account=sfs
 
-#SBATCH --partition=tier3
+#SBATCH --partition=debug
 
-#SBATCH --time=0-10:00:00
+#SBATCH --time=0-01:00:00
 
 #SBATCH --output=%x_%j.out
 
@@ -22,7 +22,7 @@
 
 #SBATCH --nodes=1
 
-#SBATCH --mem=10g
+#SBATCH --mem=3g
 
 echo "Script running!"
 
