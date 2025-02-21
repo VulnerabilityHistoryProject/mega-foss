@@ -20,6 +20,9 @@ level=logging.INFO,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
+
+NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
+
 MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
 
 ### Point 1
@@ -56,7 +59,7 @@ def convert_jsonl_to_df(json_path:str) -> pd.DataFrame:
     # Convert the list of dictionaries into a pandas DataFrame
     patch_vuln_df = pd.DataFrame(data)
 
-
+    logging.info("Converted json to df")
     return patch_vuln_df
 
 # Define a function to extract the file paths and commits
@@ -78,12 +81,12 @@ def get_directory_size(path: str) -> float:
         for f in filenames:
             fp = os.path.join(dirpath, f)
             size += os.path.getsize(fp)
+    logging.info(f"got the size for {path} repo")
     return size
 
 
 
 
-NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
 
 def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
     global NVD_ALL_REPOS, TOTAL_PATCH_COMMITS_W_VULN_COMMIT, TOTAL_NUM_MONTHS_BETWEEN,TOTAL_NUM_COMMITS_BETWEEN,BY_SAME_PERSON,SIZE_OF_ALL_CLONED_REPOS,TOTAL_VULNS
@@ -109,31 +112,34 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
         #remote_url: str = f"https://github.com/{owner}/{repo}.git"
 
         # Search for the repository in the directory
-        repo_path_variants = [
-            owner_repo,
-            owner_repo.replace("/", "_"),
-            owner_repo.replace("/", "-"),
-        ]
+        # repo_path_variants = [
+        #     owner_repo,
+        #     owner_repo.replace("/", "_"),
+        #     owner_repo.replace("/", "-"),
+        # ]
 
-        matching_repos = []
-        for variant in repo_path_variants:
-            matching_repos += glob.glob(os.path.join(NVD_ALL_REPOS, f"*{variant}*"))
+        # matching_repos = []
+        # for variant in repo_path_variants:
+        #matching_repos += glob.glob(os.path.join(NVD_ALL_REPOS, f"*{owner_repo}*"))
 
-        if not matching_repos:
-            logging.warning(f"Repo not found for {owner_repo}. Skipping...")
-            continue
+        repo_path = glob.glob(os.path.join(NVD_ALL_REPOS, f"*{owner_repo}*"))
+        logging.info(f"got this path: {str(repo_path)}")
+        # if not matching_repos:
+        #     logging.warning(f"Repo not found for {owner_repo}. Skipping...")
+        #     continue
 
-        repo_path = matching_repos[0]  # Assume the first match is correct
+        #repo_path = matching_repos[0]  # Assume the first match is correct
 
 
         commits_to_analyze: list[str] = []
         commits_to_analyze.append(patch_commit)
         commits_to_analyze.extend(vuln_commits)
 
-        print("commits to analyze: " + str(commits_to_analyze))
+        # print("commits to analyze: " + str(commits_to_analyze))
 
         ### Vars for point 3 and point 4
         temp_repo: Repository = Repository(repo_path, only_commits=commits_to_analyze, order='reverse')
+        logging.info(f"got the temp repo: {temp_repo}")
         patch_author: str = ""
         patch_author_date: datetime = None
         patch_hash: str = ""
@@ -141,7 +147,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
         temp_repo_path: str = ""
         for commit in temp_repo.traverse_commits(): ### First commit will be 
             
-        
+            logging.info(f"Analyzing commits in {temp_repo}" )
             ### Code for point 1
             if commit.project_path not in unique_repo_paths:
                 
@@ -149,9 +155,12 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
                 temp_repo_path = commit.project_path  
                 unique_repo_paths.add(temp_repo_path)
                 repo_size: float = get_directory_size(temp_repo_path) / (1024 * 1024)  # Convert to MB
-                print("temp repo path:")
-                print("uniqu repo paths" + str(unique_repo_paths))
-                print("repo size:" + str(repo_size))
+                # print("temp repo path:")
+                # print("uniqu repo paths" + str(unique_repo_paths))
+                # print("repo size:" + str(repo_size))
+                ### Point 1
+                SIZE_OF_ALL_CLONED_REPOS += repo_size
+                logging.info(f"Size is now: {str(SIZE_OF_ALL_CLONED_REPOS)}")
             
 
             if is_patch:
@@ -164,6 +173,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
                 patch_hash = commit.hash
                 ## this patch HAS at least one vuln commit
                 TOTAL_PATCH_COMMITS_W_VULN_COMMIT += 1 
+                logging.info(f"total patches with at least 1 vuln: {TOTAL_PATCH_COMMITS_W_VULN_COMMIT}")
                 is_patch = False
                 continue ### This line is INCREDIBLY Important
 
@@ -187,45 +197,94 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
 
             if patch_author_date is not None and vuln_author_date is not None:
                 difference = relativedelta(patch_author_date, vuln_author_date)
-                print(f"difference: {difference}")
+                #print(f"difference: {difference}")
 
                 months_difference = (difference.years or 0) * 12 + (difference.months or 0)
                 TOTAL_NUM_MONTHS_BETWEEN += months_difference
             else:
-                print("Skipping calculation: Missing date values")
+                logging.warning("Skipping calculation: Missing date values")
+                
 
 
+            # ### Code for point 4
+            # temp_repo_obj: Repo = Repo(temp_repo_path)
 
-            
+            # # Make sure to count commits between vuln_hash and patch_hash, including both
+            # commit_range = f"{vuln_hash}...{patch_hash}"  # Use '...' for a range between commits
+            # commit_count = temp_repo_obj.git.rev_list(commit_range, count=True)
 
-            ### Code for point 4
-            temp_repo_obj: Repo = Repo(temp_repo_path)
-            TOTAL_NUM_COMMITS_BETWEEN += int(temp_repo_obj.git.rev_list(f"{vuln_hash}..{patch_hash}", count=True))
-            
+            commit_count: int  = get_commits_between(temp_repo_path,vuln_hash,patch_hash)
+
+            # Add the result to the total
+            TOTAL_NUM_COMMITS_BETWEEN += int(commit_count)
+
+                
             ### Point 6
             ### Compare patch author and vuln author
             if patch_author == vuln_author:
                 BY_SAME_PERSON += 1
+                logging.info(f"number of patches and vulns by the same person: {str(BY_SAME_PERSON)}" )
             
             #shutil.rmtree(temp_repo_path)
 
-        ### Point 1
-        SIZE_OF_ALL_CLONED_REPOS += repo_size
+           
 
+            
+
+            ### Point 2
+            TOTAL_VULNS += len(vuln_commits) ### Getting total vulns
+            logging.info(f"Total vulns right now: {TOTAL_VULNS}")
+
+    
+
+
+
+def get_commits_between(repo_path: str, vuln_hash: str, patch_hash: str) -> int:
+    """
+    Calculate the number of commits between two given commit hashes.
+
+    :param repo_path: Path to the repository.
+    :param vuln_hash: The commit hash of the vulnerability.
+    :param patch_hash: The commit hash of the patch.
+    :return: The number of commits between the two commit hashes, or -1 if an error occurs.
+    """
+    # Initialize variables to store commit positions
+    commit_position_vuln = None
+    commit_position_patch = None
+    commit_count = 0
+
+    # Open the repository
+    repo = Repository(repo_path)
+
+    # Iterate over the commits in the repository
+    for commit in repo.traverse_commits():
+        if commit.hash == vuln_hash:
+            commit_position_vuln = commit_count
+        if commit.hash == patch_hash:
+            commit_position_patch = commit_count
         
+        # Increment the commit counter
+        commit_count += 1
+        
+        # If both commits are found, exit the loop early (optional for performance)
+        if commit_position_vuln is not None and commit_position_patch is not None:
+            break
 
-        ### Point 2
-        TOTAL_VULNS += len(vuln_commits) ### Getting total vulns
+    # If both commit positions are found, return the number of commits between them
+    if commit_position_vuln is not None and commit_position_patch is not None:
+        return abs(commit_position_patch - commit_position_vuln)
+    else:
+        # Log the error if either commit is not found and return -1 instead of raising an error
+        error_message = f"One or both commit hashes ({vuln_hash}, {patch_hash}) were not found in the repository at {repo_path}."
+        logging.error(error_message)
+        return 0  # Return a default value to indicate an error occurred
 
-    
-    
-    
 
 def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
     """
     Calculating final values:
     """
-    
+    logging.info("about to calc the final values!")
     # Define the values
     total_entries = len(patch_vuln_df)
     patches_without_vuln = total_entries - TOTAL_PATCH_COMMITS_W_VULN_COMMIT
@@ -271,9 +330,12 @@ def main():
 
     
     df = convert_jsonl_to_df(MATCH_FILES)
+    logging.info("converted the df successfully")
 
     # Apply the function to create new columns
     df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(extract_vuln_files_commits)
+    logging.info("added the columns for the vulns...")
+
 
     iterate_and_calculate(df)
     calc_final_values(df)
