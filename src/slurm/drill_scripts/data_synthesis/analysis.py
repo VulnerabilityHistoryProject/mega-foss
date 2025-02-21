@@ -206,12 +206,14 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
                 
 
 
-            ### Code for point 4
-            temp_repo_obj: Repo = Repo(temp_repo_path)
+            # ### Code for point 4
+            # temp_repo_obj: Repo = Repo(temp_repo_path)
 
-            # Make sure to count commits between vuln_hash and patch_hash, including both
-            commit_range = f"{vuln_hash}...{patch_hash}"  # Use '...' for a range between commits
-            commit_count = temp_repo_obj.git.rev_list(commit_range, count=True)
+            # # Make sure to count commits between vuln_hash and patch_hash, including both
+            # commit_range = f"{vuln_hash}...{patch_hash}"  # Use '...' for a range between commits
+            # commit_count = temp_repo_obj.git.rev_list(commit_range, count=True)
+
+            get_commits_between(temp_repo_path,vuln_hash,patch_hash)
 
             # Add the result to the total
             TOTAL_NUM_COMMITS_BETWEEN += int(commit_count)
@@ -221,7 +223,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
             ### Compare patch author and vuln author
             if patch_author == vuln_author:
                 BY_SAME_PERSON += 1
-                logging.inf(f"number of patches and vulns by the same person: {str(BY_SAME_PERSON)}" )
+                logging.info(f"number of patches and vulns by the same person: {str(BY_SAME_PERSON)}" )
             
             #shutil.rmtree(temp_repo_path)
 
@@ -234,8 +236,49 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
             logging.info(f"Total vulns right now: {TOTAL_VULNS}")
 
     
-    
-    
+
+
+
+def get_commits_between(repo_path: str, vuln_hash: str, patch_hash: str) -> int:
+    """
+    Calculate the number of commits between two given commit hashes.
+
+    :param repo_path: Path to the repository.
+    :param vuln_hash: The commit hash of the vulnerability.
+    :param patch_hash: The commit hash of the patch.
+    :return: The number of commits between the two commit hashes, or -1 if an error occurs.
+    """
+    # Initialize variables to store commit positions
+    commit_position_vuln = None
+    commit_position_patch = None
+    commit_count = 0
+
+    # Open the repository
+    repo = Repository(repo_path)
+
+    # Iterate over the commits in the repository
+    for commit in repo.traverse_commits():
+        if commit.hash == vuln_hash:
+            commit_position_vuln = commit_count
+        if commit.hash == patch_hash:
+            commit_position_patch = commit_count
+        
+        # Increment the commit counter
+        commit_count += 1
+        
+        # If both commits are found, exit the loop early (optional for performance)
+        if commit_position_vuln is not None and commit_position_patch is not None:
+            break
+
+    # If both commit positions are found, return the number of commits between them
+    if commit_position_vuln is not None and commit_position_patch is not None:
+        return abs(commit_position_patch - commit_position_vuln)
+    else:
+        # Log the error if either commit is not found and return -1 instead of raising an error
+        error_message = f"One or both commit hashes ({vuln_hash}, {patch_hash}) were not found in the repository at {repo_path}."
+        logging.error(error_message)
+        return 0  # Return a default value to indicate an error occurred
+
 
 def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
     """
