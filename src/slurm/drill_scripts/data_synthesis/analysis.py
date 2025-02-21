@@ -105,14 +105,14 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
             continue
 
         # Compose remote repo for pydriller
-        owner, repo = owner_repo.split("/")
+        #owner, repo = owner_repo.split("/")
         #remote_url: str = f"https://github.com/{owner}/{repo}.git"
 
         # Search for the repository in the directory
         repo_path_variants = [
-            repo,
-            repo.replace("/", "_"),
-            repo.replace("/", "-"),
+            owner_repo,
+            owner_repo.replace("/", "_"),
+            owner_repo.replace("/", "-"),
         ]
 
         matching_repos = []
@@ -120,7 +120,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
             matching_repos += glob.glob(os.path.join(NVD_ALL_REPOS, f"*{variant}*"))
 
         if not matching_repos:
-            logging.warning(f"Repo not found for {repo}. Skipping...")
+            logging.warning(f"Repo not found for {owner_repo}. Skipping...")
             continue
 
         repo_path = matching_repos[0]  # Assume the first match is correct
@@ -225,23 +225,7 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
     """
     Calculating final values:
     """
-    ### Point 2
-    TOTAL_ENTIRES = len(patch_vuln_df)
-    PATCHES_WO_VULN = TOTAL_ENTIRES - TOTAL_PATCH_COMMITS_W_VULN_COMMIT
-
-    ### Point 3
-    AVERAGE_NUM_MONTHS_BETWEEN_VULN_N_PATCH: float = (TOTAL_NUM_MONTHS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT )
-
-    ### Point 4
-    AVERAGE_NUM_COMMITS_BETWEEN_VULN_N_PATCH: float = (TOTAL_NUM_COMMITS_BETWEEN / TOTAL_PATCH_COMMITS_W_VULN_COMMIT)
-
-    ### Point 5
-    AVERAGE_NUM_OF_VULNS_TO_PATCH: float = (TOTAL_VULNS / TOTAL_PATCH_COMMITS_W_VULN_COMMIT)
-
-
-    ### Point 6
-    PERCENTAGE_OF_VULN_N_PATCH_BY_SAME_PERSON: float = (TOTAL_VULNS / BY_SAME_PERSON ) * 100
-
+    
     # Define the values
     total_entries = len(patch_vuln_df)
     patches_without_vuln = total_entries - TOTAL_PATCH_COMMITS_W_VULN_COMMIT
