@@ -213,7 +213,7 @@ def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
             # commit_range = f"{vuln_hash}...{patch_hash}"  # Use '...' for a range between commits
             # commit_count = temp_repo_obj.git.rev_list(commit_range, count=True)
 
-            get_commits_between(temp_repo_path,vuln_hash,patch_hash)
+            commit_count: int  = get_commits_between(temp_repo_path,vuln_hash,patch_hash)
 
             # Add the result to the total
             TOTAL_NUM_COMMITS_BETWEEN += int(commit_count)
