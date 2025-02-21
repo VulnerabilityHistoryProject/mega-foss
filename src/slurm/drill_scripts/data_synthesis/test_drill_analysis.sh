@@ -1,14 +1,14 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=SZZ-Metrics
+#SBATCH --job-name=robust-analysisNVD
 
 #SBATCH --comment="Analyzing the 13.8-ish vuln commits robustly now"
 
 #SBATCH --account=sfs
 
-#SBATCH --partition=tier3
+#SBATCH --partition=debug
 
-#SBATCH --time=1-00:00:00
+#SBATCH --time=0-01:00:00
 
 #SBATCH --output=RC_logs/%x_%j.out
 
@@ -22,7 +22,7 @@
 
 #SBATCH --nodes=1
 
-#SBATCH --mem=10g
+#SBATCH --mem=3g
 
 echo "Script running!"
 
@@ -32,4 +32,4 @@ conda activate szz-trust-worthy
 
 hostname
 
-python3 /shared/rc/sfs/mega-foss-Trust-Worthy/src/slurm/drill_scripts/data_synthesis/analysis.py
+python3 /shared/rc/sfs/mega-foss-Trust-Worthy/src/slurm/drill_scripts/data_synthesis/test_analysis.py

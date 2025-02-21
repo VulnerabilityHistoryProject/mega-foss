@@ -1,10 +1,10 @@
-Size of all cloned repos: 0
-Total Vulns: 0
-Total patch commits with vuln commit (matches): 0
-Number of vulns fixed by the same person: 0
+Size of all cloned repos: 628.0205068588257
+Total Vulns: 581
+Total patch commits with vuln commit (matches): 3
+Number of vulns fixed by the same person: 20
 Percentage of vulns fixed by the same person: 0.0%
-Total number of months between commits: 0
-Total number of commits between: 0
+Total number of months between commits: 835
+Total number of commits between: 74031
 
 
 
@@ -13,3 +13,16 @@ Total number of commits between: 0
 
 ### Point 2
 Total Entries: 5
+Patches Without Vulnerability: 2
+
+### Point 3
+Average Number of Months Between Vulnerability and Patch: 278.33
+
+### Point 4
+Average Number of Commits Between Vulnerability and Patch: 24677.00
+
+### Point 5
+Average Number of Vulnerabilities per Patch: 193.67
+
+### Point 6
+Percentage of Vulnerabilities and Patches by the Same Person: 2905.00%
