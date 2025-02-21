@@ -1,2 +1,15 @@
+Size of all cloned repos: 0
+Total Vulns: 0
+Total patch commits with vuln commit (matches): 0
+Number of vulns fixed by the same person: 0
+Percentage of vulns fixed by the same person: 0.0%
+Total number of months between commits: 0
+Total number of commits between: 0
+
+
+
+
+
+
 ### Point 2
 Total Entries: 5

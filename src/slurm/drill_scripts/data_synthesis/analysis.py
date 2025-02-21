@@ -5,6 +5,7 @@ import jsonlines
 
 import os
 import sys
+import glob
 from pydriller import Repository, Commit
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -15,14 +16,14 @@ from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
-filename="py_logs/analysis1.log",
+filename="py_logs/analysis3.log",
 level=logging.INFO,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
 
-# NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
-NVD_ALL_REPOS = Path("/shared/rc/sfs/nvd-all-repos")
+NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
+# NVD_ALL_REPOS = Path("/shared/rc/sfs/nvd-all-repos")
 MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
 
 ### Point 1
@@ -133,22 +134,25 @@ def find_repo_path(owner_repo: str) -> str | None:
     Returns:
         str | None: The path to the repository if found, otherwise None.
     """
-    try:
-        if not NVD_ALL_REPOS.exists() or not NVD_ALL_REPOS.is_dir():
-            logging.error(f"NVD_ALL_REPOS path {NVD_ALL_REPOS} does not exist or is not a directory.")
-            return None
+    # try:
+    #     if not NVD_ALL_REPOS.exists() or not NVD_ALL_REPOS.is_dir():
+    #         logging.error(f"NVD_ALL_REPOS path {NVD_ALL_REPOS} does not exist or is not a directory.")
+    #         return None
 
-        for repo in NVD_ALL_REPOS.iterdir():
-            if owner_repo in repo.name:
-                logging.info(f"Found repository path for {owner_repo}: {repo}")
-                return str(repo)
+    #     for repo in NVD_ALL_REPOS.iterdir():
+    #         if owner_repo in repo.name:
+    #             logging.info(f"Found repository path for {owner_repo}: {repo}")
+    #             return str(repo)
 
-        logging.warning(f"Repo not found for {owner_repo}. Skipping...")
-        return None
+    #     logging.warning(f"Repo not found for {owner_repo}. Skipping...")
+    #     return None
 
-    except Exception as e:
-        logging.critical(f"Error while searching for repo path {owner_repo}: {e}", exc_info=True)
-        return None
+    # except Exception as e:
+    #     logging.critical(f"Error while searching for repo path {owner_repo}: {e}", exc_info=True)
+    #     return None
+    matching_repos:list = glob.glob(os.path.join(NVD_ALL_REPOS, f"*{owner_repo}*"))
+    return matching_repos[0]
+
 
 # Assuming Repository is defined earlier and other variables exist globally
 def iterate_and_calculate(patch_vuln_df: pd.DataFrame):
