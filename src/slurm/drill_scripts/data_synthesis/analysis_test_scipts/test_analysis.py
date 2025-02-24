@@ -60,6 +60,7 @@ TOTAL_NUM_COMMITS_BETWEEN: int = 0
 AVERAGE_NUM_COMMITS_BETWEEN_VULN_N_PATCH: float = 0.0
 
 
+
 def convert_jsonl_to_df(json_path: str) -> pd.DataFrame:
     """Converts a JSONL file to a pandas DataFrame with error handling."""
     
