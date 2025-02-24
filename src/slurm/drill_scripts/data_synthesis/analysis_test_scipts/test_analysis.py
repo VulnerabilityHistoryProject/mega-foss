@@ -293,6 +293,9 @@ def get_commits_between(repo_path: str, vuln_hash: str, patch_hash: str) -> int:
         logging.error(error_message)
         return None  # Invalid repo path
 
+
+    repo = Repository(path_to_repo=)
+    from_commit=vuln_hash,to_commit=patch_hash,order='reverse'
     # Try to open the repository
     try:
         repo = Repository(repo_path)
