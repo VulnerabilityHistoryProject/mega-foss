@@ -16,8 +16,8 @@ from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
-filename="py_logs/analysis4.log",
-level=logging.INFO,
+filename="py_logs/analysisBigBoi.log",
+level=logging.WARNING,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
@@ -351,7 +351,7 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
             # Write metrics to file
             with open(output_file, "w") as f:
                 ### Get all global variable values for validation / debugging
-                f.write(f"Size of all cloned repos: {SIZE_OF_ALL_CLONED_REPOS}\n")
+                f.write(f"Size of all cloned repos in MB: {SIZE_OF_ALL_CLONED_REPOS} MB\n")
                 f.write(f"Total Vulns: {TOTAL_VULNS}\n")
                 f.write(f"Total patch commits with vuln commit (matches): {TOTAL_PATCH_COMMITS_W_VULN_COMMIT}\n")
                 f.write(f"Number of vulns fixed by the same person: {BY_SAME_PERSON}\n")

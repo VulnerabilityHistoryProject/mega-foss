@@ -13,17 +13,28 @@ from typing import Optional
 
 from pathlib import Path
 
+"""
+    Obtaining ...
+
+    1. Total size of the cloned repos
+    2. Total number of vulnerability inducing commits (vuln commits) found & (& num of patches missing a vuln (not found))
+    3. Average number of months between vuln commit and patch commit (or fix)
+    4. Average number of commits between the vuln commit & patch commit (or fix)
+    5. Average number of vuln commits fixed by patch commit (or fix)
+    6. Percentage of vulns where the vuln commit and fix were made by the same person
+    """
+
 
 # Configure logging
 logging.basicConfig(
-filename="py_logs/analysis4.log",
-level=logging.INFO,
+filename="py_logs/analysis5.log",
+level=logging.WARNING,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
 
 NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
-# NVD_ALL_REPOS = Path("/shared/rc/sfs/nvd-all-repos")
+
 MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
 
 ### Point 1
@@ -345,7 +356,7 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
         else:
             percentage_of_vuln_n_patch_by_same_person = (TOTAL_VULNS / BY_SAME_PERSON) #* 100
 
-        output_file = "vuln_patch_metrics.txt"
+        output_file = "vuln_patch_metrics_11.txt"
         
         try:
             # Write metrics to file
@@ -395,16 +406,6 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
 
 def main():
     
-    """
-    Obtaining ...
-
-    1. Total size of the cloned repos
-    2. Total number of vulnerability inducing commits (vuln commits) found & (& num of patches missing a vuln (not found))
-    3. Average number of months between vuln commit and patch commit (or fix)
-    4. Average number of commits between the vuln commit & patch commit (or fix)
-    5. Average number of vuln commits fixed by patch commit (or fix)
-    6. Percentage of vulns where the vuln commit and fix were made by the same person
-    """
 
     
     df = convert_jsonl_to_df(MATCH_FILES)
@@ -422,7 +423,7 @@ def main():
 
     # Drop the original vuln_commits column if not needed
     df.drop(columns=["vuln_commits"], inplace=True)
-    logging.info("First 5 rows of UPDATED DataFrame:\n%s", df.head().to_string())
+    logging.info("First 100 rows of UPDATED DataFrame:\n%s", df.head().to_string())
 
     # try:
     #     df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(safe_extract_vuln_files_commits).apply(pd.Ser)
@@ -435,9 +436,9 @@ def main():
 
     ### Code to run on debug partition
     # Assuming patch_vuln_df is your existing DataFrame
-    first_5_rows_df = df.head(5)
-    iterate_and_calculate(first_5_rows_df)
-    calc_final_values(first_5_rows_df)
+    first_100_rows_df = df.head(100)
+    iterate_and_calculate(first_100_rows_df)
+    calc_final_values(first_100_rows_df)
 
     # iterate_and_calculate(df)
     # calc_final_values(df)
