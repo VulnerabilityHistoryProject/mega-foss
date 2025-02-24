@@ -8,7 +8,7 @@
 
 #SBATCH --partition=tier3
 
-#SBATCH --time=1-00:00:00
+#SBATCH --time=2-00:00:00
 
 #SBATCH --output=RC_logs/%x_%j.out
 
@@ -18,7 +18,7 @@
 
 #SBATCH --mail-type=<BEGIN,END,FAIL,ALL>
 
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=5
 
 #SBATCH --nodes=1
 

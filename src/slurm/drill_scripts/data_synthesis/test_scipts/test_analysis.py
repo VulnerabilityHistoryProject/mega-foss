@@ -13,6 +13,17 @@ from typing import Optional
 
 from pathlib import Path
 
+"""
+    Obtaining ...
+
+    1. Total size of the cloned repos
+    2. Total number of vulnerability inducing commits (vuln commits) found & (& num of patches missing a vuln (not found))
+    3. Average number of months between vuln commit and patch commit (or fix)
+    4. Average number of commits between the vuln commit & patch commit (or fix)
+    5. Average number of vuln commits fixed by patch commit (or fix)
+    6. Percentage of vulns where the vuln commit and fix were made by the same person
+    """
+
 
 # Configure logging
 logging.basicConfig(
@@ -23,7 +34,7 @@ format="%(asctime)s - %(levelname)s - %(message)s",
 
 
 NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
-# NVD_ALL_REPOS = Path("/shared/rc/sfs/nvd-all-repos")
+
 MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
 
 ### Point 1
@@ -345,7 +356,7 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
         else:
             percentage_of_vuln_n_patch_by_same_person = (TOTAL_VULNS / BY_SAME_PERSON) #* 100
 
-        output_file = "test_vuln_patch_metrics.txt"
+        output_file = "vuln_patch_metrics_11.txt"
         
         try:
             # Write metrics to file
@@ -395,16 +406,6 @@ def calc_final_values(patch_vuln_df: pd.DataFrame) -> None:
 
 def main():
     
-    """
-    Obtaining ...
-
-    1. Total size of the cloned repos
-    2. Total number of vulnerability inducing commits (vuln commits) found & (& num of patches missing a vuln (not found))
-    3. Average number of months between vuln commit and patch commit (or fix)
-    4. Average number of commits between the vuln commit & patch commit (or fix)
-    5. Average number of vuln commits fixed by patch commit (or fix)
-    6. Percentage of vulns where the vuln commit and fix were made by the same person
-    """
 
     
     df = convert_jsonl_to_df(MATCH_FILES)
