@@ -6,9 +6,9 @@
 
 #SBATCH --account=sfs
 
-#SBATCH --partition=debug
+#SBATCH --partition=tier3
 
-#SBATCH --time=0-00:10:00
+#SBATCH --time=2-00:10:00
 
 #SBATCH --output=RC_logs/%x_%j.out
 
@@ -18,11 +18,11 @@
 
 #SBATCH --mail-type=<BEGIN,END,FAIL,ALL>
 
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=4
 
 #SBATCH --nodes=1
 
-#SBATCH --mem=3g
+#SBATCH --mem=12g
 
 echo "Script running!"
 

@@ -16,8 +16,8 @@ from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
-filename="py_logs/analysis4.log",
-level=logging.INFO,
+filename="py_logs/analysis5.log",
+level=logging.WARNING,
 format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
@@ -422,7 +422,7 @@ def main():
 
     # Drop the original vuln_commits column if not needed
     df.drop(columns=["vuln_commits"], inplace=True)
-    logging.info("First 5 rows of UPDATED DataFrame:\n%s", df.head().to_string())
+    logging.info("First 100 rows of UPDATED DataFrame:\n%s", df.head().to_string())
 
     # try:
     #     df[['vuln_files', 'vuln_commits']] = df['vuln_commits'].apply(safe_extract_vuln_files_commits).apply(pd.Ser)
@@ -435,9 +435,9 @@ def main():
 
     ### Code to run on debug partition
     # Assuming patch_vuln_df is your existing DataFrame
-    first_5_rows_df = df.head(5)
-    iterate_and_calculate(first_5_rows_df)
-    calc_final_values(first_5_rows_df)
+    first_100_rows_df = df.head(100)
+    iterate_and_calculate(first_100_rows_df)
+    calc_final_values(first_100_rows_df)
 
     # iterate_and_calculate(df)
     # calc_final_values(df)
