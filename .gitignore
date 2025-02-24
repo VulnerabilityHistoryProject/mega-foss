@@ -31,11 +31,11 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+*-Linux-x86_64.sh
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
+src/slurm/drill_scripts/data_synthesis/analysis.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
