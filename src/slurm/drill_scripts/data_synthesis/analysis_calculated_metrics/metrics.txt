@@ -1,0 +1,3 @@
+Size of all cloned repos: 468014.33853912354
+Total patch vuln mathes (patches with at least 1 VCC) : 10271
+3112 patch commits don't have at least 1 VCC

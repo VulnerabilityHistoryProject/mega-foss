@@ -68,5 +68,40 @@ def calculate_all_repo_sizes(patch_vuln_df: pd.DataFrame) -> float:
 
 if __name__ == "__main__":
 
+    from configure import convert_jsonl_to_df, extract_commit_hashes,extract_file_paths,write_metric_to_file
+
+    logging.basicConfig(
+        filename="production_logs/repo_sizes.log",
+        level=logging.WARNING,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+
+
+
+    NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
+    MATCH_FILES:str = "patch_vuln_match.jsonl"
+    output_file = "../analysis_calculated_metrics/repo_sizes.txt"
+
+
+    patch_vuln_df = convert_jsonl_to_df(MATCH_FILES)
+
+    logging.info("First 5 rows of the DataFrame:\n%s", patch_vuln_df.head().to_string())
     
-    get_directory_size()
+
+    # Apply functions to create new columns
+    patch_vuln_df["vuln_files"] = patch_vuln_df["vuln_commits"].apply(extract_file_paths)
+    patch_vuln_df["vuln_hashes"] = patch_vuln_df["vuln_commits"].apply(extract_commit_hashes)
+    patch_vuln_df.drop(columns=["vuln_commits"], inplace=True)
+
+    logging.info(" AFTER change First 5 rows of the DataFrame:\n%s", patch_vuln_df.head().to_string())
+
+
+    non_empty_vuln_hashes_df = patch_vuln_df[patch_vuln_df["vuln_hashes"].apply(lambda x: len(x) > 0)].copy()
+
+    # total_vulns = calculate_total_num_vuln_hashes(non_empty_vuln_hashes_df)
+    # patch_vuln_matches =  calculate_patch_vuln_matches(non_empty_vuln_hashes_df)
+
+    total_size = calculate_all_repo_sizes(non_empty_vuln_hashes_df)
+    message = f"The total size of all the repos in MB is {total_size}MB"
+    write_metric_to_file(message,output_file)
+    
