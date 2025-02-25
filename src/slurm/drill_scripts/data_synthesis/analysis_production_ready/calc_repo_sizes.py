@@ -4,14 +4,39 @@ import glob
 import pandas as pd
 
 # Calculate repo size
+import os
+import logging
+
 def get_directory_size(path: str) -> float:
+    """Calculates the total size of a directory, avoiding symlink loops and broken links."""
     size: float = 0
-    for dirpath, _, filenames in os.walk(path):
+    visited_inodes = set()  # To avoid counting the same file multiple times
+
+    for dirpath, _, filenames in os.walk(path, followlinks=False):  # Avoid following symlinks
         for f in filenames:
             fp = os.path.join(dirpath, f)
-            size += os.path.getsize(fp)
-    logging.info(f"got the size for {path} repo")
+            
+            try:
+                if os.path.islink(fp):  # Log skipped symlink
+                    logging.debug(f"Skipping symlink: {fp}")
+                    continue
+                
+                # Get file info
+                stat_info = os.stat(fp, follow_symlinks=False)
+                
+                # Avoid counting the same file if it's hard-linked elsewhere
+                if stat_info.st_ino not in visited_inodes:
+                    visited_inodes.add(stat_info.st_ino)
+                    size += stat_info.st_size
+
+            except FileNotFoundError:
+                logging.error(f"File not found: {fp}")
+            except OSError as e:
+                logging.error(f"Error accessing {fp}: {e}")
+
+    logging.info(f"Calculated size for {path}: {size / (1024 ** 2):.2f} MB")
     return size
+
 def find_repo_path(owner_repo: str) -> str | None:
     """Finds the path of a repository inside NVD_ALL_REPOS.
 
