@@ -159,11 +159,22 @@ def extract_commit_hashes(vuln_commits):
 
 
 if __name__ == "__main__":
+    # Configure logging
+    logging.basicConfig(
+        filename="/production_logs/analysis1.log",
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+
+
+
     NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
     MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
     output_file = "../analysis_calculated_metrics/metrics.txt"
 
     patch_vuln_df = convert_jsonl_to_df(MATCH_FILES)
+
+    
 
     # Apply functions to create new columns
     patch_vuln_df["vuln_files"] = patch_vuln_df["vuln_commits"].apply(extract_file_paths)

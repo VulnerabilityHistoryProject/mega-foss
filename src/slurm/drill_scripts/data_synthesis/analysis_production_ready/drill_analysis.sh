@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=DRLLANLYSIS
 
-#SBATCH --comment="Analyzing the 13.8-ish vuln commits robustly now"
+#SBATCH --comment="Running consolidated script"
 
 #SBATCH --account=sfs
 
@@ -32,4 +32,4 @@ conda activate szz-trust-worthy
 
 hostname
 
-python3 /shared/rc/sfs/mega-foss-Trust-Worthy/src/slurm/drill_scripts/data_synthesis/analysis.py
+python3 /shared/rc/sfs/mega-foss-Trust-Worthy/src/slurm/drill_scripts/data_synthesis/analysis_production_ready/calc_all_metrics.py
