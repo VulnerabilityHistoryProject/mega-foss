@@ -22,7 +22,7 @@
 
 #SBATCH --nodes=1
 
-#SBATCH --mem=5g
+#SBATCH --mem=20g
 
 echo "Script running!"
 

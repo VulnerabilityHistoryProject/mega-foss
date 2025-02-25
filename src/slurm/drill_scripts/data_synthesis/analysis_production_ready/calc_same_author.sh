@@ -18,11 +18,11 @@
 
 #SBATCH --mail-type=ALL
 
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=2
 
 #SBATCH --nodes=1
 
-#SBATCH --mem=1g
+#SBATCH --mem=10g
 
 echo "Script running!"
 
