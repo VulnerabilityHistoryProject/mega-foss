@@ -8,6 +8,9 @@ from calc_repo_sizes import calculate_all_repo_sizes
 from calc_commits_between import calculate_total_num_commits_between_patch_and_vulns
 from calc_months_between import calculate_total_num_months_between_patch_and_vulns
 from calc_same_author import calculate_num_vulns_made_and_fixed_by_same_person
+from calc_patch_vuln_sums import calculate_total_num_vuln_hashes, calculate_patch_vuln_matches
+
+
 class Metric(Enum):
     """
 
@@ -84,7 +87,7 @@ def calculate_average_num_months_btwn(patch_vuln_matches: int, non_empty_vuln_ha
         float: calculated average
     """
     total_months_between  = calculate_total_num_months_between_patch_and_vulns(non_empty_vuln_hashes)
-    avg_months_btwn =  total_months_between / patch_vuln_matches
+    avg_months_btwn =  patch_vuln_matches / total_months_between 
     message: str = f"The total number of months between commits: {total_months_between}"
     message += f"\nAverage Number of Months Between Vulnerability and Patch: {avg_months_btwn}"
     write_metric_to_file(message)
@@ -102,7 +105,7 @@ def calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes:pd.Dat
         float: calcuated average
     """
     total_commits_between:int = calculate_total_num_commits_between_patch_and_vulns(non_empty_vuln_hashes)
-    avg_commits_btwn = total_commits_between / patch_vuln_matches
+    avg_commits_btwn =  patch_vuln_matches/  total_commits_between 
     
     message: str = f"The total number of commits between patches and VCCs: {total_commits_between}"
     message += f"\nAverage Number of Months Between Vulnerability and Patch: {avg_commits_btwn}"
@@ -110,20 +113,22 @@ def calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes:pd.Dat
     return avg_commits_btwn
 
 def calculate_average_num_vuln_commits_fixed_by_patch_commit(
-        total_vulns,patch_vuln_matches) -> float:
-    avg_num_VCC_fxd_by_ptach = total_vulns / patch_vuln_matches
+        total_vulns: int,patch_vuln_matches: int) -> float:
+    avg_num_VCC_fxd_by_ptach =  patch_vuln_matches / total_vulns 
 
 
     message: str = f"Average number of VCCs fixed by a single patch commit {avg_num_VCC_fxd_by_ptach}"
     write_metric_to_file(message)
     return avg_num_VCC_fxd_by_ptach
 
-def calculate_percent_of_vcc_n_patch_w_same_author(total_vulns: int , num_by_same_author: int)-> float:
+def calculate_percent_of_vcc_n_patch_w_same_author(total_vulns: int, non_empty_vuln_hashes:pd.DataFrame)-> float:
+
+    num_by_same_author: int = calculate_num_vulns_made_and_fixed_by_same_person(non_empty_vuln_hashes)
     
-    percent_of_vcc_n_patch_with_same_auth = calculate_num_vulns_made_and_fixed_by_same_person(non_empty_vuln_hashes:pd.DataFrame)
+    percent_of_vcc_n_patch_with_same_auth = num_by_same_author / total_vulns 
     
-    message: str = f"The total number of commits between patches and VCCs: {percent_of_vcc_n_patch_with_same_auth}"
-    message += f"\nAverage Number of Months Between Vulnerability and Patch: {percent_of_vcc_n_patch_with_same_auth}"
+    message: str = f" Total number of vulns patched by same author {num_by_same_author}"
+    message += f"\nPercentage of Vulnerabilities and Patches by the Same Person{percent_of_vcc_n_patch_with_same_auth}"
     write_metric_to_file(message)
     return percent_of_vcc_n_patch_with_same_auth
 
@@ -134,9 +139,51 @@ def write_metric_to_file(message:str, output_file: str)-> None:
         file.write(message + '\n')
 
 
+
+def extract_file_paths(vuln_commits):
+    try:
+        if isinstance(vuln_commits, dict):
+            return list(vuln_commits.keys())
+        return []
+    except Exception as e:
+        print(f"Error extracting file paths: {e}")
+        return []
+def extract_commit_hashes(vuln_commits):
+    try:
+        if isinstance(vuln_commits, dict):
+            return list({commit for commits in vuln_commits.values() if isinstance(commits, list) for commit in commits})
+        return []
+    except Exception as e:
+        print(f"Error extracting commit hashes: {e}")
+        return []
+
+
 if __name__ == "__main__":
     NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
     MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
     output_file = "../analysis_calculated_metrics/metrics.txt"
 
     patch_vuln_df = convert_jsonl_to_df(MATCH_FILES)
+
+    # Apply functions to create new columns
+    patch_vuln_df["vuln_files"] = patch_vuln_df["vuln_commits"].apply(extract_file_paths)
+    patch_vuln_df["vuln_hashes"] = patch_vuln_df["vuln_commits"].apply(extract_commit_hashes)
+    patch_vuln_df.drop(columns=["vuln_commits"], inplace=True)
+
+    non_empty_vuln_hashes_df = patch_vuln_df[patch_vuln_df["vuln_hashes"].apply(lambda x: len(x) > 0)].copy()
+
+
+    total_vulns = calculate_total_num_vuln_hashes(non_empty_vuln_hashes_df)
+    patch_vuln_matches =  calculate_patch_vuln_matches(non_empty_vuln_hashes_df)
+
+
+
+    total_entries = patch_vuln_df.shape[0]
+    total_size = calculate_total_size(non_empty_vuln_hashes_df)
+
+
+    patches_without_vcc = calculate_patches_without_vcc(total_entries,patch_vuln_matches)
+    average_num_months_btwn = calculate_average_num_months_btwn(patch_vuln_matches,non_empty_vuln_hashes_df)
+    average_num_commits_btwn = calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes_df,patch_vuln_matches)
+    average_num_commits_fxd_by_patch = calculate_average_num_vuln_commits_fixed_by_patch_commit(total_vulns,patch_vuln_matches)
+    percent_of_vcc_w_same_author = calculate_percent_of_vcc_n_patch_w_same_author(total_vulns,non_empty_vuln_hashes=non_empty_vuln_hashes_df)

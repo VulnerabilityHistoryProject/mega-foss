@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=SZZ-Metrics
+#SBATCH --job-name=DRLLANLYSIS
 
 #SBATCH --comment="Analyzing the 13.8-ish vuln commits robustly now"
 
@@ -8,17 +8,17 @@
 
 #SBATCH --partition=tier3
 
-#SBATCH --time=2-00:00:00
+#SBATCH --time=1-00:00:00
 
-#SBATCH --output=RC_logs/%x_%j.out
+#SBATCH --output=production_logs/%x_%j.out
 
-#SBATCH --error=RC_logs/%x_%j.err
+#SBATCH --error=production_logs/%x_%j.err
 
 #SBATCH --mail-user=slack:@jmb7342
 
 #SBATCH --mail-type=<BEGIN,END,FAIL,ALL>
 
-#SBATCH --cpus-per-task=5
+#SBATCH --cpus-per-task=2
 
 #SBATCH --nodes=1
 

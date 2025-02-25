@@ -2,13 +2,6 @@ import pandas as pd
 
 
 
-
-
-
-
-
-
-
 def calculate_total_num_vuln_hashes(patch_vuln_df: pd.DataFrame) -> int:
     return patch_vuln_df["vuln_hashes"].explode().count()
 
