@@ -9,7 +9,7 @@ import pandas as pd
 
 
 
-def find_repo_path(owner_repo: str, nvd_all_repos: str) -> str | None:
+def find_repo_path(owner_repo: str) -> str | None:
     """Finds the path of a repository inside NVD_ALL_REPOS.
 
     Args:
@@ -18,7 +18,7 @@ def find_repo_path(owner_repo: str, nvd_all_repos: str) -> str | None:
     Returns:
         str | None: The path to the repository if found, otherwise None.
     """
-    
+    nvd_all_repos = "/shared/rc/sfs/nvd-all-repos"
     matching_repos:list = glob.glob(os.path.join(nvd_all_repos, f"*{owner_repo}*"))
     return matching_repos[0]
 

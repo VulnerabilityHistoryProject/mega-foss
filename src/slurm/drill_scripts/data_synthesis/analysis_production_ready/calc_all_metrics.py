@@ -133,8 +133,8 @@ def calculate_percent_of_vcc_n_patch_w_same_author(total_vulns: int, non_empty_v
     return percent_of_vcc_n_patch_with_same_auth
 
 
-def write_metric_to_file(message:str, output_file: str)-> None:
-
+def write_metric_to_file(message:str)-> None:
+    output_file = "../analysis_calculated_metrics/metrics.txt"
     with open(output_file,"a") as file:
         file.write(message + '\n')
 
@@ -161,7 +161,7 @@ def extract_commit_hashes(vuln_commits):
 if __name__ == "__main__":
     # Configure logging
     logging.basicConfig(
-        filename="/production_logs/analysis1.log",
+        filename="production_logs/analysis1.log",
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
@@ -169,17 +169,21 @@ if __name__ == "__main__":
 
 
     NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
-    MATCH_FILES:str = "../production_ready/patch_vuln_match.jsonl"
+    MATCH_FILES:str = "patch_vuln_match.jsonl"
     output_file = "../analysis_calculated_metrics/metrics.txt"
 
     patch_vuln_df = convert_jsonl_to_df(MATCH_FILES)
 
+    logging.info("First 5 rows of the DataFrame:\n%s", patch_vuln_df.head().to_string())
     
 
     # Apply functions to create new columns
     patch_vuln_df["vuln_files"] = patch_vuln_df["vuln_commits"].apply(extract_file_paths)
     patch_vuln_df["vuln_hashes"] = patch_vuln_df["vuln_commits"].apply(extract_commit_hashes)
     patch_vuln_df.drop(columns=["vuln_commits"], inplace=True)
+
+    logging.info(" AFTER change First 5 rows of the DataFrame:\n%s", patch_vuln_df.head().to_string())
+
 
     non_empty_vuln_hashes_df = patch_vuln_df[patch_vuln_df["vuln_hashes"].apply(lambda x: len(x) > 0)].copy()
 
