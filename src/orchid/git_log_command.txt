@@ -1,0 +1,1 @@
+git log --format="commit %H: %s. %bDate: %cs /// " --before="YYYY-MM-DD HH:MM:SS" --after="YYYY-MM-DD HH:MM:SS" --no-merges --date-order --reverse
