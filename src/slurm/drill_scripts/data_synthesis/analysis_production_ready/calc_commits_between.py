@@ -21,23 +21,45 @@ def find_repo_path(owner_repo: str) -> str | None:
     matching_repos:list = glob.glob(os.path.join(nvd_all_repos, f"*{owner_repo}*"))
     return matching_repos[0]
 
+import logging
+import pandas as pd
+from pydriller import Repository
+
+import logging
+import pandas as pd
+from pydriller import Repository
+
 def calculate_total_num_commits_between_patch_and_vulns(non_empty_vuln_hashes: pd.DataFrame) -> int:
-    
     total_commits_between: int = 0
-    for repo,patch_commit_hash,vuln_hashes in zip(non_empty_vuln_hashes["repo"],non_empty_vuln_hashes["patch_commit"],non_empty_vuln_hashes["vuln_hashes"]):
+
+    for repo, patch_commit_hash, vuln_hashes in zip(non_empty_vuln_hashes["repo"], 
+                                                     non_empty_vuln_hashes["patch_commit"], 
+                                                     non_empty_vuln_hashes["vuln_hashes"]):
         
         repo_path: str = find_repo_path(repo)
-        
-        for vuln_hash in vuln_hashes:
-            try:
-                REPOSITORY: Repository = Repository(repo_path, from_commit=vuln_hash, to_commit=patch_commit_hash, order='reverse')
-                num_commits_between = sum(1 for _ in REPOSITORY.traverse_commits())
-                total_commits_between += num_commits_between
-            except Exception as e:
-                logging.error(f"Failed to initialize repository for {repo}: {e}")
-            continue
+
+        try:
+            # Extract file paths modified in the patch commit
+            patch_commit = next(Repository(repo_path, single=patch_commit_hash).traverse_commits())
+            patch_files = {f.new_path or f.old_path for f in patch_commit.modified_files if (f.new_path or f.old_path)}
+
+            for vuln_hash in vuln_hashes:
+                try:
+                    # Count commits affecting the same files between vuln_hash and patch_commit_hash
+                    num_commits_between = sum(
+                        1 for commit in Repository(repo_path, from_commit=vuln_hash, to_commit=patch_commit_hash, order='reverse').traverse_commits()
+                        if any((f.new_path or f.old_path) in patch_files for f in commit.modified_files)
+                    )
+                    total_commits_between += num_commits_between
+
+                except Exception as e:
+                    logging.error(f"Failed to process commit range in {repo}: {e}")
+        except Exception as e:
+            logging.error(f"Failed to retrieve patch commit details in {repo}: {e}")
 
     return total_commits_between
+
+
 
 def calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes:pd.DataFrame,patch_vuln_matches:int, output_file: str) -> float:
     """
@@ -51,11 +73,13 @@ def calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes:pd.Dat
         float: calcuated average
     """
     total_commits_between:int = calculate_total_num_commits_between_patch_and_vulns(non_empty_vuln_hashes)
-    avg_commits_btwn =  patch_vuln_matches/  total_commits_between 
+    avg_commits_btwn =  patch_vuln_matches / total_commits_between 
     
     message: str = f"The total number of commits between patches and VCCs: {total_commits_between}"
     message += f"\nAverage Number of commits Between Vulnerability and Patch: {avg_commits_btwn}"
+    
     write_metric_to_file(message, output_file)
+
     return avg_commits_btwn
 
 
