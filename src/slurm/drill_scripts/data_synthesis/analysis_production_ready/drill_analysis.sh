@@ -16,7 +16,7 @@
 
 #SBATCH --mail-user=slack:@jmb7342
 
-#SBATCH --mail-type=<BEGIN,END,FAIL,ALL>
+#SBATCH --mail-type=ALL
 
 #SBATCH --cpus-per-task=2
 
