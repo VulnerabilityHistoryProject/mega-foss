@@ -1,0 +1,8 @@
+Size of all cloned repos: 468014.33853912354
+Total patch vuln mathes (patches with at least 1 VCC) : 10271
+3112 patch commits don't have at least 1 VCC
+Size of all cloned repos: 490858.4055404663
+Total patch vuln mathes (patches with at least 1 VCC) : 10271
+3112 patch commits don't have at least 1 VCC
+The total number of commits between patches and VCCs: 858254803
+Average Number of Commits Between Vulnerability and Patch: 1.1967308501039638e-05 (did math wrong--> 83,560.9778

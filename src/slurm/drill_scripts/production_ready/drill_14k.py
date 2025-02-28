@@ -94,7 +94,7 @@ def main():
             # Analyze the Git repository
             git_repo = Git(repo_path)
 
-            try:
+            try:    
                 patch_commit = git_repo.get_commit(commit_hash)
             except Exception as e:
                 logging.error(f"Error retrieving commit {commit_hash} in {repo_name}: {e}")

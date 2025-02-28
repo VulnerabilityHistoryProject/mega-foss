@@ -1,0 +1,2 @@
+The total number of commits between patches and VCCs: 860503493
+Average Number of Months Between Vulnerability and Patch: 1.193603522071932e-05
