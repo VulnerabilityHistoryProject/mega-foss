@@ -13,11 +13,6 @@ PATCH_HASHES = "../viable_patches.json"
 # Output JSON file
 PROCESSED_JSON = "patch_vuln_match.json"
 
-com = Commit()
-com.author_date
-
-repo = Repository("342",order='reverse',only_commits=["sdfs"])
-
 # Base name for log file and log directory
 LOG_DIR = "drill_logs"
 LOG_FILE_BASE = "drill.log"
@@ -71,7 +66,7 @@ def main():
     # Load JSON data
     cve_data = safe_load_json(PATCH_HASHES)
 
-
+    
     # Process each entry in the JSON
     for entry in cve_data:
         try:
@@ -99,7 +94,7 @@ def main():
             # Analyze the Git repository
             git_repo = Git(repo_path)
 
-            try:
+            try:    
                 patch_commit = git_repo.get_commit(commit_hash)
             except Exception as e:
                 logging.error(f"Error retrieving commit {commit_hash} in {repo_name}: {e}")
