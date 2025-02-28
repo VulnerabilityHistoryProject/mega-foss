@@ -77,7 +77,7 @@ def calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes:pd.Dat
     
     message: str = f"The total number of commits between patches and VCCs: {total_commits_between}"
     message += f"\nAverage Number of commits Between Vulnerability and Patch: {avg_commits_btwn}"
-    
+
     write_metric_to_file(message, output_file)
 
     return avg_commits_btwn
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     NVD_ALL_REPOS = "/shared/rc/sfs/nvd-all-repos"
     MATCH_FILES:str = "patch_vuln_match.jsonl"
-    output_file = "../analysis_calculated_metrics/commits_btw_metrics.txt"
+    output_file = "../analysis_calculated_metrics/commits_FILE_btw_metrics.txt"
 
 
     patch_vuln_df = convert_jsonl_to_df(MATCH_FILES)
