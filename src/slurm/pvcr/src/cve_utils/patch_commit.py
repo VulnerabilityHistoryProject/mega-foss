@@ -5,7 +5,7 @@ from datetime import datetime
 
 ### In the same directory ###
 from cve import CVE
-from BiMap import PatchVulnBiMap
+from cve_utils.patch_parent_nexus import PatchVulnBiMap
 
 
 ### pydriller imports ###

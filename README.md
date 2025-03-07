@@ -66,6 +66,24 @@ Output will print out tab-seperated data to be copied into the spreadsheet which
 Output will also print out data for specific projects.
 Output will also display a list of CWEs that had no vote mapping.
 
+get-local-commits
+
+### 5. Generate a List of Locally Retrievable Commits
+#### Pre-requisite
+Ensure you are in the RIT Supercomputing cluster or change the filepath on line 35 ("repos_dir = os.path...") to a folder of NVD repositories. 
+If you are on the supercomputing cluster, note that there might be an issue with "dubious ownership" in git. To fix this, run
+```sh
+git config --global --add safe.directory '*'
+```
+
+To run this script, run:
+```sh
+python src/cve/getLocalCommits.py
+```
+
+The output will state if a commit is found or not found. It will also state if a repository does not exist. Extra debug statements can be uncommented as well.
+The results will be saved in a file called viable_patches.json (our version is stored in src/cve/viable_patches.json). 
+
 # Set Up With MongoDB
 
 ## Scripts
@@ -78,3 +96,4 @@ Additionally, if you haven't already, download a collection of CVEs to use. We r
 Open a command line window and type `mongod --dbpath="{desired database folder location}"`. This should start running a MongoDB instance on your computer at `localhost:27017`. If you would like to use a database that is already running, skip this step. If you would like to use a more complicated configuration, such as on a different port, refer to the mongod documentation [here](https://www.mongodb.com/docs/manual/reference/program/mongod/). Once your database is running, *DO NOT CLOSE THIS WINDOW* until you are done, as this will close your database to connections.
 Open either `src/cve/mongodb-import.ps1` or `src/cve/mongodb-import.sh`, whichever seems more appropriate for your system. Replace the default directory path with the path to your CVE collection folder. If you used the default configuration provided by `mongod`, this is all that needs to be changed. If the target database is not on localhost and/or is running on a different port than the default, you will need to change the `mongoHost` and `mongoPort` fields respectively.
 Once your chosen script is set up for your system, you can open a new terminal window and run it. Be warned that if your CVE collection is very large, this may take a long time to run!
+

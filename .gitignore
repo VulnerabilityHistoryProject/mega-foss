@@ -55,6 +55,11 @@ cover/
 *.mo
 *.pot
 
+# RC err and out
+src/slurm/drill_scripts/production_ready/RC_Logs
+src/slurm/drill_scripts/production_ready/RC_ogs
+*.err
+*.out
 # Django stuff:
 *.log
 local_settings.py
