@@ -1,9 +1,6 @@
 [
   {
     $match:
-      /**
-       * query: The query in MQL.
-       */
       {
         $or: [
           {
@@ -353,9 +350,6 @@
   },
   {
     $count:
-      /**
-       * Provide the field name for the count.
-       */
       "count"
   }
 ]

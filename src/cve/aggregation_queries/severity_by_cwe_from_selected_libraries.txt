@@ -1,9 +1,6 @@
 [
   {
     $match:
-      /**
-       * query: The query in MQL.
-       */
       {
         $or: [
           {
@@ -353,10 +350,6 @@
   },
   {
     $project:
-      /**
-       * specifications: The fields to
-       *   include or exclude.
-       */
       {
         cve: 1,
         impact: 1,
@@ -367,34 +360,18 @@
   },
   {
     $unwind:
-      /**
-       * path: Path to the array field.
-       * includeArrayIndex: Optional name for index.
-       * preserveNullAndEmptyArrays: Optional
-       *   toggle to unwind null and empty values.
-       */
       {
         path: "$cwes"
       }
   },
   {
     $unwind:
-      /**
-       * path: Path to the array field.
-       * includeArrayIndex: Optional name for index.
-       * preserveNullAndEmptyArrays: Optional
-       *   toggle to unwind null and empty values.
-       */
       {
         path: "$cwes"
       }
   },
   {
     $set:
-      /**
-       * field: The field name
-       * expression: The expression.
-       */
       {
         cweNum: {
           $convert: {
@@ -412,10 +389,6 @@
   },
   {
     $group:
-      /**
-       * _id: The id of the group.
-       * fieldN: The first field name.
-       */
       {
         _id: "$cweNum",
         averageBaseScore: {
@@ -431,10 +404,6 @@
   },
   {
     $set:
-      /**
-       * field: The field name
-       * expression: The expression.
-       */
       {
         averageBaseScore: {
           $trunc: ["$averageBaseScore", 3]
@@ -449,9 +418,6 @@
   },
   {
     $sort:
-      /**
-       * Provide any number of field/order pairs.
-       */
       {
         _id: 1
       }

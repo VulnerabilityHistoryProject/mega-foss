@@ -1,9 +1,6 @@
 [
   {
     $match:
-      /**
-       * query: The query in MQL.
-       */
       {
         $or: [
           {
@@ -353,10 +350,6 @@
   },
   {
     $set:
-      /**
-       * field: The field name
-       * expression: The expression.
-       */
       {
         cvssState: {
           $switch: {
@@ -414,10 +407,6 @@
   },
   {
     $group:
-      /**
-       * _id: The id of the group.
-       * fieldN: The first field name.
-       */
       {
         _id: "$cvssState",
         amount: {
@@ -427,9 +416,6 @@
   },
   {
     $sort:
-      /**
-       * Provide any number of field/order pairs.
-       */
       {
         amount: -1
       }
