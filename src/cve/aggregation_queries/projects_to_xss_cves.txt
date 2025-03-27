@@ -1,0 +1,142 @@
+[
+  {
+    $project:
+      {
+        cve_id: "$cve.CVE_data_meta.ID",
+        configurations: 1,
+        cwes: "$cve.problemtype.problemtype_data.description.value"
+      }
+  },
+  {
+    $unwind:
+      {
+        path: "$cwes"
+      }
+  },
+  {
+    $unwind:
+      {
+        path: "$cwes"
+      }
+  },
+  {
+    $set:
+      {
+        cweNum: {
+          $convert: {
+            input: {
+              $ltrim: {
+                input: "$cwes",
+                chars: "CWE-"
+              }
+            },
+            to: "int",
+            onError: null
+          }
+        }
+      }
+  },
+  {
+    $match:
+      {
+        $or: [
+          {
+            cweNum: 79
+          },
+          {
+            cweNum: 644
+          }
+        ]
+      }
+  },
+  {
+    $unwind:
+      {
+        path: "$configurations.nodes"
+      }
+  },
+  {
+    $project:
+      {
+        configurations: {
+          CVE_data_version: 0,
+          nodes: {
+            operator: 0,
+            children: 0,
+            cpe_match: {
+              vulnerable: 0,
+              cpe_name: 0
+            }
+          }
+        },
+        cwes: 0
+      }
+  },
+  {
+    $set:
+      {
+        version_codes:
+          "$configurations.nodes.cpe_match"
+      }
+  },
+  {
+    $project:
+      {
+        configurations: 0
+      }
+  },
+  {
+    $unwind:
+      {
+        path: "$version_codes"
+      }
+  },
+  {
+    $project:
+      {
+        _id: 1,
+        cve_id: 1,
+        cweNum: 1,
+        cpe: {
+          $split: ["$version_codes.cpe23Uri", ":"]
+        }
+      }
+  },
+  {
+    $project:
+      {
+        _id: 1,
+        cve_id: 1,
+        cweNum: 1,
+        project: {
+          $concat: [
+            {
+              $arrayElemAt: ["$cpe", 3]
+            },
+            "/",
+            {
+              $arrayElemAt: ["$cpe", 4]
+            }
+          ]
+        }
+      }
+  },
+  {
+    $group:
+      {
+        _id: "$project",
+        cves: {
+          $addToSet: {
+            cve_id: "$cve_id",
+            cwe: "$cweNum"
+          }
+        }
+      }
+  },
+  {
+    $sort:
+      {
+        _id: 1
+      }
+  }
+]
