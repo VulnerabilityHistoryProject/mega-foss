@@ -1,6 +1,11 @@
-scipy==1.14.0
+scipy
 requests
 orjson
 tqdm==4.66.5
 pymongo
 motor
+ollama
+numpy
+chromadb
+scikit-learn
+pydriller

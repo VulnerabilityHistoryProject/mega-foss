@@ -1,0 +1,135 @@
+[
+	// {
+	//   $match: {
+	//     "cve.CVE_data_meta.ID": "CVE-2017-5107"
+	//   }
+	// }
+	{
+	  $project: {
+		allCPEs: {
+		  $reduce: {
+			input: "$configurations.nodes",
+			initialValue: [],
+			in: {
+			  $concatArrays: [
+				"$$value",
+				{
+				  $cond: [
+					{
+					  $isArray: "$$this.cpe_match"
+					},
+					{
+					  $map: {
+						input: {
+						  $filter: {
+							input:
+							  "$$this.cpe_match",
+							as: "match",
+							cond: {
+							  $eq: [
+								"$$match.vulnerable",
+								true
+							  ]
+							}
+						  }
+						},
+						as: "match",
+						in: "$$match.cpe23Uri"
+					  }
+					},
+					[]
+				  ]
+				},
+				{
+				  $reduce: {
+					input: {
+					  $cond: [
+						{
+						  $isArray:
+							"$$this.children"
+						},
+						"$$this.children",
+						[]
+					  ]
+					},
+					initialValue: [],
+					in: {
+					  $concatArrays: [
+						"$$value",
+						{
+						  $cond: [
+							{
+							  $isArray:
+								"$$this.cpe_match"
+							},
+							{
+							  $map: {
+								input: {
+								  $filter: {
+									input:
+									  "$$this.cpe_match",
+									as: "childMatch",
+									cond: {
+									  $eq: [
+										"$$childMatch.vulnerable",
+										true
+									  ]
+									}
+								  }
+								},
+								as: "childMatch",
+								in: "$$childMatch.cpe23Uri"
+							  }
+							},
+							[]
+						  ]
+						}
+					  ]
+					}
+				  }
+				}
+			  ]
+			}
+		  }
+		}
+	  }
+	},
+	{
+	  $unwind: "$allCPEs"
+	},
+	{
+	  $project: {
+		vendor: {
+		  $arrayElemAt: [
+			{
+			  $split: ["$allCPEs", ":"]
+			},
+			3
+		  ]
+		},
+		product: {
+		  $arrayElemAt: [
+			{
+			  $split: ["$allCPEs", ":"]
+			},
+			4
+		  ]
+		}
+	  }
+	},
+	{
+	  $group: {
+		_id: {
+		  vendor: "$vendor",
+		  product: "$product"
+		}
+	  }
+	},
+	{
+	  $project: {
+		_id: 0,
+		vendor: "$_id.vendor",
+		product: "$_id.product"
+	  }
+	}
+  ]

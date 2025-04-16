@@ -20,39 +20,45 @@ def find_repo_path(owner_repo: str) -> str | None:
     return matching_repos[0]
 
 
-def calculate_total_num_months_between_patch_and_vulns(non_empty_vuln_hashes: pd.DataFrame) -> int:
-    total = 0
+def calculate_total_num_months_between_patch_and_vulns(non_empty_vuln_hashes: pd.DataFrame) -> float:
+    total_months_between = 0
 
     for repo, patch_commit_hash, vuln_hashes in zip(non_empty_vuln_hashes["repo"], non_empty_vuln_hashes["patch_commit"], non_empty_vuln_hashes["vuln_hashes"]):
-        
         repo_path = find_repo_path(repo)
-        commits_to_analyze = [patch_commit_hash] + vuln_hashes  # Add patch commit + all vuln commits
 
         if not patch_commit_hash or not vuln_hashes:
             logging.warning(f"Skipping {repo} due to missing patch or vulnerability hashes.")
             continue
         
-        try:    
-            REPOSITORY = Repository(str(repo_path), only_commits=commits_to_analyze, order='reverse')
+        try:
+            # Get patch commit to extract modified files
+            patch_commit = next(Repository(repo_path, only_commits=[patch_commit_hash]).traverse_commits())
+            patch_files = {f.new_path or f.old_path for f in patch_commit.modified_files}
+            
+            if not patch_files:
+                logging.warning(f"No modified files found for patch commit {patch_commit_hash} in {repo}")
+                continue
+            
+            patch_commit_date = patch_commit.author_date  # Store patch commit date
+            
+            # Iterate over vuln commits and filter by matching files
+            for vuln_hash in vuln_hashes:
+                vuln_commit = next(Repository(repo_path, only_commits=[vuln_hash]).traverse_commits(), None)
+                
+                if not vuln_commit:
+                    logging.warning(f"Vuln commit {vuln_hash} not found in {repo}")
+                    continue
+                
+                # Check if the vuln commit modifies at least one of the same files
+                if any((f.new_path or f.old_path) in patch_files for f in vuln_commit.modified_files):
+                    diff_in_months = abs((patch_commit_date - vuln_commit.author_date).days) / 30.44  # Convert days to months
+                    total_months_between += diff_in_months
+
         except Exception as e:
-            logging.error(f"Failed to initialize repository for {repo}: {e}")
+            logging.error(f"Failed to process repository {repo}: {e}")
             continue
 
-        patch_commit_date = None
-        total_diff_in_months = 0
-
-        # Process commits one by one
-        for commit in REPOSITORY.traverse_commits():
-            if commit.hash == patch_commit_hash:
-                patch_commit_date = commit.author_date  # Store patch commit date
-                continue
-
-            if patch_commit_date:
-                total_diff_in_months += abs((patch_commit_date - commit.author_date).days) / 30.44  # Convert days to months
-        
-        total += total_diff_in_months
-
-    return total
+    return total_months_between
 
 def calculate_average_num_months_btwn(patch_vuln_matches: int, non_empty_vuln_hashes:pd.DataFrame, output_file:str) -> float:
     """

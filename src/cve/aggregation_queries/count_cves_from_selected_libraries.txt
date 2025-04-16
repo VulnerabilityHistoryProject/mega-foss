@@ -1,0 +1,355 @@
+[
+  {
+    $match:
+      {
+        $or: [
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /openssl/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /nodejs/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /linux/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /curl/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /google/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /tensorflow/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /significant-gravitas/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /huggingface/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /golang/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /electron/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /kubernetes/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /rust/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /deno/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /netdata/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /elasticsearch/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /moby/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /redis/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /protobuf/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /llama.cpp/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /scikit-learn/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /git/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /ethereum/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /joplin/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /ffmpeg/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /clickhouse/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /vim/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /tmux/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /netty/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /graphql-engine/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /selenium/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /jq/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /ollama/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /pytorch/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /bitcoin/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /opencv/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /rustdesk/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /cpython/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /apache/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /php/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /rapid7/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /ray-project/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /rufus/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /stb/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /nginx/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /libuv/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /tdengine/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /radare2/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /openwrt/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /timescaledb/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /react-native/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /vlc/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /esp-idf/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /memcached/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /systemd/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /imagemagick/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /softethervpn/
+              }
+          },
+          {
+            "configurations.nodes.cpe_match.cpe23Uri":
+              {
+                $regex: /coturn/
+              }
+          }
+        ]
+      }
+  },
+  {
+    $count:
+      "count"
+  }
+]
