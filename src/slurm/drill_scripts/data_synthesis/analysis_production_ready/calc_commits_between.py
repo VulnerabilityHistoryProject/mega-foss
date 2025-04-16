@@ -54,7 +54,7 @@ def calculate_average_num_commits_btwn_vuln_n_patch(non_empty_vuln_hashes:pd.Dat
     avg_commits_btwn =  patch_vuln_matches/  total_commits_between 
     
     message: str = f"The total number of commits between patches and VCCs: {total_commits_between}"
-    message += f"\nAverage Number of Months Between Vulnerability and Patch: {avg_commits_btwn}"
+    message += f"\nAverage Number of commits Between Vulnerability and Patch: {avg_commits_btwn}"
     write_metric_to_file(message, output_file)
     return avg_commits_btwn
 

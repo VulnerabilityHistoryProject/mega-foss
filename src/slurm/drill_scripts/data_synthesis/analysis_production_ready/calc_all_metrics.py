@@ -161,8 +161,8 @@ def extract_commit_hashes(vuln_commits):
 if __name__ == "__main__":
     # Configure logging
     logging.basicConfig(
-        filename="production_logs/analysis1.log",
-        level=logging.INFO,
+        filename="production_logs/analysis2.log",
+        level=logging.WARNING,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
