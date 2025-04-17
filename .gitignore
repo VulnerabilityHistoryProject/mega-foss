@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+# custom setup scripts
+/src/cve/culmination-import.sh
 # Distribution / packaging
 .Python
 build/
