@@ -1,0 +1,287 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 17,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE3",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "2dust/v2rayNG",
+              "description": "A V2Ray client for Android, support Xray core and v2fly core",
+              "stargazerCount": 39986,
+              "forkCount": 5924,
+              "url": "https://github.com/2dust/v2rayNG",
+              "updatedAt": "2025-04-18T21:45:24Z",
+              "issues": {
+                "totalCount": 3222
+              },
+              "watchers": {
+                "totalCount": 562
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "KRTirtho/spotube",
+              "description": "\ud83c\udfa7 Open source Spotify client that doesn't require Premium nor uses Electron! Available for both desktop & mobile!",
+              "stargazerCount": 39932,
+              "forkCount": 1649,
+              "url": "https://github.com/KRTirtho/spotube",
+              "updatedAt": "2025-04-18T21:08:15Z",
+              "issues": {
+                "totalCount": 1793
+              },
+              "watchers": {
+                "totalCount": 186
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "unclecode/crawl4ai",
+              "description": "\ud83d\ude80\ud83e\udd16 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN",
+              "stargazerCount": 39928,
+              "forkCount": 3581,
+              "url": "https://github.com/unclecode/crawl4ai",
+              "updatedAt": "2025-04-18T21:05:30Z",
+              "issues": {
+                "totalCount": 585
+              },
+              "watchers": {
+                "totalCount": 246
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "apache/airflow",
+              "description": "Apache Airflow - A platform to programmatically author, schedule, and monitor workflows",
+              "stargazerCount": 39670,
+              "forkCount": 14902,
+              "url": "https://github.com/apache/airflow",
+              "updatedAt": "2025-04-18T21:43:57Z",
+              "issues": {
+                "totalCount": 11291
+              },
+              "watchers": {
+                "totalCount": 766
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tldraw/tldraw",
+              "description": "whiteboard SDK / infinite canvas SDK",
+              "stargazerCount": 39632,
+              "forkCount": 2471,
+              "url": "https://github.com/tldraw/tldraw",
+              "updatedAt": "2025-04-18T21:13:33Z",
+              "issues": {
+                "totalCount": 1601
+              },
+              "watchers": {
+                "totalCount": 158
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "punkpeye/awesome-mcp-servers",
+              "description": "A collection of MCP servers.",
+              "stargazerCount": 39613,
+              "forkCount": 2823,
+              "url": "https://github.com/punkpeye/awesome-mcp-servers",
+              "updatedAt": "2025-04-18T21:46:43Z",
+              "issues": {
+                "totalCount": 47
+              },
+              "watchers": {
+                "totalCount": 288
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ultralytics/ultralytics",
+              "description": "Ultralytics YOLO11 \ud83d\ude80",
+              "stargazerCount": 39591,
+              "forkCount": 7687,
+              "url": "https://github.com/ultralytics/ultralytics",
+              "updatedAt": "2025-04-18T20:58:40Z",
+              "issues": {
+                "totalCount": 10876
+              },
+              "watchers": {
+                "totalCount": 192
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "bannedbook/fanqiang",
+              "description": "\u7ffb\u5899-\u79d1\u5b66\u4e0a\u7f51",
+              "stargazerCount": 39513,
+              "forkCount": 7333,
+              "url": "https://github.com/bannedbook/fanqiang",
+              "updatedAt": "2025-04-18T12:02:43Z",
+              "issues": {
+                "totalCount": 787
+              },
+              "watchers": {
+                "totalCount": 1199
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "coqui-ai/TTS",
+              "description": "\ud83d\udc38\ud83d\udcac - a deep learning toolkit for Text-to-Speech, battle-tested in research and production",
+              "stargazerCount": 39429,
+              "forkCount": 4988,
+              "url": "https://github.com/coqui-ai/TTS",
+              "updatedAt": "2025-04-18T21:38:06Z",
+              "issues": {
+                "totalCount": 1168
+              },
+              "watchers": {
+                "totalCount": 313
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ggml-org/whisper.cpp",
+              "description": "Port of OpenAI's Whisper model in C/C++",
+              "stargazerCount": 39332,
+              "forkCount": 4123,
+              "url": "https://github.com/ggml-org/whisper.cpp",
+              "updatedAt": "2025-04-18T20:55:00Z",
+              "issues": {
+                "totalCount": 1621
+              },
+              "watchers": {
+                "totalCount": 329
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "LC044/WeChatMsg",
+              "description": null,
+              "stargazerCount": 39273,
+              "forkCount": 4086,
+              "url": "https://github.com/LC044/WeChatMsg",
+              "updatedAt": "2025-04-18T20:44:38Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 188
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "chubin/cheat.sh",
+              "description": "the only cheat sheet you need",
+              "stargazerCount": 39259,
+              "forkCount": 1811,
+              "url": "https://github.com/chubin/cheat.sh",
+              "updatedAt": "2025-04-18T20:56:31Z",
+              "issues": {
+                "totalCount": 252
+              },
+              "watchers": {
+                "totalCount": 582
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "typst/typst",
+              "description": "A new markup-based typesetting system that is powerful and easy to learn.",
+              "stargazerCount": 39248,
+              "forkCount": 1075,
+              "url": "https://github.com/typst/typst",
+              "updatedAt": "2025-04-18T21:59:44Z",
+              "issues": {
+                "totalCount": 3136
+              },
+              "watchers": {
+                "totalCount": 106
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "expo/expo",
+              "description": "An open-source framework for making universal native apps with React. Expo runs on Android, iOS, and the web.",
+              "stargazerCount": 39181,
+              "forkCount": 6615,
+              "url": "https://github.com/expo/expo",
+              "updatedAt": "2025-04-18T21:28:46Z",
+              "issues": {
+                "totalCount": 16067
+              },
+              "watchers": {
+                "totalCount": 315
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tabler/tabler",
+              "description": "Tabler is free and open-source HTML Dashboard UI Kit built on Bootstrap",
+              "stargazerCount": 39121,
+              "forkCount": 4129,
+              "url": "https://github.com/tabler/tabler",
+              "updatedAt": "2025-04-18T20:41:13Z",
+              "issues": {
+                "totalCount": 996
+              },
+              "watchers": {
+                "totalCount": 645
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "bevyengine/bevy",
+              "description": "A refreshingly simple data-driven game engine built in Rust",
+              "stargazerCount": 39037,
+              "forkCount": 3844,
+              "url": "https://github.com/bevyengine/bevy",
+              "updatedAt": "2025-04-18T20:59:04Z",
+              "issues": {
+                "totalCount": 6626
+              },
+              "watchers": {
+                "totalCount": 303
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "google-research/bert",
+              "description": "TensorFlow code and pre-trained models for BERT",
+              "stargazerCount": 39029,
+              "forkCount": 9673,
+              "url": "https://github.com/google-research/bert",
+              "updatedAt": "2025-04-18T13:35:21Z",
+              "issues": {
+                "totalCount": 1145
+              },
+              "watchers": {
+                "totalCount": 997
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

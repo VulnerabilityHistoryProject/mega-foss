@@ -1,0 +1,175 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 10,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjEw",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "jgraph/drawio-desktop",
+              "description": "Official electron build of draw.io",
+              "stargazerCount": 53952,
+              "forkCount": 5237,
+              "url": "https://github.com/jgraph/drawio-desktop",
+              "updatedAt": "2025-04-18T20:33:53Z",
+              "issues": {
+                "totalCount": 1567
+              },
+              "watchers": {
+                "totalCount": 540
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "AntonOsika/gpt-engineer",
+              "description": "CLI platform to experiment with codegen. Precursor to: https://lovable.dev",
+              "stargazerCount": 53916,
+              "forkCount": 7072,
+              "url": "https://github.com/AntonOsika/gpt-engineer",
+              "updatedAt": "2025-04-18T21:15:47Z",
+              "issues": {
+                "totalCount": 492
+              },
+              "watchers": {
+                "totalCount": 529
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nocodb/nocodb",
+              "description": "\ud83d\udd25 \ud83d\udd25 \ud83d\udd25 Open Source Airtable Alternative",
+              "stargazerCount": 53818,
+              "forkCount": 3775,
+              "url": "https://github.com/nocodb/nocodb",
+              "updatedAt": "2025-04-18T21:53:58Z",
+              "issues": {
+                "totalCount": 3994
+              },
+              "watchers": {
+                "totalCount": 379
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "lencx/ChatGPT",
+              "description": "\ud83d\udd2e ChatGPT Desktop Application (Mac, Windows and Linux)",
+              "stargazerCount": 53698,
+              "forkCount": 6069,
+              "url": "https://github.com/lencx/ChatGPT",
+              "updatedAt": "2025-04-18T18:25:45Z",
+              "issues": {
+                "totalCount": 1143
+              },
+              "watchers": {
+                "totalCount": 453
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "deepfakes/faceswap",
+              "description": "Deepfakes Software For All",
+              "stargazerCount": 53694,
+              "forkCount": 13368,
+              "url": "https://github.com/deepfakes/faceswap",
+              "updatedAt": "2025-04-18T18:11:14Z",
+              "issues": {
+                "totalCount": 875
+              },
+              "watchers": {
+                "totalCount": 1533
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ultralytics/yolov5",
+              "description": "YOLOv5 \ud83d\ude80 in PyTorch > ONNX > CoreML > TFLite",
+              "stargazerCount": 53464,
+              "forkCount": 16832,
+              "url": "https://github.com/ultralytics/yolov5",
+              "updatedAt": "2025-04-18T19:08:10Z",
+              "issues": {
+                "totalCount": 9381
+              },
+              "watchers": {
+                "totalCount": 372
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "FiloSottile/mkcert",
+              "description": "A simple zero-config tool to make locally trusted development certificates with any names you'd like.",
+              "stargazerCount": 53156,
+              "forkCount": 2785,
+              "url": "https://github.com/FiloSottile/mkcert",
+              "updatedAt": "2025-04-18T19:28:36Z",
+              "issues": {
+                "totalCount": 341
+              },
+              "watchers": {
+                "totalCount": 485
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "commaai/openpilot",
+              "description": "openpilot is an operating system for robotics. Currently, it upgrades the driver assistance system on 300+ supported cars.",
+              "stargazerCount": 53131,
+              "forkCount": 9633,
+              "url": "https://github.com/commaai/openpilot",
+              "updatedAt": "2025-04-18T21:29:41Z",
+              "issues": {
+                "totalCount": 2954
+              },
+              "watchers": {
+                "totalCount": 1311
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "All-Hands-AI/OpenHands",
+              "description": "\ud83d\ude4c OpenHands: Code Less, Make More",
+              "stargazerCount": 53070,
+              "forkCount": 5913,
+              "url": "https://github.com/All-Hands-AI/OpenHands",
+              "updatedAt": "2025-04-18T21:51:12Z",
+              "issues": {
+                "totalCount": 2547
+              },
+              "watchers": {
+                "totalCount": 381
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "necolas/normalize.css",
+              "description": "A modern alternative to CSS resets",
+              "stargazerCount": 53045,
+              "forkCount": 10594,
+              "url": "https://github.com/necolas/normalize.css",
+              "updatedAt": "2025-04-18T19:05:21Z",
+              "issues": {
+                "totalCount": 513
+              },
+              "watchers": {
+                "totalCount": 1477
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

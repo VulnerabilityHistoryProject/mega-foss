@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "Significant-Gravitas/AutoGPT",
+              "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
+              "stargazerCount": 174583,
+              "forkCount": 45573,
+              "url": "https://github.com/Significant-Gravitas/AutoGPT",
+              "updatedAt": "2025-04-18T21:48:21Z",
+              "issues": {
+                "totalCount": 3225
+              },
+              "watchers": {
+                "totalCount": 1556
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

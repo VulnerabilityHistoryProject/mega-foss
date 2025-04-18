@@ -1,0 +1,159 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 9,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjk=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "golang-standards/project-layout",
+              "description": "Standard Go Project Layout",
+              "stargazerCount": 51937,
+              "forkCount": 5301,
+              "url": "https://github.com/golang-standards/project-layout",
+              "updatedAt": "2025-04-18T20:58:28Z",
+              "issues": {
+                "totalCount": 111
+              },
+              "watchers": {
+                "totalCount": 595
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "minio/minio",
+              "description": "MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license.",
+              "stargazerCount": 51866,
+              "forkCount": 5775,
+              "url": "https://github.com/minio/minio",
+              "updatedAt": "2025-04-18T20:58:00Z",
+              "issues": {
+                "totalCount": 7680
+              },
+              "watchers": {
+                "totalCount": 625
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "BurntSushi/ripgrep",
+              "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore",
+              "stargazerCount": 51756,
+              "forkCount": 2103,
+              "url": "https://github.com/BurntSushi/ripgrep",
+              "updatedAt": "2025-04-18T21:43:47Z",
+              "issues": {
+                "totalCount": 1673
+              },
+              "watchers": {
+                "totalCount": 293
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Textualize/rich",
+              "description": "Rich is a Python library for rich text and beautiful formatting in the terminal.",
+              "stargazerCount": 51746,
+              "forkCount": 1824,
+              "url": "https://github.com/Textualize/rich",
+              "updatedAt": "2025-04-18T20:38:13Z",
+              "issues": {
+                "totalCount": 1383
+              },
+              "watchers": {
+                "totalCount": 538
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pmndrs/zustand",
+              "description": "\ud83d\udc3b Bear necessities for state management in React",
+              "stargazerCount": 51730,
+              "forkCount": 1650,
+              "url": "https://github.com/pmndrs/zustand",
+              "updatedAt": "2025-04-18T21:28:20Z",
+              "issues": {
+                "totalCount": 686
+              },
+              "watchers": {
+                "totalCount": 169
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ionic-team/ionic-framework",
+              "description": "A powerful cross-platform UI toolkit for building native-quality iOS, Android, and Progressive Web Apps with HTML, CSS, and JavaScript.",
+              "stargazerCount": 51625,
+              "forkCount": 13472,
+              "url": "https://github.com/ionic-team/ionic-framework",
+              "updatedAt": "2025-04-18T21:03:21Z",
+              "issues": {
+                "totalCount": 21960
+              },
+              "watchers": {
+                "totalCount": 1587
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pi-hole/pi-hole",
+              "description": "A black hole for Internet advertisements",
+              "stargazerCount": 51513,
+              "forkCount": 2805,
+              "url": "https://github.com/pi-hole/pi-hole",
+              "updatedAt": "2025-04-18T20:57:34Z",
+              "issues": {
+                "totalCount": 3008
+              },
+              "watchers": {
+                "totalCount": 704
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "google/material-design-icons",
+              "description": "Material Design icons by Google (Material Symbols)",
+              "stargazerCount": 51405,
+              "forkCount": 9641,
+              "url": "https://github.com/google/material-design-icons",
+              "updatedAt": "2025-04-18T21:31:50Z",
+              "issues": {
+                "totalCount": 1501
+              },
+              "watchers": {
+                "totalCount": 1808
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Semantic-Org/Semantic-UI",
+              "description": "Semantic is a UI component framework based around useful principles from natural language.",
+              "stargazerCount": 51162,
+              "forkCount": 4926,
+              "url": "https://github.com/Semantic-Org/Semantic-UI",
+              "updatedAt": "2025-04-18T15:00:17Z",
+              "issues": {
+                "totalCount": 6232
+              },
+              "watchers": {
+                "totalCount": 1287
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

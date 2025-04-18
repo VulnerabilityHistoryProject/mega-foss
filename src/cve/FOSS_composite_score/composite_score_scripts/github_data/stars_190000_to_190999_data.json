@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "trekhleb/javascript-algorithms",
+              "description": "\ud83d\udcdd Algorithms and data structures implemented in JavaScript with explanations and links to further readings",
+              "stargazerCount": 190972,
+              "forkCount": 30644,
+              "url": "https://github.com/trekhleb/javascript-algorithms",
+              "updatedAt": "2025-04-18T20:53:14Z",
+              "issues": {
+                "totalCount": 358
+              },
+              "watchers": {
+                "totalCount": 4307
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

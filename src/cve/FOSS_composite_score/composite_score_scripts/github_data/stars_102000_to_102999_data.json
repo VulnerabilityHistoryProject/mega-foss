@@ -1,0 +1,63 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 3,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjM=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "rust-lang/rust",
+              "description": "Empowering everyone to build reliable and efficient software.",
+              "stargazerCount": 102805,
+              "forkCount": 13267,
+              "url": "https://github.com/rust-lang/rust",
+              "updatedAt": "2025-04-18T21:11:03Z",
+              "issues": {
+                "totalCount": 57503
+              },
+              "watchers": {
+                "totalCount": 1467
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "denoland/deno",
+              "description": "A modern runtime for JavaScript and TypeScript.",
+              "stargazerCount": 102663,
+              "forkCount": 5555,
+              "url": "https://github.com/denoland/deno",
+              "updatedAt": "2025-04-18T21:43:10Z",
+              "issues": {
+                "totalCount": 12474
+              },
+              "watchers": {
+                "totalCount": 1406
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "goldbergyoni/nodebestpractices",
+              "description": ":white_check_mark:  The Node.js best practices list (July 2024)",
+              "stargazerCount": 102382,
+              "forkCount": 10414,
+              "url": "https://github.com/goldbergyoni/nodebestpractices",
+              "updatedAt": "2025-04-18T20:53:13Z",
+              "issues": {
+                "totalCount": 328
+              },
+              "watchers": {
+                "totalCount": 1948
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

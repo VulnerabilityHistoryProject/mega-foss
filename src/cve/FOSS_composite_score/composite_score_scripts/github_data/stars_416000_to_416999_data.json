@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "freeCodeCamp/freeCodeCamp",
+              "description": "freeCodeCamp.org's open-source codebase and curriculum. Learn to code for free.",
+              "stargazerCount": 416695,
+              "forkCount": 39837,
+              "url": "https://github.com/freeCodeCamp/freeCodeCamp",
+              "updatedAt": "2025-04-18T21:56:29Z",
+              "issues": {
+                "totalCount": 19196
+              },
+              "watchers": {
+                "totalCount": 8566
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

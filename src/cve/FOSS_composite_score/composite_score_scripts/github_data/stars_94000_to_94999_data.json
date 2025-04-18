@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "ripienaar/free-for-dev",
+              "description": "A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev",
+              "stargazerCount": 94784,
+              "forkCount": 10255,
+              "url": "https://github.com/ripienaar/free-for-dev",
+              "updatedAt": "2025-04-18T20:57:40Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 1654
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ant-design/ant-design",
+              "description": "An enterprise-class UI design language and React UI library",
+              "stargazerCount": 94315,
+              "forkCount": 52005,
+              "url": "https://github.com/ant-design/ant-design",
+              "updatedAt": "2025-04-18T21:19:48Z",
+              "issues": {
+                "totalCount": 31178
+              },
+              "watchers": {
+                "totalCount": 246
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
