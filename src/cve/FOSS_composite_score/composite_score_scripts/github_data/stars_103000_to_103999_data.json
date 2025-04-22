@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "facebook/create-react-app",
+              "description": "Set up a modern web app by running one command.",
+              "stargazerCount": 103154,
+              "forkCount": 27006,
+              "url": "https://github.com/facebook/create-react-app",
+              "updatedAt": "2025-04-18T21:32:55Z",
+              "issues": {
+                "totalCount": 8389
+              },
+              "watchers": {
+                "totalCount": 1905
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

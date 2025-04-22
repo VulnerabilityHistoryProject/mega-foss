@@ -1,0 +1,95 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 5,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjU=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "microsoft/ML-For-Beginners",
+              "description": "12 weeks, 26 lessons, 52 quizzes, classic Machine Learning for all",
+              "stargazerCount": 71906,
+              "forkCount": 15499,
+              "url": "https://github.com/microsoft/ML-For-Beginners",
+              "updatedAt": "2025-04-18T21:33:12Z",
+              "issues": {
+                "totalCount": 138
+              },
+              "watchers": {
+                "totalCount": 1021
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "microsoft/playwright",
+              "description": "Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. ",
+              "stargazerCount": 71805,
+              "forkCount": 4079,
+              "url": "https://github.com/microsoft/playwright",
+              "updatedAt": "2025-04-18T20:51:40Z",
+              "issues": {
+                "totalCount": 15690
+              },
+              "watchers": {
+                "totalCount": 501
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ByteByteGoHq/system-design-101",
+              "description": "Explain complex systems using visuals and simple terms. Help you prepare for system design interviews.",
+              "stargazerCount": 71727,
+              "forkCount": 7616,
+              "url": "https://github.com/ByteByteGoHq/system-design-101",
+              "updatedAt": "2025-04-18T20:53:16Z",
+              "issues": {
+                "totalCount": 50
+              },
+              "watchers": {
+                "totalCount": 926
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hoppscotch/hoppscotch",
+              "description": "Open source API development ecosystem - https://hoppscotch.io (open-source alternative to Postman, Insomnia)",
+              "stargazerCount": 71218,
+              "forkCount": 4881,
+              "url": "https://github.com/hoppscotch/hoppscotch",
+              "updatedAt": "2025-04-18T20:56:38Z",
+              "issues": {
+                "totalCount": 1903
+              },
+              "watchers": {
+                "totalCount": 496
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "coder/code-server",
+              "description": "VS Code in the browser",
+              "stargazerCount": 71118,
+              "forkCount": 5883,
+              "url": "https://github.com/coder/code-server",
+              "updatedAt": "2025-04-18T21:49:32Z",
+              "issues": {
+                "totalCount": 3643
+              },
+              "watchers": {
+                "totalCount": 730
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

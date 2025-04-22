@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "airbnb/javascript",
+              "description": "JavaScript Style Guide",
+              "stargazerCount": 146561,
+              "forkCount": 26744,
+              "url": "https://github.com/airbnb/javascript",
+              "updatedAt": "2025-04-18T21:21:30Z",
+              "issues": {
+                "totalCount": 1354
+              },
+              "watchers": {
+                "totalCount": 3732
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

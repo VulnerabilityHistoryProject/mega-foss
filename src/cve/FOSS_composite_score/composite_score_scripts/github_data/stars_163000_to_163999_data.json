@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "trimstray/the-book-of-secret-knowledge",
+              "description": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.",
+              "stargazerCount": 163454,
+              "forkCount": 10258,
+              "url": "https://github.com/trimstray/the-book-of-secret-knowledge",
+              "updatedAt": "2025-04-18T21:55:22Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 2553
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

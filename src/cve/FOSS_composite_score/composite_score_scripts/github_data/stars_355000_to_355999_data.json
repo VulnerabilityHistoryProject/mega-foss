@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "EbookFoundation/free-programming-books",
+              "description": ":books: Freely available programming books",
+              "stargazerCount": 355123,
+              "forkCount": 63183,
+              "url": "https://github.com/EbookFoundation/free-programming-books",
+              "updatedAt": "2025-04-18T21:55:03Z",
+              "issues": {
+                "totalCount": 1169
+              },
+              "watchers": {
+                "totalCount": 9844
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

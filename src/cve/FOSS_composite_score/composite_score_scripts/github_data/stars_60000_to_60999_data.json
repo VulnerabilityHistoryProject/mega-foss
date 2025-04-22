@@ -1,0 +1,175 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 10,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjEw",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "sindresorhus/awesome-nodejs",
+              "description": ":zap: Delightful Node.js packages and resources",
+              "stargazerCount": 60605,
+              "forkCount": 6015,
+              "url": "https://github.com/sindresorhus/awesome-nodejs",
+              "updatedAt": "2025-04-18T15:46:07Z",
+              "issues": {
+                "totalCount": 103
+              },
+              "watchers": {
+                "totalCount": 1688
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Alvin9999/new-pac",
+              "description": "\u7ffb\u5899-\u79d1\u5b66\u4e0a\u7f51\u3001\u81ea\u7531\u4e0a\u7f51\u3001\u514d\u8d39\u79d1\u5b66\u4e0a\u7f51\u3001\u514d\u8d39\u7ffb\u5899\u3001fanqiang\u3001\u6cb9\u7ba1youtube/\u89c6\u9891\u4e0b\u8f7d\u3001\u8f6f\u4ef6\u3001VPN\u3001\u4e00\u952e\u7ffb\u5899\u6d4f\u89c8\u5668\uff0cvps\u4e00\u952e\u642d\u5efa\u7ffb\u5899\u670d\u52a1\u5668\u811a\u672c/\u6559\u7a0b\uff0c\u514d\u8d39shadowsocks/ss/ssr/v2ray/goflyway\u8d26\u53f7/\u8282\u70b9\uff0c\u7ffb\u5899\u68af\u5b50\uff0c\u7535\u8111\u3001\u624b\u673a\u3001iOS\u3001\u5b89\u5353\u3001windows\u3001Mac\u3001Linux\u3001\u8def\u7531\u5668\u7ffb\u5899\u3001\u79d1\u5b66\u4e0a\u7f51\u3001youtube\u89c6\u9891\u4e0b\u8f7d\u3001youtube\u6cb9\u7ba1\u955c\u50cf/\u514d\u7ffb\u5899\u7f51\u7ad9\u3001\u7f8e\u533aapple id\u5171\u4eab\u8d26\u53f7\u3001\u7ffb\u5899-\u79d1\u5b66\u4e0a\u7f51-\u68af\u5b50",
+              "stargazerCount": 60545,
+              "forkCount": 9892,
+              "url": "https://github.com/Alvin9999/new-pac",
+              "updatedAt": "2025-04-18T21:51:23Z",
+              "issues": {
+                "totalCount": 1719
+              },
+              "watchers": {
+                "totalCount": 1557
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "bradtraversy/design-resources-for-developers",
+              "description": "Curated list of design and UI resources from stock photos, web templates, CSS frameworks, UI libraries, tools and much more",
+              "stargazerCount": 60422,
+              "forkCount": 11691,
+              "url": "https://github.com/bradtraversy/design-resources-for-developers",
+              "updatedAt": "2025-04-18T20:49:24Z",
+              "issues": {
+                "totalCount": 100
+              },
+              "watchers": {
+                "totalCount": 993
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "atom/atom",
+              "description": ":atom: The hackable text editor",
+              "stargazerCount": 60398,
+              "forkCount": 17354,
+              "url": "https://github.com/atom/atom",
+              "updatedAt": "2025-04-18T17:10:40Z",
+              "issues": {
+                "totalCount": 17111
+              },
+              "watchers": {
+                "totalCount": 2632
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "lodash/lodash",
+              "description": "A modern JavaScript utility library delivering modularity, performance, & extras.",
+              "stargazerCount": 60349,
+              "forkCount": 7065,
+              "url": "https://github.com/lodash/lodash",
+              "updatedAt": "2025-04-18T19:13:02Z",
+              "issues": {
+                "totalCount": 4298
+              },
+              "watchers": {
+                "totalCount": 821
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "h5bp/Front-end-Developer-Interview-Questions",
+              "description": "A list of helpful front-end related questions you can use to interview potential candidates, test yourself or completely ignore.",
+              "stargazerCount": 60242,
+              "forkCount": 11100,
+              "url": "https://github.com/h5bp/Front-end-Developer-Interview-Questions",
+              "updatedAt": "2025-04-18T21:02:10Z",
+              "issues": {
+                "totalCount": 177
+              },
+              "watchers": {
+                "totalCount": 2200
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "localsend/localsend",
+              "description": "An open-source cross-platform alternative to AirDrop",
+              "stargazerCount": 60186,
+              "forkCount": 3213,
+              "url": "https://github.com/localsend/localsend",
+              "updatedAt": "2025-04-18T20:41:59Z",
+              "issues": {
+                "totalCount": 1258
+              },
+              "watchers": {
+                "totalCount": 255
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "xingshaocheng/architect-awesome",
+              "description": "\u540e\u7aef\u67b6\u6784\u5e08\u6280\u672f\u56fe\u8c31",
+              "stargazerCount": 60143,
+              "forkCount": 17802,
+              "url": "https://github.com/xingshaocheng/architect-awesome",
+              "updatedAt": "2025-04-18T20:41:26Z",
+              "issues": {
+                "totalCount": 71
+              },
+              "watchers": {
+                "totalCount": 3223
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "labmlai/annotated_deep_learning_paper_implementations",
+              "description": "\ud83e\uddd1\u200d\ud83c\udfeb 60+ Implementations/tutorials of deep learning papers with side-by-side notes \ud83d\udcdd; including transformers (original, xl, switch, feedback, vit, ...), optimizers (adam, adabelief, sophia, ...), gans(cyclegan, stylegan2, ...), \ud83c\udfae reinforcement learning (ppo, dqn), capsnet, distillation, ... \ud83e\udde0",
+              "stargazerCount": 60086,
+              "forkCount": 6074,
+              "url": "https://github.com/labmlai/annotated_deep_learning_paper_implementations",
+              "updatedAt": "2025-04-18T18:25:42Z",
+              "issues": {
+                "totalCount": 136
+              },
+              "watchers": {
+                "totalCount": 473
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "prakhar1989/awesome-courses",
+              "description": ":books: List of awesome university courses for learning Computer Science!",
+              "stargazerCount": 60035,
+              "forkCount": 8199,
+              "url": "https://github.com/prakhar1989/awesome-courses",
+              "updatedAt": "2025-04-18T19:14:42Z",
+              "issues": {
+                "totalCount": 79
+              },
+              "watchers": {
+                "totalCount": 2294
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

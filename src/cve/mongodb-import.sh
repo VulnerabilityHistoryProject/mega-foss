@@ -1,8 +1,10 @@
+
 #!/bin/bash
 
 # Set the path to the directory containing the JSON/CSV files
 # directoryPath=~/code/nvdcve/nvdcve/*.json
-directoryPath=~/Developer/Work/mega-foss/src/cves/nvdcve/nvdcve/*.json
+
+directoryPath=/Developer/Work/mega-foss/src/cves/nvdcve/nvdcve/*.json
 
 # Set the MongoDB connection details
 mongoHost=localhost

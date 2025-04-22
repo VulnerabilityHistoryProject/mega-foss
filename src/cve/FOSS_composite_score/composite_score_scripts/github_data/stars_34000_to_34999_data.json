@@ -1,0 +1,415 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 25,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI1",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "sahat/hackathon-starter",
+              "description": "A boilerplate for Node.js web applications",
+              "stargazerCount": 34985,
+              "forkCount": 8177,
+              "url": "https://github.com/sahat/hackathon-starter",
+              "updatedAt": "2025-04-18T20:52:29Z",
+              "issues": {
+                "totalCount": 668
+              },
+              "watchers": {
+                "totalCount": 761
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hankcs/HanLP",
+              "description": "Natural Language Processing for the next decade. Tokenization, Part-of-Speech Tagging, Named Entity Recognition, Syntactic & Semantic Dependency Parsing, Document Classification",
+              "stargazerCount": 34882,
+              "forkCount": 10539,
+              "url": "https://github.com/hankcs/HanLP",
+              "updatedAt": "2025-04-18T21:23:22Z",
+              "issues": {
+                "totalCount": 1426
+              },
+              "watchers": {
+                "totalCount": 1127
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "unknwon/the-way-to-go_ZH_CN",
+              "description": "\u300aThe Way to Go\u300b\u4e2d\u6587\u8bd1\u672c\uff0c\u4e2d\u6587\u6b63\u5f0f\u540d\u300aGo \u5165\u95e8\u6307\u5357\u300b",
+              "stargazerCount": 34854,
+              "forkCount": 8609,
+              "url": "https://github.com/unknwon/the-way-to-go_ZH_CN",
+              "updatedAt": "2025-04-18T15:50:18Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 1250
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "bumptech/glide",
+              "description": "An image loading and caching library for Android focused on smooth scrolling",
+              "stargazerCount": 34845,
+              "forkCount": 6155,
+              "url": "https://github.com/bumptech/glide",
+              "updatedAt": "2025-04-18T18:48:35Z",
+              "issues": {
+                "totalCount": 4470
+              },
+              "watchers": {
+                "totalCount": 1037
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nushell/nushell",
+              "description": "A new type of shell",
+              "stargazerCount": 34810,
+              "forkCount": 1801,
+              "url": "https://github.com/nushell/nushell",
+              "updatedAt": "2025-04-18T21:11:35Z",
+              "issues": {
+                "totalCount": 6302
+              },
+              "watchers": {
+                "totalCount": 197
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "junegunn/vim-plug",
+              "description": ":hibiscus: Minimalist Vim Plugin Manager",
+              "stargazerCount": 34759,
+              "forkCount": 1947,
+              "url": "https://github.com/junegunn/vim-plug",
+              "updatedAt": "2025-04-18T18:32:37Z",
+              "issues": {
+                "totalCount": 1030
+              },
+              "watchers": {
+                "totalCount": 374
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "chatchat-space/Langchain-Chatchat",
+              "description": "Langchain-Chatchat\uff08\u539fLangchain-ChatGLM\uff09\u57fa\u4e8e Langchain \u4e0e ChatGLM, Qwen \u4e0e Llama \u7b49\u8bed\u8a00\u6a21\u578b\u7684 RAG \u4e0e Agent \u5e94\u7528 | Langchain-Chatchat (formerly langchain-ChatGLM), local knowledge based LLM (like ChatGLM, Qwen and Llama) RAG and Agent app with langchain ",
+              "stargazerCount": 34718,
+              "forkCount": 5857,
+              "url": "https://github.com/chatchat-space/Langchain-Chatchat",
+              "updatedAt": "2025-04-18T18:20:06Z",
+              "issues": {
+                "totalCount": 4106
+              },
+              "watchers": {
+                "totalCount": 295
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "chenfei-wu/TaskMatrix",
+              "description": null,
+              "stargazerCount": 34493,
+              "forkCount": 3295,
+              "url": "https://github.com/chenfei-wu/TaskMatrix",
+              "updatedAt": "2025-04-18T17:10:47Z",
+              "issues": {
+                "totalCount": 356
+              },
+              "watchers": {
+                "totalCount": 301
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nodejs/node-v0.x-archive",
+              "description": "Moved to https://github.com/nodejs/node",
+              "stargazerCount": 34412,
+              "forkCount": 7300,
+              "url": "https://github.com/nodejs/node-v0.x-archive",
+              "updatedAt": "2025-04-18T21:30:38Z",
+              "issues": {
+                "totalCount": 6379
+              },
+              "watchers": {
+                "totalCount": 2037
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "markedjs/marked",
+              "description": "A markdown parser and compiler. Built for speed.",
+              "stargazerCount": 34411,
+              "forkCount": 3442,
+              "url": "https://github.com/markedjs/marked",
+              "updatedAt": "2025-04-18T18:56:40Z",
+              "issues": {
+                "totalCount": 1575
+              },
+              "watchers": {
+                "totalCount": 391
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "facebookresearch/faiss",
+              "description": "A library for efficient similarity search and clustering of dense vectors.",
+              "stargazerCount": 34389,
+              "forkCount": 3842,
+              "url": "https://github.com/facebookresearch/faiss",
+              "updatedAt": "2025-04-18T19:00:41Z",
+              "issues": {
+                "totalCount": 2609
+              },
+              "watchers": {
+                "totalCount": 480
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "BVLC/caffe",
+              "description": "Caffe: a fast open framework for deep learning.",
+              "stargazerCount": 34309,
+              "forkCount": 18636,
+              "url": "https://github.com/BVLC/caffe",
+              "updatedAt": "2025-04-18T21:24:12Z",
+              "issues": {
+                "totalCount": 4800
+              },
+              "watchers": {
+                "totalCount": 2089
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "spacedriveapp/spacedrive",
+              "description": "Spacedrive is an open source cross-platform file explorer, powered by a virtual distributed filesystem written in Rust.",
+              "stargazerCount": 34302,
+              "forkCount": 1041,
+              "url": "https://github.com/spacedriveapp/spacedrive",
+              "updatedAt": "2025-04-18T13:39:57Z",
+              "issues": {
+                "totalCount": 503
+              },
+              "watchers": {
+                "totalCount": 208
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "chatboxai/chatbox",
+              "description": "User-friendly Desktop Client App for AI Models/LLMs (GPT, Claude, Gemini, Ollama...)",
+              "stargazerCount": 34231,
+              "forkCount": 3265,
+              "url": "https://github.com/chatboxai/chatbox",
+              "updatedAt": "2025-04-18T21:46:49Z",
+              "issues": {
+                "totalCount": 1993
+              },
+              "watchers": {
+                "totalCount": 187
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "dockur/windows",
+              "description": "Windows inside a Docker container.",
+              "stargazerCount": 34228,
+              "forkCount": 2444,
+              "url": "https://github.com/dockur/windows",
+              "updatedAt": "2025-04-18T20:32:41Z",
+              "issues": {
+                "totalCount": 723
+              },
+              "watchers": {
+                "totalCount": 176
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "jaredpalmer/formik",
+              "description": "Build forms in React, without the tears \ud83d\ude2d ",
+              "stargazerCount": 34225,
+              "forkCount": 2807,
+              "url": "https://github.com/jaredpalmer/formik",
+              "updatedAt": "2025-04-18T18:09:19Z",
+              "issues": {
+                "totalCount": 2256
+              },
+              "watchers": {
+                "totalCount": 229
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "PKUanonym/REKCARC-TSC-UHT",
+              "description": "\u6e05\u534e\u5927\u5b66\u8ba1\u7b97\u673a\u7cfb\u8bfe\u7a0b\u653b\u7565 Guidance for courses in Department of Computer Science and Technology, Tsinghua University",
+              "stargazerCount": 34187,
+              "forkCount": 7691,
+              "url": "https://github.com/PKUanonym/REKCARC-TSC-UHT",
+              "updatedAt": "2025-04-18T17:59:54Z",
+              "issues": {
+                "totalCount": 31
+              },
+              "watchers": {
+                "totalCount": 888
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sorrycc/awesome-javascript",
+              "description": "\ud83d\udc22 A collection of awesome browser-side  JavaScript libraries, resources and shiny things.",
+              "stargazerCount": 34159,
+              "forkCount": 4457,
+              "url": "https://github.com/sorrycc/awesome-javascript",
+              "updatedAt": "2025-04-18T16:51:13Z",
+              "issues": {
+                "totalCount": 93
+              },
+              "watchers": {
+                "totalCount": 1064
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "milvus-io/milvus",
+              "description": "Milvus is a high-performance, cloud-native vector database built for scalable vector ANN search",
+              "stargazerCount": 34138,
+              "forkCount": 3160,
+              "url": "https://github.com/milvus-io/milvus",
+              "updatedAt": "2025-04-18T21:53:58Z",
+              "issues": {
+                "totalCount": 13223
+              },
+              "watchers": {
+                "totalCount": 302
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "zenorocha/clipboard.js",
+              "description": ":scissors: Modern copy to clipboard. No Flash. Just 3kb gzipped :clipboard:",
+              "stargazerCount": 34128,
+              "forkCount": 3967,
+              "url": "https://github.com/zenorocha/clipboard.js",
+              "updatedAt": "2025-04-18T20:54:29Z",
+              "issues": {
+                "totalCount": 626
+              },
+              "watchers": {
+                "totalCount": 416
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "alebcay/awesome-shell",
+              "description": "A curated list of awesome command-line frameworks, toolkits, guides and gizmos. Inspired by awesome-php.",
+              "stargazerCount": 34127,
+              "forkCount": 2409,
+              "url": "https://github.com/alebcay/awesome-shell",
+              "updatedAt": "2025-04-18T19:58:49Z",
+              "issues": {
+                "totalCount": 57
+              },
+              "watchers": {
+                "totalCount": 772
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "xitu/gold-miner",
+              "description": "\ud83e\udd47\u6398\u91d1\u7ffb\u8bd1\u8ba1\u5212\uff0c\u53ef\u80fd\u662f\u4e16\u754c\u6700\u5927\u6700\u597d\u7684\u82f1\u8bd1\u4e2d\u6280\u672f\u793e\u533a\uff0c\u6700\u61c2\u8bfb\u8005\u548c\u8bd1\u8005\u7684\u7ffb\u8bd1\u5e73\u53f0\uff1a",
+              "stargazerCount": 34057,
+              "forkCount": 5042,
+              "url": "https://github.com/xitu/gold-miner",
+              "updatedAt": "2025-04-18T20:44:36Z",
+              "issues": {
+                "totalCount": 5597
+              },
+              "watchers": {
+                "totalCount": 1266
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "netty/netty",
+              "description": "Netty project - an event-driven asynchronous network application framework",
+              "stargazerCount": 34032,
+              "forkCount": 16059,
+              "url": "https://github.com/netty/netty",
+              "updatedAt": "2025-04-18T16:04:18Z",
+              "issues": {
+                "totalCount": 6609
+              },
+              "watchers": {
+                "totalCount": 1724
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "payloadcms/payload",
+              "description": "Payload is the open-source, fullstack Next.js framework, giving you instant backend superpowers. Get a full TypeScript backend and admin panel instantly. Use Payload as a headless CMS or for building powerful applications.",
+              "stargazerCount": 34013,
+              "forkCount": 2317,
+              "url": "https://github.com/payloadcms/payload",
+              "updatedAt": "2025-04-18T21:13:39Z",
+              "issues": {
+                "totalCount": 3351
+              },
+              "watchers": {
+                "totalCount": 136
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "testerSunshine/12306",
+              "description": "12306\u667a\u80fd\u5237\u7968\uff0c\u8ba2\u7968",
+              "stargazerCount": 34012,
+              "forkCount": 9770,
+              "url": "https://github.com/testerSunshine/12306",
+              "updatedAt": "2025-04-18T21:05:01Z",
+              "issues": {
+                "totalCount": 691
+              },
+              "watchers": {
+                "totalCount": 841
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

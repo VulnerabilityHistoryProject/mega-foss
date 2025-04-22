@@ -1,0 +1,63 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 3,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjM=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "oven-sh/bun",
+              "description": "Incredibly fast JavaScript runtime, bundler, test runner, and package manager \u2013 all in one",
+              "stargazerCount": 77528,
+              "forkCount": 3030,
+              "url": "https://github.com/oven-sh/bun",
+              "updatedAt": "2025-04-18T21:03:36Z",
+              "issues": {
+                "totalCount": 11591
+              },
+              "watchers": {
+                "totalCount": 579
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tensorflow/models",
+              "description": "Models and examples built with TensorFlow",
+              "stargazerCount": 77486,
+              "forkCount": 45623,
+              "url": "https://github.com/tensorflow/models",
+              "updatedAt": "2025-04-18T17:08:38Z",
+              "issues": {
+                "totalCount": 7306
+              },
+              "watchers": {
+                "totalCount": 2690
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "doocs/advanced-java",
+              "description": "\ud83d\ude2e Core Interview Questions & Answers For Experienced Java(Backend) Developers | \u4e92\u8054\u7f51 Java \u5de5\u7a0b\u5e08\u8fdb\u9636\u77e5\u8bc6\u5b8c\u5168\u626b\u76f2\uff1a\u6db5\u76d6\u9ad8\u5e76\u53d1\u3001\u5206\u5e03\u5f0f\u3001\u9ad8\u53ef\u7528\u3001\u5fae\u670d\u52a1\u3001\u6d77\u91cf\u6570\u636e\u5904\u7406\u7b49\u9886\u57df\u77e5\u8bc6",
+              "stargazerCount": 77468,
+              "forkCount": 19174,
+              "url": "https://github.com/doocs/advanced-java",
+              "updatedAt": "2025-04-18T20:59:30Z",
+              "issues": {
+                "totalCount": 147
+              },
+              "watchers": {
+                "totalCount": 2584
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
