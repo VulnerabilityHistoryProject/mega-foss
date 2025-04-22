@@ -1,0 +1,431 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 26,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI2",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "apache/spark",
+              "description": "Apache Spark - A unified analytics engine for large-scale data processing",
+              "stargazerCount": 40957,
+              "forkCount": 28500,
+              "url": "https://github.com/apache/spark",
+              "updatedAt": "2025-04-18T20:26:34Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 2016
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "OpenBB-finance/OpenBB",
+              "description": "Investment Research for Everyone, Everywhere.",
+              "stargazerCount": 40943,
+              "forkCount": 3643,
+              "url": "https://github.com/OpenBB-finance/OpenBB",
+              "updatedAt": "2025-04-18T21:02:15Z",
+              "issues": {
+                "totalCount": 2213
+              },
+              "watchers": {
+                "totalCount": 319
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "apache/dubbo",
+              "description": "The java implementation of Apache Dubbo. An RPC and microservice framework.",
+              "stargazerCount": 40916,
+              "forkCount": 26523,
+              "url": "https://github.com/apache/dubbo",
+              "updatedAt": "2025-04-18T18:36:43Z",
+              "issues": {
+                "totalCount": 7181
+              },
+              "watchers": {
+                "totalCount": 3023
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Light-City/CPlusPlusThings",
+              "description": "C++\u90a3\u4e9b\u4e8b",
+              "stargazerCount": 40912,
+              "forkCount": 8689,
+              "url": "https://github.com/Light-City/CPlusPlusThings",
+              "updatedAt": "2025-04-18T18:59:11Z",
+              "issues": {
+                "totalCount": 227
+              },
+              "watchers": {
+                "totalCount": 552
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "cline/cline",
+              "description": "Autonomous coding agent right in your IDE, capable of creating/editing files, executing commands, using the browser, and more with your permission every step of the way.",
+              "stargazerCount": 40834,
+              "forkCount": 4513,
+              "url": "https://github.com/cline/cline",
+              "updatedAt": "2025-04-18T21:53:01Z",
+              "issues": {
+                "totalCount": 1257
+              },
+              "watchers": {
+                "totalCount": 240
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nolimits4web/swiper",
+              "description": "Most modern mobile touch slider with hardware accelerated transitions",
+              "stargazerCount": 40826,
+              "forkCount": 9750,
+              "url": "https://github.com/nolimits4web/swiper",
+              "updatedAt": "2025-04-18T21:23:55Z",
+              "issues": {
+                "totalCount": 5690
+              },
+              "watchers": {
+                "totalCount": 683
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Stability-AI/stablediffusion",
+              "description": "High-Resolution Image Synthesis with Latent Diffusion Models",
+              "stargazerCount": 40790,
+              "forkCount": 5207,
+              "url": "https://github.com/Stability-AI/stablediffusion",
+              "updatedAt": "2025-04-18T16:34:18Z",
+              "issues": {
+                "totalCount": 323
+              },
+              "watchers": {
+                "totalCount": 451
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hpcaitech/ColossalAI",
+              "description": "Making large AI models cheaper, faster and more accessible",
+              "stargazerCount": 40789,
+              "forkCount": 4495,
+              "url": "https://github.com/hpcaitech/ColossalAI",
+              "updatedAt": "2025-04-18T19:08:07Z",
+              "issues": {
+                "totalCount": 1715
+              },
+              "watchers": {
+                "totalCount": 393
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "styled-components/styled-components",
+              "description": "Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress \ud83d\udc85",
+              "stargazerCount": 40785,
+              "forkCount": 2507,
+              "url": "https://github.com/styled-components/styled-components",
+              "updatedAt": "2025-04-18T18:12:19Z",
+              "issues": {
+                "totalCount": 2939
+              },
+              "watchers": {
+                "totalCount": 344
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "karpathy/nanoGPT",
+              "description": "The simplest, fastest repository for training/finetuning medium-sized GPTs.",
+              "stargazerCount": 40764,
+              "forkCount": 6740,
+              "url": "https://github.com/karpathy/nanoGPT",
+              "updatedAt": "2025-04-18T21:29:11Z",
+              "issues": {
+                "totalCount": 327
+              },
+              "watchers": {
+                "totalCount": 402
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nwjs/nw.js",
+              "description": "Call all Node.js modules directly from DOM/WebWorker and enable a new way of writing applications with all Web technologies.",
+              "stargazerCount": 40680,
+              "forkCount": 3878,
+              "url": "https://github.com/nwjs/nw.js",
+              "updatedAt": "2025-04-18T20:52:14Z",
+              "issues": {
+                "totalCount": 7368
+              },
+              "watchers": {
+                "totalCount": 1562
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "dcloudio/uni-app",
+              "description": "A cross-platform framework using Vue.js",
+              "stargazerCount": 40656,
+              "forkCount": 3675,
+              "url": "https://github.com/dcloudio/uni-app",
+              "updatedAt": "2025-04-18T17:33:01Z",
+              "issues": {
+                "totalCount": 4758
+              },
+              "watchers": {
+                "totalCount": 513
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "termux/termux-app",
+              "description": "Termux - a terminal emulator application for Android OS extendible by variety of packages.",
+              "stargazerCount": 40653,
+              "forkCount": 4378,
+              "url": "https://github.com/termux/termux-app",
+              "updatedAt": "2025-04-18T21:21:58Z",
+              "issues": {
+                "totalCount": 2818
+              },
+              "watchers": {
+                "totalCount": 1315
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "coreybutler/nvm-windows",
+              "description": "A node.js version management utility for Windows. Ironically written in Go.",
+              "stargazerCount": 40651,
+              "forkCount": 3493,
+              "url": "https://github.com/coreybutler/nvm-windows",
+              "updatedAt": "2025-04-18T21:03:18Z",
+              "issues": {
+                "totalCount": 904
+              },
+              "watchers": {
+                "totalCount": 461
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "mingrammer/diagrams",
+              "description": ":art: Diagram as Code for prototyping cloud system architectures",
+              "stargazerCount": 40625,
+              "forkCount": 2604,
+              "url": "https://github.com/mingrammer/diagrams",
+              "updatedAt": "2025-04-18T21:12:18Z",
+              "issues": {
+                "totalCount": 527
+              },
+              "watchers": {
+                "totalCount": 405
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Kong/kong",
+              "description": "\ud83e\udd8d The Cloud-Native API Gateway and AI Gateway.",
+              "stargazerCount": 40610,
+              "forkCount": 4906,
+              "url": "https://github.com/Kong/kong",
+              "updatedAt": "2025-04-18T21:59:57Z",
+              "issues": {
+                "totalCount": 4503
+              },
+              "watchers": {
+                "totalCount": 1020
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "getsentry/sentry",
+              "description": "Developer-first error tracking and performance monitoring",
+              "stargazerCount": 40607,
+              "forkCount": 4321,
+              "url": "https://github.com/getsentry/sentry",
+              "updatedAt": "2025-04-18T21:57:14Z",
+              "issues": {
+                "totalCount": 15102
+              },
+              "watchers": {
+                "totalCount": 688
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "apachecn/ailearning",
+              "description": "AiLearning\uff1a\u6570\u636e\u5206\u6790+\u673a\u5668\u5b66\u4e60\u5b9e\u6218+\u7ebf\u6027\u4ee3\u6570+PyTorch+NLTK+TF2",
+              "stargazerCount": 40596,
+              "forkCount": 11542,
+              "url": "https://github.com/apachecn/ailearning",
+              "updatedAt": "2025-04-18T19:16:52Z",
+              "issues": {
+                "totalCount": 114
+              },
+              "watchers": {
+                "totalCount": 1670
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "vuetifyjs/vuetify",
+              "description": "\ud83d\udc09 Vue Component Framework",
+              "stargazerCount": 40437,
+              "forkCount": 6991,
+              "url": "https://github.com/vuetifyjs/vuetify",
+              "updatedAt": "2025-04-18T19:26:20Z",
+              "issues": {
+                "totalCount": 14595
+              },
+              "watchers": {
+                "totalCount": 586
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hexojs/hexo",
+              "description": "A fast, simple & powerful blog framework, powered by Node.js.",
+              "stargazerCount": 40235,
+              "forkCount": 4910,
+              "url": "https://github.com/hexojs/hexo",
+              "updatedAt": "2025-04-18T15:01:55Z",
+              "issues": {
+                "totalCount": 3974
+              },
+              "watchers": {
+                "totalCount": 810
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "coollabsio/coolify",
+              "description": "An open-source & self-hostable Heroku / Netlify / Vercel alternative.",
+              "stargazerCount": 40208,
+              "forkCount": 2403,
+              "url": "https://github.com/coollabsio/coolify",
+              "updatedAt": "2025-04-18T21:41:57Z",
+              "issues": {
+                "totalCount": 2482
+              },
+              "watchers": {
+                "totalCount": 128
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ClickHouse/ClickHouse",
+              "description": "ClickHouse\u00ae is a real-time analytics database management system",
+              "stargazerCount": 40199,
+              "forkCount": 7227,
+              "url": "https://github.com/ClickHouse/ClickHouse",
+              "updatedAt": "2025-04-18T21:14:00Z",
+              "issues": {
+                "totalCount": 23477
+              },
+              "watchers": {
+                "totalCount": 690
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "spf13/cobra",
+              "description": "A Commander for modern Go CLI interactions",
+              "stargazerCount": 40157,
+              "forkCount": 2919,
+              "url": "https://github.com/spf13/cobra",
+              "updatedAt": "2025-04-18T19:45:06Z",
+              "issues": {
+                "totalCount": 1195
+              },
+              "watchers": {
+                "totalCount": 368
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "psf/black",
+              "description": "The uncompromising Python code formatter",
+              "stargazerCount": 40105,
+              "forkCount": 2569,
+              "url": "https://github.com/psf/black",
+              "updatedAt": "2025-04-18T21:28:36Z",
+              "issues": {
+                "totalCount": 2694
+              },
+              "watchers": {
+                "totalCount": 232
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "fastlane/fastlane",
+              "description": "\ud83d\ude80 The easiest way to automate building and releasing your iOS and Android apps",
+              "stargazerCount": 40077,
+              "forkCount": 5796,
+              "url": "https://github.com/fastlane/fastlane",
+              "updatedAt": "2025-04-18T19:43:58Z",
+              "issues": {
+                "totalCount": 13129
+              },
+              "watchers": {
+                "totalCount": 727
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "iina/iina",
+              "description": "The modern video player for macOS.",
+              "stargazerCount": 40070,
+              "forkCount": 2623,
+              "url": "https://github.com/iina/iina",
+              "updatedAt": "2025-04-18T19:24:21Z",
+              "issues": {
+                "totalCount": 4096
+              },
+              "watchers": {
+                "totalCount": 531
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "microsoft/PowerToys",
+              "description": "Windows system utilities to maximize productivity",
+              "stargazerCount": 117467,
+              "forkCount": 6943,
+              "url": "https://github.com/microsoft/PowerToys",
+              "updatedAt": "2025-04-18T21:57:54Z",
+              "issues": {
+                "totalCount": 32711
+              },
+              "watchers": {
+                "totalCount": 1153
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

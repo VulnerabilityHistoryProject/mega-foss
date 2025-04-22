@@ -1,0 +1,175 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 10,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjEw",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "immich-app/immich",
+              "description": "High performance self-hosted photo and video management solution.",
+              "stargazerCount": 63891,
+              "forkCount": 3347,
+              "url": "https://github.com/immich-app/immich",
+              "updatedAt": "2025-04-18T21:46:18Z",
+              "issues": {
+                "totalCount": 5223
+              },
+              "watchers": {
+                "totalCount": 228
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "lydiahallie/javascript-questions",
+              "description": "A long list of (advanced) JavaScript questions, and their explanations :sparkles:  ",
+              "stargazerCount": 63786,
+              "forkCount": 9072,
+              "url": "https://github.com/lydiahallie/javascript-questions",
+              "updatedAt": "2025-04-18T20:53:14Z",
+              "issues": {
+                "totalCount": 247
+              },
+              "watchers": {
+                "totalCount": 1278
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sherlock-project/sherlock",
+              "description": "Hunt down social media accounts by username across social networks",
+              "stargazerCount": 63720,
+              "forkCount": 7374,
+              "url": "https://github.com/sherlock-project/sherlock",
+              "updatedAt": "2025-04-18T21:12:51Z",
+              "issues": {
+                "totalCount": 1046
+              },
+              "watchers": {
+                "totalCount": 1147
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "caddyserver/caddy",
+              "description": "Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS",
+              "stargazerCount": 63598,
+              "forkCount": 4262,
+              "url": "https://github.com/caddyserver/caddy",
+              "updatedAt": "2025-04-18T20:28:24Z",
+              "issues": {
+                "totalCount": 4201
+              },
+              "watchers": {
+                "totalCount": 843
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "obsproject/obs-studio",
+              "description": "OBS Studio - Free and open source software for live streaming and screen recording",
+              "stargazerCount": 63590,
+              "forkCount": 8338,
+              "url": "https://github.com/obsproject/obs-studio",
+              "updatedAt": "2025-04-18T21:58:40Z",
+              "issues": {
+                "totalCount": 4396
+              },
+              "watchers": {
+                "totalCount": 1462
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "apache/echarts",
+              "description": "Apache ECharts is a powerful, interactive charting and data visualization library for browser",
+              "stargazerCount": 63268,
+              "forkCount": 19712,
+              "url": "https://github.com/apache/echarts",
+              "updatedAt": "2025-04-18T18:22:12Z",
+              "issues": {
+                "totalCount": 18885
+              },
+              "watchers": {
+                "totalCount": 1973
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "openai/openai-cookbook",
+              "description": "Examples and guides for using the OpenAI API",
+              "stargazerCount": 63262,
+              "forkCount": 10269,
+              "url": "https://github.com/openai/openai-cookbook",
+              "updatedAt": "2025-04-18T21:59:24Z",
+              "issues": {
+                "totalCount": 534
+              },
+              "watchers": {
+                "totalCount": 925
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "fffaraz/awesome-cpp",
+              "description": "A curated list of awesome C++ (or C) frameworks, libraries, resources, and shiny things. Inspired by awesome-... stuff.",
+              "stargazerCount": 63109,
+              "forkCount": 7957,
+              "url": "https://github.com/fffaraz/awesome-cpp",
+              "updatedAt": "2025-04-18T19:37:15Z",
+              "issues": {
+                "totalCount": 578
+              },
+              "watchers": {
+                "totalCount": 2053
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Eugeny/tabby",
+              "description": "A terminal for a more modern age",
+              "stargazerCount": 63104,
+              "forkCount": 3565,
+              "url": "https://github.com/Eugeny/tabby",
+              "updatedAt": "2025-04-18T20:47:50Z",
+              "issues": {
+                "totalCount": 5529
+              },
+              "watchers": {
+                "totalCount": 448
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "twitter/the-algorithm",
+              "description": "Source code for Twitter's Recommendation Algorithm",
+              "stargazerCount": 63104,
+              "forkCount": 12163,
+              "url": "https://github.com/twitter/the-algorithm",
+              "updatedAt": "2025-04-18T04:20:26Z",
+              "issues": {
+                "totalCount": 994
+              },
+              "watchers": {
+                "totalCount": 341
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

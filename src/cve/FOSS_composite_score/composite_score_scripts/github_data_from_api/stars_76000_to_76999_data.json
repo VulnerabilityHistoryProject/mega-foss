@@ -1,0 +1,63 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 3,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjM=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "3b1b/manim",
+              "description": "Animation engine for explanatory math videos",
+              "stargazerCount": 76855,
+              "forkCount": 6656,
+              "url": "https://github.com/3b1b/manim",
+              "updatedAt": "2025-04-18T20:23:40Z",
+              "issues": {
+                "totalCount": 1197
+              },
+              "watchers": {
+                "totalCount": 923
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "spring-projects/spring-boot",
+              "description": "Spring Boot helps you to create Spring-powered, production-grade applications and services with absolute minimum fuss.",
+              "stargazerCount": 76836,
+              "forkCount": 41089,
+              "url": "https://github.com/spring-projects/spring-boot",
+              "updatedAt": "2025-04-18T21:59:43Z",
+              "issues": {
+                "totalCount": 37816
+              },
+              "watchers": {
+                "totalCount": 3346
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Anduin2017/HowToCook",
+              "description": "\u7a0b\u5e8f\u5458\u5728\u5bb6\u505a\u996d\u65b9\u6cd5\u6307\u5357\u3002Programmer's guide about how to cook at home (Simplified Chinese only).",
+              "stargazerCount": 76208,
+              "forkCount": 9286,
+              "url": "https://github.com/Anduin2017/HowToCook",
+              "updatedAt": "2025-04-18T22:00:32Z",
+              "issues": {
+                "totalCount": 720
+              },
+              "watchers": {
+                "totalCount": 422
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

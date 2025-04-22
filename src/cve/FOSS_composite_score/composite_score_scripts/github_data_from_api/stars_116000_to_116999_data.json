@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "electron/electron",
+              "description": ":electron: Build cross-platform desktop apps with JavaScript, HTML, and CSS",
+              "stargazerCount": 116436,
+              "forkCount": 15986,
+              "url": "https://github.com/electron/electron",
+              "updatedAt": "2025-04-18T21:15:06Z",
+              "issues": {
+                "totalCount": 20728
+              },
+              "watchers": {
+                "totalCount": 2817
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

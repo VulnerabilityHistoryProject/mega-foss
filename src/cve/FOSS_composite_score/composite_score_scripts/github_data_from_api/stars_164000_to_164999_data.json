@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "jackfrued/Python-100-Days",
+              "description": "Python - 100\u5929\u4ece\u65b0\u624b\u5230\u5927\u5e08",
+              "stargazerCount": 164223,
+              "forkCount": 53491,
+              "url": "https://github.com/jackfrued/Python-100-Days",
+              "updatedAt": "2025-04-18T21:47:13Z",
+              "issues": {
+                "totalCount": 668
+              },
+              "watchers": {
+                "totalCount": 6097
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

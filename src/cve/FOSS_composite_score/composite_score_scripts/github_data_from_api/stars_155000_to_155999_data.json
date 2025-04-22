@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "jlevy/the-art-of-command-line",
+              "description": "Master the command line, in one page",
+              "stargazerCount": 155608,
+              "forkCount": 14654,
+              "url": "https://github.com/jlevy/the-art-of-command-line",
+              "updatedAt": "2025-04-18T21:59:04Z",
+              "issues": {
+                "totalCount": 254
+              },
+              "watchers": {
+                "totalCount": 2833
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

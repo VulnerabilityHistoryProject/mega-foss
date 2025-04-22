@@ -1,0 +1,95 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 5,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjU=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "enaqx/awesome-react",
+              "description": "A collection of awesome things regarding React ecosystem",
+              "stargazerCount": 67670,
+              "forkCount": 7325,
+              "url": "https://github.com/enaqx/awesome-react",
+              "updatedAt": "2025-04-18T20:52:53Z",
+              "issues": {
+                "totalCount": 109
+              },
+              "watchers": {
+                "totalCount": 1526
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "josephmisiti/awesome-machine-learning",
+              "description": "A curated list of awesome Machine Learning frameworks, libraries and software.",
+              "stargazerCount": 67613,
+              "forkCount": 14854,
+              "url": "https://github.com/josephmisiti/awesome-machine-learning",
+              "updatedAt": "2025-04-18T21:37:18Z",
+              "issues": {
+                "totalCount": 91
+              },
+              "watchers": {
+                "totalCount": 3328
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "grafana/grafana",
+              "description": "The open and composable observability and data visualization platform. Visualize metrics, logs, and traces from multiple sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more. ",
+              "stargazerCount": 67562,
+              "forkCount": 12551,
+              "url": "https://github.com/grafana/grafana",
+              "updatedAt": "2025-04-18T21:26:31Z",
+              "issues": {
+                "totalCount": 39648
+              },
+              "watchers": {
+                "totalCount": 1276
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "louislam/uptime-kuma",
+              "description": "A fancy self-hosted monitoring tool",
+              "stargazerCount": 67347,
+              "forkCount": 5918,
+              "url": "https://github.com/louislam/uptime-kuma",
+              "updatedAt": "2025-04-18T21:36:34Z",
+              "issues": {
+                "totalCount": 3986
+              },
+              "watchers": {
+                "totalCount": 292
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "protocolbuffers/protobuf",
+              "description": "Protocol Buffers - Google's data interchange format",
+              "stargazerCount": 67321,
+              "forkCount": 15674,
+              "url": "https://github.com/protocolbuffers/protobuf",
+              "updatedAt": "2025-04-18T21:54:51Z",
+              "issues": {
+                "totalCount": 6508
+              },
+              "watchers": {
+                "totalCount": 2037
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

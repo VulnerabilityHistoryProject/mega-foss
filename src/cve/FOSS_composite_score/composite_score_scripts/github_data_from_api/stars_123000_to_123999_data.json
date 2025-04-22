@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "Chalarangelo/30-seconds-of-code",
+              "description": "Coding articles to level up your development skills",
+              "stargazerCount": 123409,
+              "forkCount": 12135,
+              "url": "https://github.com/Chalarangelo/30-seconds-of-code",
+              "updatedAt": "2025-04-18T20:59:01Z",
+              "issues": {
+                "totalCount": 296
+              },
+              "watchers": {
+                "totalCount": 2597
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "f/awesome-chatgpt-prompts",
+              "description": "This repo includes ChatGPT prompt curation to use ChatGPT and other LLM tools better.",
+              "stargazerCount": 123159,
+              "forkCount": 16492,
+              "url": "https://github.com/f/awesome-chatgpt-prompts",
+              "updatedAt": "2025-04-18T21:54:01Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 1469
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
