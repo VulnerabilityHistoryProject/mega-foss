@@ -1,0 +1,143 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 8,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjg=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "jesseduffield/lazygit",
+              "description": "simple terminal UI for git commands",
+              "stargazerCount": 58952,
+              "forkCount": 2017,
+              "url": "https://github.com/jesseduffield/lazygit",
+              "updatedAt": "2025-04-18T20:53:14Z",
+              "issues": {
+                "totalCount": 2164
+              },
+              "watchers": {
+                "totalCount": 290
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "shadowsocks/shadowsocks-windows",
+              "description": "A C# port of shadowsocks",
+              "stargazerCount": 58760,
+              "forkCount": 16366,
+              "url": "https://github.com/shadowsocks/shadowsocks-windows",
+              "updatedAt": "2025-04-18T14:39:12Z",
+              "issues": {
+                "totalCount": 2929
+              },
+              "watchers": {
+                "totalCount": 2435
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "angular/angular.js",
+              "description": "AngularJS - HTML enhanced for web apps!",
+              "stargazerCount": 58745,
+              "forkCount": 27413,
+              "url": "https://github.com/angular/angular.js",
+              "updatedAt": "2025-04-18T06:01:06Z",
+              "issues": {
+                "totalCount": 9040
+              },
+              "watchers": {
+                "totalCount": 3763
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "localstack/localstack",
+              "description": "\ud83d\udcbb A fully functional local AWS cloud stack. Develop and test your cloud & Serverless apps offline",
+              "stargazerCount": 58637,
+              "forkCount": 4144,
+              "url": "https://github.com/localstack/localstack",
+              "updatedAt": "2025-04-18T17:34:38Z",
+              "issues": {
+                "totalCount": 5888
+              },
+              "watchers": {
+                "totalCount": 518
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "alacritty/alacritty",
+              "description": "A cross-platform, OpenGL terminal emulator.",
+              "stargazerCount": 58372,
+              "forkCount": 3099,
+              "url": "https://github.com/alacritty/alacritty",
+              "updatedAt": "2025-04-18T21:58:19Z",
+              "issues": {
+                "totalCount": 6049
+              },
+              "watchers": {
+                "totalCount": 444
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "prometheus/prometheus",
+              "description": "The Prometheus monitoring system and time series database.",
+              "stargazerCount": 58206,
+              "forkCount": 9521,
+              "url": "https://github.com/prometheus/prometheus",
+              "updatedAt": "2025-04-18T20:47:18Z",
+              "issues": {
+                "totalCount": 5996
+              },
+              "watchers": {
+                "totalCount": 1116
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "meta-llama/llama",
+              "description": "Inference code for Llama models",
+              "stargazerCount": 58127,
+              "forkCount": 9744,
+              "url": "https://github.com/meta-llama/llama",
+              "updatedAt": "2025-04-18T21:11:08Z",
+              "issues": {
+                "totalCount": 1077
+              },
+              "watchers": {
+                "totalCount": 535
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "juliangarnier/anime",
+              "description": "JavaScript animation engine",
+              "stargazerCount": 58060,
+              "forkCount": 3965,
+              "url": "https://github.com/juliangarnier/anime",
+              "updatedAt": "2025-04-18T21:51:29Z",
+              "issues": {
+                "totalCount": 748
+              },
+              "watchers": {
+                "totalCount": 764
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

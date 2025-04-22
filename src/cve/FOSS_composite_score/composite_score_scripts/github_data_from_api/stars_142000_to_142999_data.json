@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "avelino/awesome-go",
+              "description": "A curated list of awesome Go frameworks, libraries and software",
+              "stargazerCount": 142039,
+              "forkCount": 12232,
+              "url": "https://github.com/avelino/awesome-go",
+              "updatedAt": "2025-04-18T21:33:00Z",
+              "issues": {
+                "totalCount": 673
+              },
+              "watchers": {
+                "totalCount": 2818
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

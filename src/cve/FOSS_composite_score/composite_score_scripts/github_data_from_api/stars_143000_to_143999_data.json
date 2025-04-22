@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "huggingface/transformers",
+              "description": "\ud83e\udd17 Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.",
+              "stargazerCount": 143165,
+              "forkCount": 28682,
+              "url": "https://github.com/huggingface/transformers",
+              "updatedAt": "2025-04-18T21:45:37Z",
+              "issues": {
+                "totalCount": 17076
+              },
+              "watchers": {
+                "totalCount": 1145
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

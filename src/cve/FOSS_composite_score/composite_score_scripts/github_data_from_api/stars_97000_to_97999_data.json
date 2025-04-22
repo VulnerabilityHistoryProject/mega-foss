@@ -1,0 +1,63 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 3,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjM=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "excalidraw/excalidraw",
+              "description": "Virtual whiteboard for sketching hand-drawn like diagrams",
+              "stargazerCount": 97794,
+              "forkCount": 9484,
+              "url": "https://github.com/excalidraw/excalidraw",
+              "updatedAt": "2025-04-18T21:13:24Z",
+              "issues": {
+                "totalCount": 3995
+              },
+              "watchers": {
+                "totalCount": 446
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "microsoft/terminal",
+              "description": "The new Windows Terminal and the original Windows console host, all in the same place!",
+              "stargazerCount": 97720,
+              "forkCount": 8531,
+              "url": "https://github.com/microsoft/terminal",
+              "updatedAt": "2025-04-18T20:58:50Z",
+              "issues": {
+                "totalCount": 13248
+              },
+              "watchers": {
+                "totalCount": 1331
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "angular/angular",
+              "description": "Deliver web apps with confidence \ud83d\ude80",
+              "stargazerCount": 97515,
+              "forkCount": 26125,
+              "url": "https://github.com/angular/angular",
+              "updatedAt": "2025-04-18T21:30:09Z",
+              "issues": {
+                "totalCount": 28975
+              },
+              "watchers": {
+                "totalCount": 3005
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

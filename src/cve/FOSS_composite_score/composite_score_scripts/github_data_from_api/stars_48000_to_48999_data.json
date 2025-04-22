@@ -1,0 +1,271 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 16,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE2",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "chinese-poetry/chinese-poetry",
+              "description": "The most comprehensive database of Chinese poetry \ud83e\uddf6\u6700\u5168\u4e2d\u534e\u53e4\u8bd7\u8bcd\u6570\u636e\u5e93,  \u5510\u5b8b\u4e24\u671d\u8fd1\u4e00\u4e07\u56db\u5343\u53e4\u8bd7\u4eba,  \u63a5\u8fd15.5\u4e07\u9996\u5510\u8bd7\u52a026\u4e07\u5b8b\u8bd7.  \u4e24\u5b8b\u65f6\u671f1564\u4f4d\u8bcd\u4eba\uff0c21050\u9996\u8bcd\u3002",
+              "stargazerCount": 48997,
+              "forkCount": 9807,
+              "url": "https://github.com/chinese-poetry/chinese-poetry",
+              "updatedAt": "2025-04-18T16:16:02Z",
+              "issues": {
+                "totalCount": 205
+              },
+              "watchers": {
+                "totalCount": 1152
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "romkatv/powerlevel10k",
+              "description": "A Zsh theme",
+              "stargazerCount": 48862,
+              "forkCount": 2279,
+              "url": "https://github.com/romkatv/powerlevel10k",
+              "updatedAt": "2025-04-18T19:25:53Z",
+              "issues": {
+                "totalCount": 2542
+              },
+              "watchers": {
+                "totalCount": 186
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "laurent22/joplin",
+              "description": "Joplin - the privacy-focused note taking app with sync capabilities for Windows, macOS, Linux, Android and iOS.",
+              "stargazerCount": 48803,
+              "forkCount": 5292,
+              "url": "https://github.com/laurent22/joplin",
+              "updatedAt": "2025-04-18T19:25:22Z",
+              "issues": {
+                "totalCount": 6937
+              },
+              "watchers": {
+                "totalCount": 485
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ethereum/go-ethereum",
+              "description": "Go implementation of the Ethereum protocol",
+              "stargazerCount": 48798,
+              "forkCount": 20792,
+              "url": "https://github.com/ethereum/go-ethereum",
+              "updatedAt": "2025-04-18T21:00:44Z",
+              "issues": {
+                "totalCount": 8339
+              },
+              "watchers": {
+                "totalCount": 2213
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "vsouza/awesome-ios",
+              "description": "A curated list of awesome iOS ecosystem, including Objective-C and Swift Projects ",
+              "stargazerCount": 48726,
+              "forkCount": 6891,
+              "url": "https://github.com/vsouza/awesome-ios",
+              "updatedAt": "2025-04-18T19:33:49Z",
+              "issues": {
+                "totalCount": 486
+              },
+              "watchers": {
+                "totalCount": 1809
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "cypress-io/cypress",
+              "description": "Fast, easy and reliable testing for anything that runs in a browser.",
+              "stargazerCount": 48530,
+              "forkCount": 3279,
+              "url": "https://github.com/cypress-io/cypress",
+              "updatedAt": "2025-04-18T19:51:00Z",
+              "issues": {
+                "totalCount": 14894
+              },
+              "watchers": {
+                "totalCount": 603
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "AlistGo/alist",
+              "description": "\ud83d\uddc2\ufe0fA file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs. / \u4e00\u4e2a\u652f\u6301\u591a\u5b58\u50a8\u7684\u6587\u4ef6\u5217\u8868/WebDAV\u7a0b\u5e8f\uff0c\u4f7f\u7528 Gin \u548c Solidjs\u3002",
+              "stargazerCount": 48497,
+              "forkCount": 6555,
+              "url": "https://github.com/AlistGo/alist",
+              "updatedAt": "2025-04-18T21:05:12Z",
+              "issues": {
+                "totalCount": 4171
+              },
+              "watchers": {
+                "totalCount": 215
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "PaddlePaddle/PaddleOCR",
+              "description": "Awesome multilingual OCR toolkits based on PaddlePaddle (practical ultra lightweight OCR system, support 80+ languages recognition, provide data annotation and synthesis tools, support training and deployment among server, mobile, embedded and IoT devices)",
+              "stargazerCount": 48445,
+              "forkCount": 8153,
+              "url": "https://github.com/PaddlePaddle/PaddleOCR",
+              "updatedAt": "2025-04-18T21:58:33Z",
+              "issues": {
+                "totalCount": 9505
+              },
+              "watchers": {
+                "totalCount": 453
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "NARKOZ/hacker-scripts",
+              "description": "Based on a true story",
+              "stargazerCount": 48380,
+              "forkCount": 6659,
+              "url": "https://github.com/NARKOZ/hacker-scripts",
+              "updatedAt": "2025-04-18T21:43:03Z",
+              "issues": {
+                "totalCount": 87
+              },
+              "watchers": {
+                "totalCount": 2083
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "appwrite/appwrite",
+              "description": "Build like a team of hundreds_",
+              "stargazerCount": 48197,
+              "forkCount": 4266,
+              "url": "https://github.com/appwrite/appwrite",
+              "updatedAt": "2025-04-18T21:30:44Z",
+              "issues": {
+                "totalCount": 3907
+              },
+              "watchers": {
+                "totalCount": 380
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "go-gitea/gitea",
+              "description": "Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD",
+              "stargazerCount": 48174,
+              "forkCount": 5755,
+              "url": "https://github.com/go-gitea/gitea",
+              "updatedAt": "2025-04-18T20:54:26Z",
+              "issues": {
+                "totalCount": 14386
+              },
+              "watchers": {
+                "totalCount": 493
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "starship/starship",
+              "description": "\u2604\ud83c\udf0c\ufe0f  The minimal, blazing-fast, and infinitely customizable prompt for any shell!",
+              "stargazerCount": 48173,
+              "forkCount": 2084,
+              "url": "https://github.com/starship/starship",
+              "updatedAt": "2025-04-18T21:08:43Z",
+              "issues": {
+                "totalCount": 2420
+              },
+              "watchers": {
+                "totalCount": 193
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "poteto/hiring-without-whiteboards",
+              "description": "\u2b50\ufe0f  Companies that don't have a broken hiring process",
+              "stargazerCount": 48153,
+              "forkCount": 3750,
+              "url": "https://github.com/poteto/hiring-without-whiteboards",
+              "updatedAt": "2025-04-18T20:31:04Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 885
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "mastodon/mastodon",
+              "description": "Your self-hosted, globally interconnected microblogging community",
+              "stargazerCount": 48124,
+              "forkCount": 7156,
+              "url": "https://github.com/mastodon/mastodon",
+              "updatedAt": "2025-04-18T21:39:40Z",
+              "issues": {
+                "totalCount": 11920
+              },
+              "watchers": {
+                "totalCount": 712
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ReactiveX/RxJava",
+              "description": "RxJava \u2013 Reactive Extensions for the JVM \u2013 a library for composing asynchronous and event-based programs using observable sequences for the Java VM.",
+              "stargazerCount": 48079,
+              "forkCount": 7608,
+              "url": "https://github.com/ReactiveX/RxJava",
+              "updatedAt": "2025-04-18T08:05:00Z",
+              "issues": {
+                "totalCount": 3168
+              },
+              "watchers": {
+                "totalCount": 2202
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "moment/moment",
+              "description": "Parse, validate, manipulate, and display dates in javascript.",
+              "stargazerCount": 48075,
+              "forkCount": 7062,
+              "url": "https://github.com/moment/moment",
+              "updatedAt": "2025-04-18T19:22:02Z",
+              "issues": {
+                "totalCount": 4147
+              },
+              "watchers": {
+                "totalCount": 859
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

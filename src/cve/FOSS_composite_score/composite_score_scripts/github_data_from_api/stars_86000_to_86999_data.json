@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "mtdvio/every-programmer-should-know",
+              "description": "A collection of (mostly) technical things every software developer should know about",
+              "stargazerCount": 86902,
+              "forkCount": 7993,
+              "url": "https://github.com/mtdvio/every-programmer-should-know",
+              "updatedAt": "2025-04-18T18:12:16Z",
+              "issues": {
+                "totalCount": 51
+              },
+              "watchers": {
+                "totalCount": 1981
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "storybookjs/storybook",
+              "description": "Storybook is the industry standard workshop for building, documenting, and testing UI components in isolation",
+              "stargazerCount": 86413,
+              "forkCount": 9506,
+              "url": "https://github.com/storybookjs/storybook",
+              "updatedAt": "2025-04-18T21:47:02Z",
+              "issues": {
+                "totalCount": 13326
+              },
+              "watchers": {
+                "totalCount": 934
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

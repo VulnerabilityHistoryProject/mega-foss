@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "TheAlgorithms/Python",
+              "description": "All Algorithms implemented in Python",
+              "stargazerCount": 199540,
+              "forkCount": 46590,
+              "url": "https://github.com/TheAlgorithms/Python",
+              "updatedAt": "2025-04-18T21:40:47Z",
+              "issues": {
+                "totalCount": 1562
+              },
+              "watchers": {
+                "totalCount": 5945
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

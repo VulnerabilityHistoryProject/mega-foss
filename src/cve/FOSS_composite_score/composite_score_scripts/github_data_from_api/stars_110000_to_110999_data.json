@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "nodejs/node",
+              "description": "Node.js JavaScript runtime \u2728\ud83d\udc22\ud83d\ude80\u2728",
+              "stargazerCount": 110653,
+              "forkCount": 31328,
+              "url": "https://github.com/nodejs/node",
+              "updatedAt": "2025-04-18T20:52:19Z",
+              "issues": {
+                "totalCount": 19003
+              },
+              "watchers": {
+                "totalCount": 2947
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "d3/d3",
+              "description": "Bring data to life with SVG, Canvas and HTML. :bar_chart::chart_with_upwards_trend::tada:",
+              "stargazerCount": 110403,
+              "forkCount": 22875,
+              "url": "https://github.com/d3/d3",
+              "updatedAt": "2025-04-18T20:08:03Z",
+              "issues": {
+                "totalCount": 2224
+              },
+              "watchers": {
+                "totalCount": 3598
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

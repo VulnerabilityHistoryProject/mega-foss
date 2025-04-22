@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "MisterBooo/LeetCodeAnimation",
+              "description": "Demonstrate all the questions on LeetCode in the form of animation.\uff08\u7528\u52a8\u753b\u7684\u5f62\u5f0f\u5448\u73b0\u89e3LeetCode\u9898\u76ee\u7684\u601d\u8def\uff09",
+              "stargazerCount": 75837,
+              "forkCount": 13985,
+              "url": "https://github.com/MisterBooo/LeetCodeAnimation",
+              "updatedAt": "2025-04-18T21:14:54Z",
+              "issues": {
+                "totalCount": 61
+              },
+              "watchers": {
+                "totalCount": 2543
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

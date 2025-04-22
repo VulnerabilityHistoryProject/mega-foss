@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "ytdl-org/youtube-dl",
+              "description": "Command-line program to download videos from YouTube.com and other video sites",
+              "stargazerCount": 135185,
+              "forkCount": 10295,
+              "url": "https://github.com/ytdl-org/youtube-dl",
+              "updatedAt": "2025-04-18T21:27:19Z",
+              "issues": {
+                "totalCount": 26717
+              },
+              "watchers": {
+                "totalCount": 2179
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

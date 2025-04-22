@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "neovim/neovim",
+              "description": "Vim-fork focused on extensibility and usability",
+              "stargazerCount": 88744,
+              "forkCount": 6026,
+              "url": "https://github.com/neovim/neovim",
+              "updatedAt": "2025-04-18T21:22:32Z",
+              "issues": {
+                "totalCount": 12598
+              },
+              "watchers": {
+                "totalCount": 979
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "deepseek-ai/DeepSeek-R1",
+              "description": null,
+              "stargazerCount": 88586,
+              "forkCount": 11441,
+              "url": "https://github.com/deepseek-ai/DeepSeek-R1",
+              "updatedAt": "2025-04-18T21:53:55Z",
+              "issues": {
+                "totalCount": 528
+              },
+              "watchers": {
+                "totalCount": 621
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

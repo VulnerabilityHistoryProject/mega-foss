@@ -1,0 +1,575 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 35,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjM1",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "deepspeedai/DeepSpeed",
+              "description": "DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective.",
+              "stargazerCount": 37986,
+              "forkCount": 4338,
+              "url": "https://github.com/deepspeedai/DeepSpeed",
+              "updatedAt": "2025-04-18T21:55:39Z",
+              "issues": {
+                "totalCount": 3057
+              },
+              "watchers": {
+                "totalCount": 351
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "vim/vim",
+              "description": "The official Vim repository",
+              "stargazerCount": 37963,
+              "forkCount": 5641,
+              "url": "https://github.com/vim/vim",
+              "updatedAt": "2025-04-18T21:08:00Z",
+              "issues": {
+                "totalCount": 8658
+              },
+              "watchers": {
+                "totalCount": 668
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "PhilJay/MPAndroidChart",
+              "description": "A powerful \ud83d\ude80 Android chart view / graph view library, supporting line- bar- pie- radar- bubble- and candlestick charts as well as scaling, panning and animations.",
+              "stargazerCount": 37920,
+              "forkCount": 9038,
+              "url": "https://github.com/PhilJay/MPAndroidChart",
+              "updatedAt": "2025-04-18T21:18:51Z",
+              "issues": {
+                "totalCount": 4959
+              },
+              "watchers": {
+                "totalCount": 1107
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "astral-sh/ruff",
+              "description": "An extremely fast Python linter and code formatter, written in Rust.",
+              "stargazerCount": 37872,
+              "forkCount": 1297,
+              "url": "https://github.com/astral-sh/ruff",
+              "updatedAt": "2025-04-18T21:20:23Z",
+              "issues": {
+                "totalCount": 6636
+              },
+              "watchers": {
+                "totalCount": 91
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "phaserjs/phaser",
+              "description": "Phaser is a fun, free and fast 2D game framework for making HTML5 games for desktop and mobile web browsers, supporting Canvas and WebGL rendering.",
+              "stargazerCount": 37803,
+              "forkCount": 7118,
+              "url": "https://github.com/phaserjs/phaser",
+              "updatedAt": "2025-04-18T18:25:06Z",
+              "issues": {
+                "totalCount": 4502
+              },
+              "watchers": {
+                "totalCount": 1194
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "impress/impress.js",
+              "description": "It's a presentation framework based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com.",
+              "stargazerCount": 37775,
+              "forkCount": 6653,
+              "url": "https://github.com/impress/impress.js",
+              "updatedAt": "2025-04-18T08:58:43Z",
+              "issues": {
+                "totalCount": 481
+              },
+              "watchers": {
+                "totalCount": 1216
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "QuivrHQ/quivr",
+              "description": "Opiniated RAG for integrating GenAI in your apps \ud83e\udde0   Focus on your product rather than the RAG. Easy integration in existing products with customisation!  Any LLM: GPT4, Groq, Llama. Any Vectorstore: PGVector, Faiss. Any Files. Anyway you want. ",
+              "stargazerCount": 37720,
+              "forkCount": 3637,
+              "url": "https://github.com/QuivrHQ/quivr",
+              "updatedAt": "2025-04-18T19:48:57Z",
+              "issues": {
+                "totalCount": 1536
+              },
+              "watchers": {
+                "totalCount": 281
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "curl/curl",
+              "description": "A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features",
+              "stargazerCount": 37646,
+              "forkCount": 6666,
+              "url": "https://github.com/curl/curl",
+              "updatedAt": "2025-04-18T21:53:07Z",
+              "issues": {
+                "totalCount": 4985
+              },
+              "watchers": {
+                "totalCount": 783
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "penpot/penpot",
+              "description": "Penpot: The open-source design tool for design and code collaboration",
+              "stargazerCount": 37621,
+              "forkCount": 1934,
+              "url": "https://github.com/penpot/penpot",
+              "updatedAt": "2025-04-18T20:35:43Z",
+              "issues": {
+                "totalCount": 1784
+              },
+              "watchers": {
+                "totalCount": 228
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "lukasz-madon/awesome-remote-job",
+              "description": "A curated list of awesome remote jobs and resources. Inspired by https://github.com/vinta/awesome-python",
+              "stargazerCount": 37604,
+              "forkCount": 4109,
+              "url": "https://github.com/lukasz-madon/awesome-remote-job",
+              "updatedAt": "2025-04-18T20:35:30Z",
+              "issues": {
+                "totalCount": 75
+              },
+              "watchers": {
+                "totalCount": 1116
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sharkdp/fd",
+              "description": "A simple, fast and user-friendly alternative to 'find'",
+              "stargazerCount": 37557,
+              "forkCount": 864,
+              "url": "https://github.com/sharkdp/fd",
+              "updatedAt": "2025-04-18T21:43:15Z",
+              "issues": {
+                "totalCount": 891
+              },
+              "watchers": {
+                "totalCount": 150
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "gradio-app/gradio",
+              "description": "Build and share delightful machine learning apps, all in Python. \ud83c\udf1f Star to support our work!",
+              "stargazerCount": 37538,
+              "forkCount": 2855,
+              "url": "https://github.com/gradio-app/gradio",
+              "updatedAt": "2025-04-18T20:45:06Z",
+              "issues": {
+                "totalCount": 5581
+              },
+              "watchers": {
+                "totalCount": 183
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "AykutSarac/jsoncrack.com",
+              "description": "\u2728 Innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs.",
+              "stargazerCount": 37513,
+              "forkCount": 2475,
+              "url": "https://github.com/AykutSarac/jsoncrack.com",
+              "updatedAt": "2025-04-18T18:28:07Z",
+              "issues": {
+                "totalCount": 251
+              },
+              "watchers": {
+                "totalCount": 207
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "suno-ai/bark",
+              "description": "\ud83d\udd0a Text-Prompted Generative Audio Model",
+              "stargazerCount": 37497,
+              "forkCount": 4440,
+              "url": "https://github.com/suno-ai/bark",
+              "updatedAt": "2025-04-18T20:17:50Z",
+              "issues": {
+                "totalCount": 462
+              },
+              "watchers": {
+                "totalCount": 329
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "google/leveldb",
+              "description": "LevelDB is a fast key-value storage library written at Google that provides an ordered mapping from string keys to string values.",
+              "stargazerCount": 37469,
+              "forkCount": 7975,
+              "url": "https://github.com/google/leveldb",
+              "updatedAt": "2025-04-18T17:18:29Z",
+              "issues": {
+                "totalCount": 771
+              },
+              "watchers": {
+                "totalCount": 1317
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "SimplifyJobs/Summer2025-Internships",
+              "description": "Collection of Summer 2025 tech internships!",
+              "stargazerCount": 37448,
+              "forkCount": 2903,
+              "url": "https://github.com/SimplifyJobs/Summer2025-Internships",
+              "updatedAt": "2025-04-18T21:49:26Z",
+              "issues": {
+                "totalCount": 2942
+              },
+              "watchers": {
+                "totalCount": 1507
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "freefq/free",
+              "description": "\u7ffb\u5899\u3001\u514d\u8d39\u7ffb\u5899\u3001\u514d\u8d39\u79d1\u5b66\u4e0a\u7f51\u3001\u514d\u8d39\u8282\u70b9\u3001\u514d\u8d39\u68af\u5b50\u3001\u514d\u8d39ss/v2ray/trojan\u8282\u70b9\u3001\u84dd\u706f\u3001\u8c37\u6b4c\u5546\u5e97\u3001\u7ffb\u5899\u68af\u5b50",
+              "stargazerCount": 37423,
+              "forkCount": 5723,
+              "url": "https://github.com/freefq/free",
+              "updatedAt": "2025-04-18T20:16:37Z",
+              "issues": {
+                "totalCount": 701
+              },
+              "watchers": {
+                "totalCount": 850
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "preactjs/preact",
+              "description": "\u269b\ufe0f Fast 3kB React alternative with the same modern API. Components & Virtual DOM.",
+              "stargazerCount": 37380,
+              "forkCount": 1982,
+              "url": "https://github.com/preactjs/preact",
+              "updatedAt": "2025-04-18T06:02:56Z",
+              "issues": {
+                "totalCount": 1868
+              },
+              "watchers": {
+                "totalCount": 395
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "LadybirdBrowser/ladybird",
+              "description": "Truly independent web browser",
+              "stargazerCount": 37375,
+              "forkCount": 1556,
+              "url": "https://github.com/LadybirdBrowser/ladybird",
+              "updatedAt": "2025-04-18T21:52:43Z",
+              "issues": {
+                "totalCount": 848
+              },
+              "watchers": {
+                "totalCount": 201
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "FlowiseAI/Flowise",
+              "description": "Drag & drop UI to build your customized LLM flow",
+              "stargazerCount": 37349,
+              "forkCount": 19453,
+              "url": "https://github.com/FlowiseAI/Flowise",
+              "updatedAt": "2025-04-18T21:06:38Z",
+              "issues": {
+                "totalCount": 1842
+              },
+              "watchers": {
+                "totalCount": 285
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "aria2/aria2",
+              "description": "aria2 is a lightweight multi-protocol & multi-source, cross platform download utility operated in command-line. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink.",
+              "stargazerCount": 37347,
+              "forkCount": 3687,
+              "url": "https://github.com/aria2/aria2",
+              "updatedAt": "2025-04-18T19:11:39Z",
+              "issues": {
+                "totalCount": 1880
+              },
+              "watchers": {
+                "totalCount": 746
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "GitHubDaily/GitHubDaily",
+              "description": "\u575a\u6301\u5206\u4eab GitHub \u4e0a\u9ad8\u8d28\u91cf\u3001\u6709\u8da3\u5b9e\u7528\u7684\u5f00\u6e90\u6280\u672f\u6559\u7a0b\u3001\u5f00\u53d1\u8005\u5de5\u5177\u3001\u7f16\u7a0b\u7f51\u7ad9\u3001\u6280\u672f\u8d44\u8baf\u3002A list cool, interesting projects of GitHub.",
+              "stargazerCount": 37346,
+              "forkCount": 3915,
+              "url": "https://github.com/GitHubDaily/GitHubDaily",
+              "updatedAt": "2025-04-18T18:37:52Z",
+              "issues": {
+                "totalCount": 513
+              },
+              "watchers": {
+                "totalCount": 1324
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "LAION-AI/Open-Assistant",
+              "description": "OpenAssistant is a chat-based assistant that understands tasks, can interact with third-party systems, and retrieve information dynamically to do so.",
+              "stargazerCount": 37306,
+              "forkCount": 3266,
+              "url": "https://github.com/LAION-AI/Open-Assistant",
+              "updatedAt": "2025-04-18T21:52:57Z",
+              "issues": {
+                "totalCount": 1644
+              },
+              "watchers": {
+                "totalCount": 438
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "FreeCodeCampChina/freecodecamp.cn",
+              "description": "FCC China open source codebase and curriculum. Learn to code and help nonprofits.",
+              "stargazerCount": 37286,
+              "forkCount": 1375,
+              "url": "https://github.com/FreeCodeCampChina/freecodecamp.cn",
+              "updatedAt": "2025-04-18T16:29:12Z",
+              "issues": {
+                "totalCount": 586
+              },
+              "watchers": {
+                "totalCount": 782
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "unslothai/unsloth",
+              "description": "Finetune Llama 4, DeepSeek-R1, Gemma 3 & Reasoning LLMs 2x faster with 70% less memory! \ud83e\udda5",
+              "stargazerCount": 37249,
+              "forkCount": 2901,
+              "url": "https://github.com/unslothai/unsloth",
+              "updatedAt": "2025-04-18T21:50:04Z",
+              "issues": {
+                "totalCount": 1865
+              },
+              "watchers": {
+                "totalCount": 219
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "koalaman/shellcheck",
+              "description": "ShellCheck, a static analysis tool for shell scripts",
+              "stargazerCount": 37243,
+              "forkCount": 1808,
+              "url": "https://github.com/koalaman/shellcheck",
+              "updatedAt": "2025-04-18T20:55:33Z",
+              "issues": {
+                "totalCount": 2776
+              },
+              "watchers": {
+                "totalCount": 413
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tw93/Pake",
+              "description": "\ud83e\udd31\ud83c\udffb Turn any webpage into a desktop app with Rust.  \ud83e\udd31\ud83c\udffb \u5229\u7528 Rust \u8f7b\u677e\u6784\u5efa\u8f7b\u91cf\u7ea7\u591a\u7aef\u684c\u9762\u5e94\u7528",
+              "stargazerCount": 37229,
+              "forkCount": 6721,
+              "url": "https://github.com/tw93/Pake",
+              "updatedAt": "2025-04-18T21:09:46Z",
+              "issues": {
+                "totalCount": 371
+              },
+              "watchers": {
+                "totalCount": 213
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "colinhacks/zod",
+              "description": "TypeScript-first schema validation with static type inference",
+              "stargazerCount": 37197,
+              "forkCount": 1387,
+              "url": "https://github.com/colinhacks/zod",
+              "updatedAt": "2025-04-18T21:23:19Z",
+              "issues": {
+                "totalCount": 2172
+              },
+              "watchers": {
+                "totalCount": 69
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tmux/tmux",
+              "description": "tmux source code",
+              "stargazerCount": 37155,
+              "forkCount": 2183,
+              "url": "https://github.com/tmux/tmux",
+              "updatedAt": "2025-04-18T20:18:55Z",
+              "issues": {
+                "totalCount": 3635
+              },
+              "watchers": {
+                "totalCount": 436
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "eugenp/tutorials",
+              "description": "Getting Started with Spring Boot 3: ",
+              "stargazerCount": 37123,
+              "forkCount": 54350,
+              "url": "https://github.com/eugenp/tutorials",
+              "updatedAt": "2025-04-18T18:59:55Z",
+              "issues": {
+                "totalCount": 784
+              },
+              "watchers": {
+                "totalCount": 1499
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "gto76/python-cheatsheet",
+              "description": "Comprehensive Python Cheatsheet",
+              "stargazerCount": 37077,
+              "forkCount": 6604,
+              "url": "https://github.com/gto76/python-cheatsheet",
+              "updatedAt": "2025-04-18T21:15:08Z",
+              "issues": {
+                "totalCount": 65
+              },
+              "watchers": {
+                "totalCount": 963
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "microsoft/AI-For-Beginners",
+              "description": "12 Weeks, 24 Lessons, AI for All!",
+              "stargazerCount": 37059,
+              "forkCount": 6757,
+              "url": "https://github.com/microsoft/AI-For-Beginners",
+              "updatedAt": "2025-04-18T21:19:18Z",
+              "issues": {
+                "totalCount": 129
+              },
+              "watchers": {
+                "totalCount": 432
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ant-design/ant-design-pro",
+              "description": "\ud83d\udc68\ud83c\udffb\u200d\ud83d\udcbb\ud83d\udc69\ud83c\udffb\u200d\ud83d\udcbb Use Ant Design like a Pro!",
+              "stargazerCount": 37029,
+              "forkCount": 8181,
+              "url": "https://github.com/ant-design/ant-design-pro",
+              "updatedAt": "2025-04-18T14:40:11Z",
+              "issues": {
+                "totalCount": 9719
+              },
+              "watchers": {
+                "totalCount": 740
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "dylanaraps/pure-bash-bible",
+              "description": "\ud83d\udcd6 A collection of pure bash alternatives to external processes.",
+              "stargazerCount": 37027,
+              "forkCount": 3335,
+              "url": "https://github.com/dylanaraps/pure-bash-bible",
+              "updatedAt": "2025-04-18T21:45:23Z",
+              "issues": {
+                "totalCount": 77
+              },
+              "watchers": {
+                "totalCount": 748
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "photoprism/photoprism",
+              "description": "AI-Powered Photos App for the Decentralized Web \ud83c\udf08\ud83d\udc8e\u2728",
+              "stargazerCount": 37018,
+              "forkCount": 2046,
+              "url": "https://github.com/photoprism/photoprism",
+              "updatedAt": "2025-04-18T19:27:30Z",
+              "issues": {
+                "totalCount": 2298
+              },
+              "watchers": {
+                "totalCount": 331
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

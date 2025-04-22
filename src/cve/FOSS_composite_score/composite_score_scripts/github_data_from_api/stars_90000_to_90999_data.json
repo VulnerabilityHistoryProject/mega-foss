@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "puppeteer/puppeteer",
+              "description": "JavaScript API for Chrome and Firefox",
+              "stargazerCount": 90415,
+              "forkCount": 9187,
+              "url": "https://github.com/puppeteer/puppeteer",
+              "updatedAt": "2025-04-18T21:34:10Z",
+              "issues": {
+                "totalCount": 7120
+              },
+              "watchers": {
+                "totalCount": 1190
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "open-webui/open-webui",
+              "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
+              "stargazerCount": 90140,
+              "forkCount": 11349,
+              "url": "https://github.com/open-webui/open-webui",
+              "updatedAt": "2025-04-18T21:46:50Z",
+              "issues": {
+                "totalCount": 4904
+              },
+              "watchers": {
+                "totalCount": 427
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

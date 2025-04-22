@@ -1,0 +1,14 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 0,
+        "pageInfo": {
+          "endCursor": null,
+          "hasNextPage": false
+        },
+        "edges": []
+      }
+    }
+  }
+]

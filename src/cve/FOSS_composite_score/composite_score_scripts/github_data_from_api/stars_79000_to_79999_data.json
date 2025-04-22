@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "macrozheng/mall",
+              "description": "mall\u9879\u76ee\u662f\u4e00\u5957\u7535\u5546\u7cfb\u7edf\uff0c\u5305\u62ec\u524d\u53f0\u5546\u57ce\u7cfb\u7edf\u53ca\u540e\u53f0\u7ba1\u7406\u7cfb\u7edf\uff0c\u57fa\u4e8eSpring Boot+MyBatis\u5b9e\u73b0\uff0c\u91c7\u7528Docker\u5bb9\u5668\u5316\u90e8\u7f72\u3002 \u524d\u53f0\u5546\u57ce\u7cfb\u7edf\u5305\u542b\u9996\u9875\u95e8\u6237\u3001\u5546\u54c1\u63a8\u8350\u3001\u5546\u54c1\u641c\u7d22\u3001\u5546\u54c1\u5c55\u793a\u3001\u8d2d\u7269\u8f66\u3001\u8ba2\u5355\u6d41\u7a0b\u3001\u4f1a\u5458\u4e2d\u5fc3\u3001\u5ba2\u6237\u670d\u52a1\u3001\u5e2e\u52a9\u4e2d\u5fc3\u7b49\u6a21\u5757\u3002 \u540e\u53f0\u7ba1\u7406\u7cfb\u7edf\u5305\u542b\u5546\u54c1\u7ba1\u7406\u3001\u8ba2\u5355\u7ba1\u7406\u3001\u4f1a\u5458\u7ba1\u7406\u3001\u4fc3\u9500\u7ba1\u7406\u3001\u8fd0\u8425\u7ba1\u7406\u3001\u5185\u5bb9\u7ba1\u7406\u3001\u7edf\u8ba1\u62a5\u8868\u3001\u8d22\u52a1\u7ba1\u7406\u3001\u6743\u9650\u7ba1\u7406\u3001\u8bbe\u7f6e\u7b49\u6a21\u5757\u3002",
+              "stargazerCount": 79949,
+              "forkCount": 29180,
+              "url": "https://github.com/macrozheng/mall",
+              "updatedAt": "2025-04-18T17:16:17Z",
+              "issues": {
+                "totalCount": 498
+              },
+              "watchers": {
+                "totalCount": 2217
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "gohugoio/hugo",
+              "description": "The world\u2019s fastest framework for building websites.",
+              "stargazerCount": 79590,
+              "forkCount": 7742,
+              "url": "https://github.com/gohugoio/hugo",
+              "updatedAt": "2025-04-18T18:58:20Z",
+              "issues": {
+                "totalCount": 7667
+              },
+              "watchers": {
+                "totalCount": 1072
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
