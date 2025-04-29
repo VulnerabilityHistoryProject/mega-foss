@@ -125,6 +125,8 @@ __pypackages__/
 celerybeat-schedule
 celerybeat.pid
 
+**/FOSS_projects_with_dependency_info.json
+**/flattened_data.json
 # SageMath parsed files
 *.sage.py
 
