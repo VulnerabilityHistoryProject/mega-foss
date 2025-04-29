@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "getify/You-Dont-Know-JS",
+              "description": "A book series (2 published editions) on the JS language.",
+              "stargazerCount": 181804,
+              "forkCount": 33619,
+              "url": "https://github.com/getify/You-Dont-Know-JS",
+              "updatedAt": "2025-04-18T21:56:49Z",
+              "issues": {
+                "totalCount": 939
+              },
+              "watchers": {
+                "totalCount": 5869
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

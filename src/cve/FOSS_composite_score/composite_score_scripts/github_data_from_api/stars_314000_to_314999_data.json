@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "jwasham/coding-interview-university",
+              "description": "A complete computer science study plan to become a software engineer.",
+              "stargazerCount": 314495,
+              "forkCount": 78402,
+              "url": "https://github.com/jwasham/coding-interview-university",
+              "updatedAt": "2025-04-18T21:53:42Z",
+              "issues": {
+                "totalCount": 509
+              },
+              "watchers": {
+                "totalCount": 8435
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

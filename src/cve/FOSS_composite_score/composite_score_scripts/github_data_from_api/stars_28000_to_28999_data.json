@@ -1,0 +1,1084 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 66,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjUw",
+          "hasNextPage": true
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "AllThingsSmitty/css-protips",
+              "description": "\u26a1\ufe0f A collection of tips to help take your CSS skills pro \ud83e\uddbe",
+              "stargazerCount": 28997,
+              "forkCount": 2196,
+              "url": "https://github.com/AllThingsSmitty/css-protips",
+              "updatedAt": "2025-04-18T19:33:34Z",
+              "issues": {
+                "totalCount": 61
+              },
+              "watchers": {
+                "totalCount": 678
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "xyflow/xyflow",
+              "description": "React Flow |\u00a0Svelte Flow - Powerful open source libraries for building node-based UIs with React (https://reactflow.dev) or Svelte (https://svelteflow.dev). Ready out-of-the-box and infinitely customizable.",
+              "stargazerCount": 28953,
+              "forkCount": 1879,
+              "url": "https://github.com/xyflow/xyflow",
+              "updatedAt": "2025-04-18T21:46:20Z",
+              "issues": {
+                "totalCount": 2174
+              },
+              "watchers": {
+                "totalCount": 125
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "utmapp/UTM",
+              "description": "Virtual machines for iOS and macOS",
+              "stargazerCount": 28932,
+              "forkCount": 1435,
+              "url": "https://github.com/utmapp/UTM",
+              "updatedAt": "2025-04-18T21:47:26Z",
+              "issues": {
+                "totalCount": 3287
+              },
+              "watchers": {
+                "totalCount": 364
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "composer/composer",
+              "description": "Dependency Manager for PHP",
+              "stargazerCount": 28922,
+              "forkCount": 4612,
+              "url": "https://github.com/composer/composer",
+              "updatedAt": "2025-04-18T21:40:42Z",
+              "issues": {
+                "totalCount": 7825
+              },
+              "watchers": {
+                "totalCount": 598
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hashicorp/consul",
+              "description": "Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure.",
+              "stargazerCount": 28903,
+              "forkCount": 4465,
+              "url": "https://github.com/hashicorp/consul",
+              "updatedAt": "2025-04-18T15:03:21Z",
+              "issues": {
+                "totalCount": 5509
+              },
+              "watchers": {
+                "totalCount": 903
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "GoogleChrome/lighthouse",
+              "description": "Automated auditing, performance metrics, and best practices for the web.",
+              "stargazerCount": 28900,
+              "forkCount": 9502,
+              "url": "https://github.com/GoogleChrome/lighthouse",
+              "updatedAt": "2025-04-18T21:50:26Z",
+              "issues": {
+                "totalCount": 9118
+              },
+              "watchers": {
+                "totalCount": 598
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "zen-browser/desktop",
+              "description": "Welcome to a calmer internet",
+              "stargazerCount": 28872,
+              "forkCount": 781,
+              "url": "https://github.com/zen-browser/desktop",
+              "updatedAt": "2025-04-18T21:53:33Z",
+              "issues": {
+                "totalCount": 5480
+              },
+              "watchers": {
+                "totalCount": 75
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "realpython/python-guide",
+              "description": "Python best practices guidebook, written for humans. ",
+              "stargazerCount": 28863,
+              "forkCount": 5868,
+              "url": "https://github.com/realpython/python-guide",
+              "updatedAt": "2025-04-18T20:22:11Z",
+              "issues": {
+                "totalCount": 270
+              },
+              "watchers": {
+                "totalCount": 1371
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "heyverse/hey",
+              "description": "Hey is a decentralized and permissionless social media app built with Lens Protocol \ud83c\udf3f",
+              "stargazerCount": 28784,
+              "forkCount": 1730,
+              "url": "https://github.com/heyverse/hey",
+              "updatedAt": "2025-04-18T18:18:52Z",
+              "issues": {
+                "totalCount": 1677
+              },
+              "watchers": {
+                "totalCount": 142
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "RVC-Project/Retrieval-based-Voice-Conversion-WebUI",
+              "description": "Easily train a good VC model with voice data <= 10 mins!",
+              "stargazerCount": 28782,
+              "forkCount": 4057,
+              "url": "https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI",
+              "updatedAt": "2025-04-18T20:48:17Z",
+              "issues": {
+                "totalCount": 1828
+              },
+              "watchers": {
+                "totalCount": 191
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tastejs/todomvc",
+              "description": "Helping you select a JavaScript framework - Todo apps for React.js, Angular, Vue and many more",
+              "stargazerCount": 28763,
+              "forkCount": 13752,
+              "url": "https://github.com/tastejs/todomvc",
+              "updatedAt": "2025-04-18T09:47:07Z",
+              "issues": {
+                "totalCount": 784
+              },
+              "watchers": {
+                "totalCount": 1100
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "postcss/postcss",
+              "description": "Transforming styles with JS plugins",
+              "stargazerCount": 28749,
+              "forkCount": 1579,
+              "url": "https://github.com/postcss/postcss",
+              "updatedAt": "2025-04-17T21:44:26Z",
+              "issues": {
+                "totalCount": 1018
+              },
+              "watchers": {
+                "totalCount": 505
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "wuyouzhuguli/SpringAll",
+              "description": "\u5faa\u5e8f\u6e10\u8fdb\uff0c\u5b66\u4e60Spring Boot\u3001Spring Boot & Shiro\u3001Spring Batch\u3001Spring Cloud\u3001Spring Cloud Alibaba\u3001Spring Security & Spring Security OAuth2\uff0c\u535a\u5ba2Spring\u7cfb\u5217\u6e90\u7801\uff1ahttps://mrbird.cc",
+              "stargazerCount": 28744,
+              "forkCount": 8176,
+              "url": "https://github.com/wuyouzhuguli/SpringAll",
+              "updatedAt": "2025-04-18T06:49:29Z",
+              "issues": {
+                "totalCount": 48
+              },
+              "watchers": {
+                "totalCount": 860
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "khoj-ai/khoj",
+              "description": "Your AI second brain. Self-hostable. Get answers from the web or your docs. Build custom agents, schedule automations, do deep research. Turn any online or local LLM into your personal, autonomous AI (gpt, claude, gemini, llama, qwen, mistral). Get started - free.",
+              "stargazerCount": 28726,
+              "forkCount": 1609,
+              "url": "https://github.com/khoj-ai/khoj",
+              "updatedAt": "2025-04-18T20:47:39Z",
+              "issues": {
+                "totalCount": 530
+              },
+              "watchers": {
+                "totalCount": 145
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "CorentinTh/it-tools",
+              "description": "Collection of handy online tools for developers, with great UX. ",
+              "stargazerCount": 28694,
+              "forkCount": 3418,
+              "url": "https://github.com/CorentinTh/it-tools",
+              "updatedAt": "2025-04-18T19:23:54Z",
+              "issues": {
+                "totalCount": 581
+              },
+              "watchers": {
+                "totalCount": 132
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ageron/handson-ml2",
+              "description": "A series of Jupyter notebooks that walk you through the fundamentals of Machine Learning and Deep Learning in Python using Scikit-Learn, Keras and TensorFlow 2.",
+              "stargazerCount": 28689,
+              "forkCount": 12968,
+              "url": "https://github.com/ageron/handson-ml2",
+              "updatedAt": "2025-04-18T19:38:37Z",
+              "issues": {
+                "totalCount": 516
+              },
+              "watchers": {
+                "totalCount": 656
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "GorvGoyl/Clone-Wars",
+              "description": "100+ open-source clones of popular sites like Airbnb, Amazon, Instagram, Netflix, Tiktok, Spotify, Whatsapp, Youtube etc. See source code, demo links, tech stack, github stars.",
+              "stargazerCount": 28674,
+              "forkCount": 2559,
+              "url": "https://github.com/GorvGoyl/Clone-Wars",
+              "updatedAt": "2025-04-18T16:51:01Z",
+              "issues": {
+                "totalCount": 81
+              },
+              "watchers": {
+                "totalCount": 502
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "filebrowser/filebrowser",
+              "description": "\ud83d\udcc2 Web File Browser",
+              "stargazerCount": 28662,
+              "forkCount": 3227,
+              "url": "https://github.com/filebrowser/filebrowser",
+              "updatedAt": "2025-04-18T15:51:49Z",
+              "issues": {
+                "totalCount": 2610
+              },
+              "watchers": {
+                "totalCount": 326
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pmndrs/react-three-fiber",
+              "description": "\ud83c\udde8\ud83c\udded A React renderer for Three.js",
+              "stargazerCount": 28653,
+              "forkCount": 1676,
+              "url": "https://github.com/pmndrs/react-three-fiber",
+              "updatedAt": "2025-04-18T20:57:05Z",
+              "issues": {
+                "totalCount": 1095
+              },
+              "watchers": {
+                "totalCount": 211
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "DevToys-app/DevToys",
+              "description": "A Swiss Army knife for developers.",
+              "stargazerCount": 28633,
+              "forkCount": 1539,
+              "url": "https://github.com/DevToys-app/DevToys",
+              "updatedAt": "2025-04-18T15:52:03Z",
+              "issues": {
+                "totalCount": 897
+              },
+              "watchers": {
+                "totalCount": 151
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "huggingface/diffusers",
+              "description": "\ud83e\udd17 Diffusers: State-of-the-art diffusion models for image, video, and audio generation in PyTorch and FLAX.",
+              "stargazerCount": 28633,
+              "forkCount": 5865,
+              "url": "https://github.com/huggingface/diffusers",
+              "updatedAt": "2025-04-18T20:27:55Z",
+              "issues": {
+                "totalCount": 4716
+              },
+              "watchers": {
+                "totalCount": 210
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "kenwheeler/slick",
+              "description": "the last carousel you'll ever need",
+              "stargazerCount": 28627,
+              "forkCount": 5877,
+              "url": "https://github.com/kenwheeler/slick",
+              "updatedAt": "2025-04-18T19:16:18Z",
+              "issues": {
+                "totalCount": 3615
+              },
+              "watchers": {
+                "totalCount": 545
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "meta-llama/llama3",
+              "description": "The official Meta Llama 3 GitHub site",
+              "stargazerCount": 28621,
+              "forkCount": 3365,
+              "url": "https://github.com/meta-llama/llama3",
+              "updatedAt": "2025-04-18T14:47:35Z",
+              "issues": {
+                "totalCount": 289
+              },
+              "watchers": {
+                "totalCount": 243
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pmndrs/react-spring",
+              "description": "\u270c\ufe0f A spring physics based React animation library",
+              "stargazerCount": 28618,
+              "forkCount": 1206,
+              "url": "https://github.com/pmndrs/react-spring",
+              "updatedAt": "2025-04-18T20:48:16Z",
+              "issues": {
+                "totalCount": 1246
+              },
+              "watchers": {
+                "totalCount": 192
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "medusajs/medusa",
+              "description": "The world's most flexible commerce platform.",
+              "stargazerCount": 28617,
+              "forkCount": 3179,
+              "url": "https://github.com/medusajs/medusa",
+              "updatedAt": "2025-04-18T21:27:41Z",
+              "issues": {
+                "totalCount": 2990
+              },
+              "watchers": {
+                "totalCount": 173
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "awesome-foss/awesome-sysadmin",
+              "description": "A curated list of amazingly awesome open-source sysadmin resources.",
+              "stargazerCount": 28613,
+              "forkCount": 1668,
+              "url": "https://github.com/awesome-foss/awesome-sysadmin",
+              "updatedAt": "2025-04-18T21:39:12Z",
+              "issues": {
+                "totalCount": 101
+              },
+              "watchers": {
+                "totalCount": 624
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "xuxueli/xxl-job",
+              "description": "A distributed task scheduling framework.\uff08\u5206\u5e03\u5f0f\u4efb\u52a1\u8c03\u5ea6\u5e73\u53f0XXL-JOB\uff09",
+              "stargazerCount": 28611,
+              "forkCount": 11139,
+              "url": "https://github.com/xuxueli/xxl-job",
+              "updatedAt": "2025-04-18T15:56:13Z",
+              "issues": {
+                "totalCount": 3163
+              },
+              "watchers": {
+                "totalCount": 951
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Ebazhanov/linkedin-skill-assessments-quizzes",
+              "description": "Full reference of LinkedIn answers 2024 for skill assessments (aws-lambda, rest-api, javascript, react, git, html, jquery, mongodb, java, Go, python, machine-learning, power-point) linkedin excel test l\u00f6sungen, linkedin machine learning test LinkedIn test questions and answers ",
+              "stargazerCount": 28610,
+              "forkCount": 13235,
+              "url": "https://github.com/Ebazhanov/linkedin-skill-assessments-quizzes",
+              "updatedAt": "2025-04-18T02:44:08Z",
+              "issues": {
+                "totalCount": 891
+              },
+              "watchers": {
+                "totalCount": 366
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "anoma/anoma",
+              "description": "Reference implementation of Anoma",
+              "stargazerCount": 28610,
+              "forkCount": 3829,
+              "url": "https://github.com/anoma/anoma",
+              "updatedAt": "2025-04-18T17:23:11Z",
+              "issues": {
+                "totalCount": 657
+              },
+              "watchers": {
+                "totalCount": 163
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tinygrad/tinygrad",
+              "description": "You like pytorch? You like micrograd? You love tinygrad! \u2764\ufe0f ",
+              "stargazerCount": 28591,
+              "forkCount": 3300,
+              "url": "https://github.com/tinygrad/tinygrad",
+              "updatedAt": "2025-04-18T21:35:44Z",
+              "issues": {
+                "totalCount": 899
+              },
+              "watchers": {
+                "totalCount": 273
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sampotts/plyr",
+              "description": "A simple HTML5, YouTube and Vimeo player",
+              "stargazerCount": 28559,
+              "forkCount": 3069,
+              "url": "https://github.com/sampotts/plyr",
+              "updatedAt": "2025-04-18T20:39:25Z",
+              "issues": {
+                "totalCount": 2101
+              },
+              "watchers": {
+                "totalCount": 431
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "google-research/tuning_playbook",
+              "description": "A playbook for systematically maximizing the performance of deep learning models.",
+              "stargazerCount": 28542,
+              "forkCount": 2343,
+              "url": "https://github.com/google-research/tuning_playbook",
+              "updatedAt": "2025-04-18T18:33:07Z",
+              "issues": {
+                "totalCount": 44
+              },
+              "watchers": {
+                "totalCount": 294
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "openai/CLIP",
+              "description": "CLIP (Contrastive Language-Image Pretraining),  Predict the most relevant text snippet given an image",
+              "stargazerCount": 28528,
+              "forkCount": 3551,
+              "url": "https://github.com/openai/CLIP",
+              "updatedAt": "2025-04-18T18:18:06Z",
+              "issues": {
+                "totalCount": 417
+              },
+              "watchers": {
+                "totalCount": 326
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nothings/stb",
+              "description": "stb single-file public domain libraries for C/C++",
+              "stargazerCount": 28511,
+              "forkCount": 7798,
+              "url": "https://github.com/nothings/stb",
+              "updatedAt": "2025-04-18T18:55:43Z",
+              "issues": {
+                "totalCount": 862
+              },
+              "watchers": {
+                "totalCount": 621
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "duckdb/duckdb",
+              "description": "DuckDB is an analytical in-process SQL database management system",
+              "stargazerCount": 28510,
+              "forkCount": 2230,
+              "url": "https://github.com/duckdb/duckdb",
+              "updatedAt": "2025-04-18T20:50:07Z",
+              "issues": {
+                "totalCount": 5746
+              },
+              "watchers": {
+                "totalCount": 211
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "menloresearch/jan",
+              "description": "Jan is an open source alternative to ChatGPT that runs 100% offline on your computer",
+              "stargazerCount": 28509,
+              "forkCount": 1680,
+              "url": "https://github.com/menloresearch/jan",
+              "updatedAt": "2025-04-18T21:50:23Z",
+              "issues": {
+                "totalCount": 2283
+              },
+              "watchers": {
+                "totalCount": 157
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Shubhamsaboo/awesome-llm-apps",
+              "description": "Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.",
+              "stargazerCount": 28508,
+              "forkCount": 3210,
+              "url": "https://github.com/Shubhamsaboo/awesome-llm-apps",
+              "updatedAt": "2025-04-18T21:57:11Z",
+              "issues": {
+                "totalCount": 53
+              },
+              "watchers": {
+                "totalCount": 332
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "zadam/trilium",
+              "description": "Build your personal knowledge base with Trilium Notes",
+              "stargazerCount": 28480,
+              "forkCount": 1930,
+              "url": "https://github.com/zadam/trilium",
+              "updatedAt": "2025-04-18T21:41:10Z",
+              "issues": {
+                "totalCount": 3505
+              },
+              "watchers": {
+                "totalCount": 279
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "vuejs/vuex",
+              "description": "\ud83d\uddc3\ufe0f Centralized State Management for Vue.js.",
+              "stargazerCount": 28461,
+              "forkCount": 9562,
+              "url": "https://github.com/vuejs/vuex",
+              "updatedAt": "2025-04-18T09:47:15Z",
+              "issues": {
+                "totalCount": 1266
+              },
+              "watchers": {
+                "totalCount": 760
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ZuzooVn/machine-learning-for-software-engineers",
+              "description": "A complete daily plan for studying to become a machine learning engineer.",
+              "stargazerCount": 28439,
+              "forkCount": 6223,
+              "url": "https://github.com/ZuzooVn/machine-learning-for-software-engineers",
+              "updatedAt": "2025-04-18T20:04:58Z",
+              "issues": {
+                "totalCount": 26
+              },
+              "watchers": {
+                "totalCount": 1493
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "shengxinjing/programmer-job-blacklist",
+              "description": ":see_no_evil:\u7a0b\u5e8f\u5458\u627e\u5de5\u4f5c\u9ed1\u540d\u5355\uff0c\u6362\u5de5\u4f5c\u548c\u5f53\u6280\u672f\u5408\u4f19\u4eba\u9700\u8c28\u614e\u554a \u66f4\u65b0\u6709\u8d5e",
+              "stargazerCount": 28413,
+              "forkCount": 1812,
+              "url": "https://github.com/shengxinjing/programmer-job-blacklist",
+              "updatedAt": "2025-04-18T11:38:40Z",
+              "issues": {
+                "totalCount": 334
+              },
+              "watchers": {
+                "totalCount": 1191
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "alibaba/spring-cloud-alibaba",
+              "description": "Spring Cloud Alibaba provides a one-stop solution for application development for the distributed solutions of Alibaba middleware.",
+              "stargazerCount": 28400,
+              "forkCount": 8396,
+              "url": "https://github.com/alibaba/spring-cloud-alibaba",
+              "updatedAt": "2025-04-18T17:11:07Z",
+              "issues": {
+                "totalCount": 2459
+              },
+              "watchers": {
+                "totalCount": 965
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tokio-rs/tokio",
+              "description": "A runtime for writing reliable asynchronous applications with Rust. Provides I/O, networking, scheduling, timers, ...",
+              "stargazerCount": 28385,
+              "forkCount": 2606,
+              "url": "https://github.com/tokio-rs/tokio",
+              "updatedAt": "2025-04-18T21:49:43Z",
+              "issues": {
+                "totalCount": 2421
+              },
+              "watchers": {
+                "totalCount": 312
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "codepath/android_guides",
+              "description": "Extensive Open-Source Guides for Android Developers",
+              "stargazerCount": 28370,
+              "forkCount": 6325,
+              "url": "https://github.com/codepath/android_guides",
+              "updatedAt": "2025-04-18T18:53:28Z",
+              "issues": {
+                "totalCount": 379
+              },
+              "watchers": {
+                "totalCount": 2096
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "mantinedev/mantine",
+              "description": "A fully featured React components library",
+              "stargazerCount": 28367,
+              "forkCount": 2015,
+              "url": "https://github.com/mantinedev/mantine",
+              "updatedAt": "2025-04-18T20:58:35Z",
+              "issues": {
+                "totalCount": 3029
+              },
+              "watchers": {
+                "totalCount": 104
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nicolargo/glances",
+              "description": "Glances an Eye on your system. A top/htop alternative for GNU/Linux, BSD, Mac OS and Windows operating systems.",
+              "stargazerCount": 28362,
+              "forkCount": 1576,
+              "url": "https://github.com/nicolargo/glances",
+              "updatedAt": "2025-04-18T19:23:29Z",
+              "issues": {
+                "totalCount": 2003
+              },
+              "watchers": {
+                "totalCount": 507
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "vadimdemedes/ink",
+              "description": "\ud83c\udf08 React for interactive command-line apps",
+              "stargazerCount": 28340,
+              "forkCount": 651,
+              "url": "https://github.com/vadimdemedes/ink",
+              "updatedAt": "2025-04-18T20:38:45Z",
+              "issues": {
+                "totalCount": 360
+              },
+              "watchers": {
+                "totalCount": 112
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "wesbos/JavaScript30",
+              "description": "30 Day Vanilla JS Challenge",
+              "stargazerCount": 28322,
+              "forkCount": 39149,
+              "url": "https://github.com/wesbos/JavaScript30",
+              "updatedAt": "2025-04-18T15:06:28Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 678
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "spf13/viper",
+              "description": "Go configuration with fangs",
+              "stargazerCount": 28318,
+              "forkCount": 2051,
+              "url": "https://github.com/spf13/viper",
+              "updatedAt": "2025-04-18T21:47:10Z",
+              "issues": {
+                "totalCount": 893
+              },
+              "watchers": {
+                "totalCount": 252
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "restic/restic",
+              "description": "Fast, secure, efficient backup program",
+              "stargazerCount": 28287,
+              "forkCount": 1598,
+              "url": "https://github.com/restic/restic",
+              "updatedAt": "2025-04-18T17:47:38Z",
+              "issues": {
+                "totalCount": 2755
+              },
+              "watchers": {
+                "totalCount": 238
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 66,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjY2",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "Textualize/textual",
+              "description": "The lean application framework for Python.  Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal and a web browser.",
+              "stargazerCount": 28284,
+              "forkCount": 876,
+              "url": "https://github.com/Textualize/textual",
+              "updatedAt": "2025-04-18T19:46:26Z",
+              "issues": {
+                "totalCount": 2172
+              },
+              "watchers": {
+                "totalCount": 166
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Pierian-Data/Complete-Python-3-Bootcamp",
+              "description": "Course Files for Complete Python 3 Bootcamp Course on Udemy",
+              "stargazerCount": 28267,
+              "forkCount": 86442,
+              "url": "https://github.com/Pierian-Data/Complete-Python-3-Bootcamp",
+              "updatedAt": "2025-04-18T18:53:48Z",
+              "issues": {
+                "totalCount": 362
+              },
+              "watchers": {
+                "totalCount": 2743
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "immerjs/immer",
+              "description": "Create the next immutable state by mutating the current one",
+              "stargazerCount": 28264,
+              "forkCount": 862,
+              "url": "https://github.com/immerjs/immer",
+              "updatedAt": "2025-04-18T19:05:21Z",
+              "issues": {
+                "totalCount": 665
+              },
+              "watchers": {
+                "totalCount": 154
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "caolan/async",
+              "description": "Async utilities for node and the browser",
+              "stargazerCount": 28237,
+              "forkCount": 2405,
+              "url": "https://github.com/caolan/async",
+              "updatedAt": "2025-04-17T02:01:20Z",
+              "issues": {
+                "totalCount": 1140
+              },
+              "watchers": {
+                "totalCount": 652
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "jamiebuilds/the-super-tiny-compiler",
+              "description": ":snowman: Possibly the smallest compiler ever",
+              "stargazerCount": 28199,
+              "forkCount": 2880,
+              "url": "https://github.com/jamiebuilds/the-super-tiny-compiler",
+              "updatedAt": "2025-04-18T20:54:41Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 473
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "motiondivision/motion",
+              "description": "A modern animation library for React and JavaScript",
+              "stargazerCount": 28194,
+              "forkCount": 938,
+              "url": "https://github.com/motiondivision/motion",
+              "updatedAt": "2025-04-18T20:58:34Z",
+              "issues": {
+                "totalCount": 1784
+              },
+              "watchers": {
+                "totalCount": 111
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "cfenollosa/os-tutorial",
+              "description": "How to create an OS from scratch",
+              "stargazerCount": 28126,
+              "forkCount": 3373,
+              "url": "https://github.com/cfenollosa/os-tutorial",
+              "updatedAt": "2025-04-18T19:36:50Z",
+              "issues": {
+                "totalCount": 177
+              },
+              "watchers": {
+                "totalCount": 798
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "viraptor/reverse-interview",
+              "description": "Questions to ask the company during your interview",
+              "stargazerCount": 28122,
+              "forkCount": 2118,
+              "url": "https://github.com/viraptor/reverse-interview",
+              "updatedAt": "2025-04-18T19:18:14Z",
+              "issues": {
+                "totalCount": 25
+              },
+              "watchers": {
+                "totalCount": 348
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "alibaba/druid",
+              "description": "\u963f\u91cc\u4e91\u8ba1\u7b97\u5e73\u53f0DataWorks(https://help.aliyun.com/document_detail/137663.html) \u56e2\u961f\u51fa\u54c1\uff0c\u4e3a\u76d1\u63a7\u800c\u751f\u7684\u6570\u636e\u5e93\u8fde\u63a5\u6c60",
+              "stargazerCount": 28117,
+              "forkCount": 8589,
+              "url": "https://github.com/alibaba/druid",
+              "updatedAt": "2025-04-18T20:47:32Z",
+              "issues": {
+                "totalCount": 4495
+              },
+              "watchers": {
+                "totalCount": 1690
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "donnemartin/data-science-ipython-notebooks",
+              "description": "Data science Python notebooks: Deep learning (TensorFlow, Theano, Caffe, Keras), scikit-learn, Kaggle, big data (Spark, Hadoop MapReduce, HDFS), matplotlib, pandas, NumPy, SciPy, Python essentials, AWS, and various command lines.",
+              "stargazerCount": 28109,
+              "forkCount": 7964,
+              "url": "https://github.com/donnemartin/data-science-ipython-notebooks",
+              "updatedAt": "2025-04-18T18:32:53Z",
+              "issues": {
+                "totalCount": 40
+              },
+              "watchers": {
+                "totalCount": 1614
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "jashkenas/backbone",
+              "description": "Give your JS App some Backbone with Models, Views, Collections, and Events",
+              "stargazerCount": 28108,
+              "forkCount": 5366,
+              "url": "https://github.com/jashkenas/backbone",
+              "updatedAt": "2025-04-18T03:50:03Z",
+              "issues": {
+                "totalCount": 2405
+              },
+              "watchers": {
+                "totalCount": 1270
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "statelyai/xstate",
+              "description": "Actor-based state management & orchestration for complex app logic.",
+              "stargazerCount": 28107,
+              "forkCount": 1295,
+              "url": "https://github.com/statelyai/xstate",
+              "updatedAt": "2025-04-18T19:51:24Z",
+              "issues": {
+                "totalCount": 1379
+              },
+              "watchers": {
+                "totalCount": 188
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "XTLS/Xray-core",
+              "description": "Xray, Penetrates Everything. Also the best v2ray-core. Where the magic happens. An open platform for various uses.",
+              "stargazerCount": 28071,
+              "forkCount": 4216,
+              "url": "https://github.com/XTLS/Xray-core",
+              "updatedAt": "2025-04-18T20:28:13Z",
+              "issues": {
+                "totalCount": 2432
+              },
+              "watchers": {
+                "totalCount": 346
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "digitalocean/nginxconfig.io",
+              "description": "\u2699\ufe0f NGINX config generator on steroids \ud83d\udc89",
+              "stargazerCount": 28057,
+              "forkCount": 2069,
+              "url": "https://github.com/digitalocean/nginxconfig.io",
+              "updatedAt": "2025-04-18T14:38:06Z",
+              "issues": {
+                "totalCount": 238
+              },
+              "watchers": {
+                "totalCount": 299
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "acheong08/ChatGPT",
+              "description": "Reverse engineered ChatGPT API",
+              "stargazerCount": 28038,
+              "forkCount": 4486,
+              "url": "https://github.com/acheong08/ChatGPT",
+              "updatedAt": "2025-04-18T18:02:35Z",
+              "issues": {
+                "totalCount": 805
+              },
+              "watchers": {
+                "totalCount": 288
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "iperov/DeepFaceLive",
+              "description": "Real-time face swap for PC streaming or video calls",
+              "stargazerCount": 28033,
+              "forkCount": 423,
+              "url": "https://github.com/iperov/DeepFaceLive",
+              "updatedAt": "2025-04-18T19:06:51Z",
+              "issues": {
+                "totalCount": 144
+              },
+              "watchers": {
+                "totalCount": 401
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

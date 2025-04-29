@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "microsoft/vscode",
+              "description": "Visual Studio Code",
+              "stargazerCount": 170171,
+              "forkCount": 31630,
+              "url": "https://github.com/microsoft/vscode",
+              "updatedAt": "2025-04-18T21:44:36Z",
+              "issues": {
+                "totalCount": 193823
+              },
+              "watchers": {
+                "totalCount": 3343
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

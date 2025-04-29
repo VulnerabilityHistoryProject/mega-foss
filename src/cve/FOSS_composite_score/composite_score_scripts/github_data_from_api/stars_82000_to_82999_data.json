@@ -1,0 +1,111 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 6,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjY=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "florinpop17/app-ideas",
+              "description": "A Collection of application ideas which can be used to improve your coding skills.",
+              "stargazerCount": 82951,
+              "forkCount": 9685,
+              "url": "https://github.com/florinpop17/app-ideas",
+              "updatedAt": "2025-04-18T18:51:34Z",
+              "issues": {
+                "totalCount": 169
+              },
+              "watchers": {
+                "totalCount": 1844
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "bitcoin/bitcoin",
+              "description": "Bitcoin Core integration/staging tree",
+              "stargazerCount": 82950,
+              "forkCount": 37076,
+              "url": "https://github.com/bitcoin/bitcoin",
+              "updatedAt": "2025-04-18T20:45:11Z",
+              "issues": {
+                "totalCount": 8511
+              },
+              "watchers": {
+                "totalCount": 4033
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ChatGPTNextWeb/NextChat",
+              "description": "\u2728 Light and Fast AI Assistant. Support: Web | iOS | MacOS | Android |  Linux | Windows",
+              "stargazerCount": 82844,
+              "forkCount": 61140,
+              "url": "https://github.com/ChatGPTNextWeb/NextChat",
+              "updatedAt": "2025-04-18T21:08:43Z",
+              "issues": {
+                "totalCount": 3479
+              },
+              "watchers": {
+                "totalCount": 434
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "n8n-io/n8n",
+              "description": "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.",
+              "stargazerCount": 82815,
+              "forkCount": 22201,
+              "url": "https://github.com/n8n-io/n8n",
+              "updatedAt": "2025-04-18T21:51:56Z",
+              "issues": {
+                "totalCount": 3213
+              },
+              "watchers": {
+                "totalCount": 551
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sveltejs/svelte",
+              "description": "web development for the rest of us",
+              "stargazerCount": 82299,
+              "forkCount": 4474,
+              "url": "https://github.com/sveltejs/svelte",
+              "updatedAt": "2025-04-18T20:58:20Z",
+              "issues": {
+                "totalCount": 8145
+              },
+              "watchers": {
+                "totalCount": 852
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "jaywcjlove/awesome-mac",
+              "description": "\uf8ff Now we have become very big, Different from the original idea. Collect premium software in various categories.",
+              "stargazerCount": 82082,
+              "forkCount": 6478,
+              "url": "https://github.com/jaywcjlove/awesome-mac",
+              "updatedAt": "2025-04-18T21:38:25Z",
+              "issues": {
+                "totalCount": 458
+              },
+              "watchers": {
+                "totalCount": 1504
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

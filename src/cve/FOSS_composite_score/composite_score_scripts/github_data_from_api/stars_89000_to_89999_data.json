@@ -1,0 +1,47 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 2,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjI=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "PanJiaChen/vue-element-admin",
+              "description": ":tada: A magical vue admin                                                                https://panjiachen.github.io/vue-element-admin",
+              "stargazerCount": 89144,
+              "forkCount": 30563,
+              "url": "https://github.com/PanJiaChen/vue-element-admin",
+              "updatedAt": "2025-04-18T18:48:12Z",
+              "issues": {
+                "totalCount": 3600
+              },
+              "watchers": {
+                "totalCount": 2192
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pytorch/pytorch",
+              "description": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
+              "stargazerCount": 89123,
+              "forkCount": 23888,
+              "url": "https://github.com/pytorch/pytorch",
+              "updatedAt": "2025-04-18T21:38:55Z",
+              "issues": {
+                "totalCount": 50403
+              },
+              "watchers": {
+                "totalCount": 1783
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

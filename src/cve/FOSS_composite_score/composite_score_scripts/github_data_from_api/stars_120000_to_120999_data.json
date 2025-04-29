@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "Genymobile/scrcpy",
+              "description": "Display and control your Android device",
+              "stargazerCount": 120793,
+              "forkCount": 11377,
+              "url": "https://github.com/Genymobile/scrcpy",
+              "updatedAt": "2025-04-18T21:10:59Z",
+              "issues": {
+                "totalCount": 5356
+              },
+              "watchers": {
+                "totalCount": 1282
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

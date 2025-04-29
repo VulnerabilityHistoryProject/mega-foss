@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "ollama/ollama",
+              "description": "Get up and running with Llama 3.3, DeepSeek-R1, Phi-4, Gemma 3, Mistral Small 3.1 and other large language models.",
+              "stargazerCount": 137789,
+              "forkCount": 11479,
+              "url": "https://github.com/ollama/ollama",
+              "updatedAt": "2025-04-18T21:59:40Z",
+              "issues": {
+                "totalCount": 6806
+              },
+              "watchers": {
+                "totalCount": 790
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

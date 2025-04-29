@@ -1,0 +1,31 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 1,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjE=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "nvm-sh/nvm",
+              "description": "Node Version Manager - POSIX-compliant bash script to manage multiple active node.js versions",
+              "stargazerCount": 84023,
+              "forkCount": 8670,
+              "url": "https://github.com/nvm-sh/nvm",
+              "updatedAt": "2025-04-18T21:12:09Z",
+              "issues": {
+                "totalCount": 2270
+              },
+              "watchers": {
+                "totalCount": 1021
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

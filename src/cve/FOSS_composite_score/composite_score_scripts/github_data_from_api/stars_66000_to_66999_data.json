@@ -1,0 +1,111 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 6,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjY=",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "expressjs/express",
+              "description": "Fast, unopinionated, minimalist web framework for node.",
+              "stargazerCount": 66786,
+              "forkCount": 18241,
+              "url": "https://github.com/expressjs/express",
+              "updatedAt": "2025-04-18T20:02:34Z",
+              "issues": {
+                "totalCount": 3954
+              },
+              "watchers": {
+                "totalCount": 1691
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sdmg15/Best-websites-a-programmer-should-visit",
+              "description": ":link: Some useful websites for programmers.",
+              "stargazerCount": 66606,
+              "forkCount": 8110,
+              "url": "https://github.com/sdmg15/Best-websites-a-programmer-should-visit",
+              "updatedAt": "2025-04-18T20:50:10Z",
+              "issues": {
+                "totalCount": 171
+              },
+              "watchers": {
+                "totalCount": 1391
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "python/cpython",
+              "description": "The Python programming language",
+              "stargazerCount": 66353,
+              "forkCount": 31629,
+              "url": "https://github.com/python/cpython",
+              "updatedAt": "2025-04-18T20:58:57Z",
+              "issues": {
+                "totalCount": 71809
+              },
+              "watchers": {
+                "totalCount": 1526
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tesseract-ocr/tesseract",
+              "description": "Tesseract Open Source OCR Engine (main repository)",
+              "stargazerCount": 66247,
+              "forkCount": 9833,
+              "url": "https://github.com/tesseract-ocr/tesseract",
+              "updatedAt": "2025-04-18T20:43:18Z",
+              "issues": {
+                "totalCount": 2703
+              },
+              "watchers": {
+                "totalCount": 1692
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "strapi/strapi",
+              "description": "\ud83d\ude80 Strapi is the leading open-source headless CMS. It\u2019s 100% JavaScript/TypeScript, fully customizable, and developer-first.",
+              "stargazerCount": 66242,
+              "forkCount": 8489,
+              "url": "https://github.com/strapi/strapi",
+              "updatedAt": "2025-04-18T21:22:34Z",
+              "issues": {
+                "totalCount": 10706
+              },
+              "watchers": {
+                "totalCount": 658
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "ventoy/Ventoy",
+              "description": "A new bootable USB solution.",
+              "stargazerCount": 66126,
+              "forkCount": 4230,
+              "url": "https://github.com/ventoy/Ventoy",
+              "updatedAt": "2025-04-18T21:31:14Z",
+              "issues": {
+                "totalCount": 2442
+              },
+              "watchers": {
+                "totalCount": 671
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

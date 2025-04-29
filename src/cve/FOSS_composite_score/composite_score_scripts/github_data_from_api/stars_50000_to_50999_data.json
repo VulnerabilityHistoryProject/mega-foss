@@ -1,0 +1,207 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 12,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjEy",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "google/guava",
+              "description": "Google core libraries for Java",
+              "stargazerCount": 50679,
+              "forkCount": 10979,
+              "url": "https://github.com/google/guava",
+              "updatedAt": "2025-04-18T21:44:56Z",
+              "issues": {
+                "totalCount": 3608
+              },
+              "watchers": {
+                "totalCount": 2362
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "withastro/astro",
+              "description": "The web framework for content-driven websites. \u2b50\ufe0f Star to support our work!",
+              "stargazerCount": 50553,
+              "forkCount": 2694,
+              "url": "https://github.com/withastro/astro",
+              "updatedAt": "2025-04-18T21:31:04Z",
+              "issues": {
+                "totalCount": 5327
+              },
+              "watchers": {
+                "totalCount": 206
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "meilisearch/meilisearch",
+              "description": "A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.",
+              "stargazerCount": 50498,
+              "forkCount": 1993,
+              "url": "https://github.com/meilisearch/meilisearch",
+              "updatedAt": "2025-04-18T20:18:11Z",
+              "issues": {
+                "totalCount": 2192
+              },
+              "watchers": {
+                "totalCount": 290
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "mozilla/pdf.js",
+              "description": "PDF Reader in JavaScript",
+              "stargazerCount": 50468,
+              "forkCount": 10256,
+              "url": "https://github.com/mozilla/pdf.js",
+              "updatedAt": "2025-04-18T21:30:07Z",
+              "issues": {
+                "totalCount": 10163
+              },
+              "watchers": {
+                "totalCount": 1121
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hacksider/Deep-Live-Cam",
+              "description": "real time face swap and one-click video deepfake with only a single image",
+              "stargazerCount": 50410,
+              "forkCount": 7470,
+              "url": "https://github.com/hacksider/Deep-Live-Cam",
+              "updatedAt": "2025-04-18T21:51:32Z",
+              "issues": {
+                "totalCount": 731
+              },
+              "watchers": {
+                "totalCount": 320
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "tiimgreen/github-cheat-sheet",
+              "description": "A list of cool features of Git and GitHub.",
+              "stargazerCount": 50401,
+              "forkCount": 5303,
+              "url": "https://github.com/tiimgreen/github-cheat-sheet",
+              "updatedAt": "2025-04-18T21:05:52Z",
+              "issues": {
+                "totalCount": 71
+              },
+              "watchers": {
+                "totalCount": 1377
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "JetBrains/kotlin",
+              "description": "The Kotlin Programming Language. ",
+              "stargazerCount": 50368,
+              "forkCount": 5897,
+              "url": "https://github.com/JetBrains/kotlin",
+              "updatedAt": "2025-04-18T18:38:15Z",
+              "issues": {
+                "totalCount": 0
+              },
+              "watchers": {
+                "totalCount": 1514
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "wagoodman/dive",
+              "description": "A tool for exploring each layer in a docker image",
+              "stargazerCount": 50363,
+              "forkCount": 1867,
+              "url": "https://github.com/wagoodman/dive",
+              "updatedAt": "2025-04-18T20:54:42Z",
+              "issues": {
+                "totalCount": 352
+              },
+              "watchers": {
+                "totalCount": 358
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "astral-sh/uv",
+              "description": "An extremely fast Python package and project manager, written in Rust.",
+              "stargazerCount": 50304,
+              "forkCount": 1402,
+              "url": "https://github.com/astral-sh/uv",
+              "updatedAt": "2025-04-18T21:43:58Z",
+              "issues": {
+                "totalCount": 6080
+              },
+              "watchers": {
+                "totalCount": 98
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "prettier/prettier",
+              "description": "Prettier is an opinionated code formatter.",
+              "stargazerCount": 50288,
+              "forkCount": 4485,
+              "url": "https://github.com/prettier/prettier",
+              "updatedAt": "2025-04-18T18:59:50Z",
+              "issues": {
+                "totalCount": 6844
+              },
+              "watchers": {
+                "totalCount": 415
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "xai-org/grok-1",
+              "description": "Grok open release",
+              "stargazerCount": 50247,
+              "forkCount": 8350,
+              "url": "https://github.com/xai-org/grok-1",
+              "updatedAt": "2025-04-18T21:03:41Z",
+              "issues": {
+                "totalCount": 222
+              },
+              "watchers": {
+                "totalCount": 619
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "sickcodes/Docker-OSX",
+              "description": "Run macOS VM in a Docker! Run near native OSX-KVM in Docker! X11 Forwarding! CI/CD for OS X Security Research! Docker mac Containers.",
+              "stargazerCount": 50188,
+              "forkCount": 2801,
+              "url": "https://github.com/sickcodes/Docker-OSX",
+              "updatedAt": "2025-04-18T20:33:14Z",
+              "issues": {
+                "totalCount": 656
+              },
+              "watchers": {
+                "totalCount": 448
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

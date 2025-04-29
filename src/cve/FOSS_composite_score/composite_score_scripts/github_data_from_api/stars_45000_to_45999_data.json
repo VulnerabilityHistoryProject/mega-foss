@@ -1,0 +1,207 @@
+[
+  {
+    "data": {
+      "search": {
+        "repositoryCount": 12,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOjEy",
+          "hasNextPage": false
+        },
+        "edges": [
+          {
+            "node": {
+              "nameWithOwner": "ziishaned/learn-regex",
+              "description": "Learn regex the easy way",
+              "stargazerCount": 45987,
+              "forkCount": 6269,
+              "url": "https://github.com/ziishaned/learn-regex",
+              "updatedAt": "2025-04-18T19:11:50Z",
+              "issues": {
+                "totalCount": 86
+              },
+              "watchers": {
+                "totalCount": 896
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "v2ray/v2ray-core",
+              "description": "A platform for building proxies to bypass network restrictions.",
+              "stargazerCount": 45933,
+              "forkCount": 8934,
+              "url": "https://github.com/v2ray/v2ray-core",
+              "updatedAt": "2025-04-18T20:58:38Z",
+              "issues": {
+                "totalCount": 2586
+              },
+              "watchers": {
+                "totalCount": 1347
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "huginn/huginn",
+              "description": "Create agents that monitor and act on your behalf.  Your agents are standing by!",
+              "stargazerCount": 45927,
+              "forkCount": 3953,
+              "url": "https://github.com/huginn/huginn",
+              "updatedAt": "2025-04-18T21:16:56Z",
+              "issues": {
+                "totalCount": 2159
+              },
+              "watchers": {
+                "totalCount": 745
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "Asabeneh/30-Days-Of-Python",
+              "description": "30 days of Python programming challenge is a step-by-step guide to learn the Python programming language in 30 days. This challenge may take more than100 days, follow your own pace.  These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw",
+              "stargazerCount": 45866,
+              "forkCount": 8748,
+              "url": "https://github.com/Asabeneh/30-Days-Of-Python",
+              "updatedAt": "2025-04-18T20:38:04Z",
+              "issues": {
+                "totalCount": 124
+              },
+              "watchers": {
+                "totalCount": 843
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "x64dbg/x64dbg",
+              "description": "An open-source user mode debugger for Windows. Optimized for reverse engineering and malware analysis.",
+              "stargazerCount": 45853,
+              "forkCount": 2527,
+              "url": "https://github.com/x64dbg/x64dbg",
+              "updatedAt": "2025-04-18T20:37:40Z",
+              "issues": {
+                "totalCount": 2553
+              },
+              "watchers": {
+                "totalCount": 2718
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pocketbase/pocketbase",
+              "description": "Open Source realtime backend in 1 file",
+              "stargazerCount": 45404,
+              "forkCount": 2223,
+              "url": "https://github.com/pocketbase/pocketbase",
+              "updatedAt": "2025-04-18T21:30:36Z",
+              "issues": {
+                "totalCount": 1760
+              },
+              "watchers": {
+                "totalCount": 247
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "nlohmann/json",
+              "description": "JSON for Modern C++",
+              "stargazerCount": 45265,
+              "forkCount": 6940,
+              "url": "https://github.com/nlohmann/json",
+              "updatedAt": "2025-04-18T19:00:38Z",
+              "issues": {
+                "totalCount": 2302
+              },
+              "watchers": {
+                "totalCount": 754
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "vllm-project/vllm",
+              "description": "A high-throughput and memory-efficient inference and serving engine for LLMs",
+              "stargazerCount": 45237,
+              "forkCount": 6933,
+              "url": "https://github.com/vllm-project/vllm",
+              "updatedAt": "2025-04-18T20:54:48Z",
+              "issues": {
+                "totalCount": 8040
+              },
+              "watchers": {
+                "totalCount": 380
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "pandas-dev/pandas",
+              "description": "Flexible and powerful data analysis / manipulation library for Python, providing labeled data structures similar to R data.frame objects, statistical functions, and much more",
+              "stargazerCount": 45171,
+              "forkCount": 18437,
+              "url": "https://github.com/pandas-dev/pandas",
+              "updatedAt": "2025-04-18T19:54:08Z",
+              "issues": {
+                "totalCount": 27346
+              },
+              "watchers": {
+                "totalCount": 1112
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "slab/quill",
+              "description": "Quill is a modern WYSIWYG editor built for compatibility and extensibility",
+              "stargazerCount": 45148,
+              "forkCount": 3488,
+              "url": "https://github.com/slab/quill",
+              "updatedAt": "2025-04-18T19:18:24Z",
+              "issues": {
+                "totalCount": 3737
+              },
+              "watchers": {
+                "totalCount": 491
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "type-challenges/type-challenges",
+              "description": "Collection of TypeScript type challenges with online judge",
+              "stargazerCount": 45086,
+              "forkCount": 4915,
+              "url": "https://github.com/type-challenges/type-challenges",
+              "updatedAt": "2025-04-18T20:53:15Z",
+              "issues": {
+                "totalCount": 35452
+              },
+              "watchers": {
+                "totalCount": 160
+              }
+            }
+          },
+          {
+            "node": {
+              "nameWithOwner": "hashicorp/terraform",
+              "description": "Terraform enables you to safely and predictably create, change, and improve infrastructure. It is a source-available tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.",
+              "stargazerCount": 45014,
+              "forkCount": 9805,
+              "url": "https://github.com/hashicorp/terraform",
+              "updatedAt": "2025-04-18T19:58:00Z",
+              "issues": {
+                "totalCount": 21348
+              },
+              "watchers": {
+                "totalCount": 1147
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
