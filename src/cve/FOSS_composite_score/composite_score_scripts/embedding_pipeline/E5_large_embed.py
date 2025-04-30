@@ -22,7 +22,6 @@ def embed_prompt_with_e5_large(prompt: str) -> list[float]:
         cls_embedding = outputs.last_hidden_state[:, 0]  # CLS token
 
     
-    cls_embedding = outputs.last_hidden_state[:, 0, :]
     normalized = torch.nn.functional.normalize(cls_embedding, p=2, dim=1)
     embedding = normalized.squeeze().tolist()  # best for similarity
 

@@ -1,14 +1,14 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F
-from embedding_models import GTE_LARGE
+from embedding_models import DISTIL_BERT
 
 
-def embed_prompt_with_gte_large(prompt: str) -> list[float]:
+def embed_prompt_with_distil_bert_large(prompt: str) -> list[float]:
 
     ### Load Tokenizer and Model ###
-    tokenizer = AutoTokenizer.from_pretrained(GTE_LARGE)
-    model = AutoModel.from_pretrained(GTE_LARGE)
+    tokenizer = AutoTokenizer.from_pretrained(DISTIL_BERT)
+    model = AutoModel.from_pretrained(DISTIL_BERT)
 
     model.eval()
 
@@ -38,5 +38,5 @@ if __name__ == "__main__":
         "It is designed to make getting started quick and easy, with the ability to scale up to complex applications. " \
         "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
         
-    embedding_1 = embed_prompt_with_gte_large(prompt=test_prompt_1)
+    embedding_1 = embed_prompt_with_distil_bert_large(prompt=test_prompt_1)
     print(embedding_1)
