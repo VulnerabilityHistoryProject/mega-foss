@@ -1,9 +1,11 @@
 
 
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
 from sklearn.metrics.pairwise import cosine_similarity
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from captum.attr import IntegratedGradients
 import numpy as np
-from typing import TypedDict
+from typing import TypedDict, Union
 
 ### Models for embedding FOSS project names
 OLLAMA_NOMIC_EMBED_TEXT = 'nomic-embed-text'  # via Ollama only (not Hugging Face / Captum compatible)
@@ -36,7 +38,31 @@ class TokensAndVectors(TypedDict):
         TypedDict (_type_): class from typing library in python for defining custom types
     """
     tokens: list[str]
+    token_attributions: list[str]
     vectors: list[float]
+
+
+def calc_token_attributions(model_name: str, model_inputs: Union[PreTrainedTokenizer,PreTrainedTokenizerFast]) -> None:
+
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+    # Ensure model is in evaluation mode
+    model.eval()
+
+    # Define the Integrated Gradients method
+    ig = IntegratedGradients(model)
+
+    # Forward pass the input through the model
+    input_ids = model_inputs["input_ids"]
+    attention_mask = model_inputs["attention_mask"]
+    outputs = model(input_ids, attention_mask=attention_mask)
+    logits = outputs.logits
+
+    # Calculate attributions using Integrated Gradients
+    attributions, delta = ig.attribute(input_ids, target=logits.argmax(dim=-1), return_convergence_delta=True)
+
+    # Convert attributions to a human-readable form
+    attributions = attributions.squeeze().cpu().detach().numpy()
 
 
 def calc_cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
@@ -58,7 +84,12 @@ def calc_cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
 
 ### General Tokenizer function
 
-def create_readable_tokens(prompt: str, tokenizer: PreTrainedTokenizer) -> list[str]:
+def create_readable_tokens(prompt: str, tokenizer: Union[PreTrainedTokenizer,PreTrainedTokenizerFast]) -> list[str]:
     human_readable_tokens = tokenizer.tokenize(text=prompt)
 
     return human_readable_tokens
+
+
+
+if __name__ == "__main__":
+    pass

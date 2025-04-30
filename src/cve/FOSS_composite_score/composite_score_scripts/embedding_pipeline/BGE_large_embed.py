@@ -12,8 +12,8 @@ import torch
 
 
 
-from embedding_models import BGE_LARGE, create_readable_tokens, TokensAndVectors, calc_cosine_similarity
-
+from embedding_models import BGE_LARGE, TokensAndVectors
+from embedding_models import create_readable_tokens, calc_cosine_similarity,calc_token_attributions
 
 def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
     """
@@ -38,8 +38,9 @@ def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
     ### Tokenize & Store tokens ###
     readable_tokens: list[str] = create_readable_tokens(prompt=prompt,tokenizer=tokenizer)
     
-    
-    
+    ### Create token attributions ###
+    token_attributions = calc_token_attributions(BGE_LARGE,model_inputs=inputs)
+
     ### Embed ### 
     with torch.no_grad():
         outputs = model(**inputs)
@@ -52,6 +53,7 @@ def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
     
     tokens_and_vectors = {
         "tokens": readable_tokens,
+        "token_attributions": token_attributions,
         "vectors": embedding
     }
     return tokens_and_vectors
@@ -72,9 +74,15 @@ if __name__ == "__main__":
     embedding_1 = embed_prompt_with_bge_large(prompt=test_prompt_1)
     embedding_2 = embed_prompt_with_bge_large(prompt=test_prompt_2)
 
+    print(embedding_1["token_attributions"])
+    print(embedding_2["token_attributions"])
 
     vector_1 = embedding_1["vectors"]
     vector_2 = embedding_2["vectors"]
 
     sim = calc_cosine_similarity(vec1=vector_1,vec2=vector_2)
     print("cosine similarity is: " + str(sim))
+
+    ### to-do ###
+    # if the tokens are different when using the attribution code, I have to change the tokens that are produced
+    # with that to match the attribution numbers
