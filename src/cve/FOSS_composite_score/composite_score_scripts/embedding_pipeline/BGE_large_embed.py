@@ -10,12 +10,17 @@ Author: @Trust-Worthy
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F
+from typing import TypedDict
 
 
 from embedding_models import BGE_LARGE, create_readable_tokens
 
 
-def embed_prompt_with_bge_large(prompt: str) -> list[float]:
+class TokensAndVectors(TypedDict):
+    tokens: list[str]
+    vectors: list[float]
+
+def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
     
     ### Load Tokenizer and Model ###
     tokenizer = AutoTokenizer.from_pretrained(BGE_LARGE)
@@ -41,8 +46,11 @@ def embed_prompt_with_bge_large(prompt: str) -> list[float]:
     # Convert to list if needed
     embedding = cls_embedding.squeeze().tolist()
     
-    
-    return embedding
+    tokens_and_vectors = {
+        "tokens": readable_tokens,
+        "vectors": embedding
+    }
+    return tokens_and_vectors
 
 
 # def calc_cosine_similarity() -> float:
