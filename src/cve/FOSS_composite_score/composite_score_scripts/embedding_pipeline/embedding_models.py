@@ -1,4 +1,7 @@
 
+
+from transformers import PreTrainedTokenizer
+
 ### Models for embedding FOSS project names
 OLLAMA_NOMIC_EMBED_TEXT = 'nomic-embed-text'  # via Ollama only (not Hugging Face / Captum compatible)
 DISTIL_BERT = 'distilbert-base-uncased'       # Available on Hugging Face, good for Captum
@@ -20,3 +23,9 @@ ROBERTA_LARGE = "roberta-large"
 GTE_LARGE = "thenlper/gte-large"
 
 
+### General Tokenizer function
+
+def create_readable_tokens(prompt: str, tokenizer: PreTrainedTokenizer) -> list[str]:
+    human_readable_tokens = tokenizer.tokenize(text=prompt)
+
+    return human_readable_tokens
