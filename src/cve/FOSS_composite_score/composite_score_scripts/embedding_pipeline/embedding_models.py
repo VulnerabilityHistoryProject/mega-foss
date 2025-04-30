@@ -42,9 +42,15 @@ class TokensAndVectors(TypedDict):
     vectors: list[float]
 
 
-def calc_token_attributions(model_name: str, model_inputs: Union[PreTrainedTokenizer,PreTrainedTokenizerFast]) -> None:
+def calc_token_attributions(input_text: str, model_name: str) -> None:
 
+    
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    # Tokenize the input text
+  
+    inputs = tokenizer(input_text, return_tensors="pt", padding=True, truncation=True)
 
     # Ensure model is in evaluation mode
     model.eval()
@@ -53,8 +59,10 @@ def calc_token_attributions(model_name: str, model_inputs: Union[PreTrainedToken
     ig = IntegratedGradients(model)
 
     # Forward pass the input through the model
-    input_ids = model_inputs["input_ids"]
-    attention_mask = model_inputs["attention_mask"]
+    input_ids = inputs["input_ids"]
+    input_ids = input_ids.long()
+
+    attention_mask = inputs["attention_mask"]
     outputs = model(input_ids, attention_mask=attention_mask)
     logits = outputs.logits
 
@@ -64,6 +72,12 @@ def calc_token_attributions(model_name: str, model_inputs: Union[PreTrainedToken
     # Convert attributions to a human-readable form
     attributions = attributions.squeeze().cpu().detach().numpy()
 
+    # Get the tokens
+    tokens = tokenizer.convert_ids_to_tokens(input_ids.squeeze().cpu().numpy())
+
+    # Print the token and their attribution scores
+    for token, attribution in zip(tokens, attributions):
+        print(f"Token: {token}, Attribution: {attribution}")
 
 def calc_cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
     """

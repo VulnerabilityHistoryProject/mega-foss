@@ -39,7 +39,7 @@ def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
     readable_tokens: list[str] = create_readable_tokens(prompt=prompt,tokenizer=tokenizer)
     
     ### Create token attributions ###
-    token_attributions = calc_token_attributions(BGE_LARGE,model_inputs=inputs)
+    #token_attributions = calc_token_attributions(input_text=prompt,model_name=BGE_LARGE)
 
     ### Embed ### 
     with torch.no_grad():
@@ -53,7 +53,7 @@ def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
     
     tokens_and_vectors = {
         "tokens": readable_tokens,
-        "token_attributions": token_attributions,
+        #"token_attributions": token_attributions,
         "vectors": embedding
     }
     return tokens_and_vectors
@@ -62,9 +62,10 @@ def embed_prompt_with_bge_large(prompt: str) -> TokensAndVectors:
 
 if __name__ == "__main__":
     
-    test_prompt_1 = "Flask is a lightweight WSGI web application framework. " \
-    "It is designed to make getting started quick and easy, with the ability to scale up to complex applications. " \
-    "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
+    test_prompt_1 = "The software patch resolves the vulnerability."
+    #"Flask is a lightweight WSGI web application framework. " \
+    #"It is designed to make getting started quick and easy, with the ability to scale up to complex applications. " \
+    #"It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
     
 
     test_prompt_2 = "Flask offers suggestions, but doesn't enforce any dependencies or project layout. " \
@@ -74,9 +75,9 @@ if __name__ == "__main__":
     embedding_1 = embed_prompt_with_bge_large(prompt=test_prompt_1)
     embedding_2 = embed_prompt_with_bge_large(prompt=test_prompt_2)
 
-    print(embedding_1["token_attributions"])
-    print(embedding_2["token_attributions"])
-
+    # print(embedding_1["token_attributions"])
+    # print(embedding_2["token_attributions"])
+    print(embedding_1["tokens"])
     vector_1 = embedding_1["vectors"]
     vector_2 = embedding_2["vectors"]
 
