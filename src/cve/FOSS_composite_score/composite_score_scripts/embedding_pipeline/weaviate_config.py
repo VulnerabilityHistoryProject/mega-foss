@@ -95,9 +95,9 @@ def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.coll
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
             wvc_config.Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
-            wvc_config.Configure.NamedVectors.none(name="sbert_minilm_name_vec"),
+            wvc_config.Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
+            wvc_config.Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
             wvc_config.Configure.NamedVectors.none(name="distil_bert_name_vec"),
-            wvc_config.Configure.NamedVectors.none(name="minilm_l6_v2_name_vec"),
             wvc_config.Configure.NamedVectors.none(name="gte_large_name_vec"),
 
             ### Named Vectors for FOSS project descriptions / CVE descriptions
