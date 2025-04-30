@@ -1,0 +1,1 @@
+NOMIC_EMBED_TXT = 'nomic-embed-text'

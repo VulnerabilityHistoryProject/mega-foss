@@ -70,14 +70,16 @@ def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.coll
             ### Named Vectors for FOSS project descriptions / CVE descriptions
             wvc_config.Configure.NamedVectors.none(name="bge_large_description_vec"),
             wvc_config.Configure.NamedVectors.none(name="e5_large_description_vec"),
-            wvc_config.Configure.NamedVectors.none(name="gte_large  _description_vec"),
+            wvc_config.Configure.NamedVectors.none(name="gte_large _description_vec"),
             wvc_config.Configure.NamedVectors.none(name="roberta_large_description_vec"),
             wvc_config.Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
         ],
         properties=[
             wvc_config.Property(name="name", data_type=wvc_config.DataType.TEXT, description="Name of the project"),
             wvc_config.Property(name="description", data_type=wvc_config.DataType.TEXT, description="Project description"),
-            wvc_config.Property(name="foss_hash", data_type=wvc_config.DataType.TEXT,description="Hash of FOSS project name")
+            wvc_config.Property(name="hash", data_type=wvc_config.DataType.TEXT,description="Hash of FOSS project name"),
+            wvc_config.Property(name="tokens", data_type=wvc_config.DataType.TEXT,description="Tokens of FOSS description"),
+            wvc_config.Property(name="token_attributions", data_type=wvc_config.DataType.TEXT,description="Weight of tokens numberically")
         ]
     )
 
