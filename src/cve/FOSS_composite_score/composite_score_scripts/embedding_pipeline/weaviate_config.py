@@ -3,6 +3,8 @@ weaviate_config.py
 
 Configures cloud-based weaviate database for semantic embedding. Additionally, different functions are included to help
 incorporate different models.
+
+Author: @Trust-Worthy
 """
 
 import os
@@ -26,25 +28,48 @@ def create_remote_weaviate_client() -> weaviate.WeaviateClient:
 
 
     # Connect to Weaviate Cloud
-    client = weaviate.connect_to_weaviate_cloud(
+    remote_client = weaviate.connect_to_weaviate_cloud(
         cluster_url=WEAVIATE_URL,
         auth_credentials=Auth.api_key(WEAVIATE_API_KEY),
     )
 
 
-    return client
+    return remote_client
 
 def connect_to_local_weaviate_client() -> weaviate.WeaviateClient:
-    client = weaviate.connect_to_local()
+    """
+    Connects to a local weaviate database on the default port via the docker container.
 
-    print("Connected to local weaviate client: " + client.is_ready())  # Should print: `True`
+    Returns:
+        weaviate.WeaviateClient: _description_
+    """
+    local_client = weaviate.connect_to_local()
+
+    print("Connected to local weaviate client--> is ready: " + local_client.is_ready())  # Should print: `True`
+    return local_client
 
 def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
+    """
+    Quickly verifies that the client is ready. This function will be used a "check" before performing search and append 
+    operations.
+
+    Args:
+        client (weaviate.WeaviateClient): _description_
+
+    Returns:
+        bool: _description_
+    """
     is_ready: bool = client.is_ready()
     print("Weaviate client is ready " + is_ready)
     return is_ready
 
 def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
+    """
+    Closes connection to the weaviate client and turns it off.
+
+    Args:
+        client (weaviate.WeaviateClient): _description_
+    """
     print("Closing connection to weaviate client")
     client.close()
 
