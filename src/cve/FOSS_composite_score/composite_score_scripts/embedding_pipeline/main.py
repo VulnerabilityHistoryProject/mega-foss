@@ -31,3 +31,9 @@ of vulnerability detection, FOSS analysis, and interpretable ML/NLP research.
 Future Work:
 - Attribution via the Captum Integrated Gradients to highlight influential tokens.
 """
+
+from pathlib import Path
+
+
+foss_proj_space_csv: Path = Path("../csv_github_data_cleaned/FOSS_projects_space.csv")
+foss_name_description_json: Path = Path("../json_github_data_cleaned/github_repositories_final_ordered.json")
