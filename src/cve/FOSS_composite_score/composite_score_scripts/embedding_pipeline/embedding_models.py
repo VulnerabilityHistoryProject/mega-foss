@@ -9,7 +9,7 @@ from typing import TypedDict, Union
 
 ### Models for embedding FOSS project names
 OLLAMA_NOMIC_EMBED_TEXT = 'nomic-embed-text'  # via Ollama only (not Hugging Face / Captum compatible)
-DISTIL_BERT = 'distilbert-base-uncased'       # Available on Hugging Face, good for Captum
+DISTIL_BERT = 'distilbert-base-nli-stsb-mean-tokens'       # Available on Hugging Face, good for Captum
 SBERT_MINI_LM_L6_V2 = 'sentence-transformers/all-MiniLM-L6-v2'
 SBERT_MINI_LM_L12_V2 = 'sentence-transformers/all-MiniLM-L12-v2'  # ✅ Add this one
 
