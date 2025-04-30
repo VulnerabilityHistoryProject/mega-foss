@@ -41,7 +41,7 @@ def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
     client.close()
 
 
-def define_weaviate_schema(client: weaviate.WeaviateClient) -> None:
+def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.collections.Collection:
     """
     Defines the embedding models that will be used for vectorizing the FOSS project names
     and the embedding models that will be used for the FOSS project descriptions.
@@ -50,11 +50,13 @@ def define_weaviate_schema(client: weaviate.WeaviateClient) -> None:
     CVE descriptions will be turned into vector queries to match against FOSS project descriptions.
 
     Args:
-        client (weaviate.WeaviateClient): 
+        client (weaviate.WeaviateClient): Initialized weaviate client.
     """
 
     # For Python client v4
     foss_wvc_collection = client.collections.create(
+
+
         name="FOSS_vectors",
         description="Open source projects with name and description",
         vectorizer_config=[
@@ -78,3 +80,5 @@ def define_weaviate_schema(client: weaviate.WeaviateClient) -> None:
             wvc_config.Property(name="foss_hash", data_type=wvc_config.DataType.TEXT,description="Hash of FOSS project name")
         ]
     )
+
+    return foss_wvc_collection
