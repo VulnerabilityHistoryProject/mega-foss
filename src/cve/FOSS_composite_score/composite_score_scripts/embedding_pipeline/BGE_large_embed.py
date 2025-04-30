@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     # print(embedding_1["token_attributions"])
     # print(embedding_2["token_attributions"])
-    print(embedding_1["tokens"])
+    print(embedding_2["tokens"])
     vector_1 = embedding_1["vectors"]
     vector_2 = embedding_2["vectors"]
 
