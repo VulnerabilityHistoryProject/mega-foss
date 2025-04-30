@@ -29,6 +29,7 @@ def embed_prompt_with_bge_large(prompt: str) -> list[float]:
     ### Tokenize & Store tokens ###
     readable_tokens: list[str] = create_readable_tokens(prompt=prompt,tokenizer=tokenizer)
     
+    print(len(readable_tokens))
     
     ### Embed ### 
     with torch.no_grad():
@@ -50,3 +51,11 @@ def embed_prompt_with_bge_large(prompt: str) -> list[float]:
 
 
 if __name__ == "__main__":
+    prompt = "Flask is a lightweight WSGI web application framework. " \
+    "It is designed to make getting started quick and easy, with the ability to scale up to complex applications. " \
+    "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
+   
+    embedding = embed_prompt_with_bge_large(prompt=prompt)
+
+    print("embedding...")
+    print(len(embedding))

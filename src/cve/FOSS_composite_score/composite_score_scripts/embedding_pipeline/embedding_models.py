@@ -8,8 +8,8 @@ DISTIL_BERT = 'distilbert-base-uncased'       # Available on Hugging Face, good 
 SBERT_MINI_LM_L6_V2 = 'sentence-transformers/all-MiniLM-L6-v2'
 SBERT_MINI_LM_L12_V2 = 'sentence-transformers/all-MiniLM-L12-v2'  # ✅ Add this one
 
-### Models for embedding FOSS project descriptions & name
 
+### Models for embedding FOSS project descriptions & name
 # Beijing General Embedding (BGE)
 BGE_LARGE = "BAAI/bge-large-en"
 # Embedding from Instruction-Finetuned T5 (E5)
