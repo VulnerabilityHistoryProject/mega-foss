@@ -11,7 +11,7 @@ from weaviate.classes.init import Auth
 import weaviate.classes.config as wvc_config
 from dotenv import load_dotenv
 
-def config_weaviate_db() -> bool:
+def create_weaviate_client() -> weaviate.WeaviateClient:
     """
     Gathers weaviate credentials via env variables and connects to remote weaviate client.
 
@@ -32,14 +32,21 @@ def config_weaviate_db() -> bool:
     )
 
 
+    return client
+
+def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
     return client.is_ready()
+
+def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
+    client.close()
+
 
 def define_weaviate_schema(client: weaviate.WeaviateClient) -> None:
     ""
 
     # For Python client v4
     foss_wvc_collection = client.collections.create(
-        name="FOSSProject",
+        name="FOSS_vectors",
         description="Open source projects with name and description",
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
