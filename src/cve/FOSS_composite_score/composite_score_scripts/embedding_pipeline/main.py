@@ -1,0 +1,33 @@
+"""
+main.py
+
+This script is the core of an interpretable NLP pipeline designed to explore semantic relationships 
+between Common Vulnerabilities and Exposures (CVEs) and open-source software (FOSS) projects. 
+The goal is to build an explainable embedding and attribution system that can support future efforts 
+to match CVEs with responsible projects, patches, or components in an interpretable and transparent way.
+
+The pipeline leverages a variety of state-of-the-art sentence embedding models and attention/attribution 
+tools to analyze natural language descriptions, vulnerability reports, and FOSS metadata.
+
+Embedding Models Used:
+- nomic-embed-text
+- BAAI/bge-large-en
+- intfloat/e5-large-v2
+- sentence-transformers/all-MiniLM-L6-v2
+- sentence-transformers/all-MiniLM-L12-v2
+- sentence-transformers/distilbert-base-nli-stsb-mean-tokens
+- sentence-transformers/paraphrase-mpnet-base-v2
+- Alibaba-NLP/gte-large
+- roberta-large
+
+Key components:
+- Embedding generation and normalization for similarity search and clustering.
+- Support for model-specific preprocessing and interpretation strategies.
+- Embedding export to Weaviate-compatible formats for hybrid search and visualization.
+
+This system is built for experimentation, insight, and extensibility in the intersection 
+of vulnerability detection, FOSS analysis, and interpretable ML/NLP research.
+
+Future Work:
+- Attribution via the Captum Integrated Gradients to highlight influential tokens.
+"""
