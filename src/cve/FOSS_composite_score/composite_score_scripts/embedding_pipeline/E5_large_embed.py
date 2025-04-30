@@ -19,18 +19,15 @@ def embed_prompt_with_e5_large(prompt: str) -> list[float]:
     # Forward pass
     with torch.no_grad():
         outputs = model(**inputs)
-        embeddings = outputs.last_hidden_state[:, 0]  # CLS token
+        cls_embedding = outputs.last_hidden_state[:, 0]  # CLS token
 
     
-    embedding = cls_embedding.squeeze().tolist()
+    cls_embedding = outputs.last_hidden_state[:, 0, :]
+    normalized = torch.nn.functional.normalize(cls_embedding, p=2, dim=1)
+    embedding = normalized.squeeze().tolist()  # best for similarity
 
-    # Normalize embedding (E5 recommends this)
-    embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
 
-    # Convert to list if needed
-    
-
-    return embeddings
+    return embedding
 
 
 if __name__ == "__main__":
