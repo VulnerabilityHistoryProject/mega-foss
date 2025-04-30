@@ -1,6 +1,9 @@
 
 
 from transformers import PreTrainedTokenizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+from typing import TypedDict
 
 ### Models for embedding FOSS project names
 OLLAMA_NOMIC_EMBED_TEXT = 'nomic-embed-text'  # via Ollama only (not Hugging Face / Captum compatible)
@@ -21,6 +24,36 @@ ROBERTA_LARGE = "roberta-large"
 
 ### Control model that will be used for both FOSS project names and descriptions
 GTE_LARGE = "thenlper/gte-large"
+
+
+
+### typedict that defines the tokens and vectors that belong to a single prompt ###
+class TokensAndVectors(TypedDict):
+    """
+    class that holds a list of tokens and a list of vectors
+
+    Args:
+        TypedDict (_type_): class from typing library in python for defining custom types
+    """
+    tokens: list[str]
+    vectors: list[float]
+
+
+def calc_cosine_similarity(vec1: list[float], vec2: list[float]) -> float:
+    """
+    Compute cosine similarity between two 1D vectors (lists).
+
+    Args:
+        vec1 (list[float]): first vector
+        vec2 (list[float]): seconds vector
+
+    Returns:
+        float: cosine similarity
+    """
+    arr1 = np.array(vec1).reshape(1, -1)
+    arr2 = np.array(vec2).reshape(1, -1)
+
+    return float(cosine_similarity(arr1, arr2)[0][0])
 
 
 ### General Tokenizer function
