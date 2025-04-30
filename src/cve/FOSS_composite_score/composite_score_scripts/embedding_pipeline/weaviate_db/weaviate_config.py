@@ -111,11 +111,6 @@ def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.coll
             wvc_config.Property(name="name", data_type=wvc_config.DataType.TEXT, description="Name of the project"),
             wvc_config.Property(name="description", data_type=wvc_config.DataType.TEXT, description="Project description"),
             wvc_config.Property(name="hash", data_type=wvc_config.DataType.TEXT,description="Hash of FOSS project name")
-
-            ### Will come back to tokens and token attributions later. ### 
-            ### Might be better to store this in MongoDB instead of weaviate
-        #     wvc_config.Property(name="tokens", data_type=wvc_config.DataType.TEXT,description="Tokens of FOSS description"),
-        #     wvc_config.Property(name="token_attributions", data_type=wvc_config.DataType.TEXT,description="Weight of tokens numberically")
         ]
     )
 

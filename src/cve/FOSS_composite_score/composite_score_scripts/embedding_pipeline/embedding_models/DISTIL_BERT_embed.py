@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from embedding_models import DISTIL_BERT
+from config_embedding_models import DISTIL_BERT
 
 
 def embed_prompt_with_distil_bert_large(prompt: str) -> list[float]:

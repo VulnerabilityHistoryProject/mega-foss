@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F
-from embedding_models import GTE_LARGE
+from config_embedding_models import GTE_LARGE
 
 
 def embed_prompt_with_gte_large(prompt: str) -> list[float]:

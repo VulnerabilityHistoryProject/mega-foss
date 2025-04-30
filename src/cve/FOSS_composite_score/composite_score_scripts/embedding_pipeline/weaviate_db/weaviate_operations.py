@@ -14,7 +14,7 @@ import weaviate
 import weaviate.classes.config as wvc_config
 import json
 import hashlib
-
+from embedding_models.BGE_large_embed import
 
 
 
@@ -55,6 +55,12 @@ def create_data_object_and_store(json_file: str, collection: weaviate.collection
                 "foss_hash": hashed_foss_name
             }
 
+            ### Create vector representations for FOSS project names ###
+
+
+
+            ### Create vector representations for FOSS project names + FOSS project descriptions ###
+
             ### Create vector represenations of the project names & the names + project descriptions
             vectorized_name_description: list[float] = ollama_nomic_embed(name_description)
             vectorized_name: list[float] = ollama_nomic_embed(project_name)
@@ -64,7 +70,12 @@ def create_data_object_and_store(json_file: str, collection: weaviate.collection
 
 
     print("#############################################")
+    print("#############################################")
+    print("#############################################")
+    print("#############################################")
     print("Starting to import the data into Weaviate!!!!")
+
+
     # Now batch import with error handling
     with collection.batch.dynamic() as batch:
         for data_object, name_vector, combined_vector in data_objects:

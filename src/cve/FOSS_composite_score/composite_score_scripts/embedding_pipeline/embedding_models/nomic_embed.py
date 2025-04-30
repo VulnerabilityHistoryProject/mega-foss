@@ -9,7 +9,7 @@ Author: @Trust-Worthy
 
 import ollama
 
-from embedding_models import OLLAMA_NOMIC_EMBED_TEXT
+from config_embedding_models import OLLAMA_NOMIC_EMBED_TEXT
 
 
 def embed_prompt_with_nomic(prompt: str) -> list[float]:

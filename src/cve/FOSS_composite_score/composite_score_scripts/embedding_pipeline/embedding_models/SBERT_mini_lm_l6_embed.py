@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from embedding_models import SBERT_MINI_LM_L6_V2
+from config_embedding_models import SBERT_MINI_LM_L6_V2
 
 
 def embed_prompt_with_sbert_mini_l6(prompt: str) -> list[float]:
