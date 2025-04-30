@@ -11,7 +11,7 @@ from weaviate.classes.init import Auth
 import weaviate.classes.config as wvc_config
 from dotenv import load_dotenv
 
-def create_weaviate_client() -> weaviate.WeaviateClient:
+def create_remote_weaviate_client() -> weaviate.WeaviateClient:
     """
     Gathers weaviate credentials via env variables and connects to remote weaviate client.
 
@@ -34,10 +34,18 @@ def create_weaviate_client() -> weaviate.WeaviateClient:
 
     return client
 
+def connect_to_local_weaviate_client() -> weaviate.WeaviateClient:
+    client = weaviate.connect_to_local()
+
+    print("Connected to local weaviate client: " + client.is_ready())  # Should print: `True`
+
 def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
-    return client.is_ready()
+    is_ready: bool = client.is_ready()
+    print("Weaviate client is ready " + is_ready)
+    return is_ready
 
 def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
+    print("Closing connection to weaviate client")
     client.close()
 
 
