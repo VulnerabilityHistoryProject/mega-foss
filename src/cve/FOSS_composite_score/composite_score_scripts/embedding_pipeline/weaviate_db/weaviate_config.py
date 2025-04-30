@@ -120,3 +120,5 @@ def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.coll
     )
 
     return foss_wvc_collection
+
+
