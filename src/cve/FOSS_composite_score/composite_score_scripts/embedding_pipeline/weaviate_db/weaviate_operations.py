@@ -78,12 +78,22 @@ def create_data_object_and_store(json_file: str, collection: weaviate.collection
 
     # Now batch import with error handling
     with collection.batch.dynamic() as batch:
-        for data_object, name_vector, combined_vector in data_objects:
+        for data_object, nomic,sbert_l6,sbertl12,disti_bert,gte_large,bge_large,e5_large,roberta_large,sbert_mpnet in data_objects:
             batch.add_object(
                 properties=data_object,
                 vector={
-                "name_vector": name_vector,
-                "combined_vector": combined_vector
+                    "ollama_nomic_name_vec": nomic,
+                    "sbert_minilm_l6_v2_name_vec" :sbert_l6,
+                    "sbert_minilm_l12_v2_name_vec" :sbertl12,
+                    "distil_bert_name_vec": disti_bert,
+                    "gte_large_name_vec": gte_large,
+
+                    ### Named Vectors for FOSS project descriptions +  CVE descriptions
+                    "bge_large_description_vec" :bge_large,
+                    "e5_large_description_vec" : e5_large,
+                    "gte_large _description_vec" : gte_large,
+                    "roberta_large_description_vec" : roberta_large,
+                    "sbert_mpnet_base_v2_description_vec" : sbert_mpnet
                 }
             )
             # Monitor errors during insertion
