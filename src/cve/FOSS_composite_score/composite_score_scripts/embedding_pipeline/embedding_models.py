@@ -43,7 +43,13 @@ class TokensAndVectors(TypedDict):
 
 
 def calc_token_attributions(input_text: str, model_name: str) -> None:
+    """
+    Calculates what tokens contributed most to the vector / had more weight.
 
+    Args:
+        input_text (str): Text to be embedded / tokenized.
+        model_name (str): Name of embedding model for performing tokenization.
+    """
     
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
