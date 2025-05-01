@@ -95,9 +95,9 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
 
         name="FOSS_vectors",
         # Other configuration parameters...
-        vector_index_config=Configure.VectorIndex.hnsw(
-            distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
-            ) ,  
+        # vector_index_config=Configure.VectorIndex.hnsw(
+        #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
+        #     ) ,  
         description="Open source projects with name and description",
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
@@ -110,7 +110,7 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
             ### Named Vectors for FOSS project descriptions / CVE descriptions
             Configure.NamedVectors.none(name="bge_large_description_vec"),
             Configure.NamedVectors.none(name="e5_large_description_vec"),
-            Configure.NamedVectors.none(name="gte_large _description_vec"),
+            Configure.NamedVectors.none(name="gte_large_description_vec"),
             Configure.NamedVectors.none(name="roberta_large_description_vec"),
             Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
         ],
@@ -125,8 +125,26 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
 
 def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
 
-    collections = client.collections.list_all()
-    print([collection.name for collection in collections])
+    try:
+        # Method 1: Simple list of collection names
+        collections = client.collections.list_all(simple=True)
+        print("Collection names:")
+        for name in collections.keys():
+            print(f"- {name}")
+    
+        # Method 2: One-liner with list comprehension
+        collection_names = list(client.collections.list_all(simple=True).keys())
+        print(f"Collections: {', '.join(collection_names)}")
+        
+        # Method 3: Using simple=False to get more details but still print names cleanly
+        collections_detailed = client.collections.list_all(simple=False)
+        print("Available collections:")
+        for collection in collections_detailed:
+            print(f"- {collection.name}")
+        
+    finally:
+        client.close()
+        print("Weaviate client connection closed")
 
 def inspect_specific_weaviate_collection(client: weaviate.WeaviateClient, collection_name: str) -> None:
 

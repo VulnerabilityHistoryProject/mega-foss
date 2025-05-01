@@ -33,6 +33,7 @@ Future Work:
 """
 
 from pathlib import Path
+from weaviate.exceptions import WeaviateBaseError
 from weaviate_db.weaviate_config import connect_to_local_weaviate_client
 from weaviate_db.weaviate_config import verify_weaviate_client_ready
 from weaviate_db.weaviate_config import close_weaviate_client
@@ -50,19 +51,33 @@ foss_name_description_json: Path = Path("../json_github_data_cleaned/github_repo
 
 def main() -> None:
 
-    local_client = connect_to_local_weaviate_client()
-    print("weaviate client is ready: " + str(verify_weaviate_client_ready(local_client)))
+    try:
+        local_client = connect_to_local_weaviate_client()
+        print("weaviate client is ready: " + str(verify_weaviate_client_ready(local_client)))
 
-    create_weaviate_collection(local_client)
-    list_weaviate_collections(local_client)
+        #foss_collection = create_weaviate_collection(local_client)
+        list_weaviate_collections(local_client)
+        
+        
+        
+        
+        
+    except WeaviateBaseError as e:
+        # Handle Weaviate-specific errors
+        print(f"Weaviate error occurred: {e.message}")
+        # You can handle different types of errors differently if needed
+        
+    except Exception as e:
+        # Handle any other unexpected errors
+        print(f"Unexpected error occurred: {str(e)}")
+        
+    finally:
+        # This block will ALWAYS execute, even if exceptions occur
+        if local_client is not None:
+            close_weaviate_client(local_client)
+            print("Weaviate client connection closed")
     
     
-    
-    
-    
-    
-    
-    close_weaviate_client(local_client)
 
 
 
