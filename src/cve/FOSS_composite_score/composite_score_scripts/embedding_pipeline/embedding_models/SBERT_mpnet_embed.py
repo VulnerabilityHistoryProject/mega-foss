@@ -1,7 +1,7 @@
 from sentence_transformers import SentenceTransformer
 
 
-from embedding_models import SBERT_MPNET
+from config_embedding_models import SBERT_MPNET
 
 
 def embed_prompt_with_sbert_mpnet(prompt: str) -> list[str]:

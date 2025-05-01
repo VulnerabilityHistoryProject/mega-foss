@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoModel
 
-from embedding_models import E5_LARGE
+from config_embedding_models import E5_LARGE
 
 
 

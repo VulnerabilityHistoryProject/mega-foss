@@ -9,7 +9,7 @@ Author: @Trust-Worthy
 
 from transformers import AutoTokenizer, AutoModel
 import torch
-from embedding_models import BGE_LARGE
+from config_embedding_models import BGE_LARGE
 
 
 def embed_prompt_with_bge_large(prompt: str) -> list[float]:

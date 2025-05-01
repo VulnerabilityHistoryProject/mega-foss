@@ -10,7 +10,7 @@ Author: @Trust-Worthy
 import os
 import weaviate
 from weaviate.classes.init import Auth
-import weaviate.classes.config as wvc_config
+from weaviate.classes.config import Configure, VectorDistances, Property, DataType
 from dotenv import load_dotenv
 
 def create_remote_weaviate_client() -> weaviate.WeaviateClient:
@@ -74,14 +74,16 @@ def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
     client.close()
 
 
-def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.collections.Collection:
+def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.collections.Collection:
     """
     Defines the embedding models that will be used for vectorizing the FOSS project names
     and the embedding models that will be used for the FOSS project descriptions.
 
     CVE/ CPE vendor:product combinations will be turned into vector queries to match against FOSS project names.
-    CVE descriptions will be turned into vector queries to match against FOSS project descriptions.
+    CVE descriptions  will be turned into vector queries to match against FOSS project descriptions.
 
+    COSINE is the distance metric being used.
+    
     Args:
         client (weaviate.WeaviateClient): Initialized weaviate client.
     """
@@ -91,32 +93,47 @@ def create_weaviate_collection(client: weaviate.WeaviateClient) -> weaviate.coll
 
 
         name="FOSS_vectors",
+        # Other configuration parameters...
+        vector_index_config=Configure.VectorIndex.hnsw(
+            distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
+            ) ,  
         description="Open source projects with name and description",
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
-            wvc_config.Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
-            wvc_config.Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
-            wvc_config.Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
-            wvc_config.Configure.NamedVectors.none(name="distil_bert_name_vec"),
-            wvc_config.Configure.NamedVectors.none(name="gte_large_name_vec"),
+            Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
+            Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
+            Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
+            Configure.NamedVectors.none(name="distil_bert_name_vec"),
+            Configure.NamedVectors.none(name="gte_large_name_vec"),
 
             ### Named Vectors for FOSS project descriptions / CVE descriptions
-            wvc_config.Configure.NamedVectors.none(name="bge_large_description_vec"),
-            wvc_config.Configure.NamedVectors.none(name="e5_large_description_vec"),
-            wvc_config.Configure.NamedVectors.none(name="gte_large _description_vec"),
-            wvc_config.Configure.NamedVectors.none(name="roberta_large_description_vec"),
-            wvc_config.Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
+            Configure.NamedVectors.none(name="bge_large_description_vec"),
+            Configure.NamedVectors.none(name="e5_large_description_vec"),
+            Configure.NamedVectors.none(name="gte_large _description_vec"),
+            Configure.NamedVectors.none(name="roberta_large_description_vec"),
+            Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
         ],
         properties=[
-            wvc_config.Property(name="name", data_type=wvc_config.DataType.TEXT, description="Name of the project"),
-            wvc_config.Property(name="description", data_type=wvc_config.DataType.TEXT, description="Project description"),
-            wvc_config.Property(name="hash", data_type=wvc_config.DataType.TEXT,description="Hash of FOSS project name")
-
-            ### Will come back to tokens and token attributions later. ### 
-            ### Might be better to store this in MongoDB instead of weaviate
-        #     wvc_config.Property(name="tokens", data_type=wvc_config.DataType.TEXT,description="Tokens of FOSS description"),
-        #     wvc_config.Property(name="token_attributions", data_type=wvc_config.DataType.TEXT,description="Weight of tokens numberically")
+            Property(name="name", data_type=DataType.TEXT, description="Name of the project"),
+            Property(name="description", data_type=DataType.TEXT, description="Project description"),
+            Property(name="hash", data_type=DataType.TEXT,description="Hash of FOSS project name")
         ]
     )
 
     return foss_wvc_collection
+
+
+
+def retrieve_existing_weaviate_collection(collection_name: str, weaviate_client:weaviate.WeaviateClient) -> weaviate.collections.Collection:
+    """
+    Use this method to retrieve an existing collection in a weaviate database.
+
+    Args:
+        collection_name (str): Name of the existing collection to retrieve
+        weaviate_client (weaviate.WeaviateClient): Existing & initialized weaviate connected client.
+
+    Returns:
+        weaviate.collections.Collection: Weaviate python object to make requests to weaviate. This function does not 
+        make a request to the weaviate database.
+    """
+    return weaviate_client.collections.get(collection_name)

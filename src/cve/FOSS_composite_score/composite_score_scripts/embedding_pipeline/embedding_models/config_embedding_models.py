@@ -15,7 +15,6 @@ SBERT_MINI_LM_L12_V2 = 'sentence-transformers/all-MiniLM-L12-v2'  # ✅ Add this
 
 
 ### Models for embedding FOSS project descriptions & name
-# Beijing General Embedding (BGE)
 BGE_LARGE = "BAAI/bge-large-en"
 # Embedding from Instruction-Finetuned T5 (E5)
 E5_LARGE = "intfloat/e5-large"

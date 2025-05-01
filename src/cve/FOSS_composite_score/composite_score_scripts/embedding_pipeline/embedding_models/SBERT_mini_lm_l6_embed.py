@@ -1,13 +1,13 @@
 from sentence_transformers import SentenceTransformer
-from embedding_models import DISTIL_BERT
+from config_embedding_models import SBERT_MINI_LM_L6_V2
 
 
-def embed_prompt_with_distil_bert_large(prompt: str) -> list[float]:
+def embed_prompt_with_sbert_mini_l6(prompt: str) -> list[float]:
 
     
 
     # Load the model
-    model = SentenceTransformer(DISTIL_BERT)
+    model = SentenceTransformer(SBERT_MINI_LM_L6_V2)
 
     
 
@@ -26,5 +26,5 @@ if __name__ == "__main__":
         "It is designed to make getting started quick and easy, with the ability to scale up to complex applications. " \
         "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
         
-    embedding_1 = embed_prompt_with_distil_bert_large(prompt=test_prompt_1)
+    embedding_1 = embed_prompt_with_sbert_mini_l6(prompt=test_prompt_1)
     print(len(embedding_1))
