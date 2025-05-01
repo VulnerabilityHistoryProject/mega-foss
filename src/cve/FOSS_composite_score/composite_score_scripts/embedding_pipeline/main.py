@@ -33,7 +33,39 @@ Future Work:
 """
 
 from pathlib import Path
+from weaviate_db.weaviate_config import connect_to_local_weaviate_client
+from weaviate_db.weaviate_config import verify_weaviate_client_ready
+from weaviate_db.weaviate_config import close_weaviate_client
+from weaviate_db.weaviate_config import create_weaviate_collection, list_weaviate_collections
+from weaviate_db.weaviate_config import retrieve_existing_weaviate_collection
 
 
 foss_proj_space_csv: Path = Path("../csv_github_data_cleaned/FOSS_projects_space.csv")
 foss_name_description_json: Path = Path("../json_github_data_cleaned/github_repositories_final_ordered.json")
+
+
+
+
+
+
+def main() -> None:
+
+    local_client = connect_to_local_weaviate_client()
+    print("weaviate client is ready: " + str(verify_weaviate_client_ready(local_client)))
+
+    create_weaviate_collection(local_client)
+    list_weaviate_collections(local_client)
+    
+    
+    
+    
+    
+    
+    
+    close_weaviate_client(local_client)
+
+
+
+if __name__ == "__main__":
+
+    main()

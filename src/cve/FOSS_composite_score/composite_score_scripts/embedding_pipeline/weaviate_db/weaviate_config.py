@@ -43,9 +43,10 @@ def connect_to_local_weaviate_client() -> weaviate.WeaviateClient:
     Returns:
         weaviate.WeaviateClient: _description_
     """
+    print("Connecting to local client...")
     local_client = weaviate.connect_to_local()
 
-    print("Connected to local weaviate client--> is ready: " + local_client.is_ready())  # Should print: `True`
+    print("Connected to local weaviate client--> is ready: " + str(local_client.is_ready()))  # Should print: `True`
     return local_client
 
 def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
@@ -60,7 +61,7 @@ def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
         bool: _description_
     """
     is_ready: bool = client.is_ready()
-    print("Weaviate client is ready " + is_ready)
+    print("Weaviate client is ready " + str(is_ready))
     return is_ready
 
 def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
@@ -122,7 +123,14 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
 
     return foss_wvc_collection
 
+def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
 
+    collections = client.collections.list_all()
+    print([collection.name for collection in collections])
+
+def inspect_specific_weaviate_collection(client: weaviate.WeaviateClient, collection_name: str) -> None:
+
+    print(client.collections.get(collection_name))
 
 def retrieve_existing_weaviate_collection(collection_name: str, weaviate_client:weaviate.WeaviateClient) -> weaviate.collections.Collection:
     """
@@ -137,3 +145,13 @@ def retrieve_existing_weaviate_collection(collection_name: str, weaviate_client:
         make a request to the weaviate database.
     """
     return weaviate_client.collections.get(collection_name)
+
+
+if __name__ == "__main__":
+
+    local_client = connect_to_local_weaviate_client()
+    print(verify_weaviate_client_ready(local_client))
+
+    close_weaviate_client(local_client)
+
+
