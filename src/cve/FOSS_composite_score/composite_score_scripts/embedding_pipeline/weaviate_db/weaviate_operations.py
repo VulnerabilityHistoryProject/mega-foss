@@ -14,8 +14,9 @@ import weaviate
 import weaviate.classes.config as wvc_config
 import json
 import hashlib
-from embedding_models.BGE_large_embed import
 
+from embedding_models.nomic_embed import embed_prompt_with_nomic
+from embedding_models.DISTIL_BERT_embed import embed_prompt_with_distil_bert
 
 
 def create_data_object_and_store(json_file: str, collection: weaviate.collections.Collection) -> None:
@@ -56,7 +57,9 @@ def create_data_object_and_store(json_file: str, collection: weaviate.collection
             }
 
             ### Create vector representations for FOSS project names ###
-
+            nomic_embed_name = list [float] = embed_prompt_with_nomic(prompt=project_name)
+            distil_bert_name = list[float] = embed_prompt_with_distil_bert(prompt=project_name)
+            
 
 
             ### Create vector representations for FOSS project names + FOSS project descriptions ###
