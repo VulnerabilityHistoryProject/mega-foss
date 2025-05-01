@@ -136,11 +136,7 @@ def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
         collection_names = list(client.collections.list_all(simple=True).keys())
         print(f"Collections: {', '.join(collection_names)}")
         
-        # Method 3: Using simple=False to get more details but still print names cleanly
-        collections_detailed = client.collections.list_all(simple=False)
-        print("Available collections:")
-        for collection in collections_detailed:
-            print(f"- {collection.name}")
+        
         
     finally:
         client.close()
