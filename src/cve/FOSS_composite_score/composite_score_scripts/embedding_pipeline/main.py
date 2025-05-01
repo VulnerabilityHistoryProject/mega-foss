@@ -37,7 +37,7 @@ from weaviate.exceptions import WeaviateBaseError
 from weaviate_db.weaviate_config import connect_to_local_weaviate_client
 from weaviate_db.weaviate_config import verify_weaviate_client_ready
 from weaviate_db.weaviate_config import close_weaviate_client
-from weaviate_db.weaviate_config import create_weaviate_collection, list_weaviate_collections
+from weaviate_db.weaviate_config import create_weaviate_collection, list_weaviate_collections, inspect_collection_properties
 from weaviate_db.weaviate_config import retrieve_existing_weaviate_collection
 
 
@@ -51,16 +51,15 @@ foss_name_description_json: Path = Path("../json_github_data_cleaned/github_repo
 
 def main() -> None:
 
+    FOSS_COLLECTION = "FOSS_vectors"
+
     try:
         local_client = connect_to_local_weaviate_client()
         print("weaviate client is ready: " + str(verify_weaviate_client_ready(local_client)))
 
-        #foss_collection = create_weaviate_collection(local_client)
+        
         list_weaviate_collections(local_client)
-        
-        
-        
-        
+        inspect_collection_properties(local_client,FOSS_COLLECTION)
         
     except WeaviateBaseError as e:
         # Handle Weaviate-specific errors

@@ -124,27 +124,86 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
     return foss_wvc_collection
 
 def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
-
-    try:
-        # Method 1: Simple list of collection names
-        collections = client.collections.list_all(simple=True)
-        print("Collection names:")
-        for name in collections.keys():
-            print(f"- {name}")
     
-        # Method 2: One-liner with list comprehension
-        collection_names = list(client.collections.list_all(simple=True).keys())
-        print(f"Collections: {', '.join(collection_names)}")
-        
-        
-        
-    finally:
-        client.close()
-        print("Weaviate client connection closed")
+    
+    # Method 1: Simple list of collection names
+    collections = client.collections.list_all(simple=True)
+    print("Collection names:")
+    for name in collections.keys():
+        print(f"- {name}")
 
-def inspect_specific_weaviate_collection(client: weaviate.WeaviateClient, collection_name: str) -> None:
+    # Method 2: One-liner with list comprehension
+    collection_names = list(client.collections.list_all(simple=True).keys())
+    print(f"Collections: {', '.join(collection_names)}")
+        
+        
+        
+   
+    
 
-    print(client.collections.get(collection_name))
+def inspect_collection_properties(client: weaviate.WeaviateClient, collection_name: str) -> None:
+
+    
+    
+    # # Get the collection
+    # collection = client.collections.get(collection_name)
+
+    # # 1. Check basic collection info
+    # print(f"Collection name: {collection.name}")
+    # # Get the full config first, then access description
+    # config = collection.config.get()
+    # print(f"Collection description: {config.description}")
+
+    # # 2. Check properties
+    # print("\nProperties:")
+    # for prop in config.properties:
+    #     print(f"- {prop.name} ({prop.data_type}): {prop.description}")
+
+    # # 3. Check named vectors
+    # print("\nNamed Vectors:")
+    # if hasattr(config, 'vector_config') and config.vector_config:
+    #     for vector_name in config.vector_config:
+    #         vector_config = config.vector_config[vector_name]
+    #         print(f"- {vector_name}")
+    #         print(f"  Vectorizer: {vector_config.vectorizer}")
+    #         if hasattr(vector_config, 'vector_index_config') and vector_config.vector_index_config:
+    #             print(f"  Index type: {vector_config.vector_index_config.index_type}")
+    #             if hasattr(vector_config.vector_index_config, 'distance_metric'):
+    #                 print(f"  Distance metric: {vector_config.vector_index_config.distance_metric}")
+    # Get the collection
+    collection = client.collections.get(collection_name)
+
+    # 1. Check basic collection info
+    print(f"Collection name: {collection.name}")
+    config = collection.config.get()
+    print(f"Collection description: {config.description}")
+
+    # 2. Check properties
+    print("\nProperties:")
+    for prop in config.properties:
+        print(f"- {prop.name} ({prop.data_type}): {prop.description}")
+
+    # 3. Check named vectors
+    print("\nNamed Vectors:")
+    if hasattr(config, 'vector_config') and config.vector_config:
+        for vector_name in config.vector_config:
+            vector_config = config.vector_config[vector_name]
+            print(f"- {vector_name}")
+            print(f"  Vectorizer: {vector_config.vectorizer}")
+            
+            # Check if vector_index_config exists
+            if hasattr(vector_config, 'vector_index_config') and vector_config.vector_index_config:
+                # Get the vector index type from the class name instead of an attribute
+                index_type = vector_config.vector_index_config.__class__.__name__
+                print(f"  Index type: {index_type}")
+                
+                # Check for distance metric if it exists
+                if hasattr(vector_config.vector_index_config, 'distance_metric'):
+                    print(f"  Distance metric: {vector_config.vector_index_config.distance_metric}")
+
+    
+        
+    
 
 def retrieve_existing_weaviate_collection(collection_name: str, weaviate_client:weaviate.WeaviateClient) -> weaviate.collections.Collection:
     """
