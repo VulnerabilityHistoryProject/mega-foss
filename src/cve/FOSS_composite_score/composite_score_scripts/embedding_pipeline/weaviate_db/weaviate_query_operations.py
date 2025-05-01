@@ -82,10 +82,11 @@ def get_query_vector_responses(response: QueryReturn) -> list[VectorResponse]:
     and it's certainty.
 
     Args:
-        response (QueryReturn): _description_
+        response (QueryReturn): object containing all of the vectors nearest to the query using cosine similarity.
 
     Returns:
-        list[VectorResponse]: _description_
+        list[VectorResponse]: List containing each responses detailed metrics: name of FOSS project, consine similarity (distance),
+        and certainty.
     """
     vector_responses = []
 
