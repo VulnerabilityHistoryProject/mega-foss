@@ -30,7 +30,9 @@ from embedding_models.GTE_large_embed import embed_prompt_with_gte_large
 @dataclass
 class FOSSProjectDataObject:
     """
-    
+    FOSSProjectDataObject is a dataclass that stores the weaviate data object which is used to
+    define the schema in the vector database. This dataclass also stores all 10 of the embedded 
+    and vectorized representations of the FOSS project name and FOSS project name + descriptions.
     """
     weaviate_data_object: dict[str, str]
     nomic_name_vec: list[float]
@@ -83,64 +85,103 @@ def create_data_object_and_store(json_file: str) -> list[FOSSProjectDataObject]:
             }
 
             ### Create vector representations for FOSS project names ###
-            nomic_name_vec : list [float] = embed_prompt_with_nomic(prompt=project_name)
-            distil_bert_name_vec : list[float] = embed_prompt_with_distil_bert(prompt=project_name)
-            sbert_l6_name_vec : list [float] = embed_prompt_with_sbert_mini_l6(prompt=project_name)
-            sbert_l12_name_vec : list [float] = embed_prompt_with_sbert_mini_l12(prompt=project_name)
-            gte_large_name_vec: list [float] = embed_prompt_with_gte_large(prompt=project_name)
+            nomic_name_vec, sbert_l6_name_vec, sbert_l12_name_vec, distil_bert_name_vec, gte_large_name_vec = embed_name(project_name=project_name)
 
             ### Create vector representations for FOSS project names + FOSS project descriptions ###
+            bge_large_name_description_vec, e5_large_name_description_vec, sbert_mpnet_name_description_vec , roberta_large_name_description_vec, gte_large_name_description_vec  = embed_name_description(name_description=name_description)
 
-            bge_large_name_description_vec : list[float] = embed_prompt_with_bge_large(prompt=name_description)
-            e5_large_name_description_vec : list[float] = embed_prompt_with_e5_large(prompt=name_description)
-            sbert_mpnet_name_description_vec : list[float] = embed_prompt_with_sbert_mpnet(prompt=name_description)
-            roberta_large_name_description_vec : list[float] = embed_prompt_with_roberta_large(prompt=name_description)
-            gte_large_name_description_vec : list[float] = embed_prompt_with_gte_large(prompt=name_description)
 
             data_objects.append(
+
                 FOSSProjectDataObject(
                     weaviate_data_object=data_object,
 
                     nomic_name_vec=nomic_name_vec,
-                    sbert_l6_name_vec=
-                    sbert_l12_name_vec=
+                    sbert_l6_name_vec= sbert_l6_name_vec,
+                    sbert_l12_name_vec= sbert_l12_name_vec,
                     distil_bert_name_vec=distil_bert_name_vec,
-                    gte_name_vec= ,
+                    gte_name_vec= gte_large_name_vec,
 
-
-
-                )
-                
+                    bge_description_vec= bge_large_name_description_vec,
+                    e5_description_vec= e5_large_name_description_vec,
+                    gte_description_vec= gte_large_name_description_vec,
+                    roberta_description_vec= roberta_large_name_description_vec,
+                    sbert_mpnet_description_vec= sbert_mpnet_name_description_vec
+                )  
             )
 
     return data_objects
 
+def embed_name(project_name: str) -> tuple[list[float]]:
+    """
+    Helper function to embed the project name using all 5 embedding models that are suited
+    for short text (1-3 words).
+
+    Args:
+        project_name (str): Name of Foss project to embed.
+
+    Returns:
+        tuple[list[float]]: Project name embedded with all 5 different models.
+    """
+    return (
+        embed_prompt_with_nomic(prompt=project_name),
+        embed_prompt_with_distil_bert(prompt=project_name),
+        embed_prompt_with_sbert_mini_l6(prompt=project_name),
+        embed_prompt_with_sbert_mini_l12(prompt=project_name),
+        embed_prompt_with_gte_large(prompt=project_name)
+    )
+
+def embed_name_description(name_description: str) -> tuple[list[float]]:
+    """
+    Helper function to embed the project name + description using all 5 embedding models that are suited
+    for multi-sentences.
+
+    Args:
+        name_description (str): Name of Foss project appended to the description of the Foss project.
+
+    Returns:
+        tuple[list[float]]: Project name + description embedded with all 5 different models.
+    """
+    return (
+        embed_prompt_with_bge_large(prompt=name_description),
+        embed_prompt_with_e5_large(prompt=name_description),
+        embed_prompt_with_sbert_mpnet(prompt=name_description),
+        embed_prompt_with_roberta_large(prompt=name_description),
+        embed_prompt_with_gte_large(prompt=name_description)
+    )
 
 
-def batch_import_data_objects(data_objects: list[tuple[dict,list[float]]] ,collection: weaviate.collections.Collection) -> None:
-   
+
+def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collection: weaviate.collections.Collection) -> None:
+    """
+    Imports both the  name embeddings for the FOSS projects as well as the 
+    name + description embeddings for all the FOSS projects.
+
+    Args:
+        data_objects (list[FOSSProjectDataObject]): dataclass containing the 10 embedded vectors.
+        collection (weaviate.collections.Collection): Weaviate class used for designating parts of a weaviate database.
+    """
 
     banner("Starting to batch import data objects into Weaviate!!!!")
 
 
     # Now batch import with error handling
     with collection.batch.dynamic() as batch:
-        for data_object, nomic,sbert_l6,sbertl12,distil_bert,gte_large_name,bge_large,e5_large,gte_large_name_descr,roberta_large,sbert_mpnet in data_objects:
+        for obj in data_objects:
             batch.add_object(
-                properties=data_object,
+                properties=obj.weaviate_data_object,
                 vector={
-                    "ollama_nomic_name_vec": nomic,
-                    "sbert_minilm_l6_v2_name_vec" :sbert_l6,
-                    "sbert_minilm_l12_v2_name_vec" :sbertl12,
-                    "distil_bert_name_vec": distil_bert,
-                    "gte_large_name_vec": gte_large_name,
+                    "ollama_nomic_name_vec": obj.nomic_name_vec,
+                    "sbert_minilm_l6_v2_name_vec": obj.sbert_l6_name_vec,
+                    "sbert_minilm_l12_v2_name_vec": obj.sbert_l12_name_vec,
+                    "distil_bert_name_vec": obj.distil_bert_name_vec,
+                    "gte_large_name_vec": obj.gte_name_vec,
 
-                    ### Named Vectors for FOSS project descriptions +  CVE descriptions
-                    "bge_large_description_vec" :bge_large,
-                    "e5_large_description_vec" : e5_large,
-                    "gte_large_description_vec" : gte_large_name_descr,
-                    "roberta_large_description_vec" : roberta_large,
-                    "sbert_mpnet_base_v2_description_vec" : sbert_mpnet
+                    "bge_large_description_vec": obj.bge_description_vec,
+                    "e5_large_description_vec": obj.e5_description_vec,
+                    "gte_large_description_vec": obj.gte_description_vec,
+                    "roberta_large_description_vec": obj.roberta_description_vec,
+                    "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec
                 }
             )
             # Monitor errors during insertion
