@@ -12,6 +12,7 @@ import weaviate
 from weaviate.classes.init import Auth
 from weaviate.classes.config import Configure, VectorDistances, Property, DataType
 from dotenv import load_dotenv
+import numpy as np
 
 def create_remote_weaviate_client() -> weaviate.WeaviateClient:
     """
@@ -138,7 +139,59 @@ def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
         
         
         
-   
+def insert_test_data(client: weaviate.WeaviateClient) -> None:
+
+    collection = client.collections.get("FOSS_vectors")
+    
+    # Create random vectors of appropriate dimensions for each model
+    # Note: Replace these dimensions with the actual dimensions of your models
+    vector_dimensions = {
+        "ollama_nomic_name_vec": 768,
+        "sbert_minilm_l6_v2_name_vec": 384,
+        "sbert_minilm_l12_v2_name_vec": 384,
+        "distil_bert_name_vec": 768,
+        "gte_large_name_vec": 1024,
+        "bge_large_description_vec": 1024,
+        "e5_large_description_vec": 1024,
+        "gte_large_description_vec": 1024,
+        "roberta_large_description_vec": 1024,
+        "sbert_mpnet_base_v2_description_vec": 768
+    }
+    
+    # Generate random vectors for testing
+    test_vectors = {}
+    for vector_name, dim in vector_dimensions.items():
+        # Create normalized random vectors (unit length)
+        random_vector = np.random.rand(dim).astype(float)
+        normalized_vector = random_vector / np.linalg.norm(random_vector)
+        test_vectors[vector_name] = normalized_vector.tolist()
+    
+    # Insert test object with all required vectors
+    test_uuid = collection.data.insert(
+        properties={
+            "name": "TensorFlow",
+            "description": "An open source machine learning framework for everyone",
+            "hash": "tf12345hash"
+        },
+        vector=test_vectors
+    )
+    
+    print(f"Successfully inserted test object with UUID: {test_uuid}")
+    
+    # Verify by retrieving the object with vectors
+    result = collection.query.fetch_object_by_id(
+        uuid=test_uuid,
+        include_vector=True
+    )
+    
+    print("\nVerifying vectors in retrieved object:")
+    for vector_name in result.vector:
+        print(f"- {vector_name}: {len(result.vector[vector_name])} dimensions")
+    
+    print("\nObject properties:")
+    print(result.properties)
+    
+
     
 
 def inspect_collection_properties(client: weaviate.WeaviateClient, collection_name: str) -> None:
@@ -224,6 +277,9 @@ if __name__ == "__main__":
 
     local_client = connect_to_local_weaviate_client()
     print(verify_weaviate_client_ready(local_client))
+
+
+
 
     close_weaviate_client(local_client)
 

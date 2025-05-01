@@ -37,7 +37,7 @@ from weaviate.exceptions import WeaviateBaseError
 from weaviate_db.weaviate_config import connect_to_local_weaviate_client
 from weaviate_db.weaviate_config import verify_weaviate_client_ready
 from weaviate_db.weaviate_config import close_weaviate_client
-from weaviate_db.weaviate_config import create_weaviate_collection, list_weaviate_collections, inspect_collection_properties
+from weaviate_db.weaviate_config import insert_test_data, list_weaviate_collections, inspect_collection_properties
 from weaviate_db.weaviate_config import retrieve_existing_weaviate_collection
 
 
@@ -60,7 +60,9 @@ def main() -> None:
         
         list_weaviate_collections(local_client)
         inspect_collection_properties(local_client,FOSS_COLLECTION)
-        
+
+
+        insert_test_data(local_client)
     except WeaviateBaseError as e:
         # Handle Weaviate-specific errors
         print(f"Weaviate error occurred: {e.message}")
