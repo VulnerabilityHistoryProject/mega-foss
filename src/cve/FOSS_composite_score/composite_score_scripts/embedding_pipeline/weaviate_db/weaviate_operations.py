@@ -9,17 +9,22 @@ Author: @Trust-Worthy
 
 """
 
-from pathlib import Path
 import weaviate
-import weaviate.classes.config as wvc_config
 import json
 import hashlib
 
 from embedding_models.nomic_embed import embed_prompt_with_nomic
 from embedding_models.DISTIL_BERT_embed import embed_prompt_with_distil_bert
+from embedding_models.SBERT_mini_lm_l6_embed import embed_prompt_with_sbert_mini_l6
+from embedding_models.SBERT_mini_lm_l12_embed import embed_prompt_with_sbert_mini_l12
 
+from embedding_models.BGE_large_embed import embed_prompt_with_bge_large
+from embedding_models.E5_large_embed import embed_prompt_with_e5_large
+from embedding_models.SBERT_mpnet_embed import embed_prompt_with_sbert_mpnet
+from embedding_models.ROBERTA_large_embed import embed_prompt_with_roberta_large
+from embedding_models.GTE_large_embed import embed_prompt_with_gte_large
 
-def create_data_object_and_store(json_file: str, collection: weaviate.collections.Collection) -> None:
+def create_data_object_and_store(json_file: str) -> None:
 
     data_objects = []
     with open(json_file,'r') as file:
@@ -50,33 +55,54 @@ def create_data_object_and_store(json_file: str, collection: weaviate.collection
             
             
             # Create data object which will be used for Weaviate
-            data_object = {
+            data_object: dict[str,str] = {
                 "name": project_name,
                 "description": description,
                 "foss_hash": hashed_foss_name
             }
 
             ### Create vector representations for FOSS project names ###
-            nomic_embed_name = list [float] = embed_prompt_with_nomic(prompt=project_name)
-            distil_bert_name = list[float] = embed_prompt_with_distil_bert(prompt=project_name)
-            
-
+            nomic_embed_name_vec = list [float] = embed_prompt_with_nomic(prompt=project_name)
+            distil_bert_name_vec = list[float] = embed_prompt_with_distil_bert(prompt=project_name)
+            sbert_l6_name_vec = list [float] = embed_prompt_with_sbert_mini_l6(prompt=project_name)
+            sbert_l12_name_vec = list [float] = embed_prompt_with_sbert_mini_l12(prompt=project_name)
 
             ### Create vector representations for FOSS project names + FOSS project descriptions ###
 
-            ### Create vector represenations of the project names & the names + project descriptions
-            vectorized_name_description: list[float] = ollama_nomic_embed(name_description)
-            vectorized_name: list[float] = ollama_nomic_embed(project_name)
-            
+            bge_large_name_description_vec = list[float] = embed_prompt_with_bge_large(prompt=name_description)
+            e5_large_name_description_vec = list[float] = embed_prompt_with_e5_large(prompt=name_description)
+            sbert_mpnet_name_description_vec = list[float] = embed_prompt_with_sbert_mpnet(prompt=name_description)
+            roberta_large_name_description_vec = list[float] = embed_prompt_with_roberta_large(prompt=name_description)
+            gte_large_name_description_vec = list[float] = embed_prompt_with_gte_large(prompt=name_description)
 
-            data_objects.append((data_object, vectorized_name, vectorized_name_description))
+            data_objects.append(
+                (
+                data_object,
+                ### Name vectors
+                nomic_embed_name_vec,
+                sbert_l6_name_vec,
+                sbert_l12_name_vec,
+                distil_bert_name_vec,
+                gte_large_name_description_vec,
+
+                ### Name + description vectors
+                bge_large_name_description_vec,
+                e5_large_name_description_vec,
+                gte_large_name_description_vec,
+                roberta_large_name_description_vec,
+                sbert_mpnet_name_description_vec
+                )
+                
+            )
 
 
+
+def batch_import_data_obejcts(data_objects: list[tuple[dict,list[float]]] ,collection: weaviate.collections.Collection) -> None:
     print("#############################################")
     print("#############################################")
     print("#############################################")
     print("#############################################")
-    print("Starting to import the data into Weaviate!!!!")
+    print("Starting to batch import data objects into Weaviate!!!!")
 
 
     # Now batch import with error handling
@@ -107,9 +133,8 @@ def create_data_object_and_store(json_file: str, collection: weaviate.collection
 
     # Check for failed objects after batch completes
     failed_objects = collection.batch.failed_objects
+
     if failed_objects:
         print(f"Number of failed imports: {len(failed_objects)}")
-        for i, obj in enumerate(failed_objects[:5]):  # Print first 5 failures
+        for i, obj in enumerate(failed_objects):  # Print first 5 failures
             print(f"Failed object {i+1}: {obj}")
-
-
