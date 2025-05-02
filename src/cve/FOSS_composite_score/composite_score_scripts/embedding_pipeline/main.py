@@ -38,7 +38,7 @@ from weaviate_db.weaviate_config import connect_to_local_weaviate_client
 from weaviate_db.weaviate_config import verify_weaviate_client_ready
 from weaviate_db.weaviate_config import close_weaviate_client
 from weaviate_db.weaviate_config import list_weaviate_collections, inspect_collection_properties, retrieve_existing_weaviate_collection
-from weaviate_db.weaviate_write_operations import create_data_object, batch_import_data_objects
+from weaviate_db.weaviate_write_operations import create_data_objects, batch_import_data_objects
 
 
 # foss_proj_space_csv: Path = Path("../csv_github_data_cleaned/FOSS_projects_space.csv")
@@ -61,7 +61,7 @@ def main() -> None:
         # list_weaviate_collections(local_client)
         # inspect_collection_properties(local_client,FOSS_COLLECTION)
         foss_collection_obj = retrieve_existing_weaviate_collection(FOSS_COLLECTION,weaviate_client=local_client)
-        data_objects = create_data_object(foss_name_description_json)
+        data_objects = create_data_objects(foss_name_description_json)
         batch_import_data_objects(data_objects=data_objects, collection=foss_collection_obj)
         
     except WeaviateBaseError as e:

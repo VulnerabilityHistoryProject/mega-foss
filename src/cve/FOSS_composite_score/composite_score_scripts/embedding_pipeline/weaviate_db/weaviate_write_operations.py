@@ -47,7 +47,7 @@ class FOSSProjectDataObject:
     roberta_description_vec: list[float]
     sbert_mpnet_description_vec: list[float]
 
-def create_data_object(json_file: str) -> list[FOSSProjectDataObject]:
+def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
 
     data_objects = []
     with open(json_file,'r') as file:
