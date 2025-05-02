@@ -1,5 +1,5 @@
 
-from load_models import model_sbert_l6
+from embedding_pipeline.embedding_models.load_models import model_sbert_l6
 
 
 def embed_prompt_with_sbert_mini_l6(prompt: str) -> list[float]:

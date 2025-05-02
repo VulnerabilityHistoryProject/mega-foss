@@ -1,5 +1,5 @@
 
-from load_models import model_sbert_l12
+from embedding_pipeline.embedding_models.load_models import model_sbert_l12
 
 
 def embed_prompt_with_sbert_mini_l12(prompt: str) -> list[float]:

@@ -9,7 +9,7 @@ Author: @Trust-Worthy
 
 import torch
 import torch.nn.functional as F
-from load_models import tokenizer_bge,model_bge_basic
+from embedding_pipeline.embedding_models.load_models import tokenizer_bge,model_bge_basic
 
 
 def embed_prompt_with_bge_large(prompt: str) -> list[float]:
