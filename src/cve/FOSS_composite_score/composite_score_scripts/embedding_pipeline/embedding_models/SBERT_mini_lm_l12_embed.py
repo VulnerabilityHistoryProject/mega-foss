@@ -6,7 +6,7 @@ def embed_prompt_with_sbert_mini_l12(prompt: str) -> list[float]:
 
     
 
-    embedding = model_sbert_l12.encode(prompt,normalize_embeddings=True)
+    embedding = model_sbert_l12.encode(sentences=[prompt],normalize_embeddings=True)
     
     
     embedding_list = embedding.tolist()

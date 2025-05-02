@@ -12,7 +12,13 @@ def embed_prompt_with_roberta_large(prompt: str) -> list[float]:
 
 
     ### Creates pytorch tensors representing token IDs ###
-    inputs =  tokenizer_roberta_large(text=prompt, max_length= 512, return_tensors="pt", padding=True, truncation=True)
+    inputs =  tokenizer_roberta_large(
+        text=prompt, 
+        max_length= 512, 
+        return_tensors="pt", 
+        padding=True, 
+        truncation=True
+    )
 
 
     ### Embed ### 

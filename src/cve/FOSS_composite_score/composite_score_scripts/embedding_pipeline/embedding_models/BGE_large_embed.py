@@ -20,8 +20,8 @@ def embed_prompt_with_bge_large(prompt: str) -> list[float]:
     Returns:
         list[float]: List of floats representing the embedding of the prompt.
     """
-    
-    embedding = model_bge.encode(prompt,normalize_embeddings=True)
+
+    embedding = model_bge.encode(sentences=[prompt],normalize_embeddings=True)
     
     
     embedding_list = embedding.tolist()

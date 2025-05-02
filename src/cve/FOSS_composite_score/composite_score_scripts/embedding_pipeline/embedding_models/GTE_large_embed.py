@@ -4,7 +4,7 @@ from embedding_models.load_models import model_gte
 
 def embed_prompt_with_gte_large(prompt: str) -> list[float]:
 
-    embedding = model_gte.encode(prompt,normalize_embeddings=True)
+    embedding = model_gte.encode(sentences=[prompt],normalize_embeddings=True)
     
     
     embedding_list = embedding.tolist()

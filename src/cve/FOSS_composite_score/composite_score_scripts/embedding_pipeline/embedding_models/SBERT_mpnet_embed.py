@@ -3,7 +3,7 @@
 from embedding_models.load_models import model_mpnet
 
 
-def embed_prompt_with_sbert_mpnet(prompt: str) -> list[str]:
+def embed_prompt_with_sbert_mpnet(prompt: str) -> list[float]:
     
     
     embedding = model_mpnet.encode(prompt,normalize_embeddings=True)
