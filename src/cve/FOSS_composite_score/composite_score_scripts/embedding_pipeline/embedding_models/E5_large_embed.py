@@ -1,5 +1,5 @@
 
-from load_models import model_e5
+from embedding_pipeline.embedding_models.load_models import model_e5
 
 
 

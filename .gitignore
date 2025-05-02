@@ -127,6 +127,7 @@ celerybeat.pid
 
 **/FOSS_projects_with_dependency_info.json
 **/flattened_data.json
+**/*.pkl
 # SageMath parsed files
 *.sage.py
 

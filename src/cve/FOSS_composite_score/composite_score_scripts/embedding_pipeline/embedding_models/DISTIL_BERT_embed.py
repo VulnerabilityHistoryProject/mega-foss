@@ -1,7 +1,7 @@
 
 
 
-from load_models import model_distil_bert
+from embedding_pipeline.embedding_models.load_models import model_distil_bert
 
 def embed_prompt_with_distil_bert(prompt: str) -> list[float]:
 

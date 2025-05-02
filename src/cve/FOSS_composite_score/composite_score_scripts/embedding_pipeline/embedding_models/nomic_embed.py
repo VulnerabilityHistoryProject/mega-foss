@@ -8,7 +8,7 @@ Author: @Trust-Worthy
 """
 
 
-from load_models import model_ollama_client, OLLAMA_NOMIC_EMBED_TEXT
+from embedding_pipeline.embedding_models.load_models import model_ollama_client, OLLAMA_NOMIC_EMBED_TEXT
 
 
 def embed_prompt_with_nomic(prompt: str) -> list[float]:
