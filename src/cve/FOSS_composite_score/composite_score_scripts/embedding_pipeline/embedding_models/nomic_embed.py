@@ -7,9 +7,8 @@ Author: @Trust-Worthy
 
 """
 
-import ollama
 
-from config_embedding_models import OLLAMA_NOMIC_EMBED_TEXT
+from embedding_models.load_models import model_ollama_client, OLLAMA_NOMIC_EMBED_TEXT
 
 
 def embed_prompt_with_nomic(prompt: str) -> list[float]:
@@ -23,7 +22,7 @@ def embed_prompt_with_nomic(prompt: str) -> list[float]:
         list[float]: Vectorized representation of the prompt. Either 768 vectors or 8192 depending on the model
     """
 
-    response = ollama.embeddings(
+    response = model_ollama_client.embeddings(
         model=OLLAMA_NOMIC_EMBED_TEXT,
         prompt=prompt
     )

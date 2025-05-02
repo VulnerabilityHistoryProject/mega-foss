@@ -21,7 +21,7 @@ E5_LARGE = "intfloat/e5-large"
 # SBERT with MPNet backbone (great general-purpose model)
 SBERT_MPNET = "sentence-transformers/all-mpnet-base-v2"
 # RoBERTa Large (usually fine-tuned for classification; limited in embedding use unless adapted)
-ROBERTA_LARGE = "roberta-large"
+ROBERTA_LARGE = "roberta-large-nli-stsb-mean-tokens"
 
 ### Control model that will be used for both FOSS project names and descriptions
 GTE_LARGE = "thenlper/gte-large"

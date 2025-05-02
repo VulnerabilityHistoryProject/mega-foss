@@ -1,35 +1,17 @@
-from transformers import AutoTokenizer, AutoModel
-import torch
-import torch.nn.functional as F
-from config_embedding_models import GTE_LARGE
+
+from embedding_models.load_models import model_gte
 
 
 def embed_prompt_with_gte_large(prompt: str) -> list[float]:
 
-    ### Load Tokenizer and Model ###
-    tokenizer = AutoTokenizer.from_pretrained(GTE_LARGE)
-    model = AutoModel.from_pretrained(GTE_LARGE)
-
-    model.eval()
-
-
-    ### Creates pytorch tensors representing token IDs ###
-    inputs =  tokenizer(text=prompt, return_tensors="pt", padding=True, truncation=True)
-
-
-    ### Embed ### 
-    with torch.no_grad():
-        outputs = model(**inputs)
-
-        # Use the [CLS] token embedding as sentence representation
-        cls_embedding = outputs.last_hidden_state[:, 0, :]
-
-
-    normalized = F.normalize(cls_embedding, p=2, dim=1)
-    embedding = normalized.squeeze().tolist()  # best for similarity
+    embedding = model_gte.encode(prompt,normalize_embeddings=True)
+    
+    
+    embedding_list = embedding.tolist()
+    
 
     
-    return embedding
+    return embedding_list
 
 
 if __name__ == "__main__":

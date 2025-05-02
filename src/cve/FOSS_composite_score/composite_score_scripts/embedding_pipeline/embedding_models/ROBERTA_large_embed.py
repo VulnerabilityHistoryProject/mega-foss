@@ -1,25 +1,23 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F
-from config_embedding_models import ROBERTA_LARGE
+from embedding_models.load_models import tokenizer_roberta_large, model_roberta_large
 
 
 def embed_prompt_with_roberta_large(prompt: str) -> list[float]:
 
-    ### Load Tokenizer and Model ###
-    tokenizer = AutoTokenizer.from_pretrained(ROBERTA_LARGE)
-    model = AutoModel.from_pretrained(ROBERTA_LARGE)
+   
 
-    model.eval()
+    model_roberta_large.eval()
 
 
     ### Creates pytorch tensors representing token IDs ###
-    inputs =  tokenizer(text=prompt, return_tensors="pt", padding=True, truncation=True)
+    inputs =  tokenizer_roberta_large(text=prompt, max_length= 512, return_tensors="pt", padding=True, truncation=True)
 
 
     ### Embed ### 
     with torch.no_grad():
-        outputs = model(**inputs)
+        outputs = model_roberta_large(**inputs)
 
         # Use the [CLS] token embedding as sentence representation
         cls_embedding = outputs.last_hidden_state[:, 0, :]

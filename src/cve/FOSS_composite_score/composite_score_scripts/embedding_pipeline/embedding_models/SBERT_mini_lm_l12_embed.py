@@ -1,23 +1,20 @@
-from sentence_transformers import SentenceTransformer
-from config_embedding_models import SBERT_MINI_LM_L12_V2
+
+from embedding_models.load_models import model_sbert_l12
 
 
 def embed_prompt_with_sbert_mini_l12(prompt: str) -> list[float]:
 
     
 
-    # Load the model
-    model = SentenceTransformer(SBERT_MINI_LM_L12_V2)
-
+    embedding = model_sbert_l12.encode(prompt,normalize_embeddings=True)
+    
+    
+    embedding_list = embedding.tolist()
     
 
-    # Encode (automatically normalized for cosine similarity if needed)
-    embedding = model.encode(sentences=prompt, normalize_embeddings=True)  # shape: (768,)
-
-    # Optional: convert to list if saving to DB like Weaviate
-    embedding_list = embedding.tolist()
-
+    
     return embedding_list
+
 
 
 if __name__ == "__main__":

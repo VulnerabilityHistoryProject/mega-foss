@@ -1,17 +1,20 @@
-from sentence_transformers import SentenceTransformer
 
 
-from config_embedding_models import SBERT_MPNET
+from embedding_models.load_models import model_mpnet
 
 
 def embed_prompt_with_sbert_mpnet(prompt: str) -> list[str]:
+    
+    
+    embedding = model_mpnet.encode(prompt,normalize_embeddings=True)
+    
+    
+    embedding_list = embedding.tolist()
+    
 
-    model = SentenceTransformer(SBERT_MPNET)
+    
+    return embedding_list
 
-    # Generate normalized embedding (automatically normalized for cosine similarity)
-    embedding = model.encode(prompt, normalize_embeddings=True).tolist()
-
-    return embedding
 
 
 

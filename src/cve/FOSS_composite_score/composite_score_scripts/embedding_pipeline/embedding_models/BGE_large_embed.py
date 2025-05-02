@@ -7,44 +7,28 @@ Author: @Trust-Worthy
 
 """
 
-from transformers import AutoTokenizer, AutoModel
-import torch
-from config_embedding_models import BGE_LARGE
+from embedding_models.load_models import model_bge
 
 
 def embed_prompt_with_bge_large(prompt: str) -> list[float]:
     """
-    Embeds a prompt (a few sentences) using the BGE Large model and tokenizes the prompt
-    is a human readable format.
+    Embeds a prompt using the BGE Large model and returns the embedding vector.
 
     Args:
-        prompt (str): Text to be embedded and tokenized.
+        prompt (str): Text to be embedded.
 
     Returns:
-        TokensAndVectors: Returns a list of tokens and a list of vectors that belong to a single prompt.
+        list[float]: List of floats representing the embedding of the prompt.
     """
-    ### Load Tokenizer and Model ###
-    tokenizer = AutoTokenizer.from_pretrained(BGE_LARGE)
-    model = AutoModel.from_pretrained(BGE_LARGE)
-    model.eval()
-
-    ### Creates pytorch tensors representing token IDs ###
-    inputs =  tokenizer(text=prompt, return_tensors="pt", padding=True, truncation=True)
-
-
-    ### Embed ### 
-    with torch.no_grad():
-        outputs = model(**inputs)
-
-        # Use the [CLS] token embedding as sentence representation
-        cls_embedding = outputs.last_hidden_state[:, 0, :]
-
-
-    normalized = torch.nn.functional.normalize(cls_embedding, p=2, dim=1)
-    embedding = normalized.squeeze().tolist()  # best for similarity
+    
+    embedding = model_bge.encode(prompt,normalize_embeddings=True)
+    
+    
+    embedding_list = embedding.tolist()
+    
 
     
-    return embedding
+    return embedding_list
 
 
 
