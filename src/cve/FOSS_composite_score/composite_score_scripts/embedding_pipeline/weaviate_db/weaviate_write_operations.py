@@ -205,3 +205,8 @@ def banner(msg: str):
     print("\n" + "#" * 50)
     print(msg)
     print("#" * 50 + "\n")
+
+
+if __name__ == "__main__":
+
+    banner()
