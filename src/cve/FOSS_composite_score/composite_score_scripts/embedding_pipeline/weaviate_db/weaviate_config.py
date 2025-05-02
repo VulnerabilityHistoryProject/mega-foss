@@ -12,6 +12,7 @@ import weaviate
 from weaviate.classes.init import Auth
 from weaviate.classes.config import Configure, VectorDistances, Property, DataType
 from dotenv import load_dotenv
+import numpy as np
 
 def create_remote_weaviate_client() -> weaviate.WeaviateClient:
     """
@@ -43,9 +44,10 @@ def connect_to_local_weaviate_client() -> weaviate.WeaviateClient:
     Returns:
         weaviate.WeaviateClient: _description_
     """
+    print("Connecting to local client...")
     local_client = weaviate.connect_to_local()
 
-    print("Connected to local weaviate client--> is ready: " + local_client.is_ready())  # Should print: `True`
+    print("Connected to local weaviate client--> is ready: " + str(local_client.is_ready()))  # Should print: `True`
     return local_client
 
 def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
@@ -60,7 +62,7 @@ def verify_weaviate_client_ready(client: weaviate.WeaviateClient) -> bool:
         bool: _description_
     """
     is_ready: bool = client.is_ready()
-    print("Weaviate client is ready " + is_ready)
+    print("Weaviate client is ready " + str(is_ready))
     return is_ready
 
 def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
@@ -94,9 +96,9 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
 
         name="FOSS_vectors",
         # Other configuration parameters...
-        vector_index_config=Configure.VectorIndex.hnsw(
-            distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
-            ) ,  
+        # vector_index_config=Configure.VectorIndex.hnsw(
+        #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
+        #     ) ,  
         description="Open source projects with name and description",
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
@@ -109,7 +111,7 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
             ### Named Vectors for FOSS project descriptions / CVE descriptions
             Configure.NamedVectors.none(name="bge_large_description_vec"),
             Configure.NamedVectors.none(name="e5_large_description_vec"),
-            Configure.NamedVectors.none(name="gte_large _description_vec"),
+            Configure.NamedVectors.none(name="gte_large_description_vec"),
             Configure.NamedVectors.none(name="roberta_large_description_vec"),
             Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
         ],
@@ -122,7 +124,139 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
 
     return foss_wvc_collection
 
+def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
+    
+    
+    # Method 1: Simple list of collection names
+    collections = client.collections.list_all(simple=True)
+    print("Collection names:")
+    for name in collections.keys():
+        print(f"- {name}")
 
+    # Method 2: One-liner with list comprehension
+    collection_names = list(client.collections.list_all(simple=True).keys())
+    print(f"Collections: {', '.join(collection_names)}")
+        
+        
+        
+def insert_test_data(client: weaviate.WeaviateClient) -> None:
+
+    collection = client.collections.get("FOSS_vectors")
+    
+    # Create random vectors of appropriate dimensions for each model
+    # Note: Replace these dimensions with the actual dimensions of your models
+    vector_dimensions = {
+        "ollama_nomic_name_vec": 768,
+        "sbert_minilm_l6_v2_name_vec": 384,
+        "sbert_minilm_l12_v2_name_vec": 384,
+        "distil_bert_name_vec": 768,
+        "gte_large_name_vec": 1024,
+        "bge_large_description_vec": 1024,
+        "e5_large_description_vec": 1024,
+        "gte_large_description_vec": 1024,
+        "roberta_large_description_vec": 1024,
+        "sbert_mpnet_base_v2_description_vec": 768
+    }
+    
+    # Generate random vectors for testing
+    test_vectors = {}
+    for vector_name, dim in vector_dimensions.items():
+        # Create normalized random vectors (unit length)
+        random_vector = np.random.rand(dim).astype(float)
+        normalized_vector = random_vector / np.linalg.norm(random_vector)
+        test_vectors[vector_name] = normalized_vector.tolist()
+    
+    # Insert test object with all required vectors
+    test_uuid = collection.data.insert(
+        properties={
+            "name": "TensorFlow",
+            "description": "An open source machine learning framework for everyone",
+            "hash": "tf12345hash"
+        },
+        vector=test_vectors
+    )
+    
+    print(f"Successfully inserted test object with UUID: {test_uuid}")
+    
+    # Verify by retrieving the object with vectors
+    result = collection.query.fetch_object_by_id(
+        uuid=test_uuid,
+        include_vector=True
+    )
+    
+    print("\nVerifying vectors in retrieved object:")
+    for vector_name in result.vector:
+        print(f"- {vector_name}: {len(result.vector[vector_name])} dimensions")
+    
+    print("\nObject properties:")
+    print(result.properties)
+    
+
+    
+
+def inspect_collection_properties(client: weaviate.WeaviateClient, collection_name: str) -> None:
+
+    
+    
+    # # Get the collection
+    # collection = client.collections.get(collection_name)
+
+    # # 1. Check basic collection info
+    # print(f"Collection name: {collection.name}")
+    # # Get the full config first, then access description
+    # config = collection.config.get()
+    # print(f"Collection description: {config.description}")
+
+    # # 2. Check properties
+    # print("\nProperties:")
+    # for prop in config.properties:
+    #     print(f"- {prop.name} ({prop.data_type}): {prop.description}")
+
+    # # 3. Check named vectors
+    # print("\nNamed Vectors:")
+    # if hasattr(config, 'vector_config') and config.vector_config:
+    #     for vector_name in config.vector_config:
+    #         vector_config = config.vector_config[vector_name]
+    #         print(f"- {vector_name}")
+    #         print(f"  Vectorizer: {vector_config.vectorizer}")
+    #         if hasattr(vector_config, 'vector_index_config') and vector_config.vector_index_config:
+    #             print(f"  Index type: {vector_config.vector_index_config.index_type}")
+    #             if hasattr(vector_config.vector_index_config, 'distance_metric'):
+    #                 print(f"  Distance metric: {vector_config.vector_index_config.distance_metric}")
+    # Get the collection
+    collection = client.collections.get(collection_name)
+
+    # 1. Check basic collection info
+    print(f"Collection name: {collection.name}")
+    config = collection.config.get()
+    print(f"Collection description: {config.description}")
+
+    # 2. Check properties
+    print("\nProperties:")
+    for prop in config.properties:
+        print(f"- {prop.name} ({prop.data_type}): {prop.description}")
+
+    # 3. Check named vectors
+    print("\nNamed Vectors:")
+    if hasattr(config, 'vector_config') and config.vector_config:
+        for vector_name in config.vector_config:
+            vector_config = config.vector_config[vector_name]
+            print(f"- {vector_name}")
+            print(f"  Vectorizer: {vector_config.vectorizer}")
+            
+            # Check if vector_index_config exists
+            if hasattr(vector_config, 'vector_index_config') and vector_config.vector_index_config:
+                # Get the vector index type from the class name instead of an attribute
+                index_type = vector_config.vector_index_config.__class__.__name__
+                print(f"  Index type: {index_type}")
+                
+                # Check for distance metric if it exists
+                if hasattr(vector_config.vector_index_config, 'distance_metric'):
+                    print(f"  Distance metric: {vector_config.vector_index_config.distance_metric}")
+
+    
+        
+    
 
 def retrieve_existing_weaviate_collection(collection_name: str, weaviate_client:weaviate.WeaviateClient) -> weaviate.collections.Collection:
     """
@@ -137,3 +271,16 @@ def retrieve_existing_weaviate_collection(collection_name: str, weaviate_client:
         make a request to the weaviate database.
     """
     return weaviate_client.collections.get(collection_name)
+
+
+if __name__ == "__main__":
+
+    local_client = connect_to_local_weaviate_client()
+    print(verify_weaviate_client_ready(local_client))
+
+
+
+
+    close_weaviate_client(local_client)
+
+

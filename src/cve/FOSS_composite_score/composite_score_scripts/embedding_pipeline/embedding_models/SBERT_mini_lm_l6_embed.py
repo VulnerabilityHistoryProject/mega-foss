@@ -1,22 +1,18 @@
-from sentence_transformers import SentenceTransformer
-from config_embedding_models import SBERT_MINI_LM_L6_V2
+
+from load_models import model_sbert_l6
 
 
 def embed_prompt_with_sbert_mini_l6(prompt: str) -> list[float]:
 
     
 
-    # Load the model
-    model = SentenceTransformer(SBERT_MINI_LM_L6_V2)
-
+    embedding = model_sbert_l6.encode(sentences=prompt,normalize_embeddings=True)
+    
+    
+    embedding_list = embedding.tolist()
     
 
-    # Encode (automatically normalized for cosine similarity if needed)
-    embedding = model.encode(sentences=prompt, normalize_embeddings=True)  # shape: (768,)
-
-    # Optional: convert to list if saving to DB like Weaviate
-    embedding_list = embedding.tolist()
-
+    
     return embedding_list
 
 
@@ -27,4 +23,5 @@ if __name__ == "__main__":
         "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
         
     embedding_1 = embed_prompt_with_sbert_mini_l6(prompt=test_prompt_1)
+    print(embedding_1)
     print(len(embedding_1))

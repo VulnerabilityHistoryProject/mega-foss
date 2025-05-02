@@ -1,32 +1,19 @@
-import torch
-from transformers import AutoTokenizer, AutoModel
 
-from config_embedding_models import E5_LARGE
+from load_models import model_e5
 
 
 
 def embed_prompt_with_e5_large(prompt: str) -> list[float]:
 
     
-    tokenizer = AutoTokenizer.from_pretrained(E5_LARGE)
-    model = AutoModel.from_pretrained(E5_LARGE)
-
-    model.eval()
-
-    # Tokenize
-    inputs = tokenizer(text=prompt, return_tensors="pt", padding=True, truncation=True)
-
-    # Forward pass
-    with torch.no_grad():
-        outputs = model(**inputs)
-        cls_embedding = outputs.last_hidden_state[:, 0]  # CLS token
+    embedding = model_e5.encode(sentences=prompt,normalize_embeddings=True)
+    
+    
+    embedding_list = embedding.tolist()
+    
 
     
-    normalized = torch.nn.functional.normalize(cls_embedding, p=2, dim=1)
-    embedding = normalized.squeeze().tolist()  # best for similarity
-
-
-    return embedding
+    return embedding_list
 
 
 if __name__ == "__main__":
@@ -37,3 +24,4 @@ if __name__ == "__main__":
     
     embedding_1 = embed_prompt_with_e5_large(prompt=test_prompt_1)
     print(embedding_1)
+    print(len(embedding_1))

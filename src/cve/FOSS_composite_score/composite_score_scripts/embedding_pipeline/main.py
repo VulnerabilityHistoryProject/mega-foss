@@ -33,7 +33,56 @@ Future Work:
 """
 
 from pathlib import Path
+from weaviate.exceptions import WeaviateBaseError
+from weaviate_db.weaviate_config import connect_to_local_weaviate_client
+from weaviate_db.weaviate_config import verify_weaviate_client_ready
+from weaviate_db.weaviate_config import close_weaviate_client
+from weaviate_db.weaviate_config import list_weaviate_collections, inspect_collection_properties, retrieve_existing_weaviate_collection
+from weaviate_db.weaviate_write_operations import create_data_objects, batch_import_data_objects
 
 
-foss_proj_space_csv: Path = Path("../csv_github_data_cleaned/FOSS_projects_space.csv")
+# foss_proj_space_csv: Path = Path("../csv_github_data_cleaned/FOSS_projects_space.csv")
 foss_name_description_json: Path = Path("../json_github_data_cleaned/github_repositories_final_ordered.json")
+
+
+
+
+
+
+def main() -> None:
+
+    FOSS_COLLECTION = "FOSS_vectors"
+
+    try:
+        local_client = connect_to_local_weaviate_client()
+        print("weaviate client is ready: " + str(verify_weaviate_client_ready(local_client)))
+
+        
+        # list_weaviate_collections(local_client)
+        # inspect_collection_properties(local_client,FOSS_COLLECTION)
+        foss_collection_obj = retrieve_existing_weaviate_collection(FOSS_COLLECTION,weaviate_client=local_client)
+        data_objects = create_data_objects(foss_name_description_json)
+        batch_import_data_objects(data_objects=data_objects, collection=foss_collection_obj)
+        
+    except WeaviateBaseError as e:
+        # Handle Weaviate-specific errors
+        print(f"Weaviate error occurred: {e.message}")
+        # You can handle different types of errors differently if needed
+        
+    except Exception as e:
+        # Handle any other unexpected errors
+        print(f"Unexpected error occurred: {str(e)}")
+        
+    finally:
+        # This block will ALWAYS execute, even if exceptions occur
+        if local_client is not None:
+            close_weaviate_client(local_client)
+            print("Weaviate client connection closed")
+    
+    
+
+
+
+if __name__ == "__main__":
+
+    main()

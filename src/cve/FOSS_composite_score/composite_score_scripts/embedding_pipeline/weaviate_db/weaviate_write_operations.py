@@ -47,7 +47,7 @@ class FOSSProjectDataObject:
     roberta_description_vec: list[float]
     sbert_mpnet_description_vec: list[float]
 
-def create_data_object_and_store(json_file: str) -> list[FOSSProjectDataObject]:
+def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
 
     data_objects = []
     with open(json_file,'r') as file:
@@ -60,7 +60,7 @@ def create_data_object_and_store(json_file: str) -> list[FOSSProjectDataObject]:
 
             ### get project name from json
             project_name = project["FOSS project name"]
-            print("processing " + project_name + "...")
+            print("processing & embedding " + project_name + "...")
 
             ### Hash project name
             hash_object = hashlib.sha1(project_name.encode())
@@ -151,7 +151,6 @@ def embed_name_description(name_description: str) -> tuple[list[float]]:
     )
 
 
-
 def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collection: weaviate.collections.Collection) -> None:
     """
     Imports both the  name embeddings for the FOSS projects as well as the 
@@ -168,6 +167,7 @@ def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collect
     # Now batch import with error handling
     with collection.batch.dynamic() as batch:
         for obj in data_objects:
+            print("Importing" + obj.weaviate_data_object["name"] + "...")
             batch.add_object(
                 properties=obj.weaviate_data_object,
                 vector={
@@ -184,6 +184,7 @@ def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collect
                     "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec
                 }
             )
+            print("Successfully imported" + obj.weaviate_data_object["name"] + "...")
             # Monitor errors during insertion
             if batch.number_errors > 10:
                 print("Batch import stopped due to excessive errors.")
@@ -204,3 +205,8 @@ def banner(msg: str):
     print("\n" + "#" * 50)
     print(msg)
     print("#" * 50 + "\n")
+
+
+if __name__ == "__main__":
+
+    banner()
