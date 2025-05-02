@@ -8,7 +8,7 @@ Author: @Trust-Worthy
 """
 
 
-from embedding_models.load_models import model_ollama_client, OLLAMA_NOMIC_EMBED_TEXT
+from load_models import model_ollama_client, OLLAMA_NOMIC_EMBED_TEXT
 
 
 def embed_prompt_with_nomic(prompt: str) -> list[float]:
@@ -24,7 +24,19 @@ def embed_prompt_with_nomic(prompt: str) -> list[float]:
 
     response = model_ollama_client.embeddings(
         model=OLLAMA_NOMIC_EMBED_TEXT,
-        prompt=prompt
+        prompt=prompt,
+        
     )
 
     return response['embedding']
+
+
+if __name__ == "__main__":
+
+    test_prompt_1 = "Flask is a lightweight WSGI web application framework. " \
+        "It is designed to make getting started quick and easy, with the ability to scale up to complex applications. " \
+        "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
+        
+    embedding_1 = embed_prompt_with_nomic(prompt=test_prompt_1)
+    print(embedding_1)
+    print(len(embedding_1))

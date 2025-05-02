@@ -1,12 +1,12 @@
 
-from embedding_models.load_models import model_e5
+from load_models import model_e5
 
 
 
 def embed_prompt_with_e5_large(prompt: str) -> list[float]:
 
     
-    embedding = model_e5.encode(sentences=[prompt],normalize_embeddings=True)
+    embedding = model_e5.encode(sentences=prompt,normalize_embeddings=True)
     
     
     embedding_list = embedding.tolist()
@@ -24,3 +24,4 @@ if __name__ == "__main__":
     
     embedding_1 = embed_prompt_with_e5_large(prompt=test_prompt_1)
     print(embedding_1)
+    print(len(embedding_1))

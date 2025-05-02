@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F
-from embedding_models.load_models import tokenizer_roberta_large, model_roberta_large
+from load_models import tokenizer_roberta_large, model_roberta_large
 
 
 def embed_prompt_with_roberta_large(prompt: str) -> list[float]:
@@ -43,3 +43,4 @@ if __name__ == "__main__":
         
     embedding_1 = embed_prompt_with_roberta_large(prompt=test_prompt_1)
     print(embedding_1)
+    print(len(embedding_1))
