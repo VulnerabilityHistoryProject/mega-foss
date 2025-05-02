@@ -161,55 +161,130 @@ def embed_name_description(name_description: str) -> tuple[list[float]]:
     )
 
 
-def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collection: weaviate.collections.Collection) -> None:
-    """
-    Imports both the  name embeddings for the FOSS projects as well as the 
-    name + description embeddings for all the FOSS projects.
+# def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collection: weaviate.collections.Collection) -> None:
+#     """
+#     Imports both the  name embeddings for the FOSS projects as well as the 
+#     name + description embeddings for all the FOSS projects.
 
-    Args:
-        data_objects (list[FOSSProjectDataObject]): dataclass containing the 10 embedded vectors.
-        collection (weaviate.collections.Collection): Weaviate class used for designating parts of a weaviate database.
-    """
+#     Args:
+#         data_objects (list[FOSSProjectDataObject]): dataclass containing the 10 embedded vectors.
+#         collection (weaviate.collections.Collection): Weaviate class used for designating parts of a weaviate database.
+#     """
 
-    banner("Starting to batch import data objects into Weaviate!!!!")
+#     banner("Starting to batch import data objects into Weaviate!!!!")
 
 
-    # Now batch import with error handling
-    with collection.batch.dynamic() as batch:
-        for obj in data_objects:
-            print("Importing" + obj.weaviate_data_object["name"] + "...")
-            batch.add_object(
-                properties=obj.weaviate_data_object,
-                vector={
-                    "ollama_nomic_name_vec": obj.nomic_name_vec,
-                    "sbert_minilm_l6_v2_name_vec": obj.sbert_l6_name_vec,
-                    "sbert_minilm_l12_v2_name_vec": obj.sbert_l12_name_vec,
-                    "distil_bert_name_vec": obj.distil_bert_name_vec,
-                    "gte_large_name_vec": obj.gte_name_vec,
+#     # Now batch import with error handling
+#     with collection.batch.dynamic() as batch:
+#         for obj in data_objects:
+#             print("Importing" + obj.weaviate_data_object["name"] + "...")
+#             batch.add_object(
+#                 properties=obj.weaviate_data_object,
+#                 vector={
+#                     "ollama_nomic_name_vec": obj.nomic_name_vec,
+#                     "sbert_minilm_l6_v2_name_vec": obj.sbert_l6_name_vec,
+#                     "sbert_minilm_l12_v2_name_vec": obj.sbert_l12_name_vec,
+#                     "distil_bert_name_vec": obj.distil_bert_name_vec,
+#                     "gte_large_name_vec": obj.gte_name_vec,
 
-                    "bge_large_description_vec": obj.bge_description_vec,
-                    "e5_large_description_vec": obj.e5_description_vec,
-                    "gte_large_description_vec": obj.gte_description_vec,
-                    "roberta_large_description_vec": obj.roberta_description_vec,
-                    "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec
-                }
-            )
-            print("Successfully imported" + obj.weaviate_data_object["name"] + "...")
-            # Monitor errors during insertion
-            if batch.number_errors > 10:
-                print("Batch import stopped due to excessive errors.")
-                break
+#                     "bge_large_description_vec": obj.bge_description_vec,
+#                     "e5_large_description_vec": obj.e5_description_vec,
+#                     "gte_large_description_vec": obj.gte_description_vec,
+#                     "roberta_large_description_vec": obj.roberta_description_vec,
+#                     "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec
+#                 }
+#             )
+#             print("Successfully imported" + obj.weaviate_data_object["name"] + "...")
+#             # Monitor errors during insertion
+#             if batch.number_errors > 10:
+#                 print("Batch import stopped due to excessive errors.")
+#                 break
             
 
-    # Check for failed objects after batch completes
-    failed_objects = collection.batch.failed_objects
+#     # Check for failed objects after batch completes
+#     failed_objects = collection.batch.failed_objects
 
-    if failed_objects:
-        print(f"Number of failed imports: {len(failed_objects)}")
-        for i, obj in enumerate(failed_objects):  # Print first 5 failures
-            print(f"Failed object {i+1}: {obj}")
+#     if failed_objects:
+#         print(f"Number of failed imports: {len(failed_objects)}")
+#         for i, obj in enumerate(failed_objects):  # Print first 5 failures
+#             print(f"Failed object {i+1}: {obj}")
+
+def batch_import_data_objects(data_objects: list[FOSSProjectDataObject], collection: weaviate.collections.Collection) -> None:
+    """
+    Imports FOSS project data objects with multiple vector embeddings into Weaviate using optimized batching.
+    
+    Args:
+        data_objects (list[FOSSProjectDataObject]): List of dataclass objects containing the embedded vectors
+        collection (weaviate.collections.Collection): Weaviate collection for import
+    """
+    banner("Starting to batch import data objects into Weaviate!!!!")
+    
+    # Set optimal batch size based on your available memory
+    # A smaller batch size (500-1000) is often more reliable for large imports
+    BATCH_SIZE = 500
+    total_objects = len(data_objects)
+    total_batches = (total_objects + BATCH_SIZE - 1) // BATCH_SIZE
+    
+    failed_objects_count = 0
+    processed_count = 0
+    
+    for batch_num in range(total_batches):
+        start_idx = batch_num * BATCH_SIZE
+        end_idx = min((batch_num + 1) * BATCH_SIZE, total_objects)
+        current_batch = data_objects[start_idx:end_idx]
+        
+        print(f"\nProcessing batch {batch_num+1}/{total_batches} ({start_idx+1}-{end_idx} of {total_objects})")
+        
+        batch_failed = 0
+        with collection.batch.dynamic(batch_size=min(100, len(current_batch))) as batch:
+            for obj in current_batch:
+                try:
+                    batch.add_object(
+                        properties=obj.weaviate_data_object,
+                        vector={
+                            "ollama_nomic_name_vec": obj.nomic_name_vec,
+                            "sbert_minilm_l6_v2_name_vec": obj.sbert_l6_name_vec,
+                            "sbert_minilm_l12_v2_name_vec": obj.sbert_l12_name_vec,
+                            "distil_bert_name_vec": obj.distil_bert_name_vec,
+                            "gte_large_name_vec": obj.gte_name_vec,
+                            "bge_large_description_vec": obj.bge_description_vec,
+                            "e5_large_description_vec": obj.e5_description_vec,
+                            "gte_large_description_vec": obj.gte_description_vec,
+                            "roberta_large_description_vec": obj.roberta_description_vec,
+                            "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec
+                        }
+                    )
+                except Exception as e:
+                    print(f"Error adding object {obj.weaviate_data_object.get('name', 'unknown')}: {str(e)}")
+                    batch_failed += 1
+            
+            # Print progress every 10% of the batch
+            processed_count += len(current_batch)
+            print(f"Progress: {processed_count}/{total_objects} objects processed ({processed_count/total_objects*100:.1f}%)")
+        
+        # Check for failed objects after each batch completes
+        batch_failed_objects = collection.batch.failed_objects
+        if batch_failed_objects:
+            failed_objects_count += len(batch_failed_objects)
+            print(f"Batch {batch_num+1} had {len(batch_failed_objects)} failed imports")
+            
+            # Print details for up to 3 failed objects per batch
+            for i, obj in enumerate(batch_failed_objects[:3]):
+                print(f"Failed object example {i+1}: {obj}")
+        
+        # If batch has excessive errors, we might want to pause or adjust parameters
+        if batch_failed > len(current_batch) / 2:
+            print(f"WARNING: More than 50% failure rate in batch {batch_num+1}. Consider checking your data or Weaviate configuration.")
+            # Optional: Add a pause or input prompt here to continue
+    
+    print(f"\nImport complete! Successfully imported {total_objects - failed_objects_count} objects.")
+    print(f"Failed imports: {failed_objects_count} objects")
+    
+    if failed_objects_count > 0:
+        print("Consider examining the failed objects and retry importing them separately.")
 
 
+        
 def banner(msg: str):
     """Print a banner with the given message, surrounded by hash lines."""
     print("\n" + "#" * 50)
