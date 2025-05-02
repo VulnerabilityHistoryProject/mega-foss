@@ -236,7 +236,8 @@ def batch_import_data_objects(data_objects: list[FOSSProjectDataObject], collect
         print(f"\nProcessing batch {batch_num+1}/{total_batches} ({start_idx+1}-{end_idx} of {total_objects})")
         
         batch_failed = 0
-        with collection.batch.dynamic(batch_size=min(100, len(current_batch))) as batch:
+        with collection.batch.fixed_size(batch_size=100, concurrent_requests=4) as batch:
+        # with collection.batch.dynamic(batch_size=min(100, len(current_batch))) as batch:
             for obj in current_batch:
                 try:
                     batch.add_object(
