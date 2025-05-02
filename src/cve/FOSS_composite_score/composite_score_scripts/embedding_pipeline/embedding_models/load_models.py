@@ -3,7 +3,7 @@ from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModel
 from ollama import Client
 
-from config_embedding_models import (
+from embedding_pipeline.embedding_models.config_embedding_models import (
     DISTIL_BERT,
     SBERT_MINI_LM_L6_V2,
     SBERT_MINI_LM_L12_V2,

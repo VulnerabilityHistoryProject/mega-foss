@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F
-from load_models import tokenizer_roberta_large, model_roberta_large
+from embedding_pipeline.embedding_models.load_models import tokenizer_roberta_large, model_roberta_large
 
 
 def embed_prompt_with_roberta_large(prompt: str) -> list[float]:

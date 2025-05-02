@@ -1,6 +1,6 @@
 
 
-from load_models import model_mpnet
+from embedding_pipeline.embedding_models.load_models import model_mpnet
 
 
 def embed_prompt_with_sbert_mpnet(prompt: str) -> list[float]:

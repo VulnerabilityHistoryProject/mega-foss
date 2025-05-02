@@ -14,16 +14,26 @@ import json
 import hashlib
 from dataclasses import dataclass
 
-from embedding_models.nomic_embed import embed_prompt_with_nomic
-from embedding_models.DISTIL_BERT_embed import embed_prompt_with_distil_bert
-from embedding_models.SBERT_mini_lm_l6_embed import embed_prompt_with_sbert_mini_l6
-from embedding_models.SBERT_mini_lm_l12_embed import embed_prompt_with_sbert_mini_l12
+import sys
+from pathlib import Path
 
-from embedding_models.BGE_large_embed import embed_prompt_with_bge_large
-from embedding_models.E5_large_embed import embed_prompt_with_e5_large
-from embedding_models.SBERT_mpnet_embed import embed_prompt_with_sbert_mpnet
-from embedding_models.ROBERTA_large_embed import embed_prompt_with_roberta_large
-from embedding_models.GTE_large_embed import embed_prompt_with_gte_large
+# Automatically find and add the project root to sys.path
+project_root = Path(__file__).resolve().parent
+while not (project_root / 'embedding_pipeline').exists() and project_root != project_root.parent:
+    project_root = project_root.parent
+
+sys.path.append(str(project_root))
+
+from embedding_pipeline.embedding_models.nomic_embed import embed_prompt_with_nomic
+from embedding_pipeline.embedding_models.DISTIL_BERT_embed import embed_prompt_with_distil_bert
+from embedding_pipeline.embedding_models.SBERT_mini_lm_l6_embed import embed_prompt_with_sbert_mini_l6
+from embedding_pipeline.embedding_models.SBERT_mini_lm_l12_embed import embed_prompt_with_sbert_mini_l12
+
+from embedding_pipeline.embedding_models.BGE_large_embed import embed_prompt_with_bge_large
+from embedding_pipeline.embedding_models.E5_large_embed import embed_prompt_with_e5_large
+from embedding_pipeline.embedding_models.SBERT_mpnet_embed import embed_prompt_with_sbert_mpnet
+from embedding_pipeline.embedding_models.ROBERTA_large_embed import embed_prompt_with_roberta_large
+from embedding_pipeline.embedding_models.GTE_large_embed import embed_prompt_with_gte_large
 
 
 
@@ -86,10 +96,10 @@ def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
 
             ### Create vector representations for FOSS project names ###
             nomic_name_vec, sbert_l6_name_vec, sbert_l12_name_vec, distil_bert_name_vec, gte_large_name_vec = embed_name(project_name=project_name)
-
+            print("embedded " + project_name + " successfully")
             ### Create vector representations for FOSS project names + FOSS project descriptions ###
             bge_large_name_description_vec, e5_large_name_description_vec, sbert_mpnet_name_description_vec , roberta_large_name_description_vec, gte_large_name_description_vec  = embed_name_description(name_description=name_description)
-
+            print("embedded " + project_name + " description successfully")
 
             data_objects.append(
 
@@ -109,7 +119,7 @@ def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
                     sbert_mpnet_description_vec= sbert_mpnet_name_description_vec
                 )  
             )
-
+            print("appended " + project_name + " to data objects successfully")
     return data_objects
 
 def embed_name(project_name: str) -> tuple[list[float]]:

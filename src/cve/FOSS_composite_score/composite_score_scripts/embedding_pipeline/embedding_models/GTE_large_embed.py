@@ -1,5 +1,5 @@
 
-from load_models import model_gte
+from embedding_pipeline.embedding_models.load_models import model_gte
 
 
 def embed_prompt_with_gte_large(prompt: str) -> list[float]:
