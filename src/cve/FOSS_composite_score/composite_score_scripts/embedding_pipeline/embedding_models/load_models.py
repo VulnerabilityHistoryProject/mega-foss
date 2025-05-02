@@ -3,7 +3,7 @@ from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModel
 from ollama import Client
 
-from embedding_models.config_embedding_models import (
+from config_embedding_models import (
     DISTIL_BERT,
     SBERT_MINI_LM_L6_V2,
     SBERT_MINI_LM_L12_V2,
@@ -37,11 +37,3 @@ model_roberta_large = AutoModel.from_pretrained(ROBERTA_LARGE)
 tokenizer_bge = AutoTokenizer.from_pretrained(BGE_LARGE)
 model_bge_basic = AutoModel.from_pretrained(BGE_LARGE)
 
-# Wrap it in a SentenceTransformer
-class CustomBGEModel(SentenceTransformer):
-    def __init__(self, model, tokenizer):
-        super().__init__()
-        self.model = model
-        self.tokenizer = tokenizer
-
-model_bge = CustomBGEModel(model=model_bge_basic,tokenizer=tokenizer_bge)

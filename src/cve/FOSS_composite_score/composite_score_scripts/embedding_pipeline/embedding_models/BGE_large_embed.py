@@ -7,7 +7,9 @@ Author: @Trust-Worthy
 
 """
 
-from embedding_models.load_models import model_bge
+import torch
+import torch.nn.functional as F
+from load_models import tokenizer_bge,model_bge_basic
 
 
 def embed_prompt_with_bge_large(prompt: str) -> list[float]:
@@ -21,13 +23,22 @@ def embed_prompt_with_bge_large(prompt: str) -> list[float]:
         list[float]: List of floats representing the embedding of the prompt.
     """
 
-    embedding = model_bge.encode(sentences=[prompt],normalize_embeddings=True)
+    # Tokenize the input text
+    inputs = tokenizer_bge(prompt, return_tensors="pt", padding=True, truncation=True, max_length=512)
     
+    # Forward pass through the model (get the embeddings)
+    with torch.no_grad():
+        outputs = model_bge_basic(**inputs)
     
-    embedding_list = embedding.tolist()
+    # Use the [CLS] token embedding (first token) as sentence representation
+    cls_embedding = outputs.last_hidden_state[:, 0, :]  # shape (batch_size, hidden_size)
     
+    # Normalize the embedding (optional)
+    normalized = F.normalize(cls_embedding, p=2, dim=1)
+    
+    # Convert the embedding to a list of floats
+    embedding_list = normalized.squeeze().tolist()
 
-    
     return embedding_list
 
 
@@ -39,23 +50,14 @@ if __name__ == "__main__":
     "It began as a simple wrapper around Werkzeug and Jinja, and has become one of the most popular Python web application frameworks."
     
 
-    # test_prompt_2 = "Flask offers suggestions, but doesn't enforce any dependencies or project layout. " \
-    # "It is up to the developer to choose the tools and libraries they want to use. " \
-    # "There are many extensions provided by the community that make adding new functionality easy."
+    test_prompt_2 = "Flask offers suggestions, but doesn't enforce any dependencies or project layout. " \
+    "It is up to the developer to choose the tools and libraries they want to use. " \
+    "There are many extensions provided by the community that make adding new functionality easy."
     
     embedding_1 = embed_prompt_with_bge_large(prompt=test_prompt_1)
-    # embedding_2 = embed_prompt_with_bge_large(prompt=test_prompt_2)
+    embedding_2 = embed_prompt_with_bge_large(prompt=test_prompt_2)
 
-    # print(embedding_1["token_attributions"])
-    # print(embedding_2["token_attributions"])
-    # print(embedding_2["tokens"])
-    # vector_1 = embedding_1["vectors"]
-    # vector_2 = embedding_2["vectors"]
+    
 
-    print(embedding_1)
-    # sim = calc_cosine_similarity(vec1=vector_1,vec2=vector_2)
-    # print("cosine similarity is: " + str(sim))
-
-    ### to-do ###
-    # if the tokens are different when using the attribution code, I have to change the tokens that are produced
-    # with that to match the attribution numbers
+    print(len(embedding_1))
+   
