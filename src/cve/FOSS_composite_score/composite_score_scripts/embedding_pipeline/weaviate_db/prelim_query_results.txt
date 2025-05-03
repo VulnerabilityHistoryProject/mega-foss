@@ -1,3 +1,7 @@
+### query was freebsd: freebsd
+
+
+
 #######################################
 #######################################
 NOMIC
@@ -70,3 +74,164 @@ SBERT L12
  {'foss_project_name': 'devhubapp devhub',
   'vector_certainty': 0.6588594913482666,
   'vector_distance': 0.6822810173034668}]
+
+#### ffmpeg:ffmpeg was query
+
+#######################################
+#######################################
+NOMIC
+[{'foss_project_name': 'FFmpeg FFmpeg',
+  'vector_certainty': 0.9790698885917664,
+  'vector_distance': 0.041860222816467285},
+ {'foss_project_name': 'ffmpegwasm ffmpeg.wasm',
+  'vector_certainty': 0.925680935382843,
+  'vector_distance': 0.14863812923431396},
+ {'foss_project_name': 'PHP-FFMpeg PHP-FFMpeg',
+  'vector_certainty': 0.9218341708183289,
+  'vector_distance': 0.15633165836334229},
+ {'foss_project_name': 'kkroening ffmpeg-python',
+  'vector_certainty': 0.9101621508598328,
+  'vector_distance': 0.17967569828033447},
+ {'foss_project_name': 'u2takey ffmpeg-go',
+  'vector_certainty': 0.909068763256073,
+  'vector_distance': 0.181862473487854}]
+#######################################
+#######################################
+DISTIL
+[{'foss_project_name': 'FFmpeg FFmpeg',
+  'vector_certainty': 0.7043855786323547,
+  'vector_distance': 0.5912288427352905},
+ {'foss_project_name': 'PHP-FFMpeg PHP-FFMpeg',
+  'vector_certainty': 0.6920787692070007,
+  'vector_distance': 0.6158424615859985},
+ {'foss_project_name': 'libffcv ffcv',
+  'vector_certainty': 0.6870896816253662,
+  'vector_distance': 0.6258206963539124},
+ {'foss_project_name': 'leixiaohua1020 simplest_ffmpeg_mobile',
+  'vector_certainty': 0.6740449666976929,
+  'vector_distance': 0.6519100666046143},
+ {'foss_project_name': 'u2takey ffmpeg-go',
+  'vector_certainty': 0.6718882322311401,
+  'vector_distance': 0.6562235951423645}]
+#######################################
+#######################################
+SBERT L6
+[{'foss_project_name': 'FFmpeg FFmpeg',
+  'vector_certainty': 0.9899959564208984,
+  'vector_distance': 0.020008087158203125},
+ {'foss_project_name': 'ffmpegwasm ffmpeg.wasm',
+  'vector_certainty': 0.9295976161956787,
+  'vector_distance': 0.1408047080039978},
+ {'foss_project_name': 'ffuf ffuf',
+  'vector_certainty': 0.854058563709259,
+  'vector_distance': 0.29188287258148193},
+ {'foss_project_name': 'libffcv ffcv',
+  'vector_certainty': 0.851290225982666,
+  'vector_distance': 0.29741954803466797},
+ {'foss_project_name': 'PHP-FFMpeg PHP-FFMpeg',
+  'vector_certainty': 0.8426841497421265,
+  'vector_distance': 0.31463170051574707}]
+#######################################
+#######################################
+SBERT L12
+[{'foss_project_name': 'FFmpeg FFmpeg',
+  'vector_certainty': 0.7069598436355591,
+  'vector_distance': 0.5860803127288818},
+ {'foss_project_name': 'ffmpegwasm ffmpeg.wasm',
+  'vector_certainty': 0.6793133616447449,
+  'vector_distance': 0.6413732767105103},
+ {'foss_project_name': 'u2takey ffmpeg-go',
+  'vector_certainty': 0.6792289018630981,
+  'vector_distance': 0.6415422558784485},
+ {'foss_project_name': 'FFmpeg asm-lessons',
+  'vector_certainty': 0.6738334894180298,
+  'vector_distance': 0.6523329615592957},
+ {'foss_project_name': 'PHP-FFMpeg PHP-FFMpeg',
+  'vector_certainty': 0.6701746582984924,
+  'vector_distance': 0.6596506834030151}]
+
+
+
+#### description query ###
+### query: "A vulnerability was found in Nothings stb up to f056911. 
+### It has been declared as critical. Affected by this vulnerability is the function stbhw_build_tileset_from_image. 
+### The manipulation of the argument h_count/v_count leads to out-of-bounds read. 
+### The attack can be launched remotely. This product takes the approach of rolling releases to provide continious delivery. 
+### Therefore, version details for affected and updated releases are not available. 
+### The vendor was contacted early about this disclosure but did not respond in any way."
+
+
+
+#######################################
+#######################################
+BGE
+[{'foss_project_name': 'proxysu ProxySU',
+  'vector_certainty': 0.9250311255455017,
+  'vector_distance': 0.14993774890899658},
+ {'foss_project_name': 'speed47 spectre-meltdown-checker',
+  'vector_certainty': 0.9244766235351562,
+  'vector_distance': 0.1510467529296875},
+ {'foss_project_name': 'Qv2ray Qv2ray',
+  'vector_certainty': 0.9227442741394043,
+  'vector_distance': 0.15451151132583618},
+ {'foss_project_name': 'SecWiki windows-kernel-exploits',
+  'vector_certainty': 0.9216547608375549,
+  'vector_distance': 0.15669047832489014},
+ {'foss_project_name': 'Ascotbe Kernelhub',
+  'vector_certainty': 0.9204369783401489,
+  'vector_distance': 0.15912604331970215}]
+#######################################
+#######################################
+E5
+[{'foss_project_name': 'k8gege K8tools',
+  'vector_certainty': 0.9062998294830322,
+  'vector_distance': 0.18740034103393555},
+ {'foss_project_name': 'Ascotbe Kernelhub',
+  'vector_certainty': 0.905363917350769,
+  'vector_distance': 0.18927210569381714},
+ {'foss_project_name': 'anchore grype',
+  'vector_certainty': 0.9053370356559753,
+  'vector_distance': 0.18932592868804932},
+ {'foss_project_name': 'Xyntax POC-T',
+  'vector_certainty': 0.9041699171066284,
+  'vector_distance': 0.19166016578674316},
+ {'foss_project_name': 'streaak keyhacks',
+  'vector_certainty': 0.9026039838790894,
+  'vector_distance': 0.19479209184646606}]
+#######################################
+#######################################
+SBERT MPNET
+[{'foss_project_name': 'k8gege K8tools',
+  'vector_certainty': 0.7217188477516174,
+  'vector_distance': 0.5565623044967651},
+ {'foss_project_name': 'anchore grype',
+  'vector_certainty': 0.7095270156860352,
+  'vector_distance': 0.5809459090232849},
+ {'foss_project_name': 'Xyntax POC-T',
+  'vector_certainty': 0.7007209658622742,
+  'vector_distance': 0.5985580682754517},
+ {'foss_project_name': 'rapid7 metasploitable3',
+  'vector_certainty': 0.6999784111976624,
+  'vector_distance': 0.6000431776046753},
+ {'foss_project_name': 'bmax121 APatch',
+  'vector_certainty': 0.6989951729774475,
+  'vector_distance': 0.602009654045105}]
+#######################################
+#######################################
+ROBERTA
+[{'foss_project_name': 'ajayyy SponsorBlock',
+  'vector_certainty': 0.9174635410308838,
+  'vector_distance': 0.16507285833358765},
+ {'foss_project_name': 'pystardust ytfzf',
+  'vector_certainty': 0.9171484708786011,
+  'vector_distance': 0.16570305824279785},
+ {'foss_project_name': 'hanydd BilibiliSponsorBlock',
+  'vector_certainty': 0.9161425828933716,
+  'vector_distance': 0.16771483421325684},
+ {'foss_project_name': 'smeijer unimported',
+  'vector_certainty': 0.9154719114303589,
+  'vector_distance': 0.16905617713928223},
+ {'foss_project_name': 'reactive data-client',
+  'vector_certainty': 0.9143311977386475,
+  'vector_distance': 0.17133760452270508}]
+
