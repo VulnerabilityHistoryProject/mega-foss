@@ -95,7 +95,7 @@ def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
             }
 
             ### Create vector representations for FOSS project names ###
-            nomic_name_vec, sbert_l6_name_vec, sbert_l12_name_vec, distil_bert_name_vec, gte_large_name_vec = embed_name(project_name=project_name)
+            nomic_name_vec, distil_bert_name_vec,sbert_l6_name_vec ,sbert_l12_name_vec,  gte_large_name_vec = embed_name(project_name=project_name)
             print("embedded " + project_name + " successfully")
             ### Create vector representations for FOSS project names + FOSS project descriptions ###
             bge_large_name_description_vec, e5_large_name_description_vec, sbert_mpnet_name_description_vec , roberta_large_name_description_vec, gte_large_name_description_vec  = embed_name_description(name_description=name_description)
