@@ -49,7 +49,7 @@ class VectorResponse(TypedDict):
     vector_certainty: float
 
 
-def query_weaviate_collection(vector_query: list[float], target_vector_query: str, weaviate_client: WeaviateClient, collection_name: str) -> QueryReturn:
+def query_weaviate_collection(vector_query: list[float], target_name_vector_query: str, weaviate_client: WeaviateClient, collection_name: str) -> QueryReturn:
     """
     Use method to query a specific weavaite collection in a specified database.
 
@@ -66,7 +66,8 @@ def query_weaviate_collection(vector_query: list[float], target_vector_query: st
 
     response = weaviate_collection.query.near_vector(
         near_vector=vector_query,
-        target_vector=target_vector_query,
+        target_vector=target_name_vector_query, ### what named vector I want to query against (10 options)
+        limit=5,
         return_metadata=MetadataQuery(distance=True,certainty=True)
     )
 

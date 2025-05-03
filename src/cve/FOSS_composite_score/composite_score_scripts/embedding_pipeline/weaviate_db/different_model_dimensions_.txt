@@ -1,0 +1,25 @@
+Nomic vector dimension: 768
+DistilBERT vector dimension: 768
+SBERT L6 vector dimension: 384
+SBERT L12 vector dimension: 384
+
+Vector name: ollama_nomic_name_vec
+Dimensions: 768
+Vector name: distil_bert_name_vec
+Dimensions: 384
+Vector name: sbert_minilm_l6_v2_name_vec
+Dimensions: 768
+Vector name: sbert_minilm_l12_v2_name_vec
+Dimensions: 384
+
+
+Vector name: e5_large_description_vec
+Dimensions: 1024
+Vector name: gte_large_name_vec
+Dimensions: 1024
+
+
+Vector name: bge_large_description_vec
+Dimensions: 1024
+Vector name: gte_large_description_vec
+Dimensions: 1024
