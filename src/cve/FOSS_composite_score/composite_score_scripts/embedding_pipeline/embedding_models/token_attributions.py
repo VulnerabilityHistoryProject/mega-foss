@@ -7,8 +7,6 @@ description will be included in each entry in the Weaviate database."
 
 
 Author: @Trust Worthy
-
-
 """
 
 import torch
@@ -16,11 +14,7 @@ from transformers import AutoTokenizer, AutoModel
 from captum.attr import IntegratedGradients
 
 
-# 1. Load model and tokenizer
-model_name = "distilbert-base-uncased"  # or any compatible transformer
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModel.from_pretrained(model_name)
-model.eval()  # evaluation mode
+
 
 # 2. Define embedding and attribution logic
 def forward_func(input_ids, attention_mask):
@@ -65,9 +59,7 @@ def get_embedding_and_attribution(text: str) -> dict:
         ]
     }
 
-# 5. Example use
-result = get_embedding_and_attribution("Buffer overflow in libpng when parsing malformed PNG files.")
-print(result)
+
 
 
 
@@ -116,3 +108,14 @@ def get_token_attributions( model: AutoModel, tokenizer: AutoTokenizer,text: str
 
 
 if __name__ == "__main__":
+
+    # 1. Load model and tokenizer
+    model_name = "distilbert-base-uncased"  # or any compatible transformer
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModel.from_pretrained(model_name)
+    model.eval()  # evaluation mode
+
+    
+    # 5. Example use
+    result = get_embedding_and_attribution("Buffer overflow in libpng when parsing malformed PNG files.")
+    print(result)
