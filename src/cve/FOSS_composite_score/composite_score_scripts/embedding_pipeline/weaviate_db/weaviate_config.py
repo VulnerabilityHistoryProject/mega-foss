@@ -171,9 +171,9 @@ def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
     for name in collections.keys():
         print(f"- {name}")
 
-    # Method 2: One-liner with list comprehension
-    collection_names = list(client.collections.list_all(simple=True).keys())
-    print(f"Collections: {', '.join(collection_names)}")
+    # # Method 2: One-liner with list comprehension
+    # collection_names = list(client.collections.list_all(simple=True).keys())
+    # print(f"Collections: {', '.join(collection_names)}")
         
         
         
