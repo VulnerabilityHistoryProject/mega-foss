@@ -78,13 +78,11 @@ def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
 
 def create_foss_name_collection(client: weaviate.WeaviateClient, new_collection_name: str) -> weaviate.collections.Collection:
     """
-    Defines the embedding models that will be used for vectorizing the FOSS project names
-    and the embedding models that will be used for the FOSS project descriptions.
+    Defines the embedding models that will be used for vectorizing the FOSS project names.
 
     CVE/ CPE vendor:product combinations will be turned into vector queries to match against FOSS project names.
-    CVE descriptions  will be turned into vector queries to match against FOSS project descriptions.
 
-    COSINE is the distance metric being used.
+    COSINE is the distance metric being used (be default).
     
     Args:
         client (weaviate.WeaviateClient): Initialized weaviate client.
@@ -95,11 +93,8 @@ def create_foss_name_collection(client: weaviate.WeaviateClient, new_collection_
 
 
         name=new_collection_name,
-        # Other configuration parameters...
-        # vector_index_config=Configure.VectorIndex.hnsw(
-        #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
-        #     ) ,  
-        description="Open source projects with name and description",
+       
+        description="Embedded github FOSS project names.",
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
             Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
@@ -127,12 +122,11 @@ def create_foss_name_collection(client: weaviate.WeaviateClient, new_collection_
 def create_description_name_collection(client: weaviate.WeaviateClient, new_collection_name: str) -> weaviate.collections.Collection:
     """
     Defines the embedding models that will be used for vectorizing the FOSS project names
-    and the embedding models that will be used for the FOSS project descriptions.
+    and  project descriptions.
 
-    CVE/ CPE vendor:product combinations will be turned into vector queries to match against FOSS project names.
-    CVE descriptions  will be turned into vector queries to match against FOSS project descriptions.
+    CVE/ CPE descriptions will be turned into vector queries to match against FOSS project descriptions.
 
-    COSINE is the distance metric being used.
+    COSINE is the distance metric being used (by default).
     
     Args:
         client (weaviate.WeaviateClient): Initialized weaviate client.
@@ -143,20 +137,16 @@ def create_description_name_collection(client: weaviate.WeaviateClient, new_coll
 
 
         name=new_collection_name,
-        # Other configuration parameters...
-        # vector_index_config=Configure.VectorIndex.hnsw(
-        #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
-        #     ) ,  
-        description="Open source projects with name and description",
+        description="Embedded github FOSS project name combined with the descriptions.",
         vectorizer_config=[
-            ### Named Vectors for FOSS project names / CVE vendor:product combos
+            ###  
             Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
             Configure.NamedVectors.none(name="distil_bert_name_vec"),
             Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
             Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
             Configure.NamedVectors.none(name="gte_large_name_vec"),
 
-            ### Named Vectors for FOSS project descriptions / CVE descriptions
+            ### 
             Configure.NamedVectors.none(name="bge_large_description_vec"),
             Configure.NamedVectors.none(name="e5_large_description_vec"),
             Configure.NamedVectors.none(name="roberta_large_description_vec"),
