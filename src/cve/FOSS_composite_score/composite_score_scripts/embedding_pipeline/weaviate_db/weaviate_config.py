@@ -76,7 +76,7 @@ def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
     client.close()
 
 
-def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.collections.Collection:
+def create_foss_name_collection(client: weaviate.WeaviateClient, new_collection_name: str) -> weaviate.collections.Collection:
     """
     Defines the embedding models that will be used for vectorizing the FOSS project names
     and the embedding models that will be used for the FOSS project descriptions.
@@ -94,7 +94,7 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
     foss_wvc_collection = client.collections.create(
 
 
-        name="FOSS_vectors",
+        name=new_collection_name,
         # Other configuration parameters...
         # vector_index_config=Configure.VectorIndex.hnsw(
         #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
@@ -103,17 +103,65 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
             Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
+            Configure.NamedVectors.none(name="distil_bert_name_vec"),
             Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
             Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
-            Configure.NamedVectors.none(name="distil_bert_name_vec"),
             Configure.NamedVectors.none(name="gte_large_name_vec"),
 
             ### Named Vectors for FOSS project descriptions / CVE descriptions
             Configure.NamedVectors.none(name="bge_large_description_vec"),
             Configure.NamedVectors.none(name="e5_large_description_vec"),
-            Configure.NamedVectors.none(name="gte_large_description_vec"),
             Configure.NamedVectors.none(name="roberta_large_description_vec"),
             Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
+            Configure.NamedVectors.none(name="gte_large_description_vec"),
+        ],
+        properties=[
+            Property(name="name", data_type=DataType.TEXT, description="Name of the project"),
+            Property(name="description", data_type=DataType.TEXT, description="Project description"),
+            Property(name="hash", data_type=DataType.TEXT,description="Hash of FOSS project name")
+        ]
+    )
+
+    return foss_wvc_collection
+
+def create_description_name_collection(client: weaviate.WeaviateClient, new_collection_name: str) -> weaviate.collections.Collection:
+    """
+    Defines the embedding models that will be used for vectorizing the FOSS project names
+    and the embedding models that will be used for the FOSS project descriptions.
+
+    CVE/ CPE vendor:product combinations will be turned into vector queries to match against FOSS project names.
+    CVE descriptions  will be turned into vector queries to match against FOSS project descriptions.
+
+    COSINE is the distance metric being used.
+    
+    Args:
+        client (weaviate.WeaviateClient): Initialized weaviate client.
+    """
+
+    # For Python client v4
+    foss_wvc_collection = client.collections.create(
+
+
+        name=new_collection_name,
+        # Other configuration parameters...
+        # vector_index_config=Configure.VectorIndex.hnsw(
+        #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
+        #     ) ,  
+        description="Open source projects with name and description",
+        vectorizer_config=[
+            ### Named Vectors for FOSS project names / CVE vendor:product combos
+            Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
+            Configure.NamedVectors.none(name="distil_bert_name_vec"),
+            Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
+            Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
+            Configure.NamedVectors.none(name="gte_large_name_vec"),
+
+            ### Named Vectors for FOSS project descriptions / CVE descriptions
+            Configure.NamedVectors.none(name="bge_large_description_vec"),
+            Configure.NamedVectors.none(name="e5_large_description_vec"),
+            Configure.NamedVectors.none(name="roberta_large_description_vec"),
+            Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
+            Configure.NamedVectors.none(name="gte_large_description_vec"),
         ],
         properties=[
             Property(name="name", data_type=DataType.TEXT, description="Name of the project"),
