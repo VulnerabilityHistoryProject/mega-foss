@@ -34,6 +34,7 @@ from embedding_pipeline.embedding_models.E5_large_embed import embed_prompt_with
 from embedding_pipeline.embedding_models.SBERT_mpnet_embed import embed_prompt_with_sbert_mpnet
 from embedding_pipeline.embedding_models.ROBERTA_large_embed import embed_prompt_with_roberta_large
 from embedding_pipeline.embedding_models.GTE_large_embed import embed_prompt_with_gte_large
+from embedding_pipeline.embedding_models.model_dimensions import validate_embedding_dimensions
 
 
 
@@ -166,7 +167,6 @@ def unpickle_data_objects(pickle_file: Path) -> list[FOSSProjectDataObject]:
     return loaded_data_objects
 
 
-
 def embed_name(project_name: str) -> tuple[list[float]]:
     """
     Helper function to embed the project name using all 5 embedding models that are suited
@@ -178,12 +178,14 @@ def embed_name(project_name: str) -> tuple[list[float]]:
     Returns:
         tuple[list[float]]: Project name embedded with all 5 different models.
     """
+    
+    
     return (
-        embed_prompt_with_nomic(prompt=project_name),
-        embed_prompt_with_distil_bert(prompt=project_name),
-        embed_prompt_with_sbert_mini_l6(prompt=project_name),
-        embed_prompt_with_sbert_mini_l12(prompt=project_name),
-        embed_prompt_with_gte_large(prompt=project_name)
+        validate_embedding_dimensions(embed_prompt_with_nomic(prompt=project_name),embed_prompt_with_nomic),
+        validate_embedding_dimensions(embed_prompt_with_distil_bert(prompt=project_name),embed_prompt_with_distil_bert),
+        validate_embedding_dimensions(embed_prompt_with_sbert_mini_l6(prompt=project_name),embed_prompt_with_sbert_mini_l6),
+        validate_embedding_dimensions(embed_prompt_with_sbert_mini_l12(prompt=project_name),embed_prompt_with_sbert_mini_l12),
+        validate_embedding_dimensions(embed_prompt_with_gte_large(prompt=project_name), embed_prompt_with_gte_large)
     )
 
 def embed_name_description(name_description: str) -> tuple[list[float]]:
@@ -198,11 +200,11 @@ def embed_name_description(name_description: str) -> tuple[list[float]]:
         tuple[list[float]]: Project name + description embedded with all 5 different models.
     """
     return (
-        embed_prompt_with_bge_large(prompt=name_description),
-        embed_prompt_with_e5_large(prompt=name_description),
-        embed_prompt_with_sbert_mpnet(prompt=name_description),
-        embed_prompt_with_roberta_large(prompt=name_description),
-        embed_prompt_with_gte_large(prompt=name_description)
+        validate_embedding_dimensions(embed_prompt_with_bge_large(prompt=name_description),embed_prompt_with_bge_large),
+        validate_embedding_dimensions(embed_prompt_with_e5_large(prompt=name_description),embed_prompt_with_e5_large),
+        validate_embedding_dimensions(embed_prompt_with_sbert_mpnet(prompt=name_description),embed_prompt_with_sbert_mpnet),
+        validate_embedding_dimensions(embed_prompt_with_roberta_large(prompt=name_description), embed_prompt_with_roberta_large),
+        validate_embedding_dimensions(embed_prompt_with_gte_large(prompt=name_description),embed_prompt_with_gte_large)
     )
 
 

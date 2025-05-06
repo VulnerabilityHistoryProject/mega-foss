@@ -1,7 +1,9 @@
 # Configuration file for embedding model dimensions
 # This helps validate that embedding outputs match expected dimensions
 
-EMBEDDING_DIMENSIONS = {
+
+from typing import Callable
+NAMED_VEC_DIMENSIONS = {
     # Name vectors
     "ollama_nomic_name_vec": 768,
     "distil_bert_name_vec": 768,
@@ -19,25 +21,30 @@ EMBEDDING_DIMENSIONS = {
 
 # Utility functions for dimension validation
 
-def validate_embedding_dimensions(embedding, target_vector_name):
+def validate_embedding_dimensions(vector_embedding: list[float], embedding_func: Callable[[str],list[float]]) -> list[float]:
     """
     Validates that an embedding vector has the expected dimensions
     
     Args:
-        embedding: The embedding vector to validate
-        target_vector_name: The name of the target vector (must be in EMBEDDING_DIMENSIONS)
-        
+    vector_embedding (list[float]): The embedding vector to validate.
+    embedding_func (Callable[[str], list[float]]): The function used to generate the embedding.
+    
     Returns:
         The embedding vector if dimensions match
         
     Raises:
         ValueError: If dimensions don't match or target_vector_name is unknown
     """
-    if target_vector_name not in EMBEDDING_DIMENSIONS:
+    if not embedding_func in EMBEDDING_FUNC_TO_NAMED_VEC:
+        raise ValueError(f"Unknown embedding function being used: {embedding_func}")
+
+    target_vector_name = EMBEDDING_FUNC_TO_NAMED_VEC[embedding_func]
+
+    if target_vector_name not in NAMED_VEC_DIMENSIONS:
         raise ValueError(f"Unknown target vector name: {target_vector_name}")
     
-    expected_dim = EMBEDDING_DIMENSIONS[target_vector_name]
-    actual_dim = len(embedding)
+    expected_dim = NAMED_VEC_DIMENSIONS[target_vector_name]
+    actual_dim = len(vector_embedding)
     
     if actual_dim != expected_dim:
         raise ValueError(
@@ -45,10 +52,10 @@ def validate_embedding_dimensions(embedding, target_vector_name):
             f"Expected {expected_dim}, got {actual_dim}"
         )
     
-    return embedding
+    return vector_embedding
 
 # Example mapping between embedding functions and their target vector names
-EMBEDDING_TO_TARGET_MAPPING = {
+EMBEDDING_FUNC_TO_NAMED_VEC = {
     "embed_prompt_with_nomic": "ollama_nomic_name_vec",
     "embed_prompt_with_distil_bert": "distil_bert_name_vec",
     "embed_prompt_with_sbert_mini_l6": "sbert_minilm_l6_v2_name_vec",
