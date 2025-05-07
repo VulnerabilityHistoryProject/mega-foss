@@ -10,11 +10,11 @@ Author: @Trust-Worthy
 
 """
 from weaviate.classes.query import MetadataQuery
-from weaviate.proto.v1.search_get_pb2 import SearchRequest
 from weaviate.collections import Collection
 from weaviate import WeaviateClient
 from weaviate_config import retrieve_existing_weaviate_collection
 from weaviate.collections.classes.internal import QueryReturn
+from embedding_pipeline.embedding_models.model_dimensions import validate_embedding_dimensions
 
 from typing import TypedDict
 
@@ -67,13 +67,43 @@ def query_weaviate_collection(vector_query: list[float], target_name_vector_quer
     response = weaviate_collection.query.near_vector(
         near_vector=vector_query,
         target_vector=target_name_vector_query, ### what named vector I want to query against (10 options)
-        limit=5,
+        limit=3,
         return_metadata=MetadataQuery(distance=True,certainty=True)
     )
 
 
     return response
-
+# Safe query function that validates dimensions before querying
+def safe_query_weaviate_collection(vector_query: list[float], target_name_vector_query: str, weaviate_client, collection_name: str):
+    """
+    Query Weaviate collection with dimension validation
+    
+    Args:
+        vector_query: The embedding vector to query with
+        target_name_vector_query: The name of the target vector in Weaviate
+        weaviate_client: The Weaviate client
+        collection_name: The name of the collection to query
+        
+    Returns:
+        Query results or None if validation fails
+    """
+    try:
+        # Validate dimensions before querying
+        validate_embedding_dimensions(vector_query, target_name_vector_query)
+        
+        # If validation passes, proceed with query
+        from embedding_pipeline.weaviate_db.weaviate_query_operations import query_weaviate_collection
+        return query_weaviate_collection(
+            vector_query=vector_query,
+            target_name_vector_query=target_name_vector_query,
+            weaviate_client=weaviate_client,
+            collection_name=collection_name
+        )
+    except ValueError as e:
+        print(f"Validation error: {e}")
+        return None
+    except Exception as e:
+        print(f"Query error: {e}")
     
 
 def get_query_vector_responses(response: QueryReturn) -> list[VectorResponse]:

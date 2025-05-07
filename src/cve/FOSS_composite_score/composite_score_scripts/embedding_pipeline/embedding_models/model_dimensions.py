@@ -28,18 +28,20 @@ def validate_embedding_dimensions(vector_embedding: list[float], embedding_func:
     Args:
     vector_embedding (list[float]): The embedding vector to validate.
     embedding_func (Callable[[str], list[float]]): The function used to generate the embedding.
-    
+
     Returns:
         The embedding vector if dimensions match
         
     Raises:
         ValueError: If dimensions don't match or target_vector_name is unknown
     """
-    if not embedding_func in EMBEDDING_FUNC_TO_NAMED_VEC:
+
+    func_name = embedding_func.__name__
+    if not func_name in EMBEDDING_FUNC_TO_NAMED_VEC:
         raise ValueError(f"Unknown embedding function being used: {embedding_func}")
-
-    target_vector_name = EMBEDDING_FUNC_TO_NAMED_VEC[embedding_func]
-
+    print(func_name)
+    target_vector_name = EMBEDDING_FUNC_TO_NAMED_VEC[func_name]
+    
     if target_vector_name not in NAMED_VEC_DIMENSIONS:
         raise ValueError(f"Unknown target vector name: {target_vector_name}")
     
@@ -71,35 +73,3 @@ EMBEDDING_FUNC_TO_NAMED_VEC = {
 # nomic_vec = embed_prompt_with_nomic(prompt=TEST_PROMPT)
 # validate_embedding_dimensions(nomic_vec, "ollama_nomic_name_vec")
 
-# Safe query function that validates dimensions before querying
-def safe_query_weaviate_collection(vector_query, target_name_vector_query, weaviate_client, collection_name):
-    """
-    Query Weaviate collection with dimension validation
-    
-    Args:
-        vector_query: The embedding vector to query with
-        target_name_vector_query: The name of the target vector in Weaviate
-        weaviate_client: The Weaviate client
-        collection_name: The name of the collection to query
-        
-    Returns:
-        Query results or None if validation fails
-    """
-    try:
-        # Validate dimensions before querying
-        validate_embedding_dimensions(vector_query, target_name_vector_query)
-        
-        # If validation passes, proceed with query
-        from embedding_pipeline.weaviate_db.weaviate_query_operations import query_weaviate_collection
-        return query_weaviate_collection(
-            vector_query=vector_query,
-            target_name_vector_query=target_name_vector_query,
-            weaviate_client=weaviate_client,
-            collection_name=collection_name
-        )
-    except ValueError as e:
-        print(f"Validation error: {e}")
-        return None
-    except Exception as e:
-        print(f"Query error: {e}")
-        return None
