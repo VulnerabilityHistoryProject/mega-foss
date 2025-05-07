@@ -76,15 +76,13 @@ def close_weaviate_client(client: weaviate.WeaviateClient) -> None:
     client.close()
 
 
-def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.collections.Collection:
+def create_foss_name_collection(client: weaviate.WeaviateClient, new_collection_name: str) -> weaviate.collections.Collection:
     """
-    Defines the embedding models that will be used for vectorizing the FOSS project names
-    and the embedding models that will be used for the FOSS project descriptions.
+    Defines the embedding models that will be used for vectorizing the FOSS project names.
 
     CVE/ CPE vendor:product combinations will be turned into vector queries to match against FOSS project names.
-    CVE descriptions  will be turned into vector queries to match against FOSS project descriptions.
 
-    COSINE is the distance metric being used.
+    COSINE is the distance metric being used (be default).
     
     Args:
         client (weaviate.WeaviateClient): Initialized weaviate client.
@@ -94,26 +92,66 @@ def create_weaviate_collection(client: weaviate.WeaviateClient, ) -> weaviate.co
     foss_wvc_collection = client.collections.create(
 
 
-        name="FOSS_vectors",
-        # Other configuration parameters...
-        # vector_index_config=Configure.VectorIndex.hnsw(
-        #     distance_metric=VectorDistances.COSINE  # Set distance metric to cosine
-        #     ) ,  
-        description="Open source projects with name and description",
+        name=new_collection_name,
+       
+        description="Embedded github FOSS project names.",
         vectorizer_config=[
             ### Named Vectors for FOSS project names / CVE vendor:product combos
             Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
+            Configure.NamedVectors.none(name="distil_bert_name_vec"),
             Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
             Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
-            Configure.NamedVectors.none(name="distil_bert_name_vec"),
             Configure.NamedVectors.none(name="gte_large_name_vec"),
 
             ### Named Vectors for FOSS project descriptions / CVE descriptions
             Configure.NamedVectors.none(name="bge_large_description_vec"),
             Configure.NamedVectors.none(name="e5_large_description_vec"),
-            Configure.NamedVectors.none(name="gte_large_description_vec"),
             Configure.NamedVectors.none(name="roberta_large_description_vec"),
             Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
+            Configure.NamedVectors.none(name="gte_large_description_vec"),
+        ],
+        properties=[
+            Property(name="name", data_type=DataType.TEXT, description="Name of the project"),
+            Property(name="description", data_type=DataType.TEXT, description="Project description"),
+            Property(name="hash", data_type=DataType.TEXT,description="Hash of FOSS project name")
+        ]
+    )
+
+    return foss_wvc_collection
+
+def create_description_name_collection(client: weaviate.WeaviateClient, new_collection_name: str) -> weaviate.collections.Collection:
+    """
+    Defines the embedding models that will be used for vectorizing the FOSS project names
+    and  project descriptions.
+
+    CVE/ CPE descriptions will be turned into vector queries to match against FOSS project descriptions.
+
+    COSINE is the distance metric being used (by default).
+    
+    Args:
+        client (weaviate.WeaviateClient): Initialized weaviate client.
+    """
+
+    # For Python client v4
+    foss_wvc_collection = client.collections.create(
+
+
+        name=new_collection_name,
+        description="Embedded github FOSS project name combined with the descriptions.",
+        vectorizer_config=[
+            ###  
+            Configure.NamedVectors.none(name="ollama_nomic_name_vec"),
+            Configure.NamedVectors.none(name="distil_bert_name_vec"),
+            Configure.NamedVectors.none(name="sbert_minilm_l6_v2_name_vec"),
+            Configure.NamedVectors.none(name="sbert_minilm_l12_v2_name_vec"),
+            Configure.NamedVectors.none(name="gte_large_name_vec"),
+
+            ### 
+            Configure.NamedVectors.none(name="bge_large_description_vec"),
+            Configure.NamedVectors.none(name="e5_large_description_vec"),
+            Configure.NamedVectors.none(name="roberta_large_description_vec"),
+            Configure.NamedVectors.none(name="sbert_mpnet_base_v2_description_vec"),
+            Configure.NamedVectors.none(name="gte_large_description_vec"),
         ],
         properties=[
             Property(name="name", data_type=DataType.TEXT, description="Name of the project"),
@@ -133,9 +171,9 @@ def list_weaviate_collections(client: weaviate.WeaviateClient) -> None:
     for name in collections.keys():
         print(f"- {name}")
 
-    # Method 2: One-liner with list comprehension
-    collection_names = list(client.collections.list_all(simple=True).keys())
-    print(f"Collections: {', '.join(collection_names)}")
+    # # Method 2: One-liner with list comprehension
+    # collection_names = list(client.collections.list_all(simple=True).keys())
+    # print(f"Collections: {', '.join(collection_names)}")
         
         
         

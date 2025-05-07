@@ -1,5 +1,5 @@
 """
-weaviate_inserts.py
+weaviate_write_operations.py
 
 This script creates a data pipeline for embedding and storing FOSS project metadata in a Weaviate vector database.
 Each project is hashed and embedded using 9 different SOTA embedding models. Vectors are inserted into a Weaviate
@@ -13,7 +13,7 @@ import weaviate
 import json
 import hashlib
 from dataclasses import dataclass
-
+import pickle
 import sys
 from pathlib import Path
 
@@ -34,6 +34,7 @@ from embedding_pipeline.embedding_models.E5_large_embed import embed_prompt_with
 from embedding_pipeline.embedding_models.SBERT_mpnet_embed import embed_prompt_with_sbert_mpnet
 from embedding_pipeline.embedding_models.ROBERTA_large_embed import embed_prompt_with_roberta_large
 from embedding_pipeline.embedding_models.GTE_large_embed import embed_prompt_with_gte_large
+from embedding_pipeline.embedding_models.model_dimensions import validate_embedding_dimensions
 
 
 
@@ -45,22 +46,35 @@ class FOSSProjectDataObject:
     and vectorized representations of the FOSS project name and FOSS project name + descriptions.
     """
     weaviate_data_object: dict[str, str]
+
     nomic_name_vec: list[float]
+    distil_bert_name_vec: list[float]
     sbert_l6_name_vec: list[float]
     sbert_l12_name_vec: list[float]
-    distil_bert_name_vec: list[float]
     gte_name_vec: list[float]
 
     bge_description_vec: list[float]
     e5_description_vec: list[float]
-    gte_description_vec: list[float]
     roberta_description_vec: list[float]
     sbert_mpnet_description_vec: list[float]
+    gte_description_vec: list[float]
 
-def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
+def create_data_objects(foss_repo_data_json: Path ) -> list[FOSSProjectDataObject]:
+    """
+    Use this method to instantiate a list of FOSSProjectDataObjects assocaited with the 12.7k FOSS project
+    names initially collected.
 
-    data_objects = []
-    with open(json_file,'r') as file:
+    Args:
+        foss_repo_data_json (str): Path to the json file containing FOSS github repo data including
+        stars, forks, and issues.
+
+
+    Returns:
+        list[FOSSProjectDataObject]: List of all Foss name + description entries vecotorized using 10 embedding models.
+    """
+
+    data_objects: list = []
+    with open(foss_repo_data_json,'r') as file:
 
         # load the json data
         data = json.load(file)
@@ -68,35 +82,36 @@ def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
         for project in data:
             
 
-            ### get project name from json
+            ### get project name from foss repo data ###
             project_name = project["FOSS project name"]
             print("processing & embedding " + project_name + "...")
 
-            ### Hash project name
+            ### Hash project name ###
             hash_object = hashlib.sha1(project_name.encode())
             hashed_foss_name = hash_object.hexdigest()
 
-            ### Get project description from json
-            description = project["description"]
+            ### Get project description from json ###
+            project_description = project["description"]
 
             ### Create combined string for vectorization
             if not project_name:
                 print(f"Skipping entry with missing name: {project}")
                 continue
 
-            name_description = project_name + " " + (description or "")
+            name_description = project_name + " " + (project_description or "")
             
             
-            # Create data object which will be used for Weaviate
+            ### Create data object in dict format in compliance with Weaviate ###
             data_object: dict[str,str] = {
                 "name": project_name,
-                "description": description,
+                "description": project_description,
                 "foss_hash": hashed_foss_name
             }
 
             ### Create vector representations for FOSS project names ###
             nomic_name_vec, distil_bert_name_vec,sbert_l6_name_vec ,sbert_l12_name_vec,  gte_large_name_vec = embed_name(project_name=project_name)
-            print("embedded " + project_name + " successfully")
+            print("embedded " + project_name + " name successfully")
+
             ### Create vector representations for FOSS project names + FOSS project descriptions ###
             bge_large_name_description_vec, e5_large_name_description_vec, sbert_mpnet_name_description_vec , roberta_large_name_description_vec, gte_large_name_description_vec  = embed_name_description(name_description=name_description)
             print("embedded " + project_name + " description successfully")
@@ -107,20 +122,50 @@ def create_data_objects(json_file: str) -> list[FOSSProjectDataObject]:
                     weaviate_data_object=data_object,
 
                     nomic_name_vec=nomic_name_vec,
+                    distil_bert_name_vec=distil_bert_name_vec,
                     sbert_l6_name_vec= sbert_l6_name_vec,
                     sbert_l12_name_vec= sbert_l12_name_vec,
-                    distil_bert_name_vec=distil_bert_name_vec,
                     gte_name_vec= gte_large_name_vec,
 
                     bge_description_vec= bge_large_name_description_vec,
                     e5_description_vec= e5_large_name_description_vec,
-                    gte_description_vec= gte_large_name_description_vec,
                     roberta_description_vec= roberta_large_name_description_vec,
-                    sbert_mpnet_description_vec= sbert_mpnet_name_description_vec
+                    sbert_mpnet_description_vec= sbert_mpnet_name_description_vec,
+                    gte_description_vec= gte_large_name_description_vec
                 )  
             )
+
             print("appended " + project_name + " to data objects successfully")
     return data_objects
+
+def pickle_data_objects(data_objects: list[FOSSProjectDataObject], output_file_name: str) -> None:
+    """
+    Use this method to pickle the data objects.
+
+    Args:
+        data_objects (list[FOSSProjectDataObject]): List of objects containing the vector info for the FOSS project names and descriptions.
+        output_file_name (str): _description_
+    """
+
+    with open(output_file_name, "wb") as f:
+        pickle.dump(data_objects, f)
+
+def unpickle_data_objects(pickle_file: Path) -> list[FOSSProjectDataObject]:
+    """
+    Use this method ot unpickle a collection of dataobjects.
+
+    Args:
+        pickle_file (str): Pickle file containing the vector info for FOSS project names and descriptions.
+
+    Returns:
+        list[FOSSProjectDataObject]: The data objects in their original form.
+    """
+
+    with open(pickle_file, "rb") as f:
+        loaded_data_objects = pickle.load(f)
+
+    return loaded_data_objects
+
 
 def embed_name(project_name: str) -> tuple[list[float]]:
     """
@@ -133,12 +178,14 @@ def embed_name(project_name: str) -> tuple[list[float]]:
     Returns:
         tuple[list[float]]: Project name embedded with all 5 different models.
     """
+    
+    
     return (
-        embed_prompt_with_nomic(prompt=project_name),
-        embed_prompt_with_distil_bert(prompt=project_name),
-        embed_prompt_with_sbert_mini_l6(prompt=project_name),
-        embed_prompt_with_sbert_mini_l12(prompt=project_name),
-        embed_prompt_with_gte_large(prompt=project_name)
+        validate_embedding_dimensions(embed_prompt_with_nomic(prompt=project_name),embed_prompt_with_nomic),
+        validate_embedding_dimensions(embed_prompt_with_distil_bert(prompt=project_name),embed_prompt_with_distil_bert),
+        validate_embedding_dimensions(embed_prompt_with_sbert_mini_l6(prompt=project_name),embed_prompt_with_sbert_mini_l6),
+        validate_embedding_dimensions(embed_prompt_with_sbert_mini_l12(prompt=project_name),embed_prompt_with_sbert_mini_l12),
+        validate_embedding_dimensions(embed_prompt_with_gte_large(prompt=project_name), embed_prompt_with_gte_large)
     )
 
 def embed_name_description(name_description: str) -> tuple[list[float]]:
@@ -153,63 +200,66 @@ def embed_name_description(name_description: str) -> tuple[list[float]]:
         tuple[list[float]]: Project name + description embedded with all 5 different models.
     """
     return (
-        embed_prompt_with_bge_large(prompt=name_description),
-        embed_prompt_with_e5_large(prompt=name_description),
-        embed_prompt_with_sbert_mpnet(prompt=name_description),
-        embed_prompt_with_roberta_large(prompt=name_description),
-        embed_prompt_with_gte_large(prompt=name_description)
+        validate_embedding_dimensions(embed_prompt_with_bge_large(prompt=name_description),embed_prompt_with_bge_large),
+        validate_embedding_dimensions(embed_prompt_with_e5_large(prompt=name_description),embed_prompt_with_e5_large),
+        validate_embedding_dimensions(embed_prompt_with_sbert_mpnet(prompt=name_description),embed_prompt_with_sbert_mpnet),
+        validate_embedding_dimensions(embed_prompt_with_roberta_large(prompt=name_description), embed_prompt_with_roberta_large),
+        validate_embedding_dimensions(embed_prompt_with_gte_large(prompt=name_description),embed_prompt_with_gte_large)
     )
 
 
-# def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collection: weaviate.collections.Collection) -> None:
-#     """
-#     Imports both the  name embeddings for the FOSS projects as well as the 
-#     name + description embeddings for all the FOSS projects.
+def batch_import_data_objects(data_objects: list[FOSSProjectDataObject] ,collection: weaviate.collections.Collection) -> None:
+    """
+    Imports both the  name embeddings for the FOSS projects as well as the 
+    name + description embeddings for all the FOSS projects.
 
-#     Args:
-#         data_objects (list[FOSSProjectDataObject]): dataclass containing the 10 embedded vectors.
-#         collection (weaviate.collections.Collection): Weaviate class used for designating parts of a weaviate database.
-#     """
+    Args:
+        data_objects (list[FOSSProjectDataObject]): dataclass containing the 10 embedded vectors.
+        collection (weaviate.collections.Collection): Weaviate class used for designating parts of a weaviate database.
+    """
 
-#     banner("Starting to batch import data objects into Weaviate!!!!")
+    banner("Starting to batch import data objects into Weaviate!!!!")
 
 
-#     # Now batch import with error handling
-#     with collection.batch.dynamic() as batch:
-#         for obj in data_objects:
-#             print("Importing" + obj.weaviate_data_object["name"] + "...")
-#             batch.add_object(
-#                 properties=obj.weaviate_data_object,
-#                 vector={
-#                     "ollama_nomic_name_vec": obj.nomic_name_vec,
-#                     "sbert_minilm_l6_v2_name_vec": obj.sbert_l6_name_vec,
-#                     "sbert_minilm_l12_v2_name_vec": obj.sbert_l12_name_vec,
-#                     "distil_bert_name_vec": obj.distil_bert_name_vec,
-#                     "gte_large_name_vec": obj.gte_name_vec,
+    # Now batch import with error handling
+    with collection.batch.dynamic() as batch:
+        for obj in data_objects:
+            print("Importing" + obj.weaviate_data_object["name"] + "...")
+            batch.add_object(
+                properties=obj.weaviate_data_object,
 
-#                     "bge_large_description_vec": obj.bge_description_vec,
-#                     "e5_large_description_vec": obj.e5_description_vec,
-#                     "gte_large_description_vec": obj.gte_description_vec,
-#                     "roberta_large_description_vec": obj.roberta_description_vec,
-#                     "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec
-#                 }
-#             )
-#             print("Successfully imported" + obj.weaviate_data_object["name"] + "...")
-#             # Monitor errors during insertion
-#             if batch.number_errors > 10:
-#                 print("Batch import stopped due to excessive errors.")
-#                 break
+                vector={
+                    "ollama_nomic_name_vec": obj.nomic_name_vec,
+                    "distil_bert_name_vec": obj.distil_bert_name_vec,
+                    "sbert_minilm_l6_v2_name_vec": obj.sbert_l6_name_vec,
+                    "sbert_minilm_l12_v2_name_vec": obj.sbert_l12_name_vec,
+                    "gte_large_name_vec": obj.gte_name_vec,
+
+                    "bge_large_description_vec": obj.bge_description_vec,
+                    "e5_large_description_vec": obj.e5_description_vec,
+                    "sbert_mpnet_base_v2_description_vec": obj.sbert_mpnet_description_vec,
+                    "roberta_large_description_vec": obj.roberta_description_vec,
+                    "gte_large_description_vec": obj.gte_description_vec
+                }
+            )
+
+            print("Successfully imported" + obj.weaviate_data_object["name"] + "...")
+            
+            ### Monitor errors during insertion ###
+            if batch.number_errors > 10:
+                print("Batch import stopped due to excessive errors.")
+                break
             
 
-#     # Check for failed objects after batch completes
-#     failed_objects = collection.batch.failed_objects
+    # Check for failed objects after batch completes
+    failed_objects = collection.batch.failed_objects
 
-#     if failed_objects:
-#         print(f"Number of failed imports: {len(failed_objects)}")
-#         for i, obj in enumerate(failed_objects):  # Print first 5 failures
-#             print(f"Failed object {i+1}: {obj}")
+    if failed_objects:
+        print(f"Number of failed imports: {len(failed_objects)}")
+        for i, obj in enumerate(failed_objects):  # Print first 5 failures
+            print(f"Failed object {i+1}: {obj}")
 
-def batch_import_data_objects(data_objects: list[FOSSProjectDataObject], collection: weaviate.collections.Collection) -> None:
+def optimized_batch_import_data_objects(data_objects: list[FOSSProjectDataObject], collection: weaviate.collections.Collection) -> None:
     """
     Imports FOSS project data objects with multiple vector embeddings into Weaviate using optimized batching.
     
@@ -287,7 +337,7 @@ def batch_import_data_objects(data_objects: list[FOSSProjectDataObject], collect
 
         
 def banner(msg: str):
-    """Print a banner with the given message, surrounded by hash lines."""
+    """Prints a banner with the given message, surrounded by hash lines."""
     print("\n" + "#" * 50)
     print(msg)
     print("#" * 50 + "\n")
