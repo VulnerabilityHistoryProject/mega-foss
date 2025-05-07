@@ -49,7 +49,7 @@ class VectorResponse(TypedDict):
     vector_certainty: float
 
 
-def query_weaviate_collection(vector_query: list[float], target_name_vector_query: str, weaviate_client: WeaviateClient, collection_name: str) -> QueryReturn:
+def query_weaviate_collection(vector_query: list[float], target_name_vector_query: str, weaviate_collection: Collection) -> QueryReturn:
     """
     Use method to query a specific weavaite collection in a specified database.
 
@@ -62,7 +62,7 @@ def query_weaviate_collection(vector_query: list[float], target_name_vector_quer
     Returns:
         QueryReturn: object containing all of the vectors nearest to the query using cosine similarity.
     """
-    weaviate_collection: Collection = retrieve_existing_weaviate_collection(collection_name=collection_name,weaviate_client=weaviate_client)
+    
 
     response = weaviate_collection.query.near_vector(
         near_vector=vector_query,
