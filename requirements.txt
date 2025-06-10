@@ -9,3 +9,9 @@ numpy
 chromadb
 scikit-learn
 pydriller
+pyyaml
+sentence_transformers
+einops
+pandas
+accelerate
+hf_xet
