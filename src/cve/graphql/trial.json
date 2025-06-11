@@ -1,0 +1,2017 @@
+[{
+    "_id": {
+      "$oid": "675148835be85ca85d671ef6"
+    },
+    "cve_id": "CVE-1999-0379",
+    "vendor": "freebsd",
+    "product": "freebsd"
+  },
+  {
+    "_id": {
+      "$oid": "675148834f9f1568870cf7d8"
+    },
+    "cve_id": "CVE-1999-0380",
+    "vendor": "seattle_lab_software",
+    "product": "slmail"
+  },
+  {
+    "_id": {
+      "$oid": "67514883bc49a134797d4362"
+    },
+    "cve_id": "CVE-1999-0381",
+    "vendor": "debian",
+    "product": "debian_linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514883d72d636c380b4cfe"
+    },
+    "cve_id": "CVE-1999-0382",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514883eadc1239df6dff68"
+    },
+    "cve_id": "CVE-1999-0383",
+    "vendor": "acc",
+    "product": "tigris"
+  },
+  {
+    "_id": {
+      "$oid": "675148831cd756bb3666efc1"
+    },
+    "cve_id": "CVE-1999-0384",
+    "vendor": "microsoft",
+    "product": "visual_basic"
+  },
+  {
+    "_id": {
+      "$oid": "675148831cd756bb3666efc1"
+    },
+    "cve_id": "CVE-1999-0384",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488327003c484c7392cd"
+    },
+    "cve_id": "CVE-1999-0385",
+    "vendor": "microsoft",
+    "product": "exchange_server"
+  },
+  {
+    "_id": {
+      "$oid": "675148836db779d5187e1be8"
+    },
+    "cve_id": "CVE-1999-0386",
+    "vendor": "microsoft",
+    "product": "personal_web_server"
+  },
+  {
+    "_id": {
+      "$oid": "6751488394818447fbcf5851"
+    },
+    "cve_id": "CVE-1999-0387",
+    "vendor": "microsoft",
+    "product": "windows_95"
+  },
+  {
+    "_id": {
+      "$oid": "67514883a5b68524b6e0b2b6"
+    },
+    "cve_id": "CVE-1999-0388",
+    "vendor": "datalynx",
+    "product": "suguard"
+  },
+  {
+    "_id": {
+      "$oid": "67514883c9bac473393c562e"
+    },
+    "cve_id": "CVE-1999-0389",
+    "vendor": "debian",
+    "product": "debian_linux"
+  },
+  {
+    "_id": {
+      "$oid": "6751488335da73d1b27241e4"
+    },
+    "cve_id": "CVE-1999-0390",
+    "vendor": "redhat",
+    "product": "linux"
+  },
+  {
+    "_id": {
+      "$oid": "675148836aae189398e3a362"
+    },
+    "cve_id": "CVE-1999-0391",
+    "vendor": "microsoft",
+    "product": "terminal_server"
+  },
+  {
+    "_id": {
+      "$oid": "675148836aae189398e3a362"
+    },
+    "cve_id": "CVE-1999-0391",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514883ccf319bcd80e387a"
+    },
+    "cve_id": "CVE-1999-0392",
+    "vendor": "thomas_boutell",
+    "product": "cgic_library"
+  },
+  {
+    "_id": {
+      "$oid": "67514883c1fea4a21e259692"
+    },
+    "cve_id": "CVE-1999-0393",
+    "vendor": "eric_allman",
+    "product": "sendmail"
+  },
+  {
+    "_id": {
+      "$oid": "675148830c47aa0aca6b60af"
+    },
+    "cve_id": "CVE-1999-0395",
+    "vendor": "backweb_technologies",
+    "product": "backweb_polite_agent_protocol"
+  },
+  {
+    "_id": {
+      "$oid": "675148833653faaa074126b5"
+    },
+    "cve_id": "CVE-1999-0396",
+    "vendor": "netbsd",
+    "product": "netbsd"
+  },
+  {
+    "_id": {
+      "$oid": "67514883da84851ec1b089d2"
+    },
+    "cve_id": "CVE-1999-0398",
+    "vendor": "ssh",
+    "product": "ssh2"
+  },
+  {
+    "_id": {
+      "$oid": "67514883845e7d5be203eeb1"
+    },
+    "cve_id": "CVE-1999-0399",
+    "vendor": "khaled_mardam-bey",
+    "product": "mirc"
+  },
+  {
+    "_id": {
+      "$oid": "675148832c47b590fab5b121"
+    },
+    "cve_id": "CVE-1999-0400",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "675148831846a5f92e601aeb"
+    },
+    "cve_id": "CVE-1999-0401",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "67514883584a2fefd6660201"
+    },
+    "cve_id": "CVE-1999-0402",
+    "vendor": "gnu",
+    "product": "wget"
+  },
+  {
+    "_id": {
+      "$oid": "67514883506f985dc1c77c69"
+    },
+    "cve_id": "CVE-1999-0403",
+    "vendor": "cyrix",
+    "product": "linux"
+  },
+  {
+    "_id": {
+      "$oid": "6751488341f08529dfd99946"
+    },
+    "cve_id": "CVE-1999-0404",
+    "vendor": "smartmax_software",
+    "product": "mailmax"
+  },
+  {
+    "_id": {
+      "$oid": "67514883a0bdcad6487401a5"
+    },
+    "cve_id": "CVE-1999-0405",
+    "vendor": "freebsd",
+    "product": "freebsd"
+  },
+  {
+    "_id": {
+      "$oid": "675148838d3cb5c06d6c5451"
+    },
+    "cve_id": "CVE-1999-0406",
+    "vendor": "digital",
+    "product": "unix"
+  },
+  {
+    "_id": {
+      "$oid": "675148831b54c56761069571"
+    },
+    "cve_id": "CVE-1999-0407",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514883743509642f76a5e7"
+    },
+    "cve_id": "CVE-1999-0408",
+    "vendor": "sun",
+    "product": "cobalt_raq"
+  },
+  {
+    "_id": {
+      "$oid": "675148830d0a3fc7a60509b2"
+    },
+    "cve_id": "CVE-1999-0409",
+    "vendor": "suse",
+    "product": "suse_linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514883d7b5e95eafad0ddf"
+    },
+    "cve_id": "CVE-1999-0410",
+    "vendor": "sun",
+    "product": "sunos"
+  },
+  {
+    "_id": {
+      "$oid": "67514884292de35e08142ac2"
+    },
+    "cve_id": "CVE-1999-0411",
+    "vendor": "sco",
+    "product": "openserver"
+  },
+  {
+    "_id": {
+      "$oid": "67514884fd0044c237b5a9ac"
+    },
+    "cve_id": "CVE-1999-0412",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514884202268c1a161de38"
+    },
+    "cve_id": "CVE-1999-0413",
+    "vendor": "sgi",
+    "product": "irix"
+  },
+  {
+    "_id": {
+      "$oid": "6751488471cf7cf5aa900de2"
+    },
+    "cve_id": "CVE-1999-0414",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "675148847cb63b97af06cb6f"
+    },
+    "cve_id": "CVE-1999-0415",
+    "vendor": "cisco",
+    "product": "cisco_7xx_routers"
+  },
+  {
+    "_id": {
+      "$oid": "67514884dbdbbcc56595cca4"
+    },
+    "cve_id": "CVE-1999-0416",
+    "vendor": "cisco",
+    "product": "cisco_7xx_routers"
+  },
+  {
+    "_id": {
+      "$oid": "675148846f9d2a8ec49eedda"
+    },
+    "cve_id": "CVE-1999-0417",
+    "vendor": "sun",
+    "product": "sunos"
+  },
+  {
+    "_id": {
+      "$oid": "67514884e5483252d7a88889"
+    },
+    "cve_id": "CVE-1999-0420",
+    "vendor": "netbsd",
+    "product": "umapfs"
+  },
+  {
+    "_id": {
+      "$oid": "67514884c5c7d5aa3863caff"
+    },
+    "cve_id": "CVE-1999-0421",
+    "vendor": "slackware",
+    "product": "slackware_linux"
+  },
+  {
+    "_id": {
+      "$oid": "675148840d72867f918cb828"
+    },
+    "cve_id": "CVE-1999-0422",
+    "vendor": "netbsd",
+    "product": "netbsd"
+  },
+  {
+    "_id": {
+      "$oid": "67514884f424fa6d1061330c"
+    },
+    "cve_id": "CVE-1999-0423",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "67514884159270ba4f3ce6f0"
+    },
+    "cve_id": "CVE-1999-0424",
+    "vendor": "netscape",
+    "product": "communicator"
+  },
+  {
+    "_id": {
+      "$oid": "67514884d95ea761a983b0e9"
+    },
+    "cve_id": "CVE-1999-0425",
+    "vendor": "netscape",
+    "product": "communicator"
+  },
+  {
+    "_id": {
+      "$oid": "67514884cda73b3478c6b8da"
+    },
+    "cve_id": "CVE-1999-0426",
+    "vendor": "suse",
+    "product": "suse_linux"
+  },
+  {
+    "_id": {
+      "$oid": "675148849e256ca36c0aa87c"
+    },
+    "cve_id": "CVE-1999-0427",
+    "vendor": "qualcomm",
+    "product": "eudora"
+  },
+  {
+    "_id": {
+      "$oid": "6751488421d4452f95a37ccc"
+    },
+    "cve_id": "CVE-1999-0428",
+    "vendor": "openssl",
+    "product": "openssl"
+  },
+  {
+    "_id": {
+      "$oid": "67514884acabd82c8d2036b3"
+    },
+    "cve_id": "CVE-1999-0429",
+    "vendor": "ibm",
+    "product": "lotus_notes"
+  },
+  {
+    "_id": {
+      "$oid": "67514884a3d92213ac281dee"
+    },
+    "cve_id": "CVE-1999-0430",
+    "vendor": "cisco",
+    "product": "catalyst_5xxx_supervisor_software"
+  },
+  {
+    "_id": {
+      "$oid": "67514884bacb92663f21578b"
+    },
+    "cve_id": "CVE-1999-0431",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "67514884464c1bc53806e90e"
+    },
+    "cve_id": "CVE-1999-0432",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "675148849443a0bb87f1cc30"
+    },
+    "cve_id": "CVE-1999-0433",
+    "vendor": "xfree86_project",
+    "product": "x11r6"
+  },
+  {
+    "_id": {
+      "$oid": "675148849443a0bb87f1cc30"
+    },
+    "cve_id": "CVE-1999-0433",
+    "vendor": "slackware",
+    "product": "slackware_linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514884c2e5b99cb2223ee9"
+    },
+    "cve_id": "CVE-1999-0434",
+    "vendor": "caldera",
+    "product": "openlinux"
+  },
+  {
+    "_id": {
+      "$oid": "67514884b460dd3cdf19ba11"
+    },
+    "cve_id": "CVE-1999-0435",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "67514884905e10171894c68b"
+    },
+    "cve_id": "CVE-1999-0436",
+    "vendor": "hp",
+    "product": "desms"
+  },
+  {
+    "_id": {
+      "$oid": "67514884905e10171894c68b"
+    },
+    "cve_id": "CVE-1999-0436",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "6751488445922df543afbd62"
+    },
+    "cve_id": "CVE-1999-0437",
+    "vendor": "ramp_networks",
+    "product": "webramp"
+  },
+  {
+    "_id": {
+      "$oid": "67514884a31e012a5be0855b"
+    },
+    "cve_id": "CVE-1999-0438",
+    "vendor": "ramp_networks",
+    "product": "webramp_m3"
+  },
+  {
+    "_id": {
+      "$oid": "675148848ffe5f6f112667d4"
+    },
+    "cve_id": "CVE-1999-0439",
+    "vendor": "procmail",
+    "product": "procmail"
+  },
+  {
+    "_id": {
+      "$oid": "675148848ffe5f6f112667d4"
+    },
+    "cve_id": "CVE-1999-0439",
+    "vendor": "caldera",
+    "product": "openlinux"
+  },
+  {
+    "_id": {
+      "$oid": "675148845ab50e942da060bb"
+    },
+    "cve_id": "CVE-1999-0440",
+    "vendor": "netscape",
+    "product": "navigator"
+  },
+  {
+    "_id": {
+      "$oid": "67514884b643ba582ce75500"
+    },
+    "cve_id": "CVE-1999-0441",
+    "vendor": "qbik",
+    "product": "wingate"
+  },
+  {
+    "_id": {
+      "$oid": "6751488441d629b1767b4915"
+    },
+    "cve_id": "CVE-1999-0442",
+    "vendor": "sun",
+    "product": "solaris"
+  },
+  {
+    "_id": {
+      "$oid": "67514884c5f3f2a742d23906"
+    },
+    "cve_id": "CVE-1999-0443",
+    "vendor": "bmc",
+    "product": "patrol_agent"
+  },
+  {
+    "_id": {
+      "$oid": "67514884fc58f4595a11911d"
+    },
+    "cve_id": "CVE-1999-0444",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488451dce8a592841eba"
+    },
+    "cve_id": "CVE-1999-0445",
+    "vendor": "cisco",
+    "product": "ios"
+  },
+  {
+    "_id": {
+      "$oid": "6751488403f01f99ee953bf9"
+    },
+    "cve_id": "CVE-1999-0446",
+    "vendor": "netbsd",
+    "product": "netbsd"
+  },
+  {
+    "_id": {
+      "$oid": "6751488453f8d153a8d74a92"
+    },
+    "cve_id": "CVE-1999-0447",
+    "vendor": "hp",
+    "product": "mpe_ix"
+  },
+  {
+    "_id": {
+      "$oid": "675148842315197a98254ad4"
+    },
+    "cve_id": "CVE-1999-0448",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514884d24092c66b402b82"
+    },
+    "cve_id": "CVE-1999-0449",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "675148843d348ff80e57b64e"
+    },
+    "cve_id": "CVE-1999-0450",
+    "vendor": "microsoft",
+    "product": "internet_information_services"
+  },
+  {
+    "_id": {
+      "$oid": "67514884729056a877b57dbb"
+    },
+    "cve_id": "CVE-1999-0451",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "675148842be42059707aa7a0"
+    },
+    "cve_id": "CVE-1999-0453",
+    "vendor": "cisco",
+    "product": "router"
+  },
+  {
+    "_id": {
+      "$oid": "6751488421a9eda3a8fa9f1d"
+    },
+    "cve_id": "CVE-1999-0455",
+    "vendor": "allaire",
+    "product": "coldfusion_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514884ba8b1cb3b7f0f066"
+    },
+    "cve_id": "CVE-1999-0457",
+    "vendor": "debian",
+    "product": "debian_linux"
+  },
+  {
+    "_id": {
+      "$oid": "6751488413b38b0471df22b2"
+    },
+    "cve_id": "CVE-1999-0458",
+    "vendor": "l0pht",
+    "product": "l0phtcrack"
+  },
+  {
+    "_id": {
+      "$oid": "6751488403bd05284b172827"
+    },
+    "cve_id": "CVE-1999-0460",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "67514884fa18389cdfdf3ecf"
+    },
+    "cve_id": "CVE-1999-0461",
+    "vendor": "sgi",
+    "product": "irix"
+  },
+  {
+    "_id": {
+      "$oid": "67514884fa18389cdfdf3ecf"
+    },
+    "cve_id": "CVE-1999-0461",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "67514884bb5c1cd113644ea0"
+    },
+    "cve_id": "CVE-1999-0462",
+    "vendor": "suse",
+    "product": "suse_linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514884ed4bcb0054e9cc29"
+    },
+    "cve_id": "CVE-1999-0463",
+    "vendor": "l0pht",
+    "product": "l0phtcrack"
+  },
+  {
+    "_id": {
+      "$oid": "6751488436b948f8031421ab"
+    },
+    "cve_id": "CVE-1999-0464",
+    "vendor": "tripwire",
+    "product": "tripwire"
+  },
+  {
+    "_id": {
+      "$oid": "67514884d74593408a73866f"
+    },
+    "cve_id": "CVE-1999-0466",
+    "vendor": "netbsd",
+    "product": "netbsd"
+  },
+  {
+    "_id": {
+      "$oid": "67514884253b8797d05ee413"
+    },
+    "cve_id": "CVE-1999-0467",
+    "vendor": "webcom",
+    "product": "cgi_guestbook"
+  },
+  {
+    "_id": {
+      "$oid": "6751488447f77c04251a8ee3"
+    },
+    "cve_id": "CVE-1999-0468",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "675148845e528343a15c6379"
+    },
+    "cve_id": "CVE-1999-0469",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "67514884440d59352f37ccc1"
+    },
+    "cve_id": "CVE-1999-0470",
+    "vendor": "novell",
+    "product": "netware"
+  },
+  {
+    "_id": {
+      "$oid": "67514884f39334f780928167"
+    },
+    "cve_id": "CVE-1999-0471",
+    "vendor": "winroute",
+    "product": "winroute"
+  },
+  {
+    "_id": {
+      "$oid": "675148844a22dd35fb70c56e"
+    },
+    "cve_id": "CVE-1999-0472",
+    "vendor": "snmp",
+    "product": "snmp"
+  },
+  {
+    "_id": {
+      "$oid": "675148844a22dd35fb70c56e"
+    },
+    "cve_id": "CVE-1999-0472",
+    "vendor": "network_appliance",
+    "product": "netcache"
+  },
+  {
+    "_id": {
+      "$oid": "67514884f262ee3beb32865a"
+    },
+    "cve_id": "CVE-1999-0473",
+    "vendor": "andrew_tridgell",
+    "product": "rsync"
+  },
+  {
+    "_id": {
+      "$oid": "675148848d05d175e50b022e"
+    },
+    "cve_id": "CVE-1999-0474",
+    "vendor": "mirabilis",
+    "product": "icq"
+  },
+  {
+    "_id": {
+      "$oid": "675148849389f69a042743e3"
+    },
+    "cve_id": "CVE-1999-0475",
+    "vendor": "procmail",
+    "product": "procmail"
+  },
+  {
+    "_id": {
+      "$oid": "6751488450d6aee17f62403e"
+    },
+    "cve_id": "CVE-1999-0476",
+    "vendor": "sco",
+    "product": "openserver"
+  },
+  {
+    "_id": {
+      "$oid": "67514884b62d6efc9185ba08"
+    },
+    "cve_id": "CVE-1999-0477",
+    "vendor": "allaire",
+    "product": "coldfusion_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514884d73e27cec8e1b910"
+    },
+    "cve_id": "CVE-1999-0478",
+    "vendor": "sendmail",
+    "product": "sendmail"
+  },
+  {
+    "_id": {
+      "$oid": "6751488487d4a9d48dc6b83b"
+    },
+    "cve_id": "CVE-1999-0479",
+    "vendor": "netscape",
+    "product": "enterprise_server"
+  },
+  {
+    "_id": {
+      "$oid": "6751488487d4a9d48dc6b83b"
+    },
+    "cve_id": "CVE-1999-0479",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "675148841622bd763cded1bb"
+    },
+    "cve_id": "CVE-1999-0480",
+    "vendor": "midnight_commander",
+    "product": "midnight_commander"
+  },
+  {
+    "_id": {
+      "$oid": "67514884996fc1d8119914fa"
+    },
+    "cve_id": "CVE-1999-0481",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "675148840a4fda20e19d5f8d"
+    },
+    "cve_id": "CVE-1999-0482",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "67514884495a6efe3e7b6999"
+    },
+    "cve_id": "CVE-1999-0483",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "6751488484cb8b1792fb1f38"
+    },
+    "cve_id": "CVE-1999-0484",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "675148848b6d11457566659c"
+    },
+    "cve_id": "CVE-1999-0485",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "675148841eb70bcd0e7d6c80"
+    },
+    "cve_id": "CVE-1999-0486",
+    "vendor": "aol",
+    "product": "instant_messenger"
+  },
+  {
+    "_id": {
+      "$oid": "6751488493d399da6ab4c274"
+    },
+    "cve_id": "CVE-1999-0487",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "67514884e1aad49d01ab7e0b"
+    },
+    "cve_id": "CVE-1999-0488",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "675148854e4a19cb06ed1aec"
+    },
+    "cve_id": "CVE-1999-0489",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885250b073a9c0d1304"
+    },
+    "cve_id": "CVE-1999-0490",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "6751488591d9ced49afa4b7c"
+    },
+    "cve_id": "CVE-1999-0491",
+    "vendor": "gnu",
+    "product": "bash"
+  },
+  {
+    "_id": {
+      "$oid": "67514885b573eef57520f77b"
+    },
+    "cve_id": "CVE-1999-0493",
+    "vendor": "sun",
+    "product": "sunos"
+  },
+  {
+    "_id": {
+      "$oid": "675148856d804a6c26e58b9b"
+    },
+    "cve_id": "CVE-1999-0494",
+    "vendor": "wingate",
+    "product": "wingate"
+  },
+  {
+    "_id": {
+      "$oid": "6751488537cf5e5f4bbffef4"
+    },
+    "cve_id": "CVE-1999-0496",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488558edab5395b0df80"
+    },
+    "cve_id": "CVE-1999-0499",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148851235f15e517de561"
+    },
+    "cve_id": "CVE-1999-0502",
+    "vendor": "sun",
+    "product": "sunos"
+  },
+  {
+    "_id": {
+      "$oid": "675148859c982aa3eacb77dc"
+    },
+    "cve_id": "CVE-1999-0503",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885a80103f21710d1c5"
+    },
+    "cve_id": "CVE-1999-0504",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148858430a7504ab01b99"
+    },
+    "cve_id": "CVE-1999-0505",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885a99089d90ca84478"
+    },
+    "cve_id": "CVE-1999-0506",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148852742ba6237842954"
+    },
+    "cve_id": "CVE-1999-0511",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488557733d53aa9ee8f9"
+    },
+    "cve_id": "CVE-1999-0513",
+    "vendor": "sun",
+    "product": "solaris"
+  },
+  {
+    "_id": {
+      "$oid": "6751488549536f8258bcffa8"
+    },
+    "cve_id": "CVE-1999-0517",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "6751488513171c1f687e4401"
+    },
+    "cve_id": "CVE-1999-0518",
+    "vendor": "microsoft",
+    "product": "windows_95"
+  },
+  {
+    "_id": {
+      "$oid": "675148858ff246e8ee76a62c"
+    },
+    "cve_id": "CVE-1999-0519",
+    "vendor": "microsoft",
+    "product": "outlook"
+  },
+  {
+    "_id": {
+      "$oid": "675148858ff246e8ee76a62c"
+    },
+    "cve_id": "CVE-1999-0519",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148853ff2eac0bfeb495b"
+    },
+    "cve_id": "CVE-1999-0524",
+    "vendor": "microsoft",
+    "product": "windows"
+  },
+  {
+    "_id": {
+      "$oid": "675148858be58a7390f151aa"
+    },
+    "cve_id": "CVE-1999-0526",
+    "vendor": "x.org",
+    "product": "x11"
+  },
+  {
+    "_id": {
+      "$oid": "67514885e10ee25f4795d099"
+    },
+    "cve_id": "CVE-1999-0534",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488510f5b0649f3fdc0c"
+    },
+    "cve_id": "CVE-1999-0535",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488525ad8dfeefee315e"
+    },
+    "cve_id": "CVE-1999-0537",
+    "vendor": "netscape",
+    "product": "communicator"
+  },
+  {
+    "_id": {
+      "$oid": "6751488589b064e32fb945ac"
+    },
+    "cve_id": "CVE-1999-0546",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148854a9b284fc4adc58c"
+    },
+    "cve_id": "CVE-1999-0549",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885df97028871defb86"
+    },
+    "cve_id": "CVE-1999-0551",
+    "vendor": "hp",
+    "product": "openmail"
+  },
+  {
+    "_id": {
+      "$oid": "67514885ce1fee0369c0e4da"
+    },
+    "cve_id": "CVE-1999-0560",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885e4c997dff00c06f3"
+    },
+    "cve_id": "CVE-1999-0562",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148858228416946e0b51c"
+    },
+    "cve_id": "CVE-1999-0566",
+    "vendor": "ibm",
+    "product": "aix"
+  },
+  {
+    "_id": {
+      "$oid": "67514885b7d11e2915c3ceb9"
+    },
+    "cve_id": "CVE-1999-0568",
+    "vendor": "sun",
+    "product": "solaris"
+  },
+  {
+    "_id": {
+      "$oid": "675148858bd110b294f39d02"
+    },
+    "cve_id": "CVE-1999-0570",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885a790ddb732184249"
+    },
+    "cve_id": "CVE-1999-0572",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148857e6b17a4ec274764"
+    },
+    "cve_id": "CVE-1999-0575",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885d8bd4822144895a7"
+    },
+    "cve_id": "CVE-1999-0576",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885e18718792bd8aea8"
+    },
+    "cve_id": "CVE-1999-0577",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885a4cd9855cd37dc18"
+    },
+    "cve_id": "CVE-1999-0578",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885b04b4df0463918b1"
+    },
+    "cve_id": "CVE-1999-0579",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514885ae6ac7e0663957e0"
+    },
+    "cve_id": "CVE-1999-0581",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148859517030ef6f4a947"
+    },
+    "cve_id": "CVE-1999-0582",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148854dfd00f2bdc9cb07"
+    },
+    "cve_id": "CVE-1999-0585",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514886f47faf64c5ce90aa"
+    },
+    "cve_id": "CVE-1999-0590",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488635e2bf77d432f8a6"
+    },
+    "cve_id": "CVE-1999-0593",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514886755a390445c30ccd"
+    },
+    "cve_id": "CVE-1999-0595",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514886f74d2d7f29ac3fe0"
+    },
+    "cve_id": "CVE-1999-0604",
+    "vendor": "selena_sol",
+    "product": "selena_sol_webstore"
+  },
+  {
+    "_id": {
+      "$oid": "67514886a3a0133d2f28a570"
+    },
+    "cve_id": "CVE-1999-0605",
+    "vendor": "austin_contract_computing",
+    "product": "merchant_order_form"
+  },
+  {
+    "_id": {
+      "$oid": "67514886a75939a4ef016c4e"
+    },
+    "cve_id": "CVE-1999-0606",
+    "vendor": "seaside_enterprises",
+    "product": "ezmall"
+  },
+  {
+    "_id": {
+      "$oid": "675148860450b0b93db6766b"
+    },
+    "cve_id": "CVE-1999-0607",
+    "vendor": "i-soft",
+    "product": "quikstore"
+  },
+  {
+    "_id": {
+      "$oid": "675148861a79e3523a1c5579"
+    },
+    "cve_id": "CVE-1999-0608",
+    "vendor": "pdgsoft",
+    "product": "pdg_shopping_cart"
+  },
+  {
+    "_id": {
+      "$oid": "67514886e45c7f3e467996fe"
+    },
+    "cve_id": "CVE-1999-0609",
+    "vendor": "mercantec",
+    "product": "softcart"
+  },
+  {
+    "_id": {
+      "$oid": "67514886709a63a02cf9fb3b"
+    },
+    "cve_id": "CVE-1999-0610",
+    "vendor": "mountain_network_systems",
+    "product": "webcart"
+  },
+  {
+    "_id": {
+      "$oid": "67514886d1b5964a4e014c9e"
+    },
+    "cve_id": "CVE-1999-0612",
+    "vendor": "gnu",
+    "product": "fingerd"
+  },
+  {
+    "_id": {
+      "$oid": "67514886d1b5964a4e014c9e"
+    },
+    "cve_id": "CVE-1999-0612",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514886a7a1b986770938fd"
+    },
+    "cve_id": "CVE-1999-0626",
+    "vendor": "sun",
+    "product": "rpc.ruserd"
+  },
+  {
+    "_id": {
+      "$oid": "67514886547bbbf28095d7ff"
+    },
+    "cve_id": "CVE-1999-0627",
+    "vendor": "ibm",
+    "product": "aix"
+  },
+  {
+    "_id": {
+      "$oid": "675148866dcfe7a6dcc60594"
+    },
+    "cve_id": "CVE-1999-0628",
+    "vendor": "netbsd",
+    "product": "netbsd"
+  },
+  {
+    "_id": {
+      "$oid": "6751488657c10a9a4e153468"
+    },
+    "cve_id": "CVE-1999-0656",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "67514886b0833421744d5080"
+    },
+    "cve_id": "CVE-1999-0667",
+    "vendor": "arp_protocol",
+    "product": "arp_protocol"
+  },
+  {
+    "_id": {
+      "$oid": "67514887c9f40daf90dd460a"
+    },
+    "cve_id": "CVE-1999-0668",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "67514887e817bea708ea03a8"
+    },
+    "cve_id": "CVE-1999-0669",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "675148878f71545b1b9bc5b3"
+    },
+    "cve_id": "CVE-1999-0670",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "67514887a6615c9de64a1fd1"
+    },
+    "cve_id": "CVE-1999-0671",
+    "vendor": "toxsoft",
+    "product": "nextftp"
+  },
+  {
+    "_id": {
+      "$oid": "67514887910c7fb20b6303ca"
+    },
+    "cve_id": "CVE-1999-0672",
+    "vendor": "fujitsu",
+    "product": "chocoa"
+  },
+  {
+    "_id": {
+      "$oid": "6751488796ba914644768287"
+    },
+    "cve_id": "CVE-1999-0673",
+    "vendor": "crear",
+    "product": "almail32"
+  },
+  {
+    "_id": {
+      "$oid": "67514887173aab8d5823f888"
+    },
+    "cve_id": "CVE-1999-0674",
+    "vendor": "sun",
+    "product": "sunos"
+  },
+  {
+    "_id": {
+      "$oid": "67514887a2455012829f3b72"
+    },
+    "cve_id": "CVE-1999-0675",
+    "vendor": "checkpoint",
+    "product": "firewall-1"
+  },
+  {
+    "_id": {
+      "$oid": "675148871a33031030aec9a5"
+    },
+    "cve_id": "CVE-1999-0676",
+    "vendor": "sun",
+    "product": "solaris"
+  },
+  {
+    "_id": {
+      "$oid": "6751488720e8e4454127102b"
+    },
+    "cve_id": "CVE-1999-0677",
+    "vendor": "ramp_networks",
+    "product": "webramp_m3"
+  },
+  {
+    "_id": {
+      "$oid": "675148871622546dbd2151b5"
+    },
+    "cve_id": "CVE-1999-0678",
+    "vendor": null,
+    "product": null
+  },
+  {
+    "_id": {
+      "$oid": "675148871e0434ebc8030b3c"
+    },
+    "cve_id": "CVE-1999-0679",
+    "vendor": "hybrid_network",
+    "product": "hybrid_ircd"
+  },
+  {
+    "_id": {
+      "$oid": "675148876aee23ba4898b4b8"
+    },
+    "cve_id": "CVE-1999-0680",
+    "vendor": "microsoft",
+    "product": "terminal_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ff9e6b59a102a69c"
+    },
+    "cve_id": "CVE-1999-0681",
+    "vendor": "microsoft",
+    "product": "personal_web_server"
+  },
+  {
+    "_id": {
+      "$oid": "6751488772dd2732a21ed6d4"
+    },
+    "cve_id": "CVE-1999-0682",
+    "vendor": "microsoft",
+    "product": "exchange_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514887d553aed85f17400b"
+    },
+    "cve_id": "CVE-1999-0683",
+    "vendor": "network_associates",
+    "product": "gauntlet_firewall"
+  },
+  {
+    "_id": {
+      "$oid": "675148873d5f1efd0622fb70"
+    },
+    "cve_id": "CVE-1999-0684",
+    "vendor": "hp",
+    "product": "sendmail"
+  },
+  {
+    "_id": {
+      "$oid": "675148879889f06f1d068cf0"
+    },
+    "cve_id": "CVE-1999-0685",
+    "vendor": "netscape",
+    "product": "communicator"
+  },
+  {
+    "_id": {
+      "$oid": "67514887d0655b31c1c5511b"
+    },
+    "cve_id": "CVE-1999-0686",
+    "vendor": "netscape",
+    "product": "enterprise_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514887d0655b31c1c5511b"
+    },
+    "cve_id": "CVE-1999-0686",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "675148877d34cf08251ce92a"
+    },
+    "cve_id": "CVE-1999-0687",
+    "vendor": "cde",
+    "product": "cde"
+  },
+  {
+    "_id": {
+      "$oid": "675148877d34cf08251ce92a"
+    },
+    "cve_id": "CVE-1999-0687",
+    "vendor": "ibm",
+    "product": "aix"
+  },
+  {
+    "_id": {
+      "$oid": "67514887b9c8d74da562288a"
+    },
+    "cve_id": "CVE-1999-0688",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887db288c195e459cea"
+    },
+    "cve_id": "CVE-1999-0689",
+    "vendor": "cde",
+    "product": "cde"
+  },
+  {
+    "_id": {
+      "$oid": "67514887db288c195e459cea"
+    },
+    "cve_id": "CVE-1999-0689",
+    "vendor": "sun",
+    "product": "solaris"
+  },
+  {
+    "_id": {
+      "$oid": "67514887aead6d2b15cfaeaf"
+    },
+    "cve_id": "CVE-1999-0690",
+    "vendor": "cde",
+    "product": "cde"
+  },
+  {
+    "_id": {
+      "$oid": "67514887aead6d2b15cfaeaf"
+    },
+    "cve_id": "CVE-1999-0690",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "675148871fd1567c6a72f0c2"
+    },
+    "cve_id": "CVE-1999-0691",
+    "vendor": "cde",
+    "product": "cde"
+  },
+  {
+    "_id": {
+      "$oid": "675148871fd1567c6a72f0c2"
+    },
+    "cve_id": "CVE-1999-0691",
+    "vendor": "ibm",
+    "product": "aix"
+  },
+  {
+    "_id": {
+      "$oid": "6751488742201581058d49e7"
+    },
+    "cve_id": "CVE-1999-0692",
+    "vendor": "sgi",
+    "product": "irix"
+  },
+  {
+    "_id": {
+      "$oid": "6751488742201581058d49e7"
+    },
+    "cve_id": "CVE-1999-0692",
+    "vendor": "cray",
+    "product": "unicos"
+  },
+  {
+    "_id": {
+      "$oid": "6751488791263264018ef907"
+    },
+    "cve_id": "CVE-1999-0693",
+    "vendor": "ibm",
+    "product": "aix"
+  },
+  {
+    "_id": {
+      "$oid": "675148874c50a83a5e91555a"
+    },
+    "cve_id": "CVE-1999-0694",
+    "vendor": "ibm",
+    "product": "aix"
+  },
+  {
+    "_id": {
+      "$oid": "67514887fe21ba5cafef835c"
+    },
+    "cve_id": "CVE-1999-0695",
+    "vendor": "sybase",
+    "product": "powerdynamo"
+  },
+  {
+    "_id": {
+      "$oid": "675148870e80e55f77e8acd7"
+    },
+    "cve_id": "CVE-1999-0696",
+    "vendor": "sun",
+    "product": "sunos"
+  },
+  {
+    "_id": {
+      "$oid": "67514887e4ba7dac151f006a"
+    },
+    "cve_id": "CVE-1999-0697",
+    "vendor": "sco",
+    "product": "openserver"
+  },
+  {
+    "_id": {
+      "$oid": "675148878527ae007e935117"
+    },
+    "cve_id": "CVE-1999-0699",
+    "vendor": "bluestone",
+    "product": "sapphire_web"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ac26a8fff5cf405b"
+    },
+    "cve_id": "CVE-1999-0700",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488701be6599e62470f0"
+    },
+    "cve_id": "CVE-1999-0701",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514887debddef3af51dd85"
+    },
+    "cve_id": "CVE-1999-0702",
+    "vendor": "microsoft",
+    "product": "internet_explorer"
+  },
+  {
+    "_id": {
+      "$oid": "67514887a8bc91f9e3615a93"
+    },
+    "cve_id": "CVE-1999-0703",
+    "vendor": "bsdi",
+    "product": "bsd_os"
+  },
+  {
+    "_id": {
+      "$oid": "6751488777be74cbf6888f96"
+    },
+    "cve_id": "CVE-1999-0704",
+    "vendor": "freebsd",
+    "product": "freebsd"
+  },
+  {
+    "_id": {
+      "$oid": "67514887272210a758caadf8"
+    },
+    "cve_id": "CVE-1999-0705",
+    "vendor": "isc",
+    "product": "inn"
+  },
+  {
+    "_id": {
+      "$oid": "67514887272210a758caadf8"
+    },
+    "cve_id": "CVE-1999-0705",
+    "vendor": "redhat",
+    "product": "linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ea83cefc3f2e21da"
+    },
+    "cve_id": "CVE-1999-0706",
+    "vendor": "isc",
+    "product": "inn"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ea83cefc3f2e21da"
+    },
+    "cve_id": "CVE-1999-0706",
+    "vendor": "redhat",
+    "product": "linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887a47b6f81a5a47ba0"
+    },
+    "cve_id": "CVE-1999-0707",
+    "vendor": "hp",
+    "product": "visualize_conference_ftp"
+  },
+  {
+    "_id": {
+      "$oid": "67514887a47b6f81a5a47ba0"
+    },
+    "cve_id": "CVE-1999-0707",
+    "vendor": "hp",
+    "product": "hp-ux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887abaa35452bccea44"
+    },
+    "cve_id": "CVE-1999-0708",
+    "vendor": "infodrom",
+    "product": "cfingerd"
+  },
+  {
+    "_id": {
+      "$oid": "67514887585603d3bfe57564"
+    },
+    "cve_id": "CVE-1999-0710",
+    "vendor": "redhat",
+    "product": "linux"
+  },
+  {
+    "_id": {
+      "$oid": "6751488722be19c7c7ec1d78"
+    },
+    "cve_id": "CVE-1999-0711",
+    "vendor": "oracle",
+    "product": "oracle8i"
+  },
+  {
+    "_id": {
+      "$oid": "67514887b2b5417d328f7f1a"
+    },
+    "cve_id": "CVE-1999-0712",
+    "vendor": "caldera",
+    "product": "coas"
+  },
+  {
+    "_id": {
+      "$oid": "67514887b2b5417d328f7f1a"
+    },
+    "cve_id": "CVE-1999-0712",
+    "vendor": "caldera",
+    "product": "openlinux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887b13764de7b532907"
+    },
+    "cve_id": "CVE-1999-0713",
+    "vendor": "transarc",
+    "product": "afs"
+  },
+  {
+    "_id": {
+      "$oid": "67514887b13764de7b532907"
+    },
+    "cve_id": "CVE-1999-0713",
+    "vendor": "digital",
+    "product": "unix"
+  },
+  {
+    "_id": {
+      "$oid": "675148875ea9e79afdfd0195"
+    },
+    "cve_id": "CVE-1999-0714",
+    "vendor": "digital",
+    "product": "unix"
+  },
+  {
+    "_id": {
+      "$oid": "675148874896670e075e88ce"
+    },
+    "cve_id": "CVE-1999-0715",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488764222940959ef5c9"
+    },
+    "cve_id": "CVE-1999-0716",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148870e0ff2d832dc8219"
+    },
+    "cve_id": "CVE-1999-0717",
+    "vendor": "microsoft",
+    "product": "excel"
+  },
+  {
+    "_id": {
+      "$oid": "675148870e0ff2d832dc8219"
+    },
+    "cve_id": "CVE-1999-0717",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ab5a3666561557a7"
+    },
+    "cve_id": "CVE-1999-0718",
+    "vendor": "ibm",
+    "product": "gina"
+  },
+  {
+    "_id": {
+      "$oid": "6751488701b191a47a0bdf6b"
+    },
+    "cve_id": "CVE-1999-0719",
+    "vendor": "gnu",
+    "product": "gnumeric"
+  },
+  {
+    "_id": {
+      "$oid": "6751488733819971d58d3c88"
+    },
+    "cve_id": "CVE-1999-0720",
+    "vendor": "linux",
+    "product": "linux_kernel"
+  },
+  {
+    "_id": {
+      "$oid": "6751488765170a1df3cf046e"
+    },
+    "cve_id": "CVE-1999-0721",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "675148872d094bd6b09b3850"
+    },
+    "cve_id": "CVE-1999-0722",
+    "vendor": "sun",
+    "product": "cobalt_raq_2"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ce5f3082d6f2638d"
+    },
+    "cve_id": "CVE-1999-0723",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "6751488717535313e6e54a4a"
+    },
+    "cve_id": "CVE-1999-0724",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "6751488745bf6310e18512ad"
+    },
+    "cve_id": "CVE-1999-0725",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "6751488713ab07e70e666e49"
+    },
+    "cve_id": "CVE-1999-0726",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514887e140ab62422c318d"
+    },
+    "cve_id": "CVE-1999-0727",
+    "vendor": "openbsd",
+    "product": "openbsd"
+  },
+  {
+    "_id": {
+      "$oid": "675148876f4411aa75817bc0"
+    },
+    "cve_id": "CVE-1999-0728",
+    "vendor": "microsoft",
+    "product": "windows_nt"
+  },
+  {
+    "_id": {
+      "$oid": "67514887394e848bf0258459"
+    },
+    "cve_id": "CVE-1999-0729",
+    "vendor": "ibm",
+    "product": "lotus_domino_server"
+  },
+  {
+    "_id": {
+      "$oid": "675148873db60ec434720857"
+    },
+    "cve_id": "CVE-1999-0730",
+    "vendor": "debian",
+    "product": "debian_linux"
+  },
+  {
+    "_id": {
+      "$oid": "675148875fbd045e5d234d6f"
+    },
+    "cve_id": "CVE-1999-0731",
+    "vendor": "caldera",
+    "product": "openlinux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ebba865378ae1358"
+    },
+    "cve_id": "CVE-1999-0732",
+    "vendor": "debian",
+    "product": "debian_linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887f75e3a460ab61c93"
+    },
+    "cve_id": "CVE-1999-0733",
+    "vendor": "vmware",
+    "product": "workstation"
+  },
+  {
+    "_id": {
+      "$oid": "675148877978449550a7a348"
+    },
+    "cve_id": "CVE-1999-0734",
+    "vendor": "cisco",
+    "product": "ciscosecure"
+  },
+  {
+    "_id": {
+      "$oid": "675148877d01b898001a553a"
+    },
+    "cve_id": "CVE-1999-0735",
+    "vendor": "kde",
+    "product": "k-mail"
+  },
+  {
+    "_id": {
+      "$oid": "67514887fcaef8754cf6b952"
+    },
+    "cve_id": "CVE-1999-0736",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514887f664f5be8dbb4d95"
+    },
+    "cve_id": "CVE-1999-0737",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "67514887e1e9a12d5a88ecd7"
+    },
+    "cve_id": "CVE-1999-0738",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "675148874c9798d6a7bf3855"
+    },
+    "cve_id": "CVE-1999-0739",
+    "vendor": "microsoft",
+    "product": "internet_information_server"
+  },
+  {
+    "_id": {
+      "$oid": "675148873ace457262e667f3"
+    },
+    "cve_id": "CVE-1999-0740",
+    "vendor": "redhat",
+    "product": "linux"
+  },
+  {
+    "_id": {
+      "$oid": "67514887ca2bbe0b0de1fc70"
+    },
+    "cve_id": "CVE-1999-0741",
+    "vendor": "qms",
+    "product": "crownnet_unix_utilities"
+  },
+  {
+    "_id": {
+      "$oid": "67514887385cd5252780552d"
+    },
+    "cve_id": "CVE-1999-0742",
+    "vendor": "debian",
+    "product": "debian_linux"
+  },
+  {
+    "_id": {
+      "$oid": "675148874d2682181a1d987d"
+    },
+    "cve_id": "CVE-1999-0743",
+    "vendor": "freebsd",
+    "product": "freebsd"
+  }
+]
