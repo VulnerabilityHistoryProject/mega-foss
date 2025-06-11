@@ -4,12 +4,16 @@ from read_product_vendor import *
 from gql.transport.requests import RequestsHTTPTransport
 
 
-#ENTER YOUR PERSONAL ACCESS TOKEN HERE  MAKE SURE YOU REMOVE IT BEFORE YOU COMMITT
-TOKEN = ''
 
+# Load environment variables from .env file
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+# Set up the GraphQL client with the transport
 transport = RequestsHTTPTransport(
     url='https://api.github.com/graphql',
-    headers={'Authorization': f'bearer {TOKEN}'}
+    headers={'Authorization': f"bearer {os.getenv('GQL_ACCESS_TOKEN')}"},
 )
 
 client = Client(transport=transport, fetch_schema_from_transport=True)
