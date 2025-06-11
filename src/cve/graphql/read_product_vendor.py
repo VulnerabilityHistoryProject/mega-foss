@@ -15,3 +15,6 @@ for pair in [{'vendor': item.get('vendor'), 'product': item.get('product')} for 
     if key not in seen:
         seen.add(key)
         extracted_pairs.append(pair)
+
+if __name__ == "__main__":
+    print(extracted_pairs)
