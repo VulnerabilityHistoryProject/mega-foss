@@ -3,7 +3,7 @@ from read_product_vendor import *
 
 from gql.transport.requests import RequestsHTTPTransport
 
-
+import time
 
 # Load environment variables from .env file
 from dotenv import load_dotenv
@@ -18,7 +18,7 @@ transport = RequestsHTTPTransport(
 
 client = Client(transport=transport, fetch_schema_from_transport=True)
 
-
+csv_path = 'lists/graphql_csv_data.csv'
 
 #THIS IS AN EXAMPLE QUERY THAT WILL BE RAN FOR EVERY PRODUCT/VENUE PAIR
 # query = gql("""
@@ -31,7 +31,11 @@ client = Client(transport=transport, fetch_schema_from_transport=True)
 #     }
 # }
 # """)
+# result = client.execute(query)
+# print(result)
 
+
+#This is our standard graphql query to find matching repositories and other information
 query = gql("""
 query ($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
@@ -43,19 +47,71 @@ query ($owner: String!, $name: String!) {
 }
 """)
 
-for item in extracted_pairs:
-    vendor = item['vendor']
-    product = item['product']
 
-    try:
-        result = client.execute(query, variable_values={'owner': vendor, 'name': product})
-        if result.get("repository"):
-            print(f"{vendor}/{product}: {result['repository']}")
-        else:
-            print(f"{vendor}/{product} → No repository found.")
-    except Exception as e:
-        #print(f"{vendor}/{product} → Error: {e}")
-        continue
 
-#result = client.execute(query)
-#print(result)
+"""_summary_
+		Queries the unique vendor/product pairs and writes the queires that 
+        successfully returns a matching repository into the 'lists/graphql_csv_data.csv' file
+        
+        Has the option to start with a given vendor/product pair
+  
+    Args:
+			vendor   (str)
+            product  (str)
+"""
+def gql_query_to_csv(vendor=None,product=None):
+    starting_index = find_starting_index(vendor,product)
+    with open(csv_path, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=['vendor', 'product', 'result'])
+        writer.writeheader()
+        for item in extracted_pairs[starting_index:]:
+            vendor = item['vendor']
+            product = item['product']
+            try:
+                result = client.execute(query, variable_values={'owner': vendor, 'name': product})
+                #time.sleep(0.75)
+                if result.get("repository"):
+                    print(f"{vendor}/{product}: {result['repository']}")
+                    result_msg = json.dumps(result['repository'])
+                    writer.writerow({
+                                'vendor': vendor,
+                                'product': product,
+                                'result': result_msg
+            })
+                else:
+                    print(f"{vendor}/{product} → No repository found.")
+            except Exception as e:
+                #result_msg = f"Error: {str(e)}"
+                continue
+            
+            
+"""_summary_
+		Queries the unique vendor/product pairs and 
+        successfully returns a matching repository.
+        
+        Has the option to start with a given vendor/product pair
+  
+    Args:
+			vendor   (str)
+            product  (str)
+"""                
+def standard_gql_query(vendor=None,product=None):
+    starting_index = find_starting_index(vendor,product)
+    for item in extracted_pairs[starting_index:]:
+        vendor = item['vendor']
+        product = item['product']
+
+        try:
+            result = client.execute(query, variable_values={'owner': vendor, 'name': product})
+            #time.sleep(0.75)
+            if result.get("repository"):
+                print(f"{vendor}/{product}: {result['repository']}")
+            else:
+                print(f"{vendor}/{product} → No repository found.")
+        except Exception as e:
+            continue
+
+
+
+if __name__ == "__main__":
+    standard_gql_query('tri','gigpress')
