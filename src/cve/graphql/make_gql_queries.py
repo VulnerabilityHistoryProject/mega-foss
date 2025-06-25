@@ -61,7 +61,7 @@ query ($owner: String!, $name: String!) {
 """
 def gql_query_to_csv(vendor=None,product=None):
     starting_index = find_starting_index(vendor,product)
-    with open(csv_path, mode='w', newline='', encoding='utf-8') as f:
+    with open(csv_path, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=['vendor', 'product', 'result'])
         writer.writeheader()
         for item in extracted_pairs[starting_index:]:
@@ -69,7 +69,6 @@ def gql_query_to_csv(vendor=None,product=None):
             product = item['product']
             try:
                 result = client.execute(query, variable_values={'owner': vendor, 'name': product})
-                #time.sleep(0.75)
                 if result.get("repository"):
                     print(f"{vendor}/{product}: {result['repository']}")
                     result_msg = json.dumps(result['repository'])
@@ -83,7 +82,9 @@ def gql_query_to_csv(vendor=None,product=None):
             except Exception as e:
                 #result_msg = f"Error: {str(e)}"
                 continue
-            
+            finally:
+                time.sleep(0.75)
+                
             
 """_summary_
 		Queries the unique vendor/product pairs and 
@@ -114,4 +115,4 @@ def standard_gql_query(vendor=None,product=None):
 
 
 if __name__ == "__main__":
-    standard_gql_query('tri','gigpress')
+    gql_query_to_csv("scponly","scponly")
