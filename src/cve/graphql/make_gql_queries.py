@@ -41,6 +41,7 @@ query ($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     description
     createdAt
+    url
     homepageUrl
     diskUsage
   }
@@ -62,21 +63,25 @@ query ($owner: String!, $name: String!) {
 def gql_query_to_csv(vendor=None,product=None):
     starting_index = find_starting_index(vendor,product)
     with open(csv_path, mode='a', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['vendor', 'product', 'result'])
+        writer = csv.DictWriter(f, fieldnames=['vendor', 'product', 'url', 'homepageUrl', 'description', 'createdAt', 'diskUsage'])
         writer.writeheader()
         for item in extracted_pairs[starting_index:]:
             vendor = item['vendor']
             product = item['product']
             try:
                 result = client.execute(query, variable_values={'owner': vendor, 'name': product})
-                if result.get("repository"):
+                repo = result.get("repository")
+                if repo:
                     print(f"{vendor}/{product}: {result['repository']}")
-                    result_msg = json.dumps(result['repository'])
                     writer.writerow({
-                                'vendor': vendor,
-                                'product': product,
-                                'result': result_msg
-            })
+                        'vendor': vendor,
+                        'product': product,
+                        'url': repo.get('url', ''),
+                        'homepageUrl': repo.get('homepageUrl', ''),
+                        'description': repo.get('description', ''),
+                        'createdAt': repo.get('createdAt', ''),
+                        'diskUsage': repo.get('diskUsage', '')
+                    })
                 else:
                     print(f"{vendor}/{product} → No repository found.")
             except Exception as e:
@@ -84,6 +89,7 @@ def gql_query_to_csv(vendor=None,product=None):
                 continue
             finally:
                 time.sleep(0.75)
+                pass
                 
             
 """_summary_
@@ -111,8 +117,10 @@ def standard_gql_query(vendor=None,product=None):
                 print(f"{vendor}/{product} → No repository found.")
         except Exception as e:
             continue
+        finally:
+            time.sleep(0.75)
 
 
 
 if __name__ == "__main__":
-    gql_query_to_csv("scponly","scponly")
+    gql_query_to_csv("hylafax","hylafax")
