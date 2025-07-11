@@ -7,8 +7,6 @@ gnome,gdm,https://github.com/GNOME/gdm,https://gitlab.gnome.org/GNOME/gdm,Read-o
 webmin,webmin,https://github.com/webmin/webmin,http://www.webmin.com/,Powerful and flexible web-based server management control panel,2009-07-20T22:03:42Z,120086
 nlog,nlog,https://github.com/NLog/NLog,https://nlog-project.org,NLog - Flexible and Structured Logging for various .NET Platforms,2012-09-12T13:49:29Z,117860
 hylafax,hylafax,https://github.com/hylafax/HylaFAX,http://www.hylafax.org,HylaFAX Software,2010-08-05T16:32:58Z,6109
-vendor,product,url,homepageUrl,description,createdAt,diskUsage
-hylafax,hylafax,https://github.com/hylafax/HylaFAX,http://www.hylafax.org,HylaFAX Software,2010-08-05T16:32:58Z,6109
 glftpd,glftpd,https://github.com/glftpd/glftpd,,,2015-12-04T20:59:41Z,0
 lcdproc,lcdproc,https://github.com/lcdproc/lcdproc,http://lcdproc.org/,Client/server suite for controlling a wide variety of LCD devices,2016-07-22T10:13:59Z,4354
 openldap,openldap,https://github.com/openldap/openldap,http://www.openldap.org/devel/contributing.html,Mirror of OpenLDAP repository,2016-04-27T16:53:11Z,55891
