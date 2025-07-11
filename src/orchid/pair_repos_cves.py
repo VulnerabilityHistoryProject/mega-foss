@@ -106,8 +106,8 @@ def extract_versions_from_cpe_matches(cpe_matches: set, vendor: str, product: st
     """
     versions = set()
     for cpe_match in cpe_matches:
-        # Only keep versions related to the vendor/product
-        if f"{vendor}:{product}" in cpe_match:
+        # Only keep versions related to the product
+        if f":{product}:" in cpe_match:
             version = cpe_match.split(":")[5]
             if version not in ("*", "", "-"):
                 versions.add(version)
