@@ -257,11 +257,3 @@ def pair_repos_to_cves():
 
 if __name__ == "__main__":
     pair_repos_to_cves()
-
-    # import time
-    # start_time = time.time()
-    # commits = get_commit_hashes_and_tags_for_repo("hylafax", "hylafax", "https://github.com/hylafax/HylaFAX")
-    # end_time = time.time()
-    # print(f"Execution time: {end_time - start_time:.2f} seconds")
-    # with open("test.json", "w", encoding="utf-8") as f:
-    #             json.dump(commits, f, indent=4)
