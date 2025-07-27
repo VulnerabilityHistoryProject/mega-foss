@@ -10,7 +10,7 @@ MODEL = 'nomic-embed-text'
 # https://nvd.nist.gov/vuln/detail/CVE-2021-33815
 # Actual fix commit should be 26d3c81bc5ef2f8c3f09d45eaeacfb4b1139a777
 NVD_DESC = 'dwa_uncompress in libavcodec/exr.c in FFmpeg 4.4 allows an out-of-bounds array access because dc_count is not strictly checked.'
-git_repo  = Git('/Users/andy/code/FFmpeg')
+git_repo  = Git('/Users/kendallroy/programmingpractice/ffmpeg')
 
 wrong_commits_string = """ee964145b5d229571e00bf6883a44189d02babe2
 a1136ca973e3b216804d05bbf64fcc19ad0f14da
@@ -20,7 +20,7 @@ a39cd8766fba7d8e4f7c177c13361058d4158ba0
 2a31bf2a3507a311537721c39712fb318120595b
 57b5b84e208ad61ffdd74ad849bed212deb92bc5
 dd4b7badb416a5c2688da7310a7fe80fe4e4f209
-3c1ecb057d7621e57968624aa15ad3e9efc819f7
+3c1ecb057d7621e57968624aa15ad3e9efc819f7n
 30549294ef0f796d48b1ffa482bd9315d4dbb83c
 a319c212bdefec27b3ee4055ad8555637a77e57a
 0ae2ccff560cb23dc0a30c02234b25b9cd958975

@@ -120,7 +120,28 @@ def standard_gql_query(vendor=None,product=None):
         finally:
             time.sleep(0.75)
 
+def get_repo_url(vendor, product):
+    query = gql("""
+        query ($owner: String!, $name: String!) {
+            repository(owner: $owner, name: $name) {
+                url
+            }
+        }
+    """)
+    
+    try:
+        result = client.execute(query, variable_values={'owner': vendor, 'name': product})
+        repo = result.get('repository')
+        if repo:
+            return repo.get('url')
+        else:
+            print(f"No repository found for {vendor}/{product}")
+            return None
+    except Exception as e:
+        print(f"Error querying {vendor}/{product}: {e}")
+        return None
 
 
 if __name__ == "__main__":
-    gql_query_to_csv("hylafax","hylafax")
+    #gql_query_to_csv("hylafax","hylafax")
+    print(get_repo_url("jcollie","asterisk"))
