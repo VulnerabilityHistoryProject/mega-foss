@@ -44,12 +44,8 @@ def get_vuln_hashes(vendor, product):
     repo_name = f"{vendor}/{product}"
     for item in data:
         if item["repo"] == repo_name:
-            vuln_dict = item.get("vuln_commit", {})
-            hashes = []
-            for commit_list in vuln_dict.values():
-                hashes.extend(commit_list)
-            return hashes
-    return []
+            return item.get("vuln_commit", {})
+    return {}
 
 def make_cve_folder(cve_id):
     #path to pydriller-cve inside mega-foss
@@ -61,11 +57,11 @@ def make_cve_folder(cve_id):
     return cve_folder_path
 
 
-def clone_the_repo(repo_url,commit_hash):
+def clone_the_repo(repo_url):
     repo_name = repo_url.split("/")[-1].replace(".git", "")
     try:
         subprocess.run(["git", "clone", repo_url, placeholder_repo_folder], check=True)
-        subprocess.run(["git", "checkout", commit_hash], cwd=placeholder_repo_folder, check=True)
+        #subprocess.run(["git", "checkout", commit_hash], cwd=placeholder_repo_folder, check=True)
     except subprocess.CalledProcessError as e:
         print(f"failed cloning {repo_name}: {e}")
     
@@ -77,61 +73,52 @@ def delete_cloned_repo(repo_path):
 
 def script(vendor,product):
     cve_id = get_cve_id(vendor,product)
-    print(cve_id)
     vuln_hashes = get_vuln_hashes(vendor,product)
-    print(vuln_hashes)
     repo_url = get_repo_url(vendor,product)
-    print(repo_url)
-    #folder_path = make_cve_folder(cve_id)
-    #clone_repo(repo_url,folder_path)
+    folder_path = make_cve_folder(cve_id)
+    clone_the_repo(repo_url)
+    get_commit_by_hash(placeholder_repo_folder,"771b3d8749b34b6eea4e03a2e514380da9582f90",vuln_hashes,folder_path)
+    delete_cloned_repo(placeholder_repo_folder)
 
-def get_commit_by_hash(repo_path,commit_hash,vuln_hash,output_dir):
-    patch_commit = next(Repository(repo_path, single=commit_hash).traverse_commits())
+def get_commit_by_hash(repo_path, patch_hash, vuln_commit_dict, output_dir):
+    patch_commit = next(Repository(repo_path, single=patch_hash).traverse_commits())
+    
     for mod in patch_commit.modified_files:
-        print(f"File: {mod.filename}")
-        patch_code = mod.source_code
+        print(f"Patch File: {mod.filename}")
+        patch_code = mod.source_code or ""
         patch_path = os.path.join(output_dir, f"patch_{mod.filename}")
+        os.makedirs(os.path.dirname(patch_path), exist_ok=True)
         with open(patch_path, "w", encoding="utf-8") as f:
             f.write(patch_code)
-        
-    vuln_commit = next(Repository(repo_path, single=vuln_hash).traverse_commits())
-    for mod in vuln_commit.modified_files:
-        print(f"File: {mod.filename}")
-        vuln_code = mod.source_code
-        vuln_path = os.path.join(output_dir, f"vuln_{mod.filename}")
-        with open(vuln_path, "w", encoding="utf-8") as f:
-            f.write(vuln_code)
+
+    # Loop through all vuln commits
+    for filename, commit_hashes in vuln_commit_dict.items():
+        for i, commit_hash in enumerate(commit_hashes):
+            try:
+                commit = next(Repository(repo_path, single=commit_hash).traverse_commits())
+                for mod in commit.modified_files:
+                    if mod.filename.endswith(filename.split("/")[-1]):  
+                        print(f"Vuln File: {mod.filename}")
+                        vuln_code = mod.source_code or ""
+                        vuln_path = os.path.join(output_dir, f"vuln_{i}_{mod.filename}")
+                        os.makedirs(os.path.dirname(vuln_path), exist_ok=True)
+                        with open(vuln_path, "w", encoding="utf-8") as f:
+                            f.write(vuln_code)
+            except StopIteration:
+                print(f"Could not find commit {commit_hash}")
 
     for mod in patch_commit.modified_files:
-        print(f"Diff for {mod.filename}:")
-        #print(mod.diff)
-        diff_code = mod.diff
+        print(f"Diff for {mod.filename}")
+        diff_code = mod.diff or ""
         diff_path = os.path.join(output_dir, f"diff_{mod.filename}.patch")
+        os.makedirs(os.path.dirname(diff_path), exist_ok=True)
         with open(diff_path, "w", encoding="utf-8") as f:
             f.write(diff_code)
     
         
 
 if __name__ == "__main__":
-    
-    
-    repo_url = "https://github.com/jcollie/asterisk"
-    patch_hash = "771b3d8749b34b6eea4e03a2e514380da9582f90"
-    vuln_commit = '4bf272ae364d99dc7ca3523e6583b1ab3d4081b5'
-    
+
     script("jcollie","asterisk")
-    #print(f"[i] Cloning to: {os.path.abspath(dest_dir)}")
-    #clone_the_vulnerabilities()
-    # commit = get_commit_by_hash(repoooo,commit_hash)
-    # for commit in Repository(repoooo, single=commit_hash).traverse_commits():
-    #     print(f"Commit: {commit.hash}")
-    #     for mod in commit.modified_files:
-    #         print(f"Modified file: {mod.filename}")
-    #         print(f"Diff: {mod.diff[:200]}...\n")
-    #         print(mod.source_code_before)  # code before the commit
-    #         print(mod.source_code)    
     
-    # clone_the_repo(repo_url,commit_hash)
-    # get_commit_by_hash('placeholder_cloned_repos/asterisk',patch_hash,vuln_commit,'pydriller-cve/CVE-2008-1897')
-    # delete_cloned_repo('placeholder_cloned_repos/asterisk')
-    #print(make_cve_folder('CVE-2008-1897'))
+    
