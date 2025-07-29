@@ -1,5 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 from gql import gql, Client
-from .read_product_vendor import *
+from read_product_vendor import *
+
 
 from gql.transport.requests import RequestsHTTPTransport
 

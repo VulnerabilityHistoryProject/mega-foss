@@ -2,6 +2,9 @@ import requests
 import os
 import json
 from pathlib import Path
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 
 NVD_API = 'https://services.nvd.nist.gov/rest/json/cves/2.0'
 

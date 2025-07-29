@@ -1,5 +1,9 @@
 import json
 import csv
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+
 
 with open('lists/nvdcve-vendor-product.json') as f:
     data = json.load(f)
