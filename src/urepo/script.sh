@@ -1,10 +1,12 @@
 #!/bin/bash
 
-file_with_repositories="repositories.txt"
+file_with_repositories="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../mega-foss-repos" && pwd)/repositories.txt"
+clone_dir="$(dirname "$file_with_repositories")"
+log_file="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/log.txt"
+
 count_cloned=0
 count_updated=0
 count_removed=0
-log_file="log.txt"
 IFS=$'\n'
 current_repo=""
 
@@ -17,6 +19,8 @@ function on_interruption {
 trap on_interruption INT
 
 echo "----- Log Entry Start: $(date '+%Y-%m-%d %H:%M:%S') -----" >> "$log_file"
+
+cd "$clone_dir"
 
 for repository in $(cat "$file_with_repositories")
 do
@@ -35,13 +39,13 @@ do
       ((count_removed++))
       repository_url="https://github.com/$repository_lowercase.git"
       echo "Cloning repository: $repository_url"
-      git clone "$repository_url"
+      git clone "$repository_url" "$repo_name"
       ((count_cloned++))
     fi
   else
     repository_url="https://github.com/$repository_lowercase.git"
     echo "Cloning repository: $repository_url"
-    git clone "$repository_url"
+    git clone "$repository_url" "$repo_name"
     ((count_cloned++))
   fi
 done
