@@ -1,6 +1,20 @@
 #!/bin/bash
+#SBATCH --job-name=clone_repos
+#SBATCH --output=clone_repos_%j.out
+#SBATCH --error=clone_repos_%j.err
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+#SBATCH --time=01:00:00
 
-file_with_repositories="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../mega-foss-repos" && pwd)/repositories.txt"
+# Command to run the job
+# sbatch clone_repos_job.sh
+
+# Command to monitor the job
+# squeue -u <username>
+
+file_with_repositories="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../mega-foss-repos" && pwd)/repositories.txt"
 clone_dir="$(dirname "$file_with_repositories")"
 log_file="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/log.txt"
 
