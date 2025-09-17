@@ -7,22 +7,19 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
 #SBATCH --time=01:00:00
+#SBATCH --partition=tier3
 
-# Command to run the job
-# sbatch clone_repos_job.sh
-
-# Command to monitor the job
-# squeue -u <username>
-
-file_with_repositories="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../mega-foss-repos" && pwd)/repositories.txt"
+file_with_repositories="$SLURM_SUBMIT_DIR/../../../mega-foss-repos/repositories.txt"
 clone_dir="$(dirname "$file_with_repositories")"
-log_file="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/log.txt"
+log_file="$SLURM_SUBMIT_DIR/log.txt"
+
 
 count_cloned=0
 count_updated=0
 count_removed=0
 IFS=$'\n'
 current_repo=""
+
 
 function on_interruption {
   echo "Operation interrupted during processing repository: $current_repo" >> "$log_file"
