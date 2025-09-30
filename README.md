@@ -3,57 +3,51 @@ MegaFoss is a project dedicatd to collecting and analyzing vulnerability data fr
 
 # Setup Guide
 ## Required Programs
-- MongoDB Community Server (https://www.mongodb.com/try/download/database-tools)
+- MongoDB Compass (https://www.mongodb.com/try/download/compass) - Gui version - Windows / Linux / Mac
+- MongoDB BI Connector (https://www.mongodb.com/try/download/bi-connector) - windows / Linux / Mac
+- MongoDB Shell (https://www.mongodb.com/try/download/shell) - Windows / Linux / Mac
 - Python 3.11.3 or higher
 
-## Step 1: Obtain CVE Data
-- You can get CVE JSON files by clonning the repository:
-
-```
-git clone https://github.com/olbat/nvdcve cves
-```
-* For testing you don't need the full dataset just download or clone a few JSON files
-
-## Step 2: Use MongoDB Compass to Import CVE Data
-- Create a new database (e.g. megafoss) and a collection (e.g. cves)
-- Inside the collection and import the cves JSON
-
-## Step 3: Install Python Dependencies
-- In your megafoss project folder install required Python packages (venv recomended):
+## Install Python dependencies
+In the root folder there is a file called ```requirements.txt```, use the following command to install all the dependencies (venv is recomended)
 
 ```
 pip install -r requirements.txt
 ```
 
-# Using MegaFoss
-## mg_repos_to_nvd.py
-- Converts the curated repo list into a mapped CSV file connecting CVE vendors and products
-- Usage:
+## Generate mongo.ini
+To facilitate secure and correct connection to MongoDB go to the file ```cd src/cve/config``` inside is going to be a ```mongo.default.ini```. Copy and paste this file in the same folder and change its name to ```mongo.ini```
+
+The file should be with the following format:
 
 ```
-python src/cve/mg_repos_to_nvd.py
+[DEFAULT]
+HOST=localhost
+PORT=27017
+DATABASE=megafoss
+COLLECTION=cves
 ```
+* Adjust the values if your MongoDB instance uses different settings
 
-## mg_list_patches.py
-- outputs lists of Git patches associated with CVEs in the repositories
-- Usage:
-
-```
-python src/cve/mg_list_patches.py
-```
-
-## mg_cve_no_cwe.py
-- Creates a list of CVEs that are missing CWE identifiers
-- Usage:
+## Create the views
+Some of the scripts need views. To create them, position yourself into ```cd src/cve/``` and then use the follow command:
 
 ```
-python src/cve/mg_cve_no_cwe.py
+python mg_create_db_views.py
+```
+* This will generate the different views needed for other scripts
+
+## Obtain and import CVE Data automatically
+Go to the file ```/src/cve``` you can use the provided bash script ```import_nvdcve.sh``` which automates the process of importing CVE JSON files
+
+The script will do the following:
+- Clone the nvdcve github repository ```https://github.com/olbat/nvdcve``` as a sibling folder next to the mega-foss project if it is not already cloned
+- Import all CVE JSON files from the cloned repository into your MongoDB instance
+
+```
+./import_nvdcve.sh localhost 27017 megafoss cves C:/projects/RIT/
 ```
 
-## mg_analysis.py
-- Performs various analyses on the CVE data including mapping to Rust vulnerability ratings using and external CSV
-- Usage:
-
-```
-python src/cve/mg_analysis.py
-```
+- This command clones nvdcve into ```C:/projects/RIT/``` if missing
+- Then imports all JSON files into the ```megafoss``` database and ```cves``` collection at ```localhost:27017```
+- The script supports interruption and can be run multiple times without duplicating documents (MongoDB prevents duplicates by _id)
