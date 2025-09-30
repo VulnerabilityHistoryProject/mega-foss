@@ -1,126 +1,105 @@
-"""
-Given a list of repositories, this script will attempt to match them with the Vendor and Product names from CVE JSONs.
-"""
-
 import os
 from config import mg_connect
-from pathlib import Path
 
-# Input files/folders
-c_repolist = os.path.join(os.path.dirname(__file__), "../../lists/c_repos.txt")
-
-# Output files
+c_repolist = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../mega-foss-repos/repositories.txt"))
 output_file = os.path.join(os.path.dirname(__file__), "output/repos_to_nvd.csv")
-missing_file = os.path.join(
-    os.path.dirname(__file__), "output/repos_to_nvd_missing.txt"
-)
+missing_file = os.path.join(os.path.dirname(__file__), "output/repos_to_nvd_missing.txt")
 fix_file = os.path.join(os.path.dirname(__file__), "output/repos_to_nvd_manual_fix.txt")
 
-# Connection details
 db = mg_connect()
-nvdcve_vendor_product_view = db.cve_vendor_product
+collection = db.cves
 
 class Repo:
-  """
-  Represents a repository with its vendor, product, and CVE matches
-  """
-  product: str
-  vendor: str
-  repo: str
-  cve_matches: set[str]
-  semi_matches: set[tuple] # Must be manually checked
+    def __init__(self, name, vendor, repo):
+        self.repo = repo
+        self.vendor = vendor.strip().lower()
+        self.product = name.strip().lower()
+        self.cve_matches = set()
+        self.semi_matches = set()
 
-  def __init__(self, name, vendor, repo):
-    self.repo = repo
-    self.vendor = vendor
-    self.product = name
-    self.cve_matches = set()
-    self.semi_matches = set()
+def clean(s):
+    return s.strip().lower().replace("-", "").replace("_", "").replace(".", "").replace(" ", "")
 
+def extract_vendor_product_from_cpe(cpe_str):
+    parts = cpe_str.split(':')
+    if len(parts) > 4:
+        return parts[3], parts[4]
+    return None, None
 
-def read_data(repo_list) -> list[Repo]:
-    """
-    Reads the list of repos from the file into a list of Repo objects
-    """
-    repos: list[Repo] = list()
-
-    with open(repo_list, "r") as f:
-        for repo in f:
-            repo = repo.strip()
-            vendor, name = repo.strip().split("/")
-            repos.append(Repo(name, vendor, repo))
-
+def read_repos(path):
+    repos = []
+    with open(path, "r") as f:
+        for line in f:
+            line=line.strip()
+            if not line or "/" not in line:
+                continue
+            vendor, product = line.split("/",1)
+            repos.append(Repo(product, vendor, line))
     return repos
 
-def find_repo_matches(repos: list[Repo]):
-    """
-    Finds vendor, product matches for each repo in the list of repos
-    """
+def find_matches(repos):
+    entries = list(collection.find({}, {"id":1, "configurations":1}))
+    product_vendor_to_cves = {}
 
-    all_entries = list(nvdcve_vendor_product_view.find())
-    all_entries = dict({e['product']:e for e in all_entries})
+    for entry in entries:
+        cve_id = entry.get("id")
+        if not cve_id: 
+            continue
+        for config in entry.get("configurations", []):
+            for node in config.get("nodes", []):
+                for cpe in node.get("cpeMatch", []):
+                    vendor, product = extract_vendor_product_from_cpe(cpe.get("criteria", ""))
+                    if vendor and product:
+                        key = (clean(vendor), clean(product))
+                        if key not in product_vendor_to_cves:
+                            product_vendor_to_cves[key] = set()
+                        product_vendor_to_cves[key].add(cve_id)
 
-    # Exact matches vendor/product
     for repo in repos:
-      f = all_entries.get(repo.product.lower(), False)
-      if f:
-        if f['vendor'] == repo.vendor.lower():
-          repo.cve_matches = f['cve_id']
-          repo.vendor = f['vendor']
-          repo.product = f['product']
+        key = (clean(repo.vendor), clean(repo.product))
+        if key in product_vendor_to_cves:
+            repo.cve_matches = product_vendor_to_cves[key]
+        else:
+            for (vendor, product), cves in product_vendor_to_cves.items():
+                if vendor == key[0] and key[1] in product:
+                    repo.semi_matches.add((vendor, product))
 
-    # Semi matches vendor/product if vendor matches and product is a substring OR if product matches
-    for repo in repos:
-      if len(repo.cve_matches) > 0:
-        continue
-      for v in all_entries.values():
-        product = v['product']
-        vendor = v['vendor']
-        if (vendor == repo.vendor and product and repo.product in product) or (product and product == repo.product):
-          repo.semi_matches.add((vendor, product))
-
-def generate_outputs(repos: list[Repo]) -> tuple[str, str, str]:
-    output = "github repo,cve vendor,cve product\n"
+def generate_outputs(repos):
+    output = "github repo,cve vendor,cve product,cve ids\n"
     output_fix = ""
     output_missing = ""
-
     for repo in repos:
-      # Manual fix required if multiple semi matches
-      if len(repo.semi_matches) > 1:
-        output_fix += f"{repo.repo}:\n{repo.semi_matches}\n\n"
-
-      # Automatically use semi match if only one
-      elif len(repo.semi_matches) == 1:
-        match = repo.semi_matches.pop()
-        output += f"{repo.repo},{match[0]},{match[1]}\n"
-
-      # No matches found
-      elif len(repo.cve_matches) == 0:
-        output_missing += f"{repo.repo}\n"
-
-      # Exact match found
-      else:
-        output += f"{repo.repo},{repo.vendor},{repo.product}\n"
-
+        if len(repo.semi_matches) > 1:
+            output_fix += f"{repo.repo}:\n{repo.semi_matches}\n\n"
+        elif len(repo.semi_matches) == 1:
+            match = repo.semi_matches.pop()
+            output += f"{repo.repo},{match[0]},{match[1]},\n"
+        elif not repo.cve_matches:
+            output_missing += f"{repo.repo}\n"
+        else:
+            cves_str = " ".join(sorted(repo.cve_matches))
+            output += f"{repo.repo},{repo.vendor},{repo.product},{cves_str}\n"
     return output, output_missing, output_fix
 
-
-def write_output(output, output_missing, output_fix):
+def write_outputs(output, missing, fix):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     with open(output_file, "w") as f:
-      f.write(output)
-
+        f.write(output)
     with open(missing_file, "w") as f:
-      f.write(output_missing)
-
-    with open(Path(fix_file), "w") as f:
-      f.write(output_fix)
+        f.write(missing)
+    with open(fix_file, "w") as f:
+        f.write(fix)
 
 def main():
-    repos = read_data(c_repolist)
-    find_repo_matches(repos)
-    output, output_missing, output_fix = generate_outputs(repos)
-    write_output(output, output_missing, output_fix)
-    print("Output written to output/repos_to_nvd.csv")
+    repos = read_repos(c_repolist)
+    print(f"Repos loaded: {len(repos)}")
+    find_matches(repos)
+    output, missing, fix = generate_outputs(repos)
+    print(f"Exact matches: {len([r for r in repos if r.cve_matches])}")
+    print(f"Semi matches: {len([r for r in repos if r.semi_matches])}")
+    print(f"Missing matches: {len([r for r in repos if not r.cve_matches and not r.semi_matches])}")
+    write_outputs(output, missing, fix)
+    print(f"Output saved to {output_file}")
 
 if __name__ == "__main__":
     main()

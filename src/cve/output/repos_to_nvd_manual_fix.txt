@@ -1,21 +1,6 @@
-[ torvalds/linux ]
-Matches: {('The Linux Kernel Organization', 'linux'), ('Red Hat', 'Red Hat Virtualization 4 for Red Hat Enterprise Linux 8'), ('Google Inc.', 'Android'), ('n/a', 'Linux kernel (gfs2 file system)'), ('n/a', 'Kernel'), ('n/a', 'Linux kernel'), ('Fedora', 'Fedora'), ('n/a', 'Linux kernel before 4.13.12'), ('Red Hat', 'Red Hat Enterprise Linux 6'), ('Linux', 'kernel'), ('Red Hat', 'Red Hat Enterprise Linux 8.4 Advanced Mission Critical Update Support'), ('n/a', 'kernel'), ('n/a', 'Linux kernel before 4.12.3'), ('Red Hat', 'Red Hat Enterprise Linux 8.2 Telecommunications Update Service'), ('Red Hat', 'Red Hat Enterprise Linux 8.2 Advanced Update Support'), ('Red Hat', 'Red Hat Enterprise Linux 8.8 Extended Update Support'), ('n/a', 'Linux kernel (TIPC kernel module)'), ('n/a', 'Linux kernel (KVM)'), ('n/a', 'Linux kernel through version 4.9-rc1'), (None, None), ('n/a', 'Linux kernel before 4.6.2'), ('n/a', 'Linux kernel since 3.13 up to 4.14 (not including)'), ('Red Hat', 'Red Hat Enterprise Linux 9.2 Extended Update Support'), ('n/a', 'Linux kernel before 4.10.13'), ('n/a', 'Linux kernel before 4.9'), ('n/a', 'Linux kernel through 4.11.1'), ('n/a', 'Linux kernel through 4.14.8'), ('n/a', 'Linux Kernel'), ('n/a', "Linux kernel's DPT I2O Controller driver"), ('n/a', 'Linux Kernel (mctp)'), ('Linux', 'Linux'), ('Red Hat', 'RHOL-5.7-RHEL-8'), ('n/a', 'Linux kernel netfilter subsystem.'), ('n/a', 'Linux kernel before 4.13'), ('Qualcomm, Inc.', 'Android for MSM, Firefox OS for MSM, QRD Android'), ('n/a', 'Linux'), ('n/a', 'Linux kernel through 4.13.3'), ('Red Hat', 'Red Hat Enterprise Linux 8.4 Update Services for SAP Solutions'), ('Red Hat', 'Red Hat Enterprise Linux 9.0 Extended Update Support'), ('n/a', 'Linux kernel (io_uring)'), ('Red Hat', 'Red Hat Enterprise Linux 8'), ('Red Hat', 'Red Hat Enterprise Linux 8.4 Telecommunications Update Service'), ('Red Hat', 'Red Hat Enterprise Linux 9'), ('n/a', 'Linux kernel 4.11'), ('n/a', 'KVM'), ('Linux Kernel Organization, Inc.', 'Linux Kernel'), ('n/a', 'Linux kernel v4.0-rc1 through v4.15-rc5'), ('n/a', 'n/a'), ('n/a', 'Linux Kernel (fbcon)'), ('Red Hat', 'Red Hat Enterprise Linux 7'), ('n/a', 'Linux kernel through v4.14-rc5'), ('n/a', 'Linux Kernel before 4.13.6'), ('n/a', 'Linux kernel 4.15.0-rc9'), ('n/a', 'Linux kernel through 4.12.4'), ('Red Hat', 'Red Hat Enterprise Linux 8.6 Extended Update Support'), ('n/a', 'Linux kernel versions up to and including 4.12'), ('n/a', 'Linux kernel v4.13 and newer'), ('Red Hat', 'Red Hat Enterprise Linux 8.2 Update Services for SAP Solutions'), ('n/a', 'Linux kernel before 4.14-rc6'), ('Linux', 'Linux Kernel'), ('n/a', 'Kernel:KVM')}
---------------------------------------------------------------------------------
-[ pytorch/pytorch ]
-Matches: {('pytorch', 'pytorch/pytorch'), ('n/a', 'n/a')}
---------------------------------------------------------------------------------
-[ opencv/opencv ]
-Matches: {('n/a', 'n/a'), ('OpenCV', 'wechat_qrcode Module'), ('n/a', 'OpenCV')}
---------------------------------------------------------------------------------
-[ python/cpython ]
-Matches: {('pyinstaller', 'pyinstaller'), ('n/a', 'python'), ('Python', 'python'), ('Python Software Foundation', 'CPython'), ('n/a', 'python/cpython'), ('n/a', 'n/a')}
---------------------------------------------------------------------------------
-[ grpc/grpc ]
-Matches: {('grpc', 'grpc-swift'), ('Google', 'gRPC'), ('n/a', 'grpc'), ('grpc', 'grpc-node')}
---------------------------------------------------------------------------------
-[ php/php-src ]
-Matches: {('n/a', 'PHP before 7.0.12'), ('n/a', 'n/a')}
---------------------------------------------------------------------------------
-[ SerenityOS/serenity ]
-Matches: {('n/a', 'SerenityOS'), ('n/a', 'n/a')}
---------------------------------------------------------------------------------
+microsoft/terminal:
+{('microsoft', 'windowsterminalservicesusingrdp'), ('microsoft', 'terminalserver'), ('microsoft', 'windows2000terminalservices')}
+
+nothings/stb:
+{('nothings', 'stbimageh'), ('nothings', 'stbtruetypeh')}
+

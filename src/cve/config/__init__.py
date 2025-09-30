@@ -1,20 +1,22 @@
 import os
 import configparser
 import pymongo
-from motor.motor_asyncio import AsyncIOMotorClient
 
 def mg_connect():
-	config = configparser.ConfigParser()
-	config.read(os.path.join(os.path.dirname(__file__), 'mongo.ini'))
+    config = configparser.ConfigParser()
+    config.read(os.path.join(os.path.dirname(__file__), 'mongo.ini'))
 
-	link = config['DEFAULT']['HOST'] if config['DEFAULT']['HOST'] != "localhost" else f"mongodb://localhost:{config['DEFAULT']['PORT']}/"
+    host = config['DEFAULT']['HOST']
+    port = config['DEFAULT']['PORT']
+    database = config['DEFAULT']['DATABASE']
 
-	return pymongo.MongoClient(link)[config['DEFAULT']['DATABASE']]
+    if host in ["localhost", "127.0.0.1"]:
+        link = f"mongodb://127.0.0.1:{port}/"
+    elif host.startswith("mongodb://"):
+        link = host
+    else:
+        link = f"mongodb://{host}:{port}/"
 
-def async_mg_connect():
-	config = configparser.ConfigParser()
-	config.read(os.path.join(os.path.dirname(__file__), 'mongo.ini'))
+    client = pymongo.MongoClient(link)
 
-	link = config['DEFAULT']['HOST'] if config['DEFAULT']['HOST'] != "localhost" else f"mongodb://localhost:{config['DEFAULT']['PORT']}/"
-
-	return AsyncIOMotorClient(link)[config['DEFAULT']['DATABASE']]
+    return client[database]
