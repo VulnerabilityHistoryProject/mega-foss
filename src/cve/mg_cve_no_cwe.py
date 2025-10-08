@@ -1,34 +1,22 @@
-"""
-This script finds all CVEs that do not have a CWE associated with them.
-"""
-
 import os
 import re
-from config import mg_connect
+from config import read_config, mg_connect
 
-# Output files
-output_file = os.path.join(os.path.dirname(__file__), 'output/cve_no_cwe.txt')
+cfg = read_config()
+database = mg_connect(cfg)
+nvdcve_cwe = database.cve_cwe
 
-# Connection details
-db = mg_connect()
-nvdcve_cwe = db.cve_cwe
+output_file = os.path.join('output', 'cve_no_cwe.txt')
 
 def main():
-  # Filter out CWES that start with "CWE" from CVE, CWE view
-  results = nvdcve_cwe.aggregate([
-      {
-          '$match': {
-              'cwe': { '$not': re.compile(r"^CWE") }
-          }
-      }
-  ]).to_list()
+    results = nvdcve_cwe.aggregate([
+        { '$match': { 'cwe': { '$not': re.compile(r"^CWE") } } }
+    ]).to_list()
 
-  with open(output_file, 'w') as f:
-    for row in results:
-      f.write(f"{row['cve_id']}\n")
+    with open(output_file, 'w') as f:
+        f.writelines(f"{row['cve_id']}\n" for row in results)
 
-  print(f"Found {len(results)} CVEs without CWEs. Results written to {output_file}")
-
+    print(f"Found {len(results)} CVEs without CWEs. Results written to {output_file}")
 
 if __name__ == "__main__":
-  main()
+    main()

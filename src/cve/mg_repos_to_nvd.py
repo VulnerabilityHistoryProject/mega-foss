@@ -1,13 +1,14 @@
 import os
-from config import mg_connect
+from config import read_config, mg_connect
 
-database, cfg = mg_connect()
+cfg = read_config()
+database = mg_connect(cfg)
 
 c_repolist = cfg.get('REPOSITORIES_FILE_PATH')
 
-output_file = "output/repos_to_nvd.csv"
-missing_file = "output/repos_to_nvd_missing.txt"
-fix_file = "output/repos_to_nvd_manual_fix.txt"
+output_file = os.path.join("output", "repos_to_nvd.csv")
+missing_file = os.path.join("output", "repos_to_nvd_missing.txt")
+fix_file = os.path.join("output", "repos_to_nvd_manual_fix.txt")
 
 collection = database.cves
 
