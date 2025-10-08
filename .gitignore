@@ -175,3 +175,10 @@ cython_debug/
 tmp/
 
 /src/urepo/log.txt
+
+# Output in root
+output/*
+!output/.gitkeep
+
+# Settings configuration for all the project
+settings.ini

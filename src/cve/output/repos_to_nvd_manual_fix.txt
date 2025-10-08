@@ -1,6 +1,0 @@
-microsoft/terminal:
-{('microsoft', 'windowsterminalservicesusingrdp'), ('microsoft', 'terminalserver'), ('microsoft', 'windows2000terminalservices')}
-
-nothings/stb:
-{('nothings', 'stbimageh'), ('nothings', 'stbtruetypeh')}
-

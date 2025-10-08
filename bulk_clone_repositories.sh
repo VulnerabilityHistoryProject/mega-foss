@@ -9,17 +9,17 @@
 #SBATCH --time=01:00:00
 #SBATCH --partition=tier3
 
-file_with_repositories="$SLURM_SUBMIT_DIR/../../../mega-foss-repos/repositories.txt"
-clone_dir="$(dirname "$file_with_repositories")"
-log_file="$SLURM_SUBMIT_DIR/log.txt"
+source settings.ini
 
+file_with_repositories="$REPOSITORIES_FILE_PATH"
+clone_dir="$REPOSITORIES_PATH"
+log_file="$OUTPUT_FILE_PATH"
 
 count_cloned=0
 count_updated=0
 count_removed=0
 IFS=$'\n'
 current_repo=""
-
 
 function on_interruption {
   echo "Operation interrupted during processing repository: $current_repo" >> "$log_file"
