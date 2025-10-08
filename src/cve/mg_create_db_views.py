@@ -1,36 +1,37 @@
 import os
-from config import mg_connect
 import re
+from config import read_config, mg_connect
 
-# Connection Details
-db = mg_connect()
+cfg = read_config()
+database = mg_connect(cfg)
 
-# Input files/folders
-cve_cwe_map = os.path.join(os.path.dirname(__file__), "pipelines/mongo-cve-cwe.py")
-cve_full_map = os.path.join(os.path.dirname(__file__), "pipelines/mongo-cve-full-map.py")
-patches_map = os.path.join(os.path.dirname(__file__), "pipelines/mongo-nvdcve.py")
-vendor_product_map = os.path.join(os.path.dirname(__file__), "pipelines/mongo-vendor-product.py")
-cve_vector_metrics_map = os.path.join(os.path.dirname(__file__), "pipelines/mongo-cve-metrics.py")
+PIPELINES = {
+    "cve_cwe": "pipelines/mongo-cve-cwe.py",
+    "cve_full_map": "pipelines/mongo-cve-full-map.py",
+    "cve_patches": "pipelines/mongo-nvdcve.py",
+    "cve_vendor_product": "pipelines/mongo-vendor-product.py",
+    "cve_metrics": "pipelines/mongo-cve-metrics.py",
+}
 
-def load_pipeline(file):
-  with open(file, "r") as f:
-    return eval(f.read())
+def load_pipeline(file_path: str):
+    """Load a MongoDB aggregation pipeline from a Python file."""
+    full_path = os.path.join(os.path.dirname(__file__), file_path)
+    with open(full_path, "r") as f:
+        return eval(f.read())
 
-def create_view(name, pipeline):
-  try:
-    db.command("drop", name)
-  except:
-    pass
-  db.command("create", name, pipeline=pipeline, viewOn="nvdcve")
+def create_view(name: str, pipeline):
+    """Create or replace a MongoDB view safely."""
+    try:
+        database.command("drop", name)
+    except Exception:
+        pass
+    database.command("create", name, pipeline=pipeline, viewOn="nvdcve")
 
 def main():
-  create_view("cve_cwe", load_pipeline(cve_cwe_map))
-  create_view("cve_patches", load_pipeline(patches_map))
-  create_view("cve_vendor_product", load_pipeline(vendor_product_map))
-  create_view("cve_metrics", load_pipeline(cve_vector_metrics_map))
-  create_view("cve_full_map", load_pipeline(cve_full_map))
-  print("Views created successfully.")
-
+    for view_name, file_path in PIPELINES.items():
+        pipeline = load_pipeline(file_path)
+        create_view(view_name, pipeline)
+    print("Views created successfully.")
 
 if __name__ == "__main__":
-  main()
+    main()

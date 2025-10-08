@@ -6,7 +6,7 @@ from pathlib import Path
 from collections import Counter
 from urllib.parse import urlparse
 import orjson
-from config import mg_connect
+from config import read_config, mg_connect
 from typing import Self
 
 from mg_cve_impact import vector_to_dict, json_to_vector
@@ -23,7 +23,8 @@ cve_map_json = os.path.join(os.path.dirname(__file__), '../../lists/nvdcve_cve_m
 output_file = os.path.join(os.path.dirname(__file__), 'output/analysis.txt')
 
 # Connection details
-db = mg_connect()
+cfg = read_config()
+database = mg_connect(cfg)
 
 class Project:
 	"""_summary_
