@@ -1,13 +1,15 @@
 import os
 from config import mg_connect
 
-c_repolist = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../mega-foss-repos/repositories.txt"))
-output_file = os.path.join(os.path.dirname(__file__), "output/repos_to_nvd.csv")
-missing_file = os.path.join(os.path.dirname(__file__), "output/repos_to_nvd_missing.txt")
-fix_file = os.path.join(os.path.dirname(__file__), "output/repos_to_nvd_manual_fix.txt")
+database, cfg = mg_connect()
 
-db = mg_connect()
-collection = db.cves
+c_repolist = cfg.get('REPOSITORIES_FILE_PATH')
+
+output_file = "output/repos_to_nvd.csv"
+missing_file = "output/repos_to_nvd_missing.txt"
+fix_file = "output/repos_to_nvd_manual_fix.txt"
+
+collection = database.cves
 
 class Repo:
     def __init__(self, name, vendor, repo):

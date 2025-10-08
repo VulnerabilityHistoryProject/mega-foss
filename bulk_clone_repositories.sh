@@ -13,7 +13,7 @@ source settings.ini
 
 file_with_repositories="$REPOSITORIES_FILE_PATH"
 clone_dir="$REPOSITORIES_PATH"
-log_file="$OUTPUT_FILE_PATH"
+log_file="output/log.txt"
 
 count_cloned=0
 count_updated=0

@@ -1,4 +1,13 @@
 #!/bin/bash
+#SBATCH --job-name=clone_repos
+#SBATCH --output=clone_repos_%j.out
+#SBATCH --error=clone_repos_%j.err
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+#SBATCH --time=01:00:00
+#SBATCH --partition=tier3
 
 source settings.ini
 
