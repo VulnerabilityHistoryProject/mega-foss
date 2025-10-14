@@ -50,7 +50,7 @@ DATABASE="megafoss"
 HOST="127.0.0.1"
 PORT="27017"
 REPOSITORIES_PATH="D:/path/to/repos/folder"
-REPOSITORIES_FILE_PATH="C:/path/to/repos/repositories.txt"
+REPOSITORIES_FILE_PATH="C:/path/to/repos/lists/repositories.txt"
 NVDCVE_PATH="E:/path/to/nvdcve/files"
 ```
 
@@ -68,21 +68,23 @@ bulk_import_nvdcve.sh
 ```
 
 ## Clone repositories
-Create a folder named ```mega-foss-repositories``` next to the project folder. Copy the ```repositories.txt``` from the project root into this new folder
+Create a folder named ```mega-foss-repositories``` as a sibling to the project folder. The ```repositories.txt``` contains a list of repositories that would be used after clonning them to match with the different NVDCVEs that are inside the database
 
-The run the provided bash script to clone all repositories inside ```repositories.txt```:
+To clone all the resporitories from the ```repositories.txt``` run the following command:
 
 ```
 bash bulk_clone_repositories.sh
 ```
 
 # Scripts
-To run the scripts located ```src/cve``` use the following command:
+## Match repositories with CVEs
+The script with name ```mg_repos_match_cve ``` will match the CVEs inside the database with the different repos that we have inside ```mega-foss-repositories```
+
+To run the script, which is located in ```src/cve```, use the following command:
 
 ```
 python -m src.cve.mg_repos_match_cve
 ```
 
-All outputs from the scripts will be saved in the output folder
-
-Anything
+# Outputs
+All outputs from the project would be inside the root folder ```output```
