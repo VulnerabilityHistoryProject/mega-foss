@@ -2,6 +2,8 @@ import csv
 import subprocess
 from pathlib import Path
 
+VALID_EXTENSIONS = {".c", ".cpp", ".h", ".hpp", ".java", ".cs"}
+
 def run(cmd, cwd=None):
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True, cwd=cwd)
     if result.returncode == 0:
@@ -24,7 +26,13 @@ def get_parent(repo, commit):
         return ""
 
 def get_changed_files(repo, old_commit, new_commit):
-    output = run(f"git diff --name-only {old_commit} {new_commit}", cwd=repo)
+    patterns_list = []
+
+    for ext in VALID_EXTENSIONS:
+        patterns_list.append(f"*{ext}")
+    patterns = ' '.join(patterns_list)
+
+    output = run(f"git diff --name-only {old_commit} {new_commit} -- {patterns}", cwd=repo)
     if output:
         return output.splitlines()
     else:
@@ -36,12 +44,18 @@ def get_patch(repo, old_commit, new_commit):
 def get_file_content(repo, commit, file_path):
     return run(f"git show {commit}:{file_path}", cwd=repo)
 
-def process_cve(cve, repo, commit, out_root):
-    cve_dir = out_root + "/" + cve
-    Path(cve_dir).mkdir(parents=True, exist_ok=True)
+def get_commit_message(repo, commit):
+    return run(f'git log -n 1 --pretty=%B {commit}', cwd=repo).strip()
 
+def process_cve(cve, repo, commit, out_root):
     parent = get_parent(repo, commit)
     changed_files = get_changed_files(repo, parent, commit)
+
+    if not changed_files:
+        return
+
+    cve_dir = out_root + "/" + cve
+    Path(cve_dir).mkdir(parents=True, exist_ok=True)
 
     patch_content = get_patch(repo, parent, commit)
     patch_file = cve_dir + "/" + commit + ".patch"
@@ -52,19 +66,19 @@ def process_cve(cve, repo, commit, out_root):
     Path(old_dir).mkdir(exist_ok=True)
     Path(new_dir).mkdir(exist_ok=True)
 
-    for file_path in changed_files:
-        if file_path.lower().endswith(".md"):
-            continue
+    old_message = get_commit_message(repo, parent)
+    new_message = get_commit_message(repo, commit)
 
+    for file_path in changed_files:
         old_content = get_file_content(repo, parent, file_path)
         new_content = get_file_content(repo, commit, file_path)
 
         name = Path(file_path).stem + ".py"
 
         if old_content:
-            Path(old_dir + "/" + name).write_text(f'"""{old_content}"""')
+            Path(old_dir + "/" + name).write_text(f'"""{old_message}\n\n{old_content}"""')
         if new_content:
-            Path(new_dir + "/" + name).write_text(f'"""{new_content}"""')
+            Path(new_dir + "/" + name).write_text(f'"""{new_message}\n\n{new_content}"""')
 
     print(f"Generated files for CVE {cve}")
 
