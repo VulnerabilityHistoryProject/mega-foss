@@ -5,6 +5,8 @@ from pathlib import Path
 VALID_EXTENSIONS = {".c", ".cpp", ".h", ".hpp", ".java", ".cs"}
 
 def run(cmd, cwd=None):
+    if cwd is not None:
+        cwd = str(cwd)
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True, cwd=cwd)
     if result.returncode == 0:
         return result.stdout.strip()
@@ -83,25 +85,31 @@ def process_cve(cve, repo, commit, out_root):
     print(f"Generated files for CVE {cve}")
 
 def main():
-    root = str(Path(__file__).parent.resolve())
-    csv_path = root + "/output/repos_match_cve.csv"
-    repos_root = str(Path(root).parent) + "/mega-foss-repos"
-    out_root = str(Path(root).parent) + "/mega-foss-historic"
-    Path(out_root).mkdir(exist_ok=True)
+    root = Path(__file__).parent.resolve()
+    csv_path = root / "output/repos_match_cve.csv"
+    repos_root = root.parent / "mega-foss-repos"
+    out_root = root.parent / "mega-foss-historic"
+    out_root.mkdir(exist_ok=True)
 
     try:
         with open(csv_path, newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 repo_name = row["github repo"].split("/")[-1]
-                repo = repos_root + "/" + repo_name
+                repo = (repos_root / repo_name).resolve()
+                repo_str = str(repo)
+
+                if not repo.exists():
+                    print(f"Repo does not exist, skipping: {repo_str}")
+                    continue
+
                 cves = row["cve ids"].split()
 
                 for cve in cves:
-                    commits = get_commits(repo, cve)
+                    commits = get_commits(repo_str, cve)
                     if not commits:
                         continue
-                    process_cve(cve, repo, commits[0], out_root)
+                    process_cve(cve, repo_str, commits[0], str(out_root))
     except KeyboardInterrupt:
         print("\nProcess interrupted by user")
 
