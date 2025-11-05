@@ -72,15 +72,16 @@ def process_cve(cve, repo, commit, out_root):
     new_message = get_commit_message(repo, commit)
 
     for file_path in changed_files:
+        extension = Path(file_path).suffix
+        name = Path(file_path).stem + extension
+
         old_content = get_file_content(repo, parent, file_path)
         new_content = get_file_content(repo, commit, file_path)
 
-        name = Path(file_path).stem + ".py"
-
         if old_content:
-            Path(old_dir + "/" + name).write_text(f'"""{old_message}\n\n{old_content}"""')
+            Path(old_dir + "/" + name).write_text(f"{old_message}\n\n{old_content}")
         if new_content:
-            Path(new_dir + "/" + name).write_text(f'"""{new_message}\n\n{new_content}"""')
+            Path(new_dir + "/" + name).write_text(f"{new_message}\n\n{new_content}")
 
     print(f"Generated files for CVE {cve}")
 
