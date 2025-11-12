@@ -88,3 +88,7 @@ python -m src.cve.mg_repos_match_cve
 
 # Outputs
 All outputs from the project would be inside the root folder ```output```
+
+# Historic CVEs
+```
+python historic_population.py

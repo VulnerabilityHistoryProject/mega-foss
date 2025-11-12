@@ -150,7 +150,6 @@ anchore/syft
 andialbrecht/sqlparse
 andr3jx/MTK6577
 andrei-tatar/nora-firebase-common
-andrepolischuk/servst
 AndreRenaud/PDFGen
 andrewsauder/as
 andrzuk/FineCMS
