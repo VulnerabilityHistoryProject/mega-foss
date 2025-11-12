@@ -179,6 +179,7 @@ tmp/
 # Output in root
 output/*
 !output/.gitkeep
+!output/repos_match_cve.csv
 
 # Settings configuration for all the project
 settings.ini
