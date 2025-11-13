@@ -525,7 +525,6 @@ Cacti/cacti
 cactus/go-camo
 Cainor/Calendarinho
 cakephp/cakephp
-calesanz/gibb-modul-151
 Calsign/APDE
 camptocamp/terraboard
 canarymail/mailcore2
@@ -1276,7 +1275,6 @@ files-community/Files
 filips123/PWAsForFirefox
 FiloSottile/nistec
 filp/whoops
-Finastra/ssr-pages
 firebase/firebase-js-sdk
 firebase/firebase-tools
 FireBlinkLTD/object-collider
@@ -1302,7 +1300,6 @@ fleetdm/fleet
 flexpaper/pdf2json
 FlexSolution/AlfrescoResetPassword
 flipped-aurora/gin-vue-admin
-flitbit/json-ptr
 flitto/express-param
 floraison/fugit
 floriangaerber/Magnesium-PHP
@@ -1669,7 +1666,6 @@ haproxy/haproxy
 haraldk/TwelveMonkeys
 HardySimpson/zlog
 harfbuzz/harfbuzz
-harrystech/dynosaur-rails
 harttle/liquidjs
 harvesthq/chosen
 hashicorp/go-getter
@@ -1899,7 +1895,6 @@ its-a-feature/Mythic
 iubenda/iubenda-cookie-class
 ivantcholakov/starter-public-edition-4
 ivmai/bdwgc
-ivywe/geeklog-ivywe
 izatop/bunt
 j-nowak/workout-organizer
 j4k0xb/webcrack
@@ -1950,7 +1945,6 @@ JeakinsCheung/ESPCMS-P8
 jeanmarc77/123solar
 jech/polipo
 jedisct1/pure-ftpd
-jeff-kelley/opensim-utils
 jeffcoughlin/farcrysolrpro
 jeffpiazza/derbynet
 jellyfin/jellyfin
