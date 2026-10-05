@@ -12,6 +12,8 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
+from tqdm import tqdm
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
 from config import read_config  # noqa: E402
@@ -31,22 +33,23 @@ def resolve(path: str) -> Path:
     return p if p.is_absolute() else REPO_ROOT / p
 
 
-def download(ecosystem: str, out_dir: Path) -> int:
+def download(ecosystem: str, out_dir: Path, unzip: bool = False) -> int:
     url = f"{BASE_URL}/{ecosystem}/all.zip"
     print(f"Downloading {url}")
     with urllib.request.urlopen(url) as resp:
         data = resp.read()
 
-    print(f"Unzipping to {out_dir}...")
     out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "all.zip").write_bytes(data)
+    if not unzip:
+        return 0
+
     count = 0
     with zipfile.ZipFile(io.BytesIO(data)) as zf:
-        for name in zf.namelist():
-            # Flatten and reject path traversal
-            target = out_dir / Path(name).name
-            if not name.endswith(".json"):
-                continue
-            target.write_bytes(zf.read(name))
+        names = [n for n in zf.namelist() if n.endswith(".json")]
+        for name in tqdm(names, desc="Unzipping", unit="file"):
+            # Flatten to reject path traversal
+            (out_dir / Path(name).name).write_bytes(zf.read(name))
             count += 1
     return count
 
@@ -60,12 +63,17 @@ def main():
                         help="Base directory for JSONs (default: OSV_JSON_PATH)")
     parser.add_argument("--output-path", default=cfg.get("OSV_OUTPUT_PATH") or "output/osv",
                         help="Analysis output directory (default: OSV_OUTPUT_PATH)")
+    parser.add_argument("--unzip", action="store_true",
+                        help="Also extract the JSONs from all.zip (default: keep only the zip)")
     args = parser.parse_args()
 
     out_dir = resolve(args.json_path) / args.ecosystem
     resolve(args.output_path).mkdir(parents=True, exist_ok=True)
-    count = download(args.ecosystem, out_dir)
-    print(f"Wrote {count} files to {out_dir}")
+    count = download(args.ecosystem, out_dir, args.unzip)
+    if args.unzip:
+        print(f"Wrote {count} files to {out_dir}")
+    else:
+        print(f"Saved {out_dir / 'all.zip'}")
 
 
 if __name__ == "__main__":
