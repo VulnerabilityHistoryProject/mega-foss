@@ -8,8 +8,16 @@ import zipfile
 import orjson
 from tqdm import tqdm
 
-from count_git_patches import has_git_fix
 from download_ecosystem import load_settings, resolve
+
+def has_git_fix(vuln: dict) -> bool:
+    for affected in vuln.get("affected", []):
+        for rng in affected.get("ranges", []):
+            if rng.get("type") != "GIT":
+                continue
+            if any("fixed" in event for event in rng.get("events", [])):
+                return True
+    return False
 
 
 def main():
