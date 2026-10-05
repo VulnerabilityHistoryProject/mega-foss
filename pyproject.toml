@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mega-foss"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+    "scipy",
+    "requests",
+    "orjson",
+    "tqdm==4.66.5",
+    "pymongo",
+    "motor",
+    "ollama",
+    "numpy",
+    "chromadb",
+    "scikit-learn",
+    "pydriller",
+    "pyyaml",
+    "sentence_transformers",
+    "einops",
+    "pandas",
+    "accelerate",
+    "hf_xet",
+]
+
+# Scripts are run from the repo root, so nothing is packaged.
+[tool.setuptools]
+packages = []

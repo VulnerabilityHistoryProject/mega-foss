@@ -52,6 +52,9 @@ PORT="27017"
 REPOSITORIES_PATH="D:/path/to/repos/folder"
 REPOSITORIES_FILE_PATH="C:/path/to/repos/lists/repositories.txt"
 NVDCVE_PATH="E:/path/to/nvdcve/files"
+OSV_ECOSYSTEM="npm"
+OSV_JSON_PATH="tmp/osv"
+OSV_OUTPUT_PATH="output/osv"
 ```
 
 ## Obtain and import CVE data
@@ -84,6 +87,15 @@ To run the script, which is located in ```src/cve```, use the following command:
 
 ```
 python -m src.cve.mg_repos_match_cve
+```
+
+## Download OSV vulnerabilities for an ecosystem
+The script ```src/osv/download_ecosystem.py``` downloads every OSV vulnerability JSON for an ecosystem into ```<OSV_JSON_PATH>/<ecosystem>``` (see ```src/osv/README.md```).
+
+Example, downloading the npm ecosystem into ```tmp/osv/npm```:
+
+```
+python src/osv/download_ecosystem.py --ecosystem npm
 ```
 
 # Outputs
