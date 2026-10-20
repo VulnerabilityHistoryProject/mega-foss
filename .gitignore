@@ -173,6 +173,7 @@ cython_debug/
 #.idea/
 
 tmp/
+!tmp/.gitkeep
 
 /src/urepo/log.txt
 

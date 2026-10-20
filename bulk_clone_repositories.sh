@@ -11,7 +11,7 @@
 
 source settings.ini
 
-file_with_repositories="$REPOSITORIES_FILE_PATH"
+file_with_repositories="$REPOSITORY_LIST"
 clone_dir="$REPOSITORIES_PATH"
 log_file="output/log.txt"
 

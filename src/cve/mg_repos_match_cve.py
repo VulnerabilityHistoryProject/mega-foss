@@ -4,7 +4,7 @@ from config import read_config, mg_connect
 cfg = read_config()
 db = mg_connect(cfg)
 
-c_repolist = cfg.get("REPOSITORIES_FILE_PATH")
+c_repolist = cfg.get("REPOSITORY_LIST")
 output_file = os.path.join("output", "repos_match_cve.csv")
 missing_file = os.path.join("output", "repos_match_cve_missing.txt")
 fix_file = os.path.join("output", "repos_match_cve_manual_fix.txt")
