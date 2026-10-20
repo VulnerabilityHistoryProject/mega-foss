@@ -55,6 +55,13 @@ def git(repo: Path, *args: str) -> str:
     return out.stdout
 
 
+def require_zip(zip_path: Path, ecosystem: str) -> None:
+    if not zip_path.exists():
+        raise SystemExit(
+            f"OSV data not found: {zip_path}\n"
+            f"Download it first with: python src/osv/download_ecosystem.py --ecosystem {ecosystem}")
+
+
 def load_vuln(zip_path: Path, vuln_id: str) -> dict:
     with zipfile.ZipFile(zip_path) as zf:
         try:
@@ -402,7 +409,9 @@ def main():
         print(f"{out_json} exists; use --force to re-run")
         return
 
-    vuln = load_vuln(resolve(args.json_path) / args.ecosystem / "all.zip", args.vuln_id)
+    zip_path = resolve(args.json_path) / args.ecosystem / "all.zip"
+    require_zip(zip_path, args.ecosystem)
+    vuln = load_vuln(zip_path, args.vuln_id)
     result = trace(args, blind(vuln) if args.blind else vuln)
     out_json.write_text(json.dumps(result, indent=2))
     (out_dir / f"{args.vuln_id}.md").write_text(to_markdown(result))

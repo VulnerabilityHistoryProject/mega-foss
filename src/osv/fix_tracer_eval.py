@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from download_ecosystem import load_settings, resolve  # noqa: E402
-from fix_tracer import blind, build_parser, load_vuln, trace  # noqa: E402
+from fix_tracer import blind, build_parser, load_vuln, require_zip, trace  # noqa: E402
 
 
 def rank_of(ranked: list[dict], expected: list[str]) -> int | None:
@@ -47,6 +47,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     args.cache_dir = args.cache_dir or str(resolve(args.output_path) / "tracer" / "cache")
     zip_path = resolve(args.json_path) / args.ecosystem / "all.zip"
+    require_zip(zip_path, args.ecosystem)
 
     with open(args.gold, newline="") as f:
         rows = list(csv.DictReader(f))[:args.limit]
