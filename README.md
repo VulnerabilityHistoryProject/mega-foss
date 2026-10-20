@@ -9,10 +9,10 @@ MegaFoss is a project dedicatd to collecting and analyzing vulnerability data fr
 - Python 3.11.3 or higher
 
 ## Install Python dependencies
-In the root folder there is a file called ```requirements.txt```, use the following command to install all the dependencies (venv is recomended)
+Dependencies are declared in ```pyproject.toml```. Use the following command from the root folder to install them (venv is recomended)
 
 ```
-pip install -r requirements.txt
+pip install .
 ```
 
 ## Create mongo database
