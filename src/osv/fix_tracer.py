@@ -5,8 +5,10 @@ Usage:
 
 Steps:
   1. Load <ID>.json from <OSV_JSON_PATH>/<ecosystem>/all.zip.
-  2. Collect candidate fix commits (OSV GIT ranges, commit references, and a
-     date window around the fixed-version tag / publication date).
+  2. Collect candidate fix commits: OSV GIT ranges and commit references, plus the
+     commits in a date window. The window starts at the newest git tag matching an
+     affected version (tag dates are cached per repo) and ends at a later fixed
+     tag, else shortly after the publication date.
   3. Embed each candidate (message + files + diff, optionally an LLM summary),
      cached per commit SHA so repeated runs and sibling jobs reuse the work.
   4. Rank by cosine similarity combined with temporal, path, keyword and
@@ -46,7 +48,7 @@ def log(msg: str) -> None:
     print(f"[{time.monotonic() - T0:7.1f}s] {msg}", file=sys.stderr, flush=True)
 
 
-WEIGHTS = {"semantic": 0.55, "reference": 0.15, "path": 0.10, "temporal": 0.10, "keyword": 0.10}
+WEIGHTS = {"semantic": 0.63, "reference": 0.15, "path": 0.10, "temporal": 0.02, "keyword": 0.10}
 KEYWORDS = re.compile(
     r"\b(cve-\d{4}-\d+|ghsa-[\w-]+|security|vulnerab\w*|exploit\w*|sanitiz\w*|escap\w*|"
     r"overflow|injection|xss|traversal|bypass|denial|dos|fix\w*)\b", re.I)
@@ -148,19 +150,154 @@ def referenced_commits(vuln: dict) -> list[str]:
             if (m := COMMIT_URL.search(r.get("url", "")))]
 
 
-def fixed_versions(vuln: dict) -> list[str]:
-    return [e["fixed"] for a in vuln.get("affected", []) for r in a.get("ranges", [])
+def affected_versions(vuln: dict) -> list[tuple[str, str]]:
+    """(version, ecosystem) for every affected package version the record names."""
+    out = []
+    for a in vuln.get("affected", []):
+        eco = a.get("package", {}).get("ecosystem", "")
+        out += [(v, eco) for v in a.get("versions", [])]
+        for r in a.get("ranges", []):
+            if r.get("type") in ("SEMVER", "ECOSYSTEM"):
+                out += [(e[k], eco) for e in r.get("events", [])
+                        for k in ("introduced", "last_affected") if e.get(k) and e[k] != "0"]
+    return out
+
+
+def fixed_versions(vuln: dict) -> list[tuple[str, str]]:
+    return [(e["fixed"], a.get("package", {}).get("ecosystem", ""))
+            for a in vuln.get("affected", []) for r in a.get("ranges", [])
             if r.get("type") in ("SEMVER", "ECOSYSTEM") for e in r.get("events", []) if "fixed" in e]
 
 
-def tag_date(repo: Path, versions: list[str]) -> tuple[datetime | None, str | None]:
-    tags = git(repo, "tag", "--format=%(refname:short)").split()
-    for version in versions:
-        for tag in tags:
-            if tag in (version, f"v{version}", f"release-{version}", f"rel-{version}"):
-                ts = git(repo, "log", "-1", "--format=%cI", tag).strip()
-                return parse_time(ts), tag
-    return None, None
+def upstream_versions(version: str, ecosystem: str) -> list[str]:
+    """Upstream version candidates for a package version, most specific first.
+
+    Distro versions carry an epoch and packaging revision ("6:9.20-0ubuntu0.14.04.1+esm1"
+    -> "9.20"), which never appear in upstream git tags.
+    """
+    v = re.sub(r"^\d+:", "", version.strip())
+    eco = ecosystem.lower()
+    if eco.startswith(("ubuntu", "debian")) and "-" in v:
+        v = v.rsplit("-", 1)[0]
+    elif eco.startswith("alpine"):
+        v = re.sub(r"-r\d+$", "", v)
+    v = re.sub(r"\+(dfsg|ds|repack|really|git|svn|hg|bzr|esm|deb|ubuntu|build|nmu)[\w.+~-]*$", "", v)
+    cands = [v.replace("~", "-").lower()]
+    base = re.split(r"[~+]", v)[0].lower()  # drop pre-release/local suffix as a fallback
+    if base and base not in cands:
+        cands.append(base)
+    return [c for c in cands if c]
+
+
+def tag_version(tag: str) -> str:
+    """Strip name/prefix from a tag: n9.0.2, v1.2, release/4.4, OpenSSL_1_1_1k -> version."""
+    v = re.sub(r"^[^\d]*", "", tag)
+    if "." not in v and "_" in v:
+        v = v.replace("_", ".")
+    return v.lower()
+
+
+def numeric_parts(version: str) -> tuple[int, ...]:
+    m = re.match(r"\d+(?:\.\d+)*", version)
+    return tuple(int(x) for x in m.group(0).split(".")) if m else ()
+
+
+def common_prefix(a: tuple, b: tuple) -> int:
+    n = 0
+    for x, y in zip(a, b):
+        if x != y:
+            break
+        n += 1
+    return n
+
+
+def git_common_dir(repo: Path) -> Path:
+    out = Path(git(repo, "rev-parse", "--git-common-dir").strip())
+    return out if out.is_absolute() else repo / out
+
+
+def tag_dates(repo: Path, cache_dir: Path, refresh: bool = False) -> dict[str, str]:
+    """{tag: commit date (ISO)} for every tag, read once per repo and cached.
+
+    The cache is rebuilt when the repo's tag refs change (or with --refresh-tags).
+    """
+    gd = git_common_dir(repo)
+    stamp = [(gd / n).stat().st_mtime if (gd / n).exists() else 0 for n in ("packed-refs", "refs/tags")]
+    path = cache_dir / "tags" / f"{hashlib.sha1(str(repo.resolve()).encode()).hexdigest()[:12]}.json"
+    if path.exists() and not refresh:
+        cached = json.loads(path.read_text())
+        if cached.get("stamp") == stamp:
+            return cached["tags"]
+    # *committerdate is the target commit of an annotated tag; committerdate covers lightweight tags
+    fmt = "%(refname)%09%(*committerdate:iso-strict)%09%(committerdate:iso-strict)"
+    tags = {}
+    for line in git(repo, "for-each-ref", f"--format={fmt}", "refs/tags").splitlines():
+        name, deref, direct = (line.split("\t") + ["", ""])[:3]
+        if name and (deref or direct):
+            tags[name.removeprefix("refs/tags/")] = deref or direct
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(f".{os.getpid()}.tmp")
+    tmp.write_text(json.dumps({"repo": str(repo), "stamp": stamp, "tags": tags}))
+    os.replace(tmp, path)
+    return tags
+
+
+def match_version_tags(versions: list[tuple[str, str]], tags: dict[str, str],
+                       exact_only: bool = False) -> list[dict]:
+    """Map package versions to git tags: an exact tag, else the closest tags sharing a version prefix."""
+    index: dict[str, tuple[str, str]] = {}
+    for tag, date in tags.items():
+        key = tag_version(tag)
+        if key and (key not in index or parse_time(date) < parse_time(index[key][1])):
+            index[key] = (tag, date)
+    parsed = {key: numeric_parts(key) for key in index}
+
+    matches, seen = [], set()
+    for version, eco in versions:
+        cands = upstream_versions(version, eco)
+        if not cands or cands[0] in seen:
+            continue
+        seen.add(cands[0])
+        exact = next((c for c in cands if c in index), None)
+        if exact:
+            tag, date = index[exact]
+            matches.append({"version": version, "upstream": exact, "tag": tag, "date": date, "match": "exact"})
+            continue
+        parts = numeric_parts(cands[0])
+        if exact_only or not parts:
+            continue
+        need = min(2, len(parts))  # at least major.minor must agree
+        best, group = 0, []
+        for key, kparts in parsed.items():
+            n = common_prefix(parts, kparts)
+            if n < need:
+                continue
+            if n > best:
+                best, group = n, []
+            if n == best:
+                group.append(index[key])
+        if group:
+            tag, date = min(group, key=lambda t: parse_time(t[1]))  # earliest of the closest tags
+            matches.append({"version": version, "upstream": cands[0], "tag": tag, "date": date,
+                            "match": f"similar ({best} version parts)"})
+    return matches
+
+
+def candidate_window(matches, fixed_matches, published, days_before, days_after):
+    """(start, end, source). The bug exists in every affected release, so the fix
+    landed after the newest affected tag; it ends at a later fixed tag, else shortly
+    after the OSV publication date. Falls back to a window around publication."""
+    if matches:
+        start = max(parse_time(m["date"]) for m in matches)
+        later = [d for m in fixed_matches if (d := parse_time(m["date"])) > start]
+        if later:
+            return start, min(later), "newest affected tag -> fixed tag"
+        if published and published + timedelta(days=days_after) > start:
+            return start, published + timedelta(days=days_after), "newest affected tag -> published"
+    if published:
+        return (published - timedelta(days=days_before), published + timedelta(days=days_after),
+                "published date window")
+    return None
 
 
 def resolve_sha(repo: Path, ref: str) -> str | None:
@@ -320,7 +457,7 @@ def explain_signals(c: dict, s: dict, anchor: datetime | None) -> list[str]:
         bullets.append("The commit message uses security/fix language (e.g. CVE ID, 'security', 'fix').")
     if anchor:
         days = abs((parse_time(c["date"]) - anchor).days)
-        bullets.append(f"Committed {days} day(s) from the anchor date ({anchor.date()}).")
+        bullets.append(f"Committed {days} day(s) from the end of the candidate window ({anchor.date()}).")
     return bullets
 
 
@@ -365,12 +502,21 @@ def trace(args, vuln: dict) -> dict:
     result["repo"] = str(repo)
     log(f"{vuln_id}: using repo {repo}")
 
-    log(f"{vuln_id}: looking up fixed-version tags and listing commits (slow on large repos)")
+    cache_dir = resolve(args.cache_dir)
+    log(f"{vuln_id}: reading tag dates (cached per repo)")
+    tags = tag_dates(repo, cache_dir, args.refresh_tags)
     published = parse_time(vuln.get("published"))
-    tag_dt, tag = tag_date(repo, fixed_versions(vuln))
-    anchor = tag_dt or published
+    matches = match_version_tags(affected_versions(vuln), tags)
+    fixed_matches = match_version_tags(fixed_versions(vuln), tags, exact_only=True)
+    window = candidate_window(matches, fixed_matches, published, args.days_before, args.days_after)
+    anchor = window[1] if window else None
+    result["version_matches"] = matches
+    result["window"] = ({"start": window[0].isoformat(), "end": window[1].isoformat(), "source": window[2]}
+                        if window else None)
     result["anchor"] = {"date": anchor.isoformat() if anchor else None,
-                        "source": f"tag {tag}" if tag else "published"}
+                        "source": window[2] if window else "none"}
+    log(f"{vuln_id}: {len(tags)} tags; {len(matches)} affected versions matched to tags; "
+        + (f"window {window[0].date()} .. {window[1].date()} ({window[2]})" if window else "no date window"))
 
     direct = [s for ref in direct_fixes(vuln) if (s := resolve_sha(repo, ref))]
     referenced = [s for ref in referenced_commits(vuln) if (s := resolve_sha(repo, ref))]
@@ -378,23 +524,21 @@ def trace(args, vuln: dict) -> dict:
     evidence.update({s: "osv_reference" for s in referenced if s not in evidence})
 
     candidates = {}
-    if anchor:
-        window = list_window_commits(repo, anchor - timedelta(days=args.days_before),
-                                     anchor + timedelta(days=args.days_after))
+    if window:
+        in_window = list_window_commits(repo, window[0], window[1])
         terms = mentioned_terms(desc)
-        window.sort(key=lambda c: prefilter_score(c["subject"], terms, set(evidence), c["sha"]),
-                    reverse=True)
-        candidates = {c["sha"]: "date_window" for c in window[:args.max_candidates]}
+        in_window.sort(key=lambda c: prefilter_score(c["subject"], terms, set(evidence), c["sha"]),
+                       reverse=True)
+        log(f"{vuln_id}: {len(in_window)} commits in window; keeping the top {args.max_candidates} by prefilter")
+        candidates = {c["sha"]: "date_window" for c in in_window[:args.max_candidates]}
     candidates = {**candidates, **evidence}
-    log(f"{vuln_id}: anchor {result['anchor']['date']} ({result['anchor']['source']}); "
-        f"{len(candidates)} candidate commits ({len(evidence)} from OSV evidence)")
+    log(f"{vuln_id}: {len(candidates)} candidate commits ({len(evidence)} from OSV evidence)")
     result["num_candidates"] = len(candidates)
     if not candidates:
         return {**result, "status": "no_candidates"}
 
     llm = Llm(args.api_url, args.api_key, args.embed_model, args.chat_model, not args.no_summary,
               args.tokens_per_minute)
-    cache_dir = resolve(args.cache_dir)
     log(f"{vuln_id}: embedding vulnerability description via {args.api_url}")
     query = llm.embed(f"{vuln.get('summary', '')}\n{desc}", "query")
     terms = mentioned_terms(desc)
@@ -410,7 +554,7 @@ def trace(args, vuln: dict) -> dict:
             "semantic": max(cosine(query, np.array(c["embedding"])), 0.0),
             "reference": 1.0 if sha in evidence else 0.0,
             "path": sum(t in haystack for t in terms) / len(terms) if terms else 0.0,
-            "temporal": math.exp(-days / 30) if days is not None else 0.0,
+            "temporal": math.exp(-days / 180) if days is not None else 0.0,
             "keyword": 1.0 if KEYWORDS.search(c["message"]) else 0.0,
         }
         score = sum(WEIGHTS[k] * v for k, v in signals.items())
@@ -440,7 +584,10 @@ def trace(args, vuln: dict) -> dict:
 def to_markdown(r: dict) -> str:
     lines = [f"# {r['id']}", "", f"Status: {r['status']}"]
     if r["status"] == "ok":
-        lines += [f"Repo: {r['repo']}", f"Anchor: {r['anchor']['date']} ({r['anchor']['source']})",
+        w = r.get("window")
+        lines += [f"Repo: {r['repo']}",
+                  f"Candidate window: {w['start']} .. {w['end']} ({w['source']})" if w else "Candidate window: none",
+                  f"Affected versions matched to tags: {len(r.get('version_matches', []))}",
                   f"Candidates considered: {r['num_candidates']}",
                   f"Confidence (heuristic): {r['confidence']}"]
         for i, c in enumerate(r["candidates"], 1):
@@ -475,6 +622,8 @@ def build_parser(cfg: dict) -> argparse.ArgumentParser:
     p.add_argument("--days-after", type=int, default=int(cfg.get("FIX_TRACER_DAYS_AFTER") or 14))
     p.add_argument("--max-candidates", type=int, default=int(cfg.get("FIX_TRACER_MAX_CANDIDATES") or 200))
     p.add_argument("--top-k", type=int, default=int(cfg.get("FIX_TRACER_TOP_K") or 3))
+    p.add_argument("--refresh-tags", action="store_true",
+                   help="Rebuild the cached tag dates for the repo (default: reuse until its tags change)")
     p.add_argument("--force", action="store_true", help="Re-run even if output exists")
     p.add_argument("--blind", action="store_true",
                    help="Test mode: hide the OSV fix commits/commit references from the tracer")
