@@ -8,6 +8,7 @@ Relative paths are resolved from the repository root.
 import argparse
 import io
 import sys
+import urllib.error
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -33,11 +34,30 @@ def resolve(path: str) -> Path:
     return p if p.is_absolute() else REPO_ROOT / p
 
 
+def fetch(url: str, timeout: int = 60) -> bytes:
+    """Stream the download with a progress readout; timeout applies per socket read."""
+    chunks, done = [], 0
+    with urllib.request.urlopen(url, timeout=timeout) as resp:
+        total = int(resp.headers.get("Content-Length") or 0)
+        while chunk := resp.read(1 << 20):
+            chunks.append(chunk)
+            done += len(chunk)
+            msg = f"{done / 1e6:.1f}" + (f"/{total / 1e6:.1f}" if total else "") + " MB"
+            print(f"\r  {msg}", end="", file=sys.stderr, flush=True)
+    print(file=sys.stderr)
+    return b"".join(chunks)
+
+
 def download(ecosystem: str, out_dir: Path, unzip: bool = False) -> int:
     url = f"{BASE_URL}/{ecosystem}/all.zip"
     print(f"Downloading {url}")
-    with urllib.request.urlopen(url) as resp:
-        data = resp.read()
+    try:
+        data = fetch(url)
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f"{url} returned HTTP {e.code}. Ecosystem names are case-sensitive "
+                         "(e.g. npm, PyPI, Go, Ubuntu); see https://osv-vulnerabilities.storage.googleapis.com/")
+    except (urllib.error.URLError, TimeoutError) as e:
+        raise SystemExit(f"Download failed or stalled: {e}")
 
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "all.zip").write_bytes(data)

@@ -1,2 +1,2 @@
 vuln_id,repo,fix_commits
-CVE-2026-96611,ffmpeg/ffmpeg,059eb2e853c1f62b8df1b73be9318061a7a21b0b
+UBUNTU-CVE-2026-96611,ffmpeg/ffmpeg,059eb2e853c1f62b8df1b73be9318061a7a21b0b
