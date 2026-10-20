@@ -33,7 +33,7 @@ writing `<OSV_OUTPUT_PATH>/tracer/<ID>.json` and `.md` with a bulleted rationale
 `fix_tracer_eval.py` scores it against `lists/fix_tracer_gold.csv`
 (`vuln_id,repo,fix_commits`). SLURM: `src/slurm/fix_tracer.slurm.sh`.
 
-Besides `OSV_*` and `REPOSITORIES_PATH` (repos at `<REPOSITORIES_PATH>/<owner>/<name>`),
+Besides `OSV_*` and `REPOSITORIES_PATH` (`REPOSITORY_LIST` csv matches OSV URLs to clones at `<REPOSITORIES_PATH>/<repo>`),
 these `settings.ini` keys set the defaults (CLI flags override them):
 
 | Key | Default | Purpose |

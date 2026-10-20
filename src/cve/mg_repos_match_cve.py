@@ -1,3 +1,4 @@
+import csv
 import os
 from config import read_config, mg_connect
 
@@ -34,13 +35,13 @@ def extract_vendor_product(cpe):
 def read_repos(path):
     """Read repos from file and return Repo objects."""
     repos = []
-    with open(path, "r") as f:
-        for line in f:
-            line = line.strip()
-            if "/" not in line:
+    with open(path, newline="") as f:
+        for row in csv.DictReader(f):
+            slug = (row.get("repo") or "").strip()
+            if "/" not in slug:
                 continue
-            vendor, product = line.split("/", 1)
-            repos.append(Repo(product, vendor, line))
+            vendor, product = slug.split("/", 1)
+            repos.append(Repo(product, vendor, slug))
     return repos
 
 def build_cve_map():

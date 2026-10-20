@@ -50,7 +50,7 @@ DATABASE="megafoss"
 HOST="127.0.0.1"
 PORT="27017"
 REPOSITORIES_PATH="D:/path/to/repos/folder"
-REPOSITORY_LIST="C:/path/to/repos/lists/repositories.txt"
+REPOSITORY_LIST="C:/path/to/repos/lists/repositories.csv"
 NVDCVE_PATH="E:/path/to/nvdcve/files"
 OSV_ECOSYSTEM="npm"
 OSV_JSON_PATH="tmp/osv"
@@ -71,9 +71,9 @@ bulk_import_nvdcve.sh
 ```
 
 ## Clone repositories
-Create a folder named ```mega-foss-repositories``` as a sibling to the project folder. The ```repositories.txt``` contains a list of repositories that would be used after clonning them to match with the different NVDCVEs that are inside the database
+Create a folder named ```mega-foss-repositories``` as a sibling to the project folder. The ```repositories.csv``` contains a list of repositories, one per line as ```repo,url``` (header row, then ```owner/name,clone-url```), that would be used after clonning them to match with the different NVDCVEs that are inside the database
 
-To clone all the resporitories from the ```repositories.txt``` run the following command:
+To clone all the resporitories from the ```repositories.csv``` run the following command:
 
 ```
 bash bulk_clone_repositories.sh

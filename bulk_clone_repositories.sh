@@ -18,7 +18,6 @@ log_file="output/log.txt"
 count_cloned=0
 count_updated=0
 count_removed=0
-IFS=$'\n'
 current_repo=""
 
 function on_interruption {
@@ -33,11 +32,15 @@ echo "----- Log Entry Start: $(date '+%Y-%m-%d %H:%M:%S') -----" >> "$log_file"
 
 cd "$clone_dir"
 
-for repository in $(cat "$file_with_repositories")
+# CSV with header "repo,url"; clones to <REPOSITORIES_PATH>/<owner>/<name>
+while IFS=, read -r repository repository_url
 do
+  repository=$(echo "$repository" | tr -d '\r')
+  repository_url=$(echo "$repository_url" | tr -d '\r')
+  [ -z "$repository" ] || [ "$repository" = "repo" ] && continue
   current_repo="$repository"
-  repository_lowercase=$(echo "$repository" | tr '[:upper:]' '[:lower:]')
-  repo_name=$(basename "$repository_lowercase")
+  repo_name="$repository"
+  mkdir -p "$(dirname "$repo_name")"
 
   if [ -d "$repo_name" ]; then
     if git -C "$repo_name" rev-parse --is-inside-work-tree > /dev/null 2>&1; then
@@ -48,18 +51,16 @@ do
       echo "Directory $repo_name exists but is not a git repository. Removing to reclone."
       rm -rf "$repo_name"
       ((count_removed++))
-      repository_url="https://github.com/$repository_lowercase.git"
       echo "Cloning repository: $repository_url"
       git clone "$repository_url" "$repo_name"
       ((count_cloned++))
     fi
   else
-    repository_url="https://github.com/$repository_lowercase.git"
     echo "Cloning repository: $repository_url"
     git clone "$repository_url" "$repo_name"
     ((count_cloned++))
   fi
-done
+done < "$file_with_repositories"
 
 echo "Total repositories cloned: $count_cloned" >> "$log_file"
 echo "Total repositories updated: $count_updated" >> "$log_file"

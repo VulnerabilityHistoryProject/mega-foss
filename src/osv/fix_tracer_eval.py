@@ -8,8 +8,7 @@ Gold file (CSV with header), default lists/fix_tracer_gold.csv:
   fix_commits space-separated SHAs (prefixes ok); any one in the ranking counts as a hit.
 
 Each vulnerability is traced with the answer hidden (--blind) and results go to
-<OSV_OUTPUT_PATH>/tracer_blind/. Reports Top-1 / Top-3 / Top-k accuracy and the
-rank of each expected commit, and writes eval_summary.json alongside.
+<OSV_OUTPUT_PATH>/tracer_blind/. Reports Top-k accuracy and the rank of each expected commit, and writes eval_summary.json alongside.
 
     python src/osv/fix_tracer_eval.py                       # whole gold file
     python src/osv/fix_tracer_eval.py --limit 5 --no-summary # quick smoke test
