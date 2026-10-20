@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from download_ecosystem import load_settings, resolve  # noqa: E402
-from fix_tracer import blind, build_parser, load_vuln, require_zip, trace  # noqa: E402
+from fix_tracer import blind, build_parser, load_vuln, log, require_zip, trace  # noqa: E402
 
 
 def rank_of(ranked: list[dict], expected: list[str]) -> int | None:
@@ -53,7 +53,8 @@ def main():
         rows = list(csv.DictReader(f))[:args.limit]
 
     results = []
-    for row in rows:
+    for n, row in enumerate(rows, 1):
+        log(f"=== [{n}/{len(rows)}] {row['vuln_id'].strip()} ===")
         vuln_id, expected = row["vuln_id"].strip(), row["fix_commits"].split()
         args.repo_path = None
         repo = (row.get("repo") or "").strip()
@@ -68,6 +69,8 @@ def main():
         results.append({"id": vuln_id, "status": res["status"], "rank": rank,
                         "confidence": res.get("confidence")})
         print(f"{vuln_id}: {res['status']} rank={rank}", flush=True)
+        if res["status"] != "ok":
+            log(f"  skipped: {res['status']}")
 
     n = len(results)
     summary = {"total": n, "ecosystem": args.ecosystem, "results": results}

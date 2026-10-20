@@ -38,8 +38,11 @@ these `settings.ini` keys set the defaults (CLI flags override them):
 
 | Key | Default | Purpose |
 | --- | --- | --- |
-| `FIX_TRACER_EMBED_MODEL` | `nomic-embed-text` | Ollama embedding model |
-| `FIX_TRACER_CHAT_MODEL` | `llama3.1` | Ollama model for summaries/rationales |
+| `FIX_TRACER_API_URL` | `https://api.genai.gccis.rit.edu/v1` | OpenAI-compatible API base URL |
+| `FIX_TRACER_API_KEY` | _(empty)_ | API key; set it only in `settings.ini` (gitignored), never `settings.default.ini` |
+| `FIX_TRACER_TOKENS_PER_MINUTE` | `10000` | Per-process token budget; the tracer sleeps to stay under it (`0` = off). With SLURM arrays the limit is shared, so divide it among concurrent tasks |
+| `FIX_TRACER_EMBED_MODEL` | `embeddinggemma:latest` | Embedding model (list names with `GET <url>/models`) |
+| `FIX_TRACER_CHAT_MODEL` | `qwen3:latest` | Model for summaries/rationales |
 | `FIX_TRACER_SUMMARIZE` | `true` | LLM summary per candidate commit |
 | `FIX_TRACER_DAYS_BEFORE` / `_AFTER` | `180` / `14` | Candidate window around the anchor date |
 | `FIX_TRACER_MAX_CANDIDATES` | `200` | Cap on window commits embedded |

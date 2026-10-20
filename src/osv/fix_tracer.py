@@ -27,6 +27,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 import zipfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -38,6 +39,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from download_ecosystem import load_settings, resolve  # noqa: E402
 
 PROMPT_VERSION = "v1"
+T0 = time.monotonic()
+
+
+def log(msg: str) -> None:
+    print(f"[{time.monotonic() - T0:7.1f}s] {msg}", file=sys.stderr, flush=True)
+
+
 WEIGHTS = {"semantic": 0.55, "reference": 0.15, "path": 0.10, "temporal": 0.10, "keyword": 0.10}
 KEYWORDS = re.compile(
     r"\b(cve-\d{4}-\d+|ghsa-[\w-]+|security|vulnerab\w*|exploit\w*|sanitiz\w*|escap\w*|"
@@ -191,23 +199,75 @@ def commit_details(repo: Path, sha: str) -> dict:
 
 
 class Llm:
-    def __init__(self, embed_model: str, chat_model: str, summarize: bool):
-        import ollama
-        self.ollama = ollama
+    """Client for an OpenAI-compatible API (/embeddings and /chat/completions)."""
+
+    def __init__(self, base_url: str, api_key: str, embed_model: str, chat_model: str,
+                 summarize: bool, tokens_per_minute: int = 0):
+        if not api_key:
+            raise SystemExit("No API key: set FIX_TRACER_API_KEY in settings.ini (or pass --api-key)")
+        import requests
+        self.http = requests.Session()
+        self.http.headers["Authorization"] = f"Bearer {api_key}"
+        self.base_url = base_url.rstrip("/")
         self.embed_model = embed_model
         self.chat_model = chat_model
         self.summarize = summarize
+        self.tokens_per_minute = tokens_per_minute
+        self.window: list[list] = []  # [monotonic time, tokens] per request
 
-    def embed(self, text: str, kind: str) -> np.ndarray:
-        # nomic-embed-text expects a task prefix
-        prefix = "search_query: " if kind == "query" else "search_document: "
-        resp = self.ollama.embeddings(model=self.embed_model, prompt=prefix + text[:8000])
-        return np.array(resp["embedding"], dtype=np.float32)
+    def estimate_tokens(self, payload: dict) -> int:
+        """Rough count (~4 characters per token); the API's own count is logged afterwards."""
+        text = payload.get("input") or "".join(m["content"] for m in payload.get("messages", []))
+        return max(1, len(text) // 4)
+
+    def recent(self) -> tuple[int, int]:
+        """(requests, tokens) sent by this process in the last 60 seconds."""
+        cutoff = time.monotonic() - 60
+        self.window = [w for w in self.window if w[0] >= cutoff]
+        return len(self.window), sum(w[1] for w in self.window)
+
+    def throttle(self, est: int) -> None:
+        """Sleep until sending `est` more tokens stays under the per-minute budget."""
+        while self.tokens_per_minute:
+            reqs, toks = self.recent()
+            if toks + est <= self.tokens_per_minute or not self.window:
+                return
+            wait = max(self.window[0][0] + 60 - time.monotonic(), 0.5)
+            log(f"  throttling {wait:.0f}s: {toks} tokens used in last 60s "
+                f"+ ~{est} would exceed {self.tokens_per_minute}/min")
+            time.sleep(wait)
+
+    def post(self, path: str, payload: dict) -> dict:
+        est = self.estimate_tokens(payload)
+        for attempt in range(5):
+            self.throttle(est)
+            entry = [time.monotonic(), est]
+            self.window.append(entry)
+            reqs, toks = self.recent()
+            log(f"  -> {path} ~{est} tokens | last 60s (this process): {reqs} requests, ~{toks} tokens"
+                + (f" of {self.tokens_per_minute}" if self.tokens_per_minute else ""))
+            resp = self.http.post(f"{self.base_url}{path}", json=payload, timeout=120)
+            if resp.status_code in (429, 500, 502, 503, 504) and attempt < 4:
+                log(f"  API {path} returned HTTP {resp.status_code}; retry {attempt + 1}/4 in {2 ** attempt}s")
+                time.sleep(2 ** attempt)  # many array tasks share the API; back off
+                continue
+            if not resp.ok:
+                raise RuntimeError(f"{path} returned HTTP {resp.status_code}: {resp.text[:300]}")
+            data = resp.json()
+            usage = data.get("usage")
+            if usage:
+                entry[1] = usage.get("total_tokens", entry[1])  # replace the estimate
+                log(f"  <- {path} actual usage: {usage}")
+            return data
+
+    def embed(self, text: str, kind: str = "document") -> np.ndarray:
+        data = self.post("/embeddings", {"model": self.embed_model, "input": text[:8000]})
+        return np.array(data["data"][0]["embedding"], dtype=np.float32)
 
     def chat(self, prompt: str) -> str:
-        resp = self.ollama.chat(model=self.chat_model,
-                                messages=[{"role": "user", "content": prompt}])
-        return resp["message"]["content"].strip()
+        data = self.post("/chat/completions", {"model": self.chat_model,
+                                               "messages": [{"role": "user", "content": prompt}]})
+        return data["choices"][0]["message"]["content"].strip()
 
     def summarize_commit(self, c: dict) -> str:
         return self.chat(
@@ -217,12 +277,15 @@ class Llm:
 
 
 def commit_embedding(llm: Llm, repo: Path, sha: str, cache_dir: Path) -> dict:
-    key = hashlib.sha1(f"{llm.embed_model}|{llm.chat_model}|{llm.summarize}|{PROMPT_VERSION}".encode()).hexdigest()[:10]
+    key = hashlib.sha1(f"{llm.base_url}|{llm.embed_model}|{llm.chat_model}|{llm.summarize}|{PROMPT_VERSION}".encode()).hexdigest()[:10]
     path = cache_dir / key / f"{sha}.json"
     if path.exists():
         return json.loads(path.read_text())
     c = commit_details(repo, sha)
+    if llm.summarize:
+        log(f"  {sha[:10]}: summarizing ({llm.chat_model})")
     c["summary"] = llm.summarize_commit(c) if llm.summarize else ""
+    log(f"  {sha[:10]}: embedding ({llm.embed_model})")
     text = (f"{c['message']}\n\nFiles: {', '.join(c['files'][:30])}\n\n"
             f"{c['summary']}\n\n{c['diff']}")
     c["embedding"] = llm.embed(text, "document").tolist()
@@ -286,6 +349,7 @@ def trace(args, vuln: dict) -> dict:
     vuln_id = vuln["id"]
     desc = vuln_text(vuln)
     result = {"id": vuln_id, "description": desc, "status": "ok", "candidates": []}
+    log(f"{vuln_id}: starting")
 
     repo = args.repo_path
     if not repo:
@@ -297,7 +361,9 @@ def trace(args, vuln: dict) -> dict:
     if not (repo / ".git").exists() and not (repo / "HEAD").exists():
         return {**result, "status": f"repo_not_found: {repo}"}
     result["repo"] = str(repo)
+    log(f"{vuln_id}: using repo {repo}")
 
+    log(f"{vuln_id}: looking up fixed-version tags and listing commits (slow on large repos)")
     published = parse_time(vuln.get("published"))
     tag_dt, tag = tag_date(repo, fixed_versions(vuln))
     anchor = tag_dt or published
@@ -318,17 +384,23 @@ def trace(args, vuln: dict) -> dict:
                     reverse=True)
         candidates = {c["sha"]: "date_window" for c in window[:args.max_candidates]}
     candidates = {**candidates, **evidence}
+    log(f"{vuln_id}: anchor {result['anchor']['date']} ({result['anchor']['source']}); "
+        f"{len(candidates)} candidate commits ({len(evidence)} from OSV evidence)")
     result["num_candidates"] = len(candidates)
     if not candidates:
         return {**result, "status": "no_candidates"}
 
-    llm = Llm(args.embed_model, args.chat_model, not args.no_summary)
+    llm = Llm(args.api_url, args.api_key, args.embed_model, args.chat_model, not args.no_summary,
+              args.tokens_per_minute)
     cache_dir = resolve(args.cache_dir)
+    log(f"{vuln_id}: embedding vulnerability description via {args.api_url}")
     query = llm.embed(f"{vuln.get('summary', '')}\n{desc}", "query")
     terms = mentioned_terms(desc)
 
     ranked = []
-    for sha, ev in candidates.items():
+    for i, (sha, ev) in enumerate(candidates.items(), 1):
+        if i == 1 or i % 10 == 0 or i == len(candidates):
+            log(f"{vuln_id}: candidate {i}/{len(candidates)}")
         c = commit_embedding(llm, repo, sha, cache_dir)
         haystack = (" ".join(c["files"]) + "\n" + c["diff"]).lower()
         days = abs((parse_time(c["date"]) - anchor).days) if anchor else None
@@ -344,9 +416,11 @@ def trace(args, vuln: dict) -> dict:
                        "evidence": ev, "score": round(score, 4),
                        "signals": {k: round(v, 4) for k, v in signals.items()}, "_c": c})
     ranked.sort(key=lambda r: r["score"], reverse=True)
+    log(f"{vuln_id}: ranked; generating rationale for top {min(args.top_k, len(ranked))}")
 
     for r in ranked[:args.top_k]:
         c = r.pop("_c")
+        log(f"  rationale for {r['sha'][:10]} (score {r['score']})")
         bullets = explain_signals(c, r["signals"], anchor)
         if r["evidence"] == "osv_git_range":
             bullets.insert(0, "The OSV record's GIT range lists this commit as the fix.")
@@ -385,8 +459,15 @@ def build_parser(cfg: dict) -> argparse.ArgumentParser:
     p.add_argument("--repos-dir", default=cfg.get("REPOSITORIES_PATH") or "")
     p.add_argument("--repo-path", help="Explicit repository path (overrides --repos-dir lookup)")
     p.add_argument("--cache-dir", default=cfg.get("FIX_TRACER_CACHE_PATH") or None, help="Embedding cache (default: <output-path>/tracer/cache, shared with test mode)")
-    p.add_argument("--embed-model", default=cfg.get("FIX_TRACER_EMBED_MODEL") or "nomic-embed-text")
-    p.add_argument("--chat-model", default=cfg.get("FIX_TRACER_CHAT_MODEL") or "llama3.1")
+    p.add_argument("--api-url", default=cfg.get("FIX_TRACER_API_URL") or "https://api.genai.gccis.rit.edu/v1",
+                   help="OpenAI-compatible API base URL (default: FIX_TRACER_API_URL)")
+    p.add_argument("--api-key", default=cfg.get("FIX_TRACER_API_KEY") or "",
+                   help="API key (default: FIX_TRACER_API_KEY in settings.ini)")
+    p.add_argument("--tokens-per-minute", type=int,
+                   default=int(cfg.get("FIX_TRACER_TOKENS_PER_MINUTE") or 0),
+                   help="Wait as needed to stay under this per-process budget; 0 = no limit")
+    p.add_argument("--embed-model", default=cfg.get("FIX_TRACER_EMBED_MODEL") or "embeddinggemma:latest")
+    p.add_argument("--chat-model", default=cfg.get("FIX_TRACER_CHAT_MODEL") or "qwen3:latest")
     p.add_argument("--no-summary", action="store_true", default=(cfg.get("FIX_TRACER_SUMMARIZE") or "true").lower() == "false", help="Skip per-commit LLM summaries")
     p.add_argument("--days-before", type=int, default=int(cfg.get("FIX_TRACER_DAYS_BEFORE") or 180))
     p.add_argument("--days-after", type=int, default=int(cfg.get("FIX_TRACER_DAYS_AFTER") or 14))
@@ -413,6 +494,7 @@ def main():
     require_zip(zip_path, args.ecosystem)
     vuln = load_vuln(zip_path, args.vuln_id)
     result = trace(args, blind(vuln) if args.blind else vuln)
+    log("done")
     out_json.write_text(json.dumps(result, indent=2))
     (out_dir / f"{args.vuln_id}.md").write_text(to_markdown(result))
     print(f"{args.vuln_id}: {result['status']} -> {out_json}")
