@@ -203,11 +203,13 @@ class Llm:
 
     def __init__(self, base_url: str, api_key: str, embed_model: str, chat_model: str,
                  summarize: bool, tokens_per_minute: int = 0):
-        if not api_key:
+        local = re.match(r"https?://(localhost|127\.0\.0\.1)(:|/|$)", base_url)
+        if not api_key and not local:
             raise SystemExit("No API key: set FIX_TRACER_API_KEY in settings.ini (or pass --api-key)")
         import requests
         self.http = requests.Session()
-        self.http.headers["Authorization"] = f"Bearer {api_key}"
+        if api_key:  # a local Ollama server needs no key
+            self.http.headers["Authorization"] = f"Bearer {api_key}"
         self.base_url = base_url.rstrip("/")
         self.embed_model = embed_model
         self.chat_model = chat_model

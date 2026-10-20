@@ -89,14 +89,102 @@ To run the script, which is located in ```src/cve```, use the following command:
 python -m src.cve.mg_repos_match_cve
 ```
 
-## Download OSV vulnerabilities for an ecosystem
-The script ```src/osv/download_ecosystem.py``` downloads every OSV vulnerability JSON for an ecosystem into ```<OSV_JSON_PATH>/<ecosystem>``` (see ```src/osv/README.md```).
+## OSV vulnerabilities
 
-Example, downloading the npm ecosystem into ```tmp/osv/npm```:
+### Download an ecosystem
+
+Downloads every vulnerability JSON for an ecosystem from the OSV bulk export
+(`https://osv-vulnerabilities.storage.googleapis.com/<ecosystem>/all.zip`)
+and extracts them to `<OSV_JSON_PATH>/<ecosystem>/` (default `tmp/osv/npm/`).
+
+Defaults are read from `settings.ini` (falling back to `settings.default.ini`):
+
+| Key | Default | Purpose |
+| --- | --- | --- |
+| `OSV_ECOSYSTEM` | `npm` | OSV ecosystem to download |
+| `OSV_JSON_PATH` | `tmp/osv` | Base folder for downloaded JSONs |
+| `OSV_OUTPUT_PATH` | `output/osv` | Output folder for later analysis scripts (created by the downloader) |
+
+Relative paths resolve from the repository root.
 
 ```
-python src/osv/download_ecosystem.py --ecosystem npm
+python src/osv/download_ecosystem.py                       # use settings
+python src/osv/download_ecosystem.py --ecosystem PyPI      # override ecosystem
+python src/osv/download_ecosystem.py --unzip               # also extract the JSONs
+python src/osv/download_ecosystem.py --json-path some/dir --output-path out/dir
 ```
+
+Requires `pymongo` (imported by `config.py`).
+
+### Trace OSV vulnerabilities to their fix commits
+
+Finds the commit that fixed one OSV vulnerability (`python src/osv/fix_tracer.py <ID>`),
+writing `<OSV_OUTPUT_PATH>/tracer/<ID>.json` and `.md` with a bulleted rationale.
+`--blind` hides the OSV fix commits (test mode, output in `tracer_blind/`), and
+`fix_tracer_eval.py` scores it against `lists/fix_tracer_gold.csv`
+(`vuln_id,repo,fix_commits`). SLURM: `src/slurm/fix_tracer.slurm.sh`.
+
+Besides `OSV_*` and `REPOSITORIES_PATH` (`REPOSITORY_LIST` csv matches OSV URLs to clones at `<REPOSITORIES_PATH>/<repo>`),
+these `settings.ini` keys set the defaults (CLI flags override them):
+
+| Key | Default | Purpose |
+| --- | --- | --- |
+| `FIX_TRACER_API_URL` | `https://api.genai.gccis.rit.edu/v1` | OpenAI-compatible API base URL |
+| `FIX_TRACER_API_KEY` | _(empty)_ | API key; set it only in `settings.ini` (gitignored), never `settings.default.ini` |
+| `FIX_TRACER_TOKENS_PER_MINUTE` | `10000` | Per-process token budget; the tracer sleeps to stay under it (`0` = off). With SLURM arrays the limit is shared, so divide it among concurrent tasks |
+| `FIX_TRACER_EMBED_MODEL` | `embeddinggemma:latest` | Embedding model (list names with `GET <url>/models`) |
+| `FIX_TRACER_CHAT_MODEL` | `qwen3:latest` | Model for summaries/rationales |
+| `FIX_TRACER_SUMMARIZE` | `true` | LLM summary per candidate commit |
+| `FIX_TRACER_DAYS_BEFORE` / `_AFTER` | `180` / `14` | Candidate window around the anchor date |
+| `FIX_TRACER_MAX_CANDIDATES` | `200` | Cap on window commits embedded |
+| `FIX_TRACER_TOP_K` | `3` | Commits reported |
+| `FIX_TRACER_CACHE_PATH` | `<OSV_OUTPUT_PATH>/tracer/cache` | Embedding cache |
+| `FIX_TRACER_GOLD_PATH` | `lists/fix_tracer_gold.csv` | Gold file for the eval harness |
+
+#### Connecting to an AI backend
+
+`fix_tracer.py` talks to any OpenAI-compatible API (`/embeddings` and `/chat/completions`),
+so switching backends only means changing `settings.ini`. Embeddings are cached per API URL
+and model, so each backend keeps its own cache.
+
+**RIT AI (`api.genai.gccis.rit.edu`)**
+
+```ini
+FIX_TRACER_API_URL="https://api.genai.gccis.rit.edu/v1"
+FIX_TRACER_API_KEY="<your key>"
+FIX_TRACER_TOKENS_PER_MINUTE="10000"
+FIX_TRACER_EMBED_MODEL="embeddinggemma:latest"
+FIX_TRACER_CHAT_MODEL="qwen3:latest"
+```
+
+- `settings.ini` is gitignored; keep the key there and never in `settings.default.ini`.
+- List the models your key can use: `curl -H "Authorization: Bearer $KEY" https://api.genai.gccis.rit.edu/v1/models`
+- Keep `FIX_TRACER_TOKENS_PER_MINUTE` at your account's limit so the tracer waits instead of getting HTTP 429s.
+  The budget is per process, so for parallel SLURM tasks divide it by the number of concurrent tasks.
+
+**Local Ollama**
+
+1. Install Ollama (https://ollama.com/download) and make sure it is running (`ollama serve`, or the desktop app).
+2. Pull the models:
+   ```
+   ollama pull embeddinggemma
+   ollama pull qwen3
+   ```
+3. Point the tracer at it in `settings.ini`:
+   ```ini
+   FIX_TRACER_API_URL="http://localhost:11434/v1"
+   FIX_TRACER_API_KEY=""
+   FIX_TRACER_TOKENS_PER_MINUTE="0"
+   FIX_TRACER_EMBED_MODEL="embeddinggemma:latest"
+   FIX_TRACER_CHAT_MODEL="qwen3:latest"
+   ```
+   No API key is needed for `localhost`, and `0` turns the token throttle off.
+4. Check it: `curl http://localhost:11434/v1/models` should list the pulled models.
+
+Model names must match `ollama list` exactly (including `:latest`). For a faster local run, use
+a smaller chat model or skip summaries (`FIX_TRACER_SUMMARIZE="false"` or `--no-summary`).
+Any flag can override a setting for one run, e.g.
+`python src/osv/fix_tracer.py <ID> --api-url http://localhost:11434/v1 --tokens-per-minute 0`.
 
 # Outputs
 All outputs from the project would be inside the root folder ```output```
