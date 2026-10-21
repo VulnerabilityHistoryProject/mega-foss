@@ -53,7 +53,6 @@ KEYWORDS = re.compile(
     r"\b(cve-\d{4}-\d+|ghsa-[\w-]+|security|vulnerab\w*|exploit\w*|sanitiz\w*|escap\w*|"
     r"overflow|injection|xss|traversal|bypass|denial|dos|fix\w*)\b", re.I)
 COMMIT_URL = re.compile(r"/commits?/([0-9a-f]{7,40})\b")
-REPO_URL = re.compile(r"github\.com[/:]([\w.-]+)/([\w.-]+?)(?:\.git)?(?:/|$)")
 MAX_DIFF_CHARS = 6000
 
 
@@ -102,42 +101,29 @@ def parse_time(value: str | None) -> datetime | None:
     return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
 
 
-def find_repo_slug(vuln: dict) -> str | None:
-    urls = [r.get("repo", "") for a in vuln.get("affected", []) for r in a.get("ranges", [])]
-    urls += [r.get("url", "") for r in vuln.get("references", [])]
-    for url in urls:
-        m = REPO_URL.search(url)
-        if m:
-            return f"{m.group(1)}/{m.group(2)}"
-    return None
-
-
-def norm_url(url: str) -> str:
-    url = url.strip().lower()
-    if url.startswith("git@"):  # scp-style: git@host:owner/name
-        url = url.replace(":", "/", 1)
-    url = re.sub(r"^(https?://|ssh://|git@)(git@)?", "", url)
-    return re.sub(r"\.git$", "", url.rstrip("/"))
-
-
-def load_repo_list(path: str | None) -> dict[str, str]:
-    """Map normalized clone URL -> 'repo' column of the repository CSV (repo,url)."""
+def load_package_map(path: str | None) -> dict[tuple[str, str], str]:
+    """Map (ecosystem, package) -> repo ('owner/name' clone folder) from the package CSV."""
     if not path or not resolve(path).exists():
         return {}
     with open(resolve(path), newline="") as f:
-        return {norm_url(r["url"]): r["repo"].strip() for r in csv.DictReader(f)
-                if r.get("url") and r.get("repo")}
+        return {(r["ecosystem"].strip().lower(), r["package"].strip().lower()): r["repo"].strip()
+                for r in csv.DictReader(f) if r.get("ecosystem") and r.get("package") and r.get("repo")}
 
 
-def find_listed_repo(vuln: dict, listed: dict[str, str]) -> str | None:
-    """First repo in the list whose clone URL is a prefix of an OSV repo/reference URL."""
-    urls = [r.get("repo", "") for a in vuln.get("affected", []) for r in a.get("ranges", [])]
-    urls += [r.get("url", "") for r in vuln.get("references", [])]
-    for url in map(norm_url, filter(None, urls)):
-        for listed_url, repo in listed.items():
-            if url == listed_url or url.startswith(listed_url + "/"):
-                return repo
-    return None
+def vuln_packages(vuln: dict) -> list[tuple[str, str]]:
+    """(ecosystem, package) pairs of the record; 'Ubuntu:Pro:14.04:LTS' reduces to 'ubuntu'."""
+    pairs = []
+    for a in vuln.get("affected", []):
+        pkg = a.get("package") or {}
+        if pkg.get("name"):
+            pair = (pkg.get("ecosystem", "").split(":")[0].lower(), pkg["name"].lower())
+            if pair not in pairs:
+                pairs.append(pair)
+    return pairs
+
+
+def find_package_repo(vuln: dict, package_map: dict[tuple[str, str], str]) -> str | None:
+    return next((package_map[p] for p in vuln_packages(vuln) if p in package_map), None)
 
 
 def direct_fixes(vuln: dict) -> list[str]:
@@ -498,9 +484,11 @@ def trace(args, vuln: dict) -> dict:
 
     repo = args.repo_path
     if not repo:
-        slug = find_listed_repo(vuln, load_repo_list(args.repo_list)) or find_repo_slug(vuln)
+        slug = find_package_repo(vuln, load_package_map(args.package_map))
         if not slug:
-            return {**result, "status": "no_repo_found"}
+            pairs = ", ".join(f"{e}/{n}" for e, n in vuln_packages(vuln)) or "no packages"
+            log(f"{vuln_id}: no repo mapped for {pairs}; add a row to {args.package_map}")
+            return {**result, "status": f"no_repo_found: {pairs}"}
         repo = resolve(args.repos_dir) / slug
     repo = Path(repo)
     if not (repo / ".git").exists() and not (repo / "HEAD").exists():
@@ -612,8 +600,8 @@ def build_parser(cfg: dict) -> argparse.ArgumentParser:
     p.add_argument("--ecosystem", default=cfg.get("OSV_ECOSYSTEM") or "npm")
     p.add_argument("--json-path", default=cfg.get("OSV_JSON_PATH") or "tmp/osv")
     p.add_argument("--output-path", default=cfg.get("OSV_OUTPUT_PATH") or "output/osv")
-    p.add_argument("--repo-list", default=cfg.get("REPOSITORY_LIST") or None,
-                   help="Repository CSV (repo,url) used to match OSV URLs to local clones (default: REPOSITORY_LIST)")
+    p.add_argument("--package-map", default=cfg.get("FIX_TRACER_PACKAGE_MAP") or "lists/package_repos.csv",
+                   help="CSV (ecosystem,package,repo) mapping packages to repo folders under --repos-dir")
     p.add_argument("--repos-dir", default=cfg.get("REPOSITORIES_PATH") or "")
     p.add_argument("--repo-path", help="Explicit repository path (overrides --repos-dir lookup)")
     p.add_argument("--cache-dir", default=cfg.get("FIX_TRACER_CACHE_PATH") or None, help="Embedding cache (default: <output-path>/tracer/cache, shared with test mode)")

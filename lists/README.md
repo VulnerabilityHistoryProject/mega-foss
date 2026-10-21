@@ -12,6 +12,10 @@ This file was handmade and there is not currently any code in mega-foss that can
 #### Usage
 This file is used in our code to process CVEs and map them to the correct repository via their vendor and product tags. See `src/cve/mg_analysis.py` and `src/output/gen_real_nvd_missing.py`.
 
+### package_repos.csv
+
+Maps an OSV package to its repository for `fix_tracer`: `ecosystem,package,repo`. Matching is case-insensitive, and an ecosystem like `Ubuntu:Pro:14.04:LTS` matches `ubuntu`. `repo` is the `owner/name` folder of the clone under `REPOSITORIES_PATH`.
+
 ### fix_tracer_gold.csv
 
 The gold set for testing `src/osv/fix_tracer.py`: vulnerabilities whose fix commits are already known. One row per vulnerability, with a header:

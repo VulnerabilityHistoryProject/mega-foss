@@ -22,15 +22,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import numpy as np
 from download_ecosystem import load_settings, resolve
-from fix_tracer import (Llm, build_parser, commit_details, commit_embedding, cosine, find_listed_repo,
-                        find_repo_slug, load_repo_list, load_vuln, log, require_zip, resolve_sha, vuln_text)
+from fix_tracer import (Llm, build_parser, commit_details, commit_embedding, cosine, find_package_repo,
+                        load_package_map, load_vuln, log, require_zip, resolve_sha, vuln_text)
 
 
 def compare(args, llm, cache_dir, vuln_id, ref, repo_slug=None):
     vuln = load_vuln(resolve(args.json_path) / args.ecosystem / "all.zip", vuln_id)
     repo = args.repo_path
     if not repo:
-        slug = repo_slug or find_listed_repo(vuln, load_repo_list(args.repo_list)) or find_repo_slug(vuln)
+        slug = repo_slug or find_package_repo(vuln, load_package_map(args.package_map))
         if not slug:
             print(f"{vuln_id}: no repository found; pass --repo-path")
             return
