@@ -12,10 +12,6 @@ This file was handmade and there is not currently any code in mega-foss that can
 #### Usage
 This file is used in our code to process CVEs and map them to the correct repository via their vendor and product tags. See `src/cve/mg_analysis.py` and `src/output/gen_real_nvd_missing.py`.
 
-### package_repos.csv
-
-Maps an OSV package to its repository for `fix_tracer`: `ecosystem,package,repo`. Matching is case-insensitive, and an ecosystem like `Ubuntu:Pro:14.04:LTS` matches `ubuntu`. `repo` is the `owner/name` folder of the clone under `REPOSITORIES_PATH`.
-
 ### fix_tracer_gold.csv
 
 The gold set for testing `src/osv/fix_tracer.py`: vulnerabilities whose fix commits are already known. One row per vulnerability, with a header:
@@ -23,7 +19,7 @@ The gold set for testing `src/osv/fix_tracer.py`: vulnerabilities whose fix comm
 | Column | Meaning |
 | --- | --- |
 | `vuln_id` | OSV ID, exactly as named in the ecosystem's `all.zip` (e.g. `GHSA-xxxx-xxxx-xxxx`, `UBUNTU-CVE-2024-1234`) |
-| `repo` | `owner/name` as listed in `repositories.csv`, or an absolute path to a local clone. Leave blank to infer the repo from the OSV record |
+| `repo` | `owner/name` clone folder under `REPOSITORIES_PATH`, or an absolute path to a local clone. Leave blank to look the repo up from the OSV package in the repository list |
 | `fix_commits` | Known fix commit SHAs, separated by spaces (prefixes are fine). Finding any one of them counts as a hit |
 #### Generation information
 Handmade. Pick vulnerabilities whose fix is a commit in a cloned repo, and whose OSV record has a fixed-version tag or a `published` date, since the tracer needs one of those to build its candidate window. The `OSV_ECOSYSTEM` in `settings.ini` must match the ecosystem the IDs come from.

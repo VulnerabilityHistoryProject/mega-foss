@@ -30,11 +30,11 @@ def compare(args, llm, cache_dir, vuln_id, ref, repo_slug=None):
     vuln = load_vuln(resolve(args.json_path) / args.ecosystem / "all.zip", vuln_id)
     repo = args.repo_path
     if not repo:
-        slug = repo_slug or find_package_repo(vuln, load_package_map(args.package_map))
-        if not slug:
+        folder = repo_slug or find_package_repo(vuln, load_package_map(args.repo_list))
+        if not folder:
             print(f"{vuln_id}: no repository found; pass --repo-path")
             return
-        repo = resolve(args.repos_dir) / slug
+        repo = resolve(args.repos_dir) / folder
     repo = Path(repo)
     sha = resolve_sha(repo, ref)
     if not sha:

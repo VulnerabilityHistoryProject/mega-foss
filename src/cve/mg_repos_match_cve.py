@@ -34,12 +34,13 @@ def extract_vendor_product(cpe):
 
 def read_repos(path):
     """Read repos from file and return Repo objects."""
-    repos = []
+    repos, seen = [], set()
     with open(path, newline="") as f:
         for row in csv.DictReader(f):
             slug = (row.get("repo") or "").strip()
-            if "/" not in slug:
+            if "/" not in slug or slug in seen:
                 continue
+            seen.add(slug)
             vendor, product = slug.split("/", 1)
             repos.append(Repo(product, vendor, slug))
     return repos

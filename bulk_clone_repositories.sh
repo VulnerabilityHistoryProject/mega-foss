@@ -32,12 +32,13 @@ echo "----- Log Entry Start: $(date '+%Y-%m-%d %H:%M:%S') -----" >> "$log_file"
 
 cd "$clone_dir"
 
-# CSV with header "repo,url"; clones to <REPOSITORIES_PATH>/<owner>/<name>
+# CSV with header "repo,url,osv_ecosystem,osv_package"; clones url into <REPOSITORIES_PATH>/<repo>.
+# Repos listed on several rows (one per package) are cloned once.
 while IFS=, read -r repository repository_url
 do
   repository=$(echo "$repository" | tr -d '\r')
   repository_url=$(echo "$repository_url" | tr -d '\r')
-  [ -z "$repository" ] || [ "$repository" = "repo" ] && continue
+  [ -z "$repository" ] && continue
   current_repo="$repository"
   repo_name="$repository"
   mkdir -p "$(dirname "$repo_name")"
@@ -60,7 +61,7 @@ do
     git clone "$repository_url" "$repo_name"
     ((count_cloned++))
   fi
-done < "$file_with_repositories"
+done < <(tail -n +2 "$file_with_repositories" | cut -d, -f1,2 | sort -u)
 
 echo "Total repositories cloned: $count_cloned" >> "$log_file"
 echo "Total repositories updated: $count_updated" >> "$log_file"

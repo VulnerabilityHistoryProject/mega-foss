@@ -71,7 +71,7 @@ bulk_import_nvdcve.sh
 ```
 
 ## Clone repositories
-Create a folder named ```mega-foss-repositories``` as a sibling to the project folder. The ```repositories.csv``` contains a list of repositories, one per line as ```repo,url``` (header row, then ```owner/name,clone-url```), that would be used after clonning them to match with the different NVDCVEs that are inside the database
+Create a folder named ```mega-foss-repositories``` as a sibling to the project folder. The ```repositories.csv``` contains a list of repositories, as ```repo,url,osv_ecosystem,osv_package``` (header row, then ```owner/name``` = the folder under the repositories path, the full clone URL; the two OSV columns say which OSV package maps to that repo and may be blank; a repo can appear on several rows, one per package), that would be used after clonning them to match with the different NVDCVEs that are inside the database
 
 To clone all the resporitories from the ```repositories.csv``` run the following command:
 
@@ -132,7 +132,7 @@ very little, since fixes often land well before the OSV date.
 `fix_tracer_eval.py` scores it against `lists/fix_tracer_gold.csv`
 (`vuln_id,repo,fix_commits`). SLURM: `src/slurm/fix_tracer.slurm.sh`.
 
-Besides `OSV_*` and `REPOSITORIES_PATH` (clones live at `<REPOSITORIES_PATH>/<repo>`),
+Besides `OSV_*` and `REPOSITORIES_PATH` (`REPOSITORY_LIST` maps `osv_ecosystem` + `osv_package` to the repo URL; clones live at `<REPOSITORIES_PATH>/<repo>`; unmapped packages report `no_repo_found`),
 these `settings.ini` keys set the defaults (CLI flags override them):
 
 | Key | Default | Purpose |
@@ -148,7 +148,6 @@ these `settings.ini` keys set the defaults (CLI flags override them):
 | `FIX_TRACER_MAX_CANDIDATES` | `200` | Cap on window commits embedded |
 | `FIX_TRACER_TOP_K` | `3` | Commits reported |
 | `FIX_TRACER_CACHE_PATH` | `<OSV_OUTPUT_PATH>/tracer/cache` | Embedding cache |
-| `FIX_TRACER_PACKAGE_MAP` | `lists/package_repos.csv` | CSV `ecosystem,package,repo` mapping an OSV package to its clone folder (no URL parsing; unmapped packages report `no_repo_found`) |
 | `FIX_TRACER_GOLD_PATH` | `lists/fix_tracer_gold.csv` | Gold file for the eval harness |
 
 #### Connecting to an AI backend

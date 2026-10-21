@@ -17,8 +17,9 @@ Steps:
 
 Defaults come from settings.ini (REPOSITORIES_PATH, OSV_*); relative paths
 resolve from the repository root. Repositories are looked up in the
-REPOSITORY_LIST csv (repo,url) and expected at <REPOSITORIES_PATH>/<repo>,
-where bulk_clone_repositories.sh puts them.
+REPOSITORY_LIST csv (repo,url,osv_ecosystem,osv_package) by the OSV package name and
+expected at <REPOSITORIES_PATH>/<repo>, where bulk_clone_repositories.sh
+puts them.
 """
 import argparse
 import csv
@@ -102,12 +103,14 @@ def parse_time(value: str | None) -> datetime | None:
 
 
 def load_package_map(path: str | None) -> dict[tuple[str, str], str]:
-    """Map (ecosystem, package) -> repo ('owner/name' clone folder) from the package CSV."""
+    """Map (OSV ecosystem, OSV package) -> 'repo' clone folder (owner/name under REPOSITORIES_PATH)
+    from the repository CSV (columns repo, url, osv_ecosystem, osv_package; rows without OSV columns are skipped)."""
     if not path or not resolve(path).exists():
         return {}
     with open(resolve(path), newline="") as f:
-        return {(r["ecosystem"].strip().lower(), r["package"].strip().lower()): r["repo"].strip()
-                for r in csv.DictReader(f) if r.get("ecosystem") and r.get("package") and r.get("repo")}
+        return {(r["osv_ecosystem"].strip().lower(), r["osv_package"].strip().lower()): r["repo"].strip()
+                for r in csv.DictReader(f)
+                if r.get("osv_ecosystem") and r.get("osv_package") and r.get("repo")}
 
 
 def vuln_packages(vuln: dict) -> list[tuple[str, str]]:
@@ -484,10 +487,10 @@ def trace(args, vuln: dict) -> dict:
 
     repo = args.repo_path
     if not repo:
-        slug = find_package_repo(vuln, load_package_map(args.package_map))
+        slug = find_package_repo(vuln, load_package_map(args.repo_list))
         if not slug:
             pairs = ", ".join(f"{e}/{n}" for e, n in vuln_packages(vuln)) or "no packages"
-            log(f"{vuln_id}: no repo mapped for {pairs}; add a row to {args.package_map}")
+            log(f"{vuln_id}: no repo mapped for {pairs}; add osv_ecosystem/osv_package to a row of {args.repo_list}")
             return {**result, "status": f"no_repo_found: {pairs}"}
         repo = resolve(args.repos_dir) / slug
     repo = Path(repo)
@@ -600,8 +603,8 @@ def build_parser(cfg: dict) -> argparse.ArgumentParser:
     p.add_argument("--ecosystem", default=cfg.get("OSV_ECOSYSTEM") or "npm")
     p.add_argument("--json-path", default=cfg.get("OSV_JSON_PATH") or "tmp/osv")
     p.add_argument("--output-path", default=cfg.get("OSV_OUTPUT_PATH") or "output/osv")
-    p.add_argument("--package-map", default=cfg.get("FIX_TRACER_PACKAGE_MAP") or "lists/package_repos.csv",
-                   help="CSV (ecosystem,package,repo) mapping packages to repo folders under --repos-dir")
+    p.add_argument("--repo-list", default=cfg.get("REPOSITORY_LIST") or "lists/repositories.csv",
+                   help="Repository CSV (repo,url,osv_ecosystem,osv_package) mapping OSV packages to repo folders (default: REPOSITORY_LIST)")
     p.add_argument("--repos-dir", default=cfg.get("REPOSITORIES_PATH") or "")
     p.add_argument("--repo-path", help="Explicit repository path (overrides --repos-dir lookup)")
     p.add_argument("--cache-dir", default=cfg.get("FIX_TRACER_CACHE_PATH") or None, help="Embedding cache (default: <output-path>/tracer/cache, shared with test mode)")
