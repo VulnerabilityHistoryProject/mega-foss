@@ -34,6 +34,23 @@ def resolve(path: str) -> Path:
     return p if p.is_absolute() else REPO_ROOT / p
 
 
+def find_zips(json_root: Path, ecosystem: str | None = None) -> list[Path]:
+    """OSV zips to search: the complete <json_root>/all.zip if present, else the
+    <json_root>/<ecosystem>/all.zip (or every ecosystem zip on disk when ecosystem is None)."""
+    full = json_root / "all.zip"
+    if full.exists():
+        return [full]
+    if ecosystem:
+        single = json_root / ecosystem / "all.zip"
+        return [single] if single.exists() else []
+    return sorted(json_root.glob("*/all.zip"))
+
+
+def zip_path_for(json_root: Path, ecosystem: str) -> Path:
+    """Complete dump if downloaded, else the ecosystem's own all.zip (which may not exist yet)."""
+    return (find_zips(json_root, ecosystem) or [json_root / ecosystem / "all.zip"])[0]
+
+
 def fetch(url: str, timeout: int = 60) -> bytes:
     """Stream the download with a progress readout; timeout applies per socket read."""
     chunks, done = [], 0

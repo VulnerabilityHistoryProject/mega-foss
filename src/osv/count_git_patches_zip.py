@@ -8,7 +8,7 @@ import zipfile
 import orjson
 from tqdm import tqdm
 
-from download_ecosystem import load_settings, resolve
+from download_ecosystem import load_settings, resolve, zip_path_for
 
 def has_git_fix(vuln: dict) -> bool:
     for affected in vuln.get("affected", []):
@@ -27,7 +27,7 @@ def main():
     parser.add_argument("--json-path", default=cfg.get("OSV_JSON_PATH") or "tmp/osv")
     args = parser.parse_args()
 
-    zip_path = resolve(args.json_path) / args.ecosystem / "all.zip"
+    zip_path = zip_path_for(resolve(args.json_path), args.ecosystem)
     total = with_fix = 0
     with zipfile.ZipFile(zip_path) as zf:
         names = [n for n in zf.namelist() if n.endswith(".json")]

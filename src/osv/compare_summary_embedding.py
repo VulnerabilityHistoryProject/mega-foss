@@ -21,13 +21,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import numpy as np
-from download_ecosystem import load_settings, resolve
+from download_ecosystem import load_settings, resolve, zip_path_for
 from fix_tracer import (Llm, build_parser, commit_details, commit_embedding, cosine, find_package_repo,
                         load_package_map, load_vuln, log, require_zip, resolve_sha, vuln_text)
 
 
 def compare(args, llm, cache_dir, vuln_id, ref, repo_slug=None):
-    vuln = load_vuln(resolve(args.json_path) / args.ecosystem / "all.zip", vuln_id)
+    vuln = load_vuln(zip_path_for(resolve(args.json_path), args.ecosystem), vuln_id)
     repo = args.repo_path
     if not repo:
         folder = repo_slug or find_package_repo(vuln, load_package_map(args.repo_list))
@@ -72,7 +72,7 @@ def main():
     p.add_argument("--limit", type=int, default=None, help="Only the first N gold rows")
     args = p.parse_args()
 
-    require_zip(resolve(args.json_path) / args.ecosystem / "all.zip", args.ecosystem)
+    require_zip(zip_path_for(resolve(args.json_path), args.ecosystem), args.ecosystem)
     cache_dir = resolve(args.cache_dir or str(resolve(args.output_path) / "tracer" / "cache"))
     llm = Llm(args.api_url, args.api_key, args.embed_model, args.chat_model,
               not args.no_summary, args.tokens_per_minute)

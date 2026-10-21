@@ -4,7 +4,8 @@ Usage:
     python3 src/osv/fix_tracer.py GHSA-xxxx-xxxx-xxxx [--ecosystem npm] [--repo-path DIR]
 
 Steps:
-  1. Load <ID>.json from <OSV_JSON_PATH>/<ecosystem>/all.zip.
+  1. Load <ID>.json from <OSV_JSON_PATH>/all.zip (download_all_osv.py) if present,
+     else <OSV_JSON_PATH>/<ecosystem>/all.zip.
   2. Collect candidate fix commits: OSV GIT ranges and commit references, plus the
      commits in a date window. The window starts at the newest git tag matching an
      affected version (tag dates are cached per repo) and ends at a later fixed
@@ -13,6 +14,9 @@ Steps:
      cached per commit SHA so repeated runs and sibling jobs reuse the work.
   4. Rank by cosine similarity combined with temporal, path, keyword and
      reference signals, then ask the LLM to explain the top matches.
+  4b. If the record has "upstream" IDs, fetch those records (recursively) from local
+     OSV dumps, downloading further ecosystem all.zip files as needed (never the API),
+     and save them to <OSV_OUTPUT_PATH>/tracer/upstream/<ID>.json.
   5. Write <OSV_OUTPUT_PATH>/tracer/<ID>.json and <ID>.md.
 
 Defaults come from settings.ini (REPOSITORIES_PATH, OSV_*); relative paths
@@ -31,6 +35,7 @@ import re
 import subprocess
 import sys
 import time
+import urllib.request
 import zipfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -39,7 +44,8 @@ import numpy as np
 import orjson
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from download_ecosystem import load_settings, resolve  # noqa: E402
+from download_ecosystem import (BASE_URL, download, find_zips, load_settings,  # noqa: E402
+                                resolve, zip_path_for)
 
 PROMPT_VERSION = "v1"
 T0 = time.monotonic()
@@ -78,6 +84,67 @@ def load_vuln(zip_path: Path, vuln_id: str) -> dict:
             return orjson.loads(zf.read(f"{vuln_id}.json"))
         except KeyError:
             raise SystemExit(f"{vuln_id}.json not found in {zip_path}")
+
+
+def read_from_zip(zip_path: Path, vuln_id: str) -> dict | None:
+    with zipfile.ZipFile(zip_path) as zf:
+        try:
+            return orjson.loads(zf.read(f"{vuln_id}.json"))
+        except KeyError:
+            return None
+
+
+def remote_ecosystems() -> list[str]:
+    with urllib.request.urlopen(f"{BASE_URL}/ecosystems.txt", timeout=60) as resp:
+        return [e.strip() for e in resp.read().decode().splitlines() if e.strip()]
+
+
+def find_upstream(vuln: dict, json_root: Path, download_missing: bool = True) -> dict[str, dict | None]:
+    """Resolve the record's 'upstream' IDs (and their upstreams) from local OSV dumps.
+
+    Searches every <json_root>/<ecosystem>/all.zip already on disk; for IDs still missing,
+    downloads further ecosystem dumps (one at a time, no API lookups) until all are found
+    or the ecosystem list is exhausted. Unresolved IDs map to None.
+    """
+    found: dict[str, dict | None] = {}
+    pending = list(vuln.get("upstream", []))
+    complete = (json_root / "all.zip").exists()
+    zips = {p.parent.name: p for p in find_zips(json_root)}
+    download_missing = download_missing and not complete  # the full dump already covers everything
+    tried: set[str] = set()
+    remote: list[str] | None = None
+
+    def resolve_pending() -> None:
+        while pending:
+            uid = pending.pop()
+            if uid in found:
+                continue
+            found[uid] = next((r for z in zips.values() if (r := read_from_zip(z, uid))), None)
+            if found[uid]:
+                pending.extend(found[uid].get("upstream", []))
+
+    resolve_pending()
+    while download_missing and any(v is None for v in found.values()):
+        if remote is None:
+            remote = remote_ecosystems()
+        eco = next((e for e in remote if e not in zips and e not in tried), None)
+        if not eco:
+            break
+        tried.add(eco)
+        log(f"upstream: {sum(v is None for v in found.values())} unresolved; downloading {eco} dump")
+        out = json_root / eco
+        try:
+            download(eco, out)
+        except SystemExit as e:
+            log(f"upstream: skipping {eco}: {e}")
+            continue
+        zips[eco] = out / "all.zip"
+        for uid, rec in list(found.items()):
+            if rec is None:
+                pending.append(uid)
+                del found[uid]
+        resolve_pending()
+    return found
 
 
 def blind(vuln: dict) -> dict:
@@ -626,6 +693,8 @@ def build_parser(cfg: dict) -> argparse.ArgumentParser:
     p.add_argument("--top-k", type=int, default=int(cfg.get("FIX_TRACER_TOP_K") or 3))
     p.add_argument("--refresh-tags", action="store_true",
                    help="Rebuild the cached tag dates for the repo (default: reuse until its tags change)")
+    p.add_argument("--no-upstream-download", action="store_true",
+                   help="Only look for 'upstream' records in dumps already on disk; don't download more ecosystems")
     p.add_argument("--force", action="store_true", help="Re-run even if output exists")
     p.add_argument("--blind", action="store_true",
                    help="Test mode: hide the OSV fix commits/commit references from the tracer")
@@ -643,10 +712,21 @@ def main():
         print(f"{out_json} exists; use --force to re-run")
         return
 
-    zip_path = resolve(args.json_path) / args.ecosystem / "all.zip"
+    zip_path = zip_path_for(resolve(args.json_path), args.ecosystem)
     require_zip(zip_path, args.ecosystem)
     vuln = load_vuln(zip_path, args.vuln_id)
+    upstream = {}
+    if vuln.get("upstream"):
+        upstream = find_upstream(vuln, resolve(args.json_path), not args.no_upstream_download)
+        up_dir = out_dir / "upstream"
+        up_dir.mkdir(exist_ok=True)
+        for uid, rec in upstream.items():
+            if rec:
+                (up_dir / f"{uid}.json").write_text(json.dumps(rec, indent=2))
+        log(f"upstream: resolved {sum(bool(r) for r in upstream.values())}/{len(upstream)} -> {up_dir}")
     result = trace(args, blind(vuln) if args.blind else vuln)
+    if upstream:
+        result["upstream"] = {uid: bool(rec) for uid, rec in upstream.items()}
     log("done")
     out_json.write_text(json.dumps(result, indent=2))
     (out_dir / f"{args.vuln_id}.md").write_text(to_markdown(result))
