@@ -283,16 +283,17 @@ def match_version_tags(versions: list[tuple[str, str]], tags: dict[str, str],
     return matches
 
 
-def candidate_window(matches, fixed_matches, published, days_before, days_after):
+def candidate_window(matches, fixed_matches, published, days_before, days_after, tag_buffer=30):
     """(start, end, source). The bug exists in every affected release, so the fix
-    landed after the newest affected tag; it ends at a later fixed tag, else shortly
+    landed around the newest affected tag (minus a buffer for release delays); it ends at a later fixed tag, else shortly
     after the OSV publication date. Falls back to a window around publication."""
     if matches:
-        start = max(parse_time(m["date"]) for m in matches)
-        later = [d for m in fixed_matches if (d := parse_time(m["date"])) > start]
+        tag_date = max(parse_time(m["date"]) for m in matches)
+        start = tag_date - timedelta(days=tag_buffer)  # fixes land before the release is tagged
+        later = [d for m in fixed_matches if (d := parse_time(m["date"])) > tag_date]
         if later:
             return start, min(later), "newest affected tag -> fixed tag"
-        if published and published + timedelta(days=days_after) > start:
+        if published and published + timedelta(days=days_after) > tag_date:
             return start, published + timedelta(days=days_after), "newest affected tag -> published"
     if published:
         return (published - timedelta(days=days_before), published + timedelta(days=days_after),
@@ -316,13 +317,15 @@ def mentioned_terms(text: str) -> set[str]:
 
 
 def list_window_commits(repo: Path, start: datetime, end: datetime) -> list[dict]:
-    fmt = "%H%x1f%cI%x1f%s"
-    out = git(repo, "log", "--no-merges", f"--since={start.isoformat()}",
+    fmt = "%x1e%H%x1f%cI%x1f%s"
+    out = git(repo, "log", "--no-merges", "--name-only", f"--since={start.isoformat()}",
               f"--until={end.isoformat()}", f"--format={fmt}")
     commits = []
-    for line in out.splitlines():
-        sha, date, subject = line.split("\x1f", 2)
-        commits.append({"sha": sha, "date": date, "subject": subject})
+    for record in out.split("\x1e")[1:]:
+        header, _, names = record.partition("\n")
+        sha, date, subject = header.split("\x1f", 2)
+        commits.append({"sha": sha, "date": date, "subject": subject,
+                        "files": [n for n in names.splitlines() if n]})
     return commits
 
 
@@ -440,10 +443,13 @@ def cosine(a: np.ndarray, b: np.ndarray) -> float:
     return float(a @ b) / denom if denom else 0.0
 
 
-def prefilter_score(subject: str, terms: set[str], referenced: set[str], sha: str) -> float:
-    s = 2.0 if any(sha.startswith(r) for r in referenced) else 0.0
-    s += 1.0 if KEYWORDS.search(subject) else 0.0
-    s += 0.5 if any(t in subject.lower() for t in terms) else 0.0
+def prefilter_score(c: dict, terms: set[str], referenced: set[str]) -> float:
+    subject = c["subject"].lower()
+    s = 2.0 if any(c["sha"].startswith(r) for r in referenced) else 0.0
+    s += 1.0 if KEYWORDS.search(c["subject"]) else 0.0
+    s += 0.5 if any(t in subject for t in terms) else 0.0
+    files = [f.lower() for f in c.get("files", [])]
+    s += 1.5 if any(t in f for t in terms for f in files) else 0.0
     return s
 
 
@@ -508,7 +514,8 @@ def trace(args, vuln: dict) -> dict:
     published = parse_time(vuln.get("published"))
     matches = match_version_tags(affected_versions(vuln), tags)
     fixed_matches = match_version_tags(fixed_versions(vuln), tags, exact_only=True)
-    window = candidate_window(matches, fixed_matches, published, args.days_before, args.days_after)
+    window = candidate_window(matches, fixed_matches, published, args.days_before, args.days_after,
+                              args.tag_buffer_days)
     anchor = window[1] if window else None
     result["version_matches"] = matches
     result["window"] = ({"start": window[0].isoformat(), "end": window[1].isoformat(), "source": window[2]}
@@ -527,8 +534,10 @@ def trace(args, vuln: dict) -> dict:
     if window:
         in_window = list_window_commits(repo, window[0], window[1])
         terms = mentioned_terms(desc)
-        in_window.sort(key=lambda c: prefilter_score(c["subject"], terms, set(evidence), c["sha"]),
-                       reverse=True)
+        center = max((parse_time(m["date"]) for m in matches), default=window[1])
+        # Best score first; ties go to the commits closest to the affected release tag.
+        in_window.sort(key=lambda c: (-prefilter_score(c, terms, set(evidence)),
+                                      abs((parse_time(c["date"]) - center).total_seconds())))
         log(f"{vuln_id}: {len(in_window)} commits in window; keeping the top {args.max_candidates} by prefilter")
         candidates = {c["sha"]: "date_window" for c in in_window[:args.max_candidates]}
     candidates = {**candidates, **evidence}
@@ -618,6 +627,8 @@ def build_parser(cfg: dict) -> argparse.ArgumentParser:
     p.add_argument("--embed-model", default=cfg.get("FIX_TRACER_EMBED_MODEL") or "embeddinggemma:latest")
     p.add_argument("--chat-model", default=cfg.get("FIX_TRACER_CHAT_MODEL") or "qwen3:latest")
     p.add_argument("--no-summary", action="store_true", default=(cfg.get("FIX_TRACER_SUMMARIZE") or "true").lower() == "false", help="Skip per-commit LLM summaries")
+    p.add_argument("--tag-buffer-days", type=int, default=int(cfg.get("FIX_TRACER_TAG_BUFFER_DAYS") or 30),
+                   help="Days before the newest affected tag to start the candidate window")
     p.add_argument("--days-before", type=int, default=int(cfg.get("FIX_TRACER_DAYS_BEFORE") or 180))
     p.add_argument("--days-after", type=int, default=int(cfg.get("FIX_TRACER_DAYS_AFTER") or 14))
     p.add_argument("--max-candidates", type=int, default=int(cfg.get("FIX_TRACER_MAX_CANDIDATES") or 200))

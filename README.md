@@ -121,7 +121,7 @@ Requires `pymongo` (imported by `config.py`).
 Finds the commit that fixed one OSV vulnerability (`python src/osv/fix_tracer.py <ID>`),
 writing `<OSV_OUTPUT_PATH>/tracer/<ID>.json` and `.md` with a bulleted rationale.
 Candidate commits come from the OSV record's GIT ranges and commit links, plus the commits
-in a date window. The window starts at the date of the newest git tag that matches an affected
+in a date window. The window starts 30 days (`FIX_TRACER_TAG_BUFFER_DAYS`) before the date of the newest git tag that matches an affected
 version (distro versions like `6:9.20-0ubuntu0.14.04.1` are reduced to `9.20`; if no tag matches
 exactly, the closest tags sharing a major.minor are used) and ends at a later fixed-version tag,
 else 14 days after the publication date. Without a matching tag it falls back to a window around
@@ -143,6 +143,7 @@ these `settings.ini` keys set the defaults (CLI flags override them):
 | `FIX_TRACER_EMBED_MODEL` | `embeddinggemma:latest` | Embedding model (list names with `GET <url>/models`) |
 | `FIX_TRACER_CHAT_MODEL` | `qwen3:latest` | Model for summaries/rationales |
 | `FIX_TRACER_SUMMARIZE` | `true` | LLM summary per candidate commit |
+| `FIX_TRACER_TAG_BUFFER_DAYS` | `30` | Days before the newest affected tag to start the window (fixes land before releases) |
 | `FIX_TRACER_DAYS_BEFORE` / `_AFTER` | `180` / `14` | Days before/after the publication date; `_BEFORE` only applies when no affected-version tag matches |
 | `FIX_TRACER_MAX_CANDIDATES` | `200` | Cap on window commits embedded |
 | `FIX_TRACER_TOP_K` | `3` | Commits reported |
