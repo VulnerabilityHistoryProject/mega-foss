@@ -108,10 +108,10 @@ Defaults are read from `settings.ini` (falling back to `settings.default.ini`):
 Relative paths resolve from the repository root.
 
 ```
-python src/osv/download_ecosystem.py                       # use settings
-python src/osv/download_ecosystem.py --ecosystem PyPI      # override ecosystem
-python src/osv/download_ecosystem.py --unzip               # also extract the JSONs
-python src/osv/download_ecosystem.py --json-path some/dir --output-path out/dir
+python3 src/osv/download_ecosystem.py                       # use settings
+python3 src/osv/download_ecosystem.py --ecosystem PyPI      # override ecosystem
+python3 src/osv/download_ecosystem.py --unzip               # also extract the JSONs
+python3 src/osv/download_ecosystem.py --json-path some/dir --output-path out/dir
 ```
 
 Requires `pymongo` (imported by `config.py`).
@@ -200,4 +200,4 @@ All outputs from the project would be inside the root folder ```output```
 
 # Historic CVEs
 ```
-python historic_population.py
+python3 historic_population.py

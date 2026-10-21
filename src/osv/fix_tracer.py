@@ -1,7 +1,7 @@
 """Find the commit in a source repository that fixed a single OSV vulnerability.
 
 Usage:
-    python src/osv/fix_tracer.py GHSA-xxxx-xxxx-xxxx [--ecosystem npm] [--repo-path DIR]
+    python3 src/osv/fix_tracer.py GHSA-xxxx-xxxx-xxxx [--ecosystem npm] [--repo-path DIR]
 
 Steps:
   1. Load <ID>.json from <OSV_JSON_PATH>/<ecosystem>/all.zip.

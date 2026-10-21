@@ -10,9 +10,9 @@ Gold file (CSV with header), default lists/fix_tracer_gold.csv:
 Each vulnerability is traced with the answer hidden (--blind) and results go to
 <OSV_OUTPUT_PATH>/tracer_blind/. Reports Top-k accuracy and the rank of each expected commit, and writes eval_summary.json alongside.
 
-    python src/osv/fix_tracer_eval.py                       # whole gold file
-    python src/osv/fix_tracer_eval.py --limit 5 --no-summary # quick smoke test
-    python src/osv/fix_tracer_eval.py --ecosystem PyPI --gold my_gold.csv
+    python3 src/osv/fix_tracer_eval.py                       # whole gold file
+    python3 src/osv/fix_tracer_eval.py --limit 5 --no-summary # quick smoke test
+    python3 src/osv/fix_tracer_eval.py --ecosystem PyPI --gold my_gold.csv
 Extra tracer options (--chat-model, --days-before, ...) are accepted.
 """
 import csv
