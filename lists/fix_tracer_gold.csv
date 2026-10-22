@@ -1,2 +1,3 @@
 vuln_id,repo,fix_commits
+OSV-2026-1332,tmux/tmux,be75a67b1fe182fab9868d15ed618557555f6a0e
 UBUNTU-CVE-2026-96611,ffmpeg/ffmpeg,2cc7b87bdb75bcb59bf8bcd5296ca43f89b3a909
