@@ -1,9 +1,11 @@
 import os
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 from advisory import Advisory
-from git_ops import CandidateCommit, GitRepo
+from embeddings import apply_semantic_embeddings
+from git_ops import GitRepo
 from ranker import rank_candidates
+from rules import ChangesRelevantCode
 
 
 def rank_commits(
@@ -42,8 +44,6 @@ def rank_commits(
         advisory = Advisory.from_file(cve_input)
     elif isinstance(cve_input, dict):
         advisory = Advisory(cve_input)
-    else:
-        raise TypeError("cve_input must be a file path string or a dict")
 
     # 2. Open Git repository
     repo = GitRepo(repo_path)
@@ -59,21 +59,22 @@ def rank_commits(
         since=since,
         until=until,
         max_candidates=max_candidates,
-        fetch_diff=False,
     )
 
     # 4b. Also include any commits explicitly referenced in advisory if not already present
     existing_ids = {c.commit_id.lower() for c in candidates}
     for ref_sha in advisory.fixed_commits | advisory.reference_commits:
         ref_sha_clean = ref_sha.lower().replace("commit::", "")
-        if ref_sha_clean not in existing_ids:
-            explicit_commit = repo.get_commit_by_id(ref_sha_clean)
-            if explicit_commit:
-                candidates.append(explicit_commit)
-                existing_ids.add(explicit_commit.commit_id.lower())
+        if ref_sha_clean in existing_ids:
+            continue
+
+        explicit_commit = repo.get_commit_by_id(ref_sha_clean)
+        if explicit_commit:
+            candidates.append(explicit_commit)
+            existing_ids.add(explicit_commit.commit_id.lower())
 
     if show_progress:
-        print(f"→ [1/3] Git log scanned: found {len(candidates)} candidate commits")
+        print(f"-> [1/3] Git log scanned: found {len(candidates)} candidate commits")
 
     # 5. Fast initial heuristic ranking
     ranked = rank_candidates(advisory, candidates)
@@ -82,22 +83,25 @@ def rank_commits(
     top_candidates = ranked[:50]
     if fetch_diff and top_candidates:
         repo.populate_diffs_for_commits(top_candidates, show_progress=show_progress)
-        from rules import ChangesRelevantCode
         code_rule = ChangesRelevantCode()
         for c in top_candidates:
-            if c.diff:
-                matched, reason = code_rule.apply(c, advisory)
-                if matched and not any(r["rule"] == code_rule.id for r in c.matched_rules):
-                    c.score += code_rule.weight
-                    c.matched_rules.append({
+            if not c.diff:
+                continue
+
+            matched, reason = code_rule.apply(c, advisory)
+            if matched and not any(r["rule"] == code_rule.id for r in c.matched_rules):
+                c.score += code_rule.weight
+                c.matched_rules.append(
+                    {
                         "rule": code_rule.id,
                         "weight": code_rule.weight,
                         "reason": reason,
-                    })
+                    }
+                )
 
     # 5c. Optional semantic embedding re-ranking on top candidates
     if use_embeddings and ranked:
-        from embeddings import apply_semantic_embeddings
+
         apply_semantic_embeddings(
             advisory=advisory,
             candidates=ranked,
@@ -108,9 +112,13 @@ def rank_commits(
 
     # Final sort
     pub_time = advisory.published_timestamp
+
     def sort_key(c):
-        time_dist = abs(c.timestamp - pub_time) if (pub_time and c.timestamp) else 9999999999
+        time_dist = (
+            abs(c.timestamp - pub_time) if (pub_time and c.timestamp) else 9999999999
+        )
         return (c.score, -time_dist)
+
     ranked.sort(key=sort_key, reverse=True)
 
     top_commits = ranked[:top_k] if top_k else ranked

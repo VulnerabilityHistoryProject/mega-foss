@@ -2,7 +2,7 @@ import os
 import re
 import subprocess
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import List, Optional
 
 
 @dataclass
@@ -40,14 +40,24 @@ class CandidateCommit:
 class GitRepo:
     def __init__(self, repo_path: str):
         self.repo_path = os.path.abspath(repo_path)
-        if not os.path.isdir(os.path.join(self.repo_path, ".git")) and not os.path.isfile(os.path.join(self.repo_path, "HEAD")):
+        if not os.path.isdir(
+            os.path.join(self.repo_path, ".git")
+        ) and not os.path.isfile(os.path.join(self.repo_path, "HEAD")):
             raise ValueError(f"Not a valid git repository: {self.repo_path}")
 
     def _run_git(self, args: List[str], timeout: int = 30) -> str:
         cmd = ["git", "-C", self.repo_path] + args
-        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=timeout)
+        res = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout,
+        )
         if res.returncode != 0:
-            raise RuntimeError(f"Git command failed: {' '.join(cmd)}\nStderr: {res.stderr.strip()}")
+            raise RuntimeError(
+                f"Git command failed: {' '.join(cmd)}\nStderr: {res.stderr.strip()}"
+            )
         return res.stdout
 
     def get_tags(self) -> List[str]:
@@ -62,7 +72,9 @@ class GitRepo:
         except RuntimeError:
             return False
 
-    def find_matching_tag(self, version_str: str, package_name: Optional[str] = None) -> Optional[str]:
+    def find_matching_tag(
+        self, version_str: str, package_name: Optional[str] = None
+    ) -> Optional[str]:
         """Match a version string (e.g. '9.0.0') to an actual Git tag in the repository."""
         if not version_str:
             return None
@@ -80,16 +92,28 @@ class GitRepo:
         # 3. Package-prefixed tags (e.g. 'zip-9.0.0', 'zip-v9.0.0', 'zip_9.0.0')
         if package_name:
             pkg = package_name.lower().replace("_", "-")
-            for prefix in [f"{pkg}-{version_str}", f"{pkg}-v{version_str}", f"{pkg}_{version_str}", f"{pkg}_v{version_str}"]:
+            for prefix in [
+                f"{pkg}-{version_str}",
+                f"{pkg}-v{version_str}",
+                f"{pkg}_{version_str}",
+                f"{pkg}_v{version_str}",
+            ]:
                 if prefix in tags:
                     return prefix
         # 4. Release prefixes
-        for prefix in [f"release-{version_str}", f"release-v{version_str}", f"release/{version_str}", f"rel-{version_str}"]:
+        for prefix in [
+            f"release-{version_str}",
+            f"release-v{version_str}",
+            f"release/{version_str}",
+            f"rel-{version_str}",
+        ]:
             if prefix in tags:
                 return prefix
 
         # 5. Regex boundary match (e.g. 'v9.0.0-rc1', 'archive-9.0.0')
-        pattern = re.compile(rf"(?:^|[_\-/v]){re.escape(version_str)}(?:$|[_\-/\.])", re.IGNORECASE)
+        pattern = re.compile(
+            rf"(?:^|[_\-/v]){re.escape(version_str)}(?:$|[_\-/\.])", re.IGNORECASE
+        )
         for t in tags:
             if pattern.search(t):
                 return t
@@ -140,7 +164,6 @@ class GitRepo:
         since: Optional[int] = None,
         until: Optional[int] = None,
         max_candidates: int = 2000,
-        fetch_diff: bool = True,
     ) -> List[CandidateCommit]:
         """
         Extract candidate commits using `git log`.
@@ -223,20 +246,27 @@ class GitRepo:
 
         return commits
 
-    def populate_diffs_for_commits(self, commits: List[CandidateCommit], show_progress: bool = False):
+    def populate_diffs_for_commits(
+        self, commits: List[CandidateCommit], show_progress: bool = False
+    ):
         """Populate full diffs for a subset of candidate commits."""
         import sys
+
         total = len(commits)
         for i, c in enumerate(commits):
             if show_progress:
                 pct = int(((i + 1) / total) * 100)
-                sys.stderr.write(f"\r→ [2/3] Reading full diffs: [ {i + 1} / {total} ] ({pct}%)")
+                sys.stderr.write(
+                    f"\r-> [2/3] Reading full diffs: [ {i + 1} / {total} ] ({pct}%)"
+                )
                 sys.stderr.flush()
             if c.diff:
                 continue
             try:
                 # Full diff with no line cap
-                diff_out = self._run_git(["show", "--format=", "--unified=1", c.commit_id], timeout=30)
+                diff_out = self._run_git(
+                    ["show", "--format=", "--unified=1", c.commit_id], timeout=30
+                )
                 diff_lines = diff_out.splitlines()
                 c.diff = diff_lines
                 c.hunks = sum(1 for line in diff_lines if line.startswith("@@"))
@@ -245,5 +275,7 @@ class GitRepo:
         if show_progress and total > 0:
             sys.stderr.write(" [Done]\n")
 
-    def _populate_diffs(self, commits: List[CandidateCommit], show_progress: bool = False):
+    def _populate_diffs(
+        self, commits: List[CandidateCommit], show_progress: bool = False
+    ):
         self.populate_diffs_for_commits(commits, show_progress=show_progress)

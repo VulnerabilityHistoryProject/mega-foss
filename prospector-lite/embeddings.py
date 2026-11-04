@@ -74,7 +74,7 @@ class TransformerEmbedder:
                 done = min(i + len(batch), total)
                 pct = int((done / total) * 100)
                 commits_info = f" ({num_commits} commits)" if num_commits else ""
-                sys.stderr.write(f"\r→ [3/3] Computing embeddings: [ {done} / {total} chunks{commits_info} ] ({pct}%)")
+                sys.stderr.write(f"\r-> [3/3] Computing embeddings: [ {done} / {total} chunks{commits_info} ] ({pct}%)")
                 sys.stderr.flush()
 
         if show_progress and total > 0:
@@ -90,7 +90,7 @@ def get_embedding_model(model_name_or_path: str = "sentence-transformers/all-Min
 
     if show_progress:
         import sys
-        sys.stderr.write(f"→ Loading transformer embedding model ({model_name_or_path})... ")
+        sys.stderr.write(f"-> Loading transformer embedding model ({model_name_or_path})... ")
         sys.stderr.flush()
 
     embedder = TransformerEmbedder(model_name_or_path)
