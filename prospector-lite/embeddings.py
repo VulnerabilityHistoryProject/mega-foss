@@ -129,7 +129,7 @@ def extract_source_chunks_from_diff(commit, advisory) -> List[str]:
     over test cases, lockfiles, or markdown.
     """
     if not commit.diff:
-        return []
+        return [f"Commit message: {commit.message}\nChanged files: {', '.join(commit.changed_files[:10])}"]
 
     file_diffs = {}
     current_file = None
@@ -227,6 +227,9 @@ def apply_semantic_embeddings(
         flat_texts.extend(chunks)
         commit_chunk_map.append((start_idx, len(chunks)))
 
+    if not flat_texts:
+        return
+
     # Encode in batches of 16 (prevents memory spikes)
     chunk_vecs = model.encode(
         flat_texts,
@@ -240,6 +243,8 @@ def apply_semantic_embeddings(
 
     for i, commit in enumerate(target_commits):
         start_idx, num_chunks = commit_chunk_map[i]
+        if num_chunks == 0:
+            continue
         # Max-pool across the commit's source files (so if file 3 is the fix, its high match wins)
         best_sim = float(np.max(chunk_sims[start_idx : start_idx + num_chunks]))
 

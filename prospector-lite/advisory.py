@@ -3,7 +3,6 @@ import os
 import re
 from datetime import datetime
 from typing import Dict, List, Optional, Set
-from dateutil.parser import isoparse
 
 RELEVANT_EXTENSIONS = {
     "rs", "toml", "c", "cpp", "h", "java", "py", "go", "js", "ts",
@@ -68,14 +67,14 @@ class Advisory:
         self.published_timestamp: Optional[int] = None
         if data.get("published"):
             try:
-                self.published_timestamp = int(isoparse(data["published"]).timestamp())
+                self.published_timestamp = int(datetime.fromisoformat(data["published"].replace("Z", "+00:00")).timestamp())
             except Exception:
                 pass
 
         self.modified_timestamp: Optional[int] = None
         if data.get("modified"):
             try:
-                self.modified_timestamp = int(isoparse(data["modified"]).timestamp())
+                self.modified_timestamp = int(datetime.fromisoformat(data["modified"].replace("Z", "+00:00")).timestamp())
             except Exception:
                 pass
 
