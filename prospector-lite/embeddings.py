@@ -4,6 +4,14 @@ from typing import Any, List, Optional
 import numpy as np
 from numpy.typing import NDArray
 
+try:
+    import torch
+    import torch.nn.functional as F
+    from transformers import AutoModel, AutoTokenizer
+    HAS_TORCH_TRANSFORMERS = True
+except ImportError:
+    HAS_TORCH_TRANSFORMERS = False
+
 logger = logging.getLogger("prospector-lite.embeddings")
 
 _MODEL_CACHE = {}
@@ -11,8 +19,11 @@ _MODEL_CACHE = {}
 
 class TransformerEmbedder:
     def __init__(self, model_name_or_path: str):
-        import torch
-        from transformers import AutoModel, AutoTokenizer
+        if not HAS_TORCH_TRANSFORMERS:
+            raise ImportError(
+                "PyTorch and transformers are required for semantic embeddings. "
+                "Please install torch and transformers."
+            )
 
         # Standardize HuggingFace name if shorthand passed
         if model_name_or_path == "all-MiniLM-L6-v2":
@@ -32,7 +43,6 @@ class TransformerEmbedder:
         self.model.eval()
 
     def _mean_pooling(self, model_output, attention_mask):
-        import torch
         token_embeddings = model_output[0]
         input_mask_expanded = (
             attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
@@ -49,8 +59,6 @@ class TransformerEmbedder:
         num_commits: int = 0,
     ) -> NDArray[Any]:
         import sys
-        import torch
-        import torch.nn.functional as F
 
         all_embeddings = []
         total = len(texts)

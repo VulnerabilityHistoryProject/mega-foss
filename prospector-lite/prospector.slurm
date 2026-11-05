@@ -4,7 +4,7 @@
 #SBATCH --partition=tigris
 #SBATCH --output=logs/%x_%A_%a.out
 #SBATCH --error=logs/%x_%A_%a.err
-#SBATCH --time=08:00:00             # 6 hours per batch task
+#SBATCH --time=06:00:00             # 6 hours per batch task
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4           # 4 CPUs for process pool
@@ -17,12 +17,17 @@ mkdir -p logs output
 
 # Load Spack modules / environment
 spack unload --all
-spack load /kid6nul
+spack load /3j6eoyl
+spack load /dq4pyuh
+
 
 # Avoid PyTorch CPU thread contention across multiprocessing workers
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export TOKENIZERS_PARALLELISM=false
+
+# Fix glibc static TLS exhaustion with Spack tcmalloc / torch
+export LD_PRELOAD="/.autofs/tools/spack/opt/spack/linux-rhel9-neoverse_v2/gcc-12.3.1/gperftools-2.15-dvdbmkepqu6mqb75f34tphl7ntwn22ta/lib/libtcmalloc_minimal.so.4:${LD_PRELOAD}"
 
 # Paths on RIT RC shared filesystem
 CSV_PATH="/shared/rc/sfs/osv-rust/jobs/crate_repos.csv"

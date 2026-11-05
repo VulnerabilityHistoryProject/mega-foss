@@ -15,6 +15,13 @@ import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Dict, List, Optional, Tuple
 
+# Pre-import PyTorch and transformers at process startup to prevent glibc static TLS errors
+try:
+    import torch
+    import transformers
+except ImportError:
+    pass
+
 from prospector_lite import rank_commits
 
 
